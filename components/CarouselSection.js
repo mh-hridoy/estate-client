@@ -5,7 +5,7 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
 const CarouselSection = () => {
     return (
-        <Carousel showArrows={false} autoPlay={true} stopOnHover={true} showThumbs={false} infiniteLoop={true} className="carousel">
+        <Carousel showStatus={false} showArrows={false} autoPlay={true} stopOnHover={true} showThumbs={false} infiniteLoop={true} className="carousel">
             <div>
                 <img src="/front.JPEG" alt="image" />
             </div>

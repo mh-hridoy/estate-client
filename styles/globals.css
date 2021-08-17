@@ -34,9 +34,20 @@ strong {
 
 }
 
+.introduction {
+border-bottom: 1px solid var(--primary-color);
+box-shadow: 1px 2px 10px rgba(0, 0, 0, 0.2);
+padding : 10px;
+border-radius: 15px;
+border-top: 1px solid var(--secondary-color);
+margin-top: 10px;
+
+}
+
 .carousel {
     width : 100vw;
     height : 500px;
+    margin-bottom: 5px;
 }
 
 img {

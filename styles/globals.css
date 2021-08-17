@@ -1,128 +1,192 @@
 :root {
-    --first-color : #fff;
-    --second-color : #000;
-    --primary-color : #F6D167;
-    --secondary-color : #64C9CF;
-    --hover-color : #DF711B
+  --first-color: #27323a;
+  --second-color: #435055;
+  --primary-color: #29a19c;
+  --secondary-color: #45f07e;
+  --hover-color: #a3f7df;
 }
 
+.homePage {
+  background-image: url("../public/front.JPEG");
+  height: 100vh;
+  width: 100vw;
+  background-position: center center;
+  background-size: cover;
+  overscroll-behavior: initial;
+  z-index: 1;
+  position: relative;
+}
+
+.homePage::after {
+  content: "";
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 2;
+}
+
+.homeContent {
+    position: absolute;
+    z-index: 5;
+    top: 30%;
+    left: 50%;
+    transform : translate(-50%, -50%);
+    display : flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.homePageLogo {
+    margin-bottom: 25px;
+
+}
+
+.searchBox {
+    width: 40vw;
+}
 
 .header {
-    height: 10vh;
-    width: 100vw;
-    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);    
-    overflow: hidden;
-    margin-bottom: 2px;
+  height: 10vh;
+  width: 100vw;
+  overflow: hidden;
+  background-color: var(--primary-color);
 }
 
+/* .carouselImage {
+    height : 100vh;
+    background-size: contain;
+} */
+
+/* .carousel {
+ height: 100%;
+  width: 100%;
+  background-position: center center;
+  background-size: cover;
+  overscroll-behavior: initial;
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  
+}
+
+.carousel::after {
+  content: "";
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background-color: rgba(70, 66, 66, 0.5);
+  filter: brightness(50%);
+  z-index: 2;
+}
+ */
+
 .logo-section {
-    display: flex;
-    justify-content: flex-start;
-    padding: 5px 0;
+  display: flex;
+  justify-content: flex-start;
+  padding: 5px 0;
 }
 
 .logo {
-    padding: 5px;
+  padding: 5px;
 }
 
 .hamBurger {
-    height : 100%;
-    width : 100%;
-    position: relative;
-    
+  height: 100%;
+  width: 100%;
+  position: relative;
 }
 
-
 strong {
-    font-size: 16px;
-
+  font-size: 16px;
 }
 
 .footer {
-    background-color: var(--hover-color);
-    margin-top: 20px;    
-    border-top: 1px solid var(--hover-color);
-    box-shadow: 0px 2px 10px 5px rgba(0, 0, 0, 0.2);
-
+  background-color: var(--first-color);
+  box-shadow: 0px 2px 10px 5px rgba(0, 0, 0, 0.2);
+  color: #fff;
 }
 
 .section {
-    padding : 10px;  
+  padding: 10px;
 }
 
 .copyrightSection {
-    background-color: var(--primary-color);
-    text-align: center;
-    font-size: 12px;
+  background-color: var(--second-color);
+  text-align: center;
+  font-size: 12px;
+  color: #fff;
 }
 
 .linkAndContact {
-    display: flex;
-    justify-content: space-around;
+  display: flex;
+  justify-content: space-around;
+}
+
+.aboutUs {
+    text-align : center;
 }
 
 ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
-
-
 
 .introduction {
-border-bottom: 1px solid var(--primary-color);
-box-shadow: 1px 2px 10px rgba(0, 0, 0, 0.2);
-padding : 10px;
-border-radius: 15px;
-border-top: 1px solid var(--secondary-color);
-margin-top: 10px;
-
+  border-bottom: 1px solid var(--primary-color);
+  box-shadow: 1px 2px 10px rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  border-radius: 15px;
+  border-top: 1px solid var(--secondary-color);
+  margin-top: 10px;
 }
 
-h3 {
-    text-decoration: underline;
+.footerTitle {
+  text-decoration: underline;
+  color: var(--primary-color);
 }
 
-.carousel {
-    width : 100vw;
-    height : 500px;
-    margin-bottom: 5px;
-}
+
 
 img {
-    object-fit: fill;
-    background-position: bottom;
-    object-position: bottom;
-    background-position: bottom;
+  object-fit: fill;
+  background-position: bottom;
+  object-position: bottom;
+  background-position: bottom;
 }
 
-@media screen and (max-width : 1000px) {
+@media screen and (max-width: 1000px) {
 
-.carousel {
-    width : 100vw;
-    height : 400px;
+  /* .carouselImage {
+    object-fit : cover;
+} */
+
+
+.searchBox {
+    width: 50vw;
+    height : 25px
 }
 
-img {
-    background-size: contain;
-    background-repeat: no-repeat;
-    object-fit: fill;
 }
 
+@media screen and (max-width: 700px) {
+
+      /* .carouselImage {
+    object-fit : cover;
+} */
+
+.searchBox {
+    width: 70vw;
 }
 
-@media screen and (max-width : 700px) {
-    
-.carousel {
-    width : 100vw;
-    height : 300px;
-}
-
-img {
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    object-fit: fill;
-}
 
 }

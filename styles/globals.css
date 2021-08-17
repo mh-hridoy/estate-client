@@ -1,0 +1,78 @@
+:root {
+    --first-color : #fff;
+    --second-color : #000;
+    --primary-color : #F6D167;
+    --secondary-color : #64C9CF;
+    --hover-color : #DF711B
+}
+
+
+.header {
+    height: 10vh;
+    width: 100vw;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);    
+    overflow: hidden;
+    margin-bottom: 2px;
+}
+
+.logo-section {
+    display: flex;
+    justify-content: flex-start;
+    padding: 5px 0;
+}
+
+.hamBurger {
+    height : 100%;
+    width : 100%;
+    position: relative;
+    
+}
+
+
+strong {
+    font-size: 16px;
+
+}
+
+.carousel {
+    width : 100vw;
+    height : 500px;
+}
+
+img {
+    object-fit: fill;
+    background-position: bottom;
+    object-position: bottom;
+    background-position: bottom;
+}
+
+@media screen and (max-width : 1000px) {
+
+.carousel {
+    width : 100vw;
+    height : 400px;
+}
+
+img {
+    background-size: contain;
+    background-repeat: no-repeat;
+    object-fit: fill;
+}
+
+}
+
+@media screen and (max-width : 700px) {
+    
+.carousel {
+    width : 100vw;
+    height : 300px;
+}
+
+img {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    object-fit: fill;
+}
+
+}

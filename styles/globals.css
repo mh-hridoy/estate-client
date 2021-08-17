@@ -21,6 +21,10 @@
     padding: 5px 0;
 }
 
+.logo {
+    padding: 5px;
+}
+
 .hamBurger {
     height : 100%;
     width : 100%;
@@ -34,6 +38,37 @@ strong {
 
 }
 
+.footer {
+    background-color: var(--hover-color);
+    margin-top: 20px;    
+    border-top: 1px solid var(--hover-color);
+    box-shadow: 0px 2px 10px 5px rgba(0, 0, 0, 0.2);
+
+}
+
+.section {
+    padding : 10px;  
+}
+
+.copyrightSection {
+    background-color: var(--primary-color);
+    text-align: center;
+    font-size: 12px;
+}
+
+.linkAndContact {
+    display: flex;
+    justify-content: space-around;
+}
+
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+
+
 .introduction {
 border-bottom: 1px solid var(--primary-color);
 box-shadow: 1px 2px 10px rgba(0, 0, 0, 0.2);
@@ -42,6 +77,10 @@ border-radius: 15px;
 border-top: 1px solid var(--secondary-color);
 margin-top: 10px;
 
+}
+
+h3 {
+    text-decoration: underline;
 }
 
 .carousel {

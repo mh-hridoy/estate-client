@@ -11,7 +11,7 @@ const Header = () => {
                 <Col span={20} wrap="true">
                     <div className="logo-section">
                         <div className="logo">
-                            <Image src="/logo.png" alt="logo" width="40" height="40" />
+                            <Image src="/favicon.ico" alt="logo" width="40" height="40" />
                         </div>
 
                         <div className="nameinfo">
@@ -20,11 +20,11 @@ const Header = () => {
 
                             </div>
                             <div className="number">
-                                (+1)847-xxx-xxx</div>
+                                (+1)847-XXX-XXXX</div>
                         </div>
                     </div>
                 </Col>
-                <Col xs={4} sm={0}>
+                <Col xs={4} md={0}>
                     <div className="hamBurger">
                         <Hamburger />
                     </div>

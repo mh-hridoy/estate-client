@@ -1,12 +1,31 @@
 import styles from '../styles/login.module.css'
 import { Row, Col, Form, Input, Button, Checkbox } from 'antd';
-import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import { MailOutlined, UserOutlined, LockOutlined, DollarOutlined, ShoppingCartOutlined, HomeOutlined, UnorderedListOutlined } from '@ant-design/icons';
+import { useState } from 'react';
 
 const Login = () => {
+  const [isLogin, setIsLogin] = useState(false)
   const { Item } = Form
+
+
   const onFinish = (values) => {
     console.log('Received values of form: ', values);
   };
+
+  const toggleForm = (e) => {
+    e.preventDefault()
+
+    setIsLogin(true)
+
+  }
+
+  const toggleToFalse = (e) => {
+    e.preventDefault()
+
+    setIsLogin(false)
+
+  }
+
 
   return (
     <>
@@ -17,50 +36,128 @@ const Login = () => {
             <div className={styles.logoDiv}>
               <img className={styles.loginLogo} src="/favicon.ico" alt="logo" />
             </div>
-            <Form
-              className={styles.mainForm}
-              initialValues={{ remember: true }}
-              onFinish={onFinish}
-            >
-              <Item
-                name="Email" type="email"
-                rules={[{ required: true, message: 'Please input your Email address!' }]}
+            {!isLogin ?
+              <Form
+                className={styles.mainForm}
+                initialValues={{ remember: true }}
+                onFinish={onFinish}
               >
-                <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Email address..." />
-              </Item>
-              <Item
-                name="password"
-                rules={[{ required: true, message: 'Please input your Password!' }]}
-              >
-                <Input
-                  prefix={<LockOutlined className="site-form-item-icon" />}
-                  type="password"
-                  placeholder="Password"
-                />
-              </Item>
-              <Item className={styles.loginForgot}>
+                <Item
+                  name="Email" type="email"
+                  rules={[{ required: true, message: 'Please input your Email address!' }]}
+                >
+                  <Input prefix={<MailOutlined className="site-form-item-icon" />} placeholder="Email address..." />
+                </Item>
+                <Item
+                  name="password"
+                  rules={[{ required: true, message: 'Please input your Password!' }]}
+                >
+                  <Input.Password
+                    prefix={<LockOutlined className="site-form-item-icon" />}
+                    type="password"
+                    placeholder="Password"
+                  />
+                  <p className={styles.forgotText}>
+                    <a href="" >
+                      Forgot password
+                    </a>
+                  </p>
 
-                <Item name="remember" valuePropName="checked">
-                  <Checkbox>Remember me</Checkbox>
                 </Item>
 
-                <a href="" className={styles.forgotText}>
-                  Forgot password
-                </a>
-              </Item>
+                <Item className={styles.rememberMe} name="remember" valuePropName="checked">
+                  <Checkbox>Remember me</Checkbox>
+                </Item>
+                <div className={styles.formBottomSection}>
 
-              <Item>
-                <Button type="primary" htmlType="submit" className="login-form-button">
-                  Log in
-                </Button>
-                Or <a href="">register now!</a>
-              </Item>
-            </Form>
+                  <Item>
+                    <Button type="primary" htmlType="submit" className={styles.loginFormButton}>
+                      Log in
+                    </Button>
+                  </Item>
+                  <p className={styles.or}> Or </p>  <br />
+                  <a onClick={toggleForm}>Register now!</a>
+                </div>
+
+              </Form>
+
+              :
+
+              <Form
+                className={styles.mainForm}
+                initialValues={{ remember: true }}
+                onFinish={onFinish}
+              >
+                <Item
+                  name="Full Name"
+                  rules={[{ required: true, message: 'Please input your full name!' }]}
+                >
+                  <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Email address..." />
+                </Item>
+
+                <Item
+                  name="Email" type="email"
+                  rules={[{ required: true, message: 'Please input your Email address!' }]}
+                >
+                  <Input prefix={<MailOutlined className="site-form-item-icon" />} placeholder="Email address..." />
+                </Item>
+
+                <Item
+                  name="password"
+                  rules={[{ required: true, message: 'Please input your Password!' }]}
+                >
+                  <Input.Password
+                    prefix={<LockOutlined className="site-form-item-icon" />}
+                    type="password"
+                    placeholder="Password"
+                  />
+
+                </Item>
+                <Item
+                  name="Confirm Password"
+                  rules={[{ required: true, message: 'Please input your Confirm Password!' }]}
+                >
+                  <Input.Password
+                    prefix={<LockOutlined className="site-form-item-icon" />}
+                    type="password"
+                    placeholder="Password"
+                  />
+
+                </Item>
+
+                <div className={styles.formBottomSection}>
+
+                  <Item>
+                    <Button type="primary" htmlType="submit" className={styles.loginFormButton}>
+                      Register
+                    </Button>
+                  </Item>
+                  <p className={styles.or}> Already have an account ? </p>  <br />
+                  <a onClick={toggleToFalse} >Login Here!</a>
+                </div>
+
+              </Form>
+
+            }
 
           </div>
 
         </Col>
       </Row>
+
+      <Row>
+        <Col xs={24} md={0}>
+
+          <div className="ourServices">
+            <h2><strong>Our Services</strong></h2>
+
+
+
+          </div>
+
+        </Col>
+      </Row>
+
     </>
 
   )

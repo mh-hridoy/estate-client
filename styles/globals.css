@@ -1,9 +1,9 @@
 :root {
   --first-color: #27323a;
-  --second-color: #435055;
-  --primary-color: #753422;
-  --secondary-color: #B05B3B;
-  --hover-color: #D79771;
+  --second-color: #FFEBDA;
+  --primary-color: #520a99de;
+  --secondary-color: #55882B; 
+  --hover-color: #0e0222b9;
   --text-color: #fff;
   --text-black : #000;
 }
@@ -13,7 +13,7 @@ body {
 }
 
 .homePage {
-  background-image: url("../public/front.JPEG");
+  background-image: url("../public/house3.svg");
   height: 100vh;
   width: 100vw;
   background-position: center center;
@@ -23,16 +23,6 @@ body {
   position: relative;
 }
 
-.homePage::after {
-  content: "";
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  top: 0;
-  left: 0;
-  background-color: rgba(0, 0, 0, 0.4);
-  z-index: 2;
-}
 
 .homeContent {
     position: absolute;
@@ -54,6 +44,7 @@ body {
 
 .searchBox {
     width: 40vw;
+
 }
 
 .header {
@@ -164,7 +155,7 @@ ul {
 
 .footerTitle {
   text-decoration: underline;
-  color: var(--hover-color);
+  color: var(--secondary-color);
 }
 
 

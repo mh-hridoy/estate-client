@@ -41,8 +41,8 @@ const Login = () => {
               {!isLogin ?
                 <Form
                   className={styles.mainForm}
-                  initialValues={{ remember: true }}
                   onFinish={onFinish}
+
                 >
                   <Item
                     name="Email" type="email"
@@ -59,17 +59,14 @@ const Login = () => {
                       type="password"
                       placeholder="Password"
                     />
-                    <p className={styles.forgotText}>
-                      <a href="" >
-                        Forgot password
-                      </a>
-                    </p>
-
                   </Item>
 
-                  <Item className={styles.rememberMe} name="remember" valuePropName="checked">
-                    <Checkbox>Remember me</Checkbox>
-                  </Item>
+                  <p className={styles.forgotText}>
+                    <a href="" >
+                      Forgot password
+                    </a>
+                  </p>
+
                   <div className={styles.formBottomSection}>
 
                     <Item>

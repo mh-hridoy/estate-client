@@ -42,7 +42,7 @@ var styles = {
     },
     bmItem: {
         display: 'inline-block',
-        color: 'var(--first-color)',
+        color: '#fff',
         fontWeight: 'bold',
         padding: '5px 10px'
     },

@@ -13,7 +13,7 @@ const HomePage = () => {
 
                 <div className="searchBox">
                     <Search allowClear size="large"
-                    />
+                        placeholder="308 James Place ....." />
                 </div>
             </div>
 

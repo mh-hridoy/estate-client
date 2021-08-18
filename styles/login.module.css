@@ -1,5 +1,5 @@
 .loginPage {
-  background-image: url("../public/front.JPEG");
+  background-image: url("../public/house2.svg");
   height: 100vh;
   width: 100vw;
   background-position: center center;
@@ -9,16 +9,6 @@
   position: relative;
 }
 
-.loginPage::after {
-  content: "";
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  top: 0;
-  left: 0;
-  background-color: rgba(0, 0, 0, 0.4);
-  z-index: 2;
-}
 
 
 .loginForm {
@@ -35,6 +25,8 @@
     height: fit-content;
     width : 350px;
     background-color: var(--primary-color);
+    border-bottom: 5px solid var(--hover-color);
+    border-top: 5px solid var(--secondary-color);
 
 }
 
@@ -59,13 +51,14 @@
 }
 
 .forgotText {
-    margin-top: 2px;
+    margin-top: -12px;
     text-align : end;
     margin-bottom: 0px;
 }
 
 .formBottomSection {
     display: flex;
+    margin-top: 20px;
     align-items: center;
     flex-direction: column;
     justify-content: center;
@@ -74,16 +67,15 @@
 
 .or{
     margin : -20px;
+    color : var(--text-color)
 }
 
-.rememberMe {
-    margin-top: -30px;
-}
 
 .fullForm {
     margin : 0;
     padding :0;
     height : 100%;
+    
 }
 
 .serviceContainer {
@@ -108,8 +100,8 @@
     margin: 5px 0 10px 0;
     box-shadow: 5px 2px 25px 5px rgba(0,0,0,0.5);
     border-radius: 15px;
-    border-bottom: 2px solid var(--primary-color);
-    border-top: 2px solid var(--secondary-color);
+    border-bottom: 5px solid var(--hover-color);
+    border-top: 5px solid var(--secondary-color);
     background-color: var(--primary-color);
     padding : 0 30px;
 }

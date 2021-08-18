@@ -11,12 +11,14 @@
   "dependencies": {
     "@ant-design/icons": "^4.6.3",
     "antd": "^4.16.12",
+    "formik": "^2.2.9",
     "next": "11.0.1",
     "react": "17.0.2",
     "react-burger-menu": "^3.0.6",
     "react-dom": "17.0.2",
     "react-responsive-carousel": "^3.2.20",
-    "react-show-more": "^2.0.0"
+    "react-show-more": "^2.0.0",
+    "yup": "^0.32.9"
   },
   "devDependencies": {
     "eslint": "7.31.0",

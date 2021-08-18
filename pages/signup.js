@@ -1,5 +1,7 @@
 import styles from '../styles/login.module.css'
-import { Row, Col, Form, Input, Button, Checkbox } from 'antd';
+import { Row, Col, Form, Input, Button } from 'antd';
+import { Formik } from 'formik'
+import * as Yup from 'yup';
 import { MailOutlined, UserOutlined, LockOutlined, DollarOutlined, ShoppingCartOutlined, HomeOutlined, UnorderedListOutlined } from '@ant-design/icons';
 import { useState } from 'react';
 
@@ -48,7 +50,7 @@ const Login = () => {
                     name="Email" type="email"
                     rules={[{ required: true, message: 'Please input your Email address!' }]}
                   >
-                    <Input prefix={<MailOutlined className="site-form-item-icon" />} placeholder="Email address..." />
+                    <Input prefix={<MailOutlined className="site-form-item-icon" />} name="email" placeholder="Email address..." />
                   </Item>
                   <Item
                     name="password"
@@ -57,6 +59,7 @@ const Login = () => {
                     <Input.Password
                       prefix={<LockOutlined className="site-form-item-icon" />}
                       type="password"
+                      name="password"
                       placeholder="Password"
                     />
                   </Item>

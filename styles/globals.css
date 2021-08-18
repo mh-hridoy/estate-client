@@ -1,9 +1,15 @@
 :root {
   --first-color: #27323a;
   --second-color: #435055;
-  --primary-color: #29a19c;
-  --secondary-color: #45f07e;
-  --hover-color: #a3f7df;
+  --primary-color: #753422;
+  --secondary-color: #B05B3B;
+  --hover-color: #D79771;
+  --text-color: #fff;
+  --text-black : #000;
+}
+
+body {
+  overflow-x: hidden;
 }
 
 .homePage {
@@ -55,6 +61,12 @@
   width: 100vw;
   overflow: hidden;
   background-color: var(--primary-color);
+  color: var(--text-color);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width : 100%;
+  z-index: 1000;
 }
 
 /* .carouselImage {
@@ -152,7 +164,7 @@ ul {
 
 .footerTitle {
   text-decoration: underline;
-  color: var(--primary-color);
+  color: var(--hover-color);
 }
 
 

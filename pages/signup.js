@@ -5,6 +5,7 @@ import { Formik } from 'formik'
 import * as Yup from 'yup';
 import { MailOutlined, UserOutlined, LockOutlined, DollarOutlined, ShoppingCartOutlined, HomeOutlined, UnorderedListOutlined } from '@ant-design/icons';
 import { useState } from 'react';
+import Link from 'next/link';
 
 
 const loginValidation = Yup.object().shape({
@@ -81,9 +82,11 @@ const Login = () => {
                         </Form.Item>
 
                         <p className={styles.forgotText}>
-                          <a href="" >
-                            Forgot password
-                          </a>
+                          <Link href="reset-password">
+                            <a  >
+                              Forgot password ?
+                            </a>
+                          </Link>
                         </p>
 
                         <div className={styles.formBottomSection}>

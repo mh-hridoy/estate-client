@@ -10,7 +10,18 @@
   background-attachment: fixed;
 }
 
+.resetPage {
+   background-image: url("../public/resetPass.png"); 
+  height: 50vh;
+  width: 100vw;
+  background-position: center center;
+  background-size: cover;
+  overscroll-behavior: initial;
+  z-index: 1;
+  position: relative;
+  background-attachment: fixed;
 
+}
 
 .loginForm {
     position: absolute;

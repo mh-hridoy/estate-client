@@ -6,9 +6,16 @@ import { Formik } from 'formik'
 import * as Yup from 'yup';
 import { MailOutlined, QrcodeOutlined, LockOutlined } from '@ant-design/icons';
 
-const validateResetForm = Yup.object().shape({
-    email: Yup.string().email("Please enter a valid email address").required("Email address is required"),
-    code: Yup.string().required("Please enter a valid code"),
+const validateEmail = Yup.object().shape({
+    email: Yup.string().email("Please enter a valid email address").required("Email address is required")
+
+})
+
+const validateCode = Yup.object().shape({
+    code: Yup.string().required("Please enter a valid code")
+})
+
+const validatePassword = Yup.object().shape({
     password: Yup.string().min(8, "Password must be at least 8 characters long").required("Password is required"),
     cPassword: Yup.string()
         .test('passwords-match', 'Passwords must match', function (value) {
@@ -17,12 +24,15 @@ const validateResetForm = Yup.object().shape({
 
 })
 
+
 const resetPassword = () => {
     const [emailSubmitted, isEmailSubmitted] = useState(false)
     const [codeSubmitted, isCodeSubmitted] = useState(false)
 
-    const resetForm = (values) => {
+    const submitEmail = (values) => {
+        console.log(values)
         isEmailSubmitted(true)
+
     }
 
     const submitPassword = (values) => {
@@ -31,6 +41,8 @@ const resetPassword = () => {
     }
 
     const submitCode = (values) => {
+        console.log(values)
+
         isCodeSubmitted(true)
     }
 
@@ -46,7 +58,7 @@ const resetPassword = () => {
                                 <img className={styles.loginLogo} src="/favicon.ico" alt="logo" />
                             </div>
                             {!emailSubmitted && !codeSubmitted &&
-                                <Formik initialValues={{ email: "", code: "", password: "", cPassword: "" }} onSubmit={resetForm} validationSchema={validateResetForm}>
+                                <Formik initialValues={{ email: "" }} onSubmit={submitEmail} validationSchema={validateEmail}>
                                     {({ errors, touched }) => (
                                         <Form
                                             className={styles.mainForm}>
@@ -67,11 +79,11 @@ const resetPassword = () => {
                             }
 
                             {emailSubmitted && !codeSubmitted &&
-                                <Formik initialValues={{ code: "", password: "", cPassword: "" }} onSubmit={submitCode} validationSchema={validateResetForm}>
+                                <Formik initialValues={{ code: "" }} onSubmit={submitCode} validationSchema={validateCode}>
                                     {({ errors, touched }) => (
                                         <Form
                                             className={styles.mainForm}>
-                                            <Form.Item hasFeedback validateStatus={touched.email && errors.email ? "error" : ""}
+                                        <Form.Item hasFeedback validateStatus={touched.code && errors.code ? "error" : ""}
                                                 name="code">
                                                 <Input prefix={<QrcodeOutlined className="site-form-item-icon" />} name="code" placeholder="Enter reset code here..." />
                                             </Form.Item>
@@ -88,18 +100,18 @@ const resetPassword = () => {
                             }
 
                             {emailSubmitted && codeSubmitted &&
-                                <Formik initialValues={{ password: "", cPassword: "" }} onSubmit={submitPassword} validationSchema={validateResetForm}>
+                                <Formik initialValues={{ password: "", cPassword: "" }} onSubmit={submitPassword} validationSchema={validatePassword}>
                                     {({ errors, touched }) => (
                                         <Form
                                             className={styles.mainForm}>
-                                            <Form.Item hasFeedback validateStatus={touched.email && errors.email ? "error" : ""}
+                                        <Form.Item hasFeedback validateStatus={touched.password && errors.password ? "error" : ""}
                                                 name="password">
                                                 <Input.Password prefix={<LockOutlined className="site-form-item-icon" />} name="password" placeholder="Enter Password" />
                                             </Form.Item>
 
-                                            <Form.Item hasFeedback validateStatus={touched.email && errors.email ? "error" : ""}
-                                                name="confirmPassword">
-                                                <Input.Password prefix={<LockOutlined className="site-form-item-icon" />} name="confirmPassword" placeholder="Enter confirm password" />
+                                        <Form.Item hasFeedback validateStatus={touched.cPassword && errors.cPassword ? "error" : ""}
+                                            name="cPassword">
+                                            <Input.Password prefix={<LockOutlined className="site-form-item-icon" />} name="cPassword" placeholder="Enter confirm password" />
                                             </Form.Item>
 
                                             <div className={styles.formBottomSection}>

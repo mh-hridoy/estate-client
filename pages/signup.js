@@ -44,7 +44,7 @@ const Login = () => {
       console.log(data)
       setIsLoading(false)
 
-      toast.success("Login successful")
+      toast.success("Login successful.")
     } catch (err) {
       setIsLoading(false)
       toast.error(err.response.data.message)

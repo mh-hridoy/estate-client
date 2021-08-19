@@ -5,6 +5,9 @@ import { Form, Input } from 'formik-antd'
 import { Formik } from 'formik'
 import * as Yup from 'yup';
 import { MailOutlined, QrcodeOutlined, LockOutlined } from '@ant-design/icons';
+import { toast } from 'react-toastify'
+import axios from 'axios'
+import { useRouter } from 'next/router'
 
 const validateEmail = Yup.object().shape({
     email: Yup.string().email("Please enter a valid email address").required("Email address is required")
@@ -28,23 +31,72 @@ const validatePassword = Yup.object().shape({
 const resetPassword = () => {
     const [emailSubmitted, isEmailSubmitted] = useState(false)
     const [codeSubmitted, isCodeSubmitted] = useState(false)
+    const [requestedMail, isRequestedMail] = useState('')
+    const [isLoading, setIsLoading] = useState(false)
 
-    const submitEmail = (values) => {
-        console.log(values)
-        isEmailSubmitted(true)
+    const router = useRouter()
+
+    const submitEmail = async (values) => {
+        const email = values.email
+        try {
+            setIsLoading(true)
+            await axios.post(`http://localhost:5000/api/reset-password`, values, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+
+            toast.success("Your password reset code has been sent to your email.")
+            setIsLoading(false)
+            isEmailSubmitted(true)
+            isRequestedMail(email)
+        } catch (err) {
+            setIsLoading(false)
+            toast.error(err.response.data.message || "Something went wrong!!!")
+
+        }
+    }
+    const submitCode = async ({ code }) => {
+        try {
+            setIsLoading(true)
+            await axios.post(`http://localhost:5000/api/verify-code`, { email: requestedMail, resetCode: code }, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+
+            toast.success("Please change your password now.")
+            setIsLoading(false)
+            isCodeSubmitted(true)
+        } catch (err) {
+            setIsLoading(false)
+            toast.error(err.response.data.message || "Something went wrong!!!")
+
+        }
+    }
+
+    const submitPassword = async ({ password, cPassword }) => {
+        try {
+            setIsLoading(true)
+            await axios.patch(`http://localhost:5000/api/change-password`, { email: requestedMail, password, cPassword }, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+
+            toast.success("Password successfully changed!, Please login now.")
+            router.push("/signup")
+            setIsLoading(false)
+            isRequestedMail('')
+        } catch (err) {
+            setIsLoading(false)
+            router.push("/reset-password")
+            toast.error(err.response.data.message || "Something went wrong!!!")
+
+        }
 
     }
 
-    const submitPassword = (values) => {
-        console.log(values)
-
-    }
-
-    const submitCode = (values) => {
-        console.log(values)
-
-        isCodeSubmitted(true)
-    }
 
     return (
         <>
@@ -69,7 +121,7 @@ const resetPassword = () => {
 
                                             <div className={styles.formBottomSection}>
 
-                                                <Button htmlType="submit" className={styles.loginFormButton}>Submit</Button>
+                                            <Button htmlType="submit" disabled={isLoading} loading={isLoading} className={styles.loginFormButton}>Submit</Button>
                                             </div>
 
                                         </Form>
@@ -90,7 +142,7 @@ const resetPassword = () => {
 
                                             <div className={styles.formBottomSection}>
 
-                                                <Button htmlType="submit" className={styles.loginFormButton}>Submit</Button>
+                                            <Button htmlType="submit" disabled={isLoading} loading={isLoading} className={styles.loginFormButton}>Submit</Button>
                                             </div>
 
                                         </Form>
@@ -116,7 +168,7 @@ const resetPassword = () => {
 
                                             <div className={styles.formBottomSection}>
 
-                                                <Button htmlType="submit" className={styles.loginFormButton}>Submit</Button>
+                                            <Button htmlType="submit" disabled={isLoading} loading={isLoading} className={styles.loginFormButton}>Submit</Button>
                                             </div>
 
                                         </Form>

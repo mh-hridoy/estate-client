@@ -8,6 +8,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { toast } from 'react-toastify'
 import axios from 'axios'
+import { useRouter } from 'next/router'
 
 
 const loginValidation = Yup.object().shape({
@@ -27,26 +28,50 @@ const signupValidation = Yup.object().shape({
 
 const Login = () => {
   const [isLogin, setIsLogin] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
+  const router = useRouter()
 
   const loginAccount = async (values) => {
     try {
-      const { data } = await axios.post('http://localhost:5000/api/login', values, {
+      setIsLoading(true)
+      const { data } = await axios.post(`http://localhost:5000/api/login`, values, {
         headers: {
           'Content-Type': 'application/json'
         }
       })
 
       console.log(data)
-      // toast("Login successful")
+      setIsLoading(false)
+
+      toast.success("Login successful")
     } catch (err) {
-      toast.warn(err)
+      setIsLoading(false)
+      toast.error(err.response.data.message)
 
     }
   };
 
-  const registerAccount = (values) => {
-    console.log(values)
+  const registerAccount = async ({ email, fullName: name, password, cPassword }) => {
+    try {
+      setIsLoading(true)
+      const { data } = await axios.post(`http://localhost:5000/api/signup`, { email, name, password, cPassword }, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+
+
+      console.log(data)
+      setIsLoading(false)
+      toast.success("Signup successful. Please login Now.")
+      setIsLogin(false)
+
+    } catch (err) {
+      setIsLoading(false)
+      toast.error(err.response.data.message || "Please provide the correct data & try again.")
+
+    }
   };
 
   const toggleForm = (e) => {
@@ -62,9 +87,6 @@ const Login = () => {
     setIsLogin(false)
 
   }
-
-  //  // "proxy": "http://localhost:5000/api",
-
 
   return (
     <>
@@ -107,7 +129,7 @@ const Login = () => {
                         </p>
 
                         <div className={styles.formBottomSection}>
-                          <Button htmlType="submit" className={styles.loginFormButton}>
+                          <Button htmlType="submit" className={styles.loginFormButton} disabled={isLoading} loading={isLoading}>
                             Log in
                           </Button>
 
@@ -133,18 +155,21 @@ const Login = () => {
                         className={styles.mainForm}>
                         <Form.Item
                           name="fullName"
+                          hasFeedback validateStatus={touched.fullName && errors.fullName ? "error" : ""}
                         >
                           <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Full Name..." name="fullName" />
                         </Form.Item>
 
                         <Form.Item
                           name="email"
+                          hasFeedback validateStatus={touched.email && errors.email ? "error" : ""}
                         >
                           <Input prefix={<MailOutlined className="site-form-item-icon" />} placeholder="Email address..." name="email" />
                         </Form.Item>
 
                         <Form.Item
                           name="password"
+                          hasFeedback validateStatus={touched.password && errors.password ? "error" : ""}
                         >
                           <Input.Password
                             prefix={<LockOutlined className="site-form-item-icon" />}
@@ -155,6 +180,7 @@ const Login = () => {
                         </Form.Item>
                         <Form.Item
                           name="cPassword"
+                          hasFeedback validateStatus={touched.cPassword && errors.cPassword ? "error" : ""}
                         >
                           <Input.Password
                             prefix={<LockOutlined className="site-form-item-icon" />}
@@ -165,7 +191,7 @@ const Login = () => {
                         </Form.Item>
 
                         <div className={styles.formBottomSection}>
-                          <Button htmlType="submit" className={styles.loginFormButton}>
+                          <Button htmlType="submit" className={styles.loginFormButton} disabled={isLoading} loading={isLoading}>
                             Register
                           </Button>
 

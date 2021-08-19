@@ -84,6 +84,10 @@ body {
   z-index: 1000;
 }
 
+.bar-of-progress {
+  z-index: 50;
+}
+
 
 /* .carouselImage {
     height : 100vh;

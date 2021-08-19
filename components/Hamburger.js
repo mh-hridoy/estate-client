@@ -1,5 +1,7 @@
 import React from 'react'
 import { slide as Menu } from 'react-burger-menu'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 var styles = {
     bmBurgerButton: {
@@ -36,15 +38,12 @@ var styles = {
     bmMorphShape: {
         fill: '#373a47'
     },
-    bmItemList: {
-        color: 'var(--first-color)',
-        padding: '0.8em'
-    },
     bmItem: {
-        display: 'inline-block',
+        display: 'flex',
+        flexDirection: 'column',
+        textAlign: 'center',
         color: '#fff',
         fontWeight: 'bold',
-        padding: '5px 10px'
     },
     bmOverlay: {
         background: 'rgba(0,0,0,0.2)',
@@ -60,17 +59,25 @@ var styles = {
 
 
 const Hamburger = () => {
-    const showSettings = (event) => {
-        event.preventDefault();
+    const router = useRouter()
+    const { pathname } = router
 
-    }
     return (
         <>
             <Menu right styles={styles} width="30vw" >
-                <a id="home" className="menu-item" href="/">Home</a>
-                <a id="about" className="menu-item" href="/about">About</a>
-                <a id="contact" className="menu-item" href="/contact">Contact</a>
-                <a onClick={showSettings} className="menu-item--small" href="">Settings</a>
+                <ul className="burgerMenu">
+                    <li>
+                        <Link href="/" >
+                            <a id="home" name='/' className={`menuItem ${pathname === "/" ? "active" : ""}`}>Home</a>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link href="/signup">
+                            <a id="signup" className={`menuItem ${pathname === "/signup" ? "active" : ""}`}>Sign Up</a>
+                        </Link>
+
+                    </li>
+                </ul>
             </Menu>
 
         </>

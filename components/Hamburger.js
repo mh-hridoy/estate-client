@@ -72,6 +72,12 @@ const Hamburger = () => {
                         </Link>
                     </li>
                     <li>
+                        <Link href="/community">
+                            <a id="community" className={`menuItem ${pathname === "/community" ? "active" : ""}`}>Community</a>
+                        </Link>
+
+                    </li>
+                    <li>
                         <Link href="/signup">
                             <a id="signup" className={`menuItem ${pathname === "/signup" ? "active" : ""}`}>Sign Up</a>
                         </Link>

@@ -6,6 +6,8 @@ import * as Yup from 'yup';
 import { MailOutlined, UserOutlined, LockOutlined, DollarOutlined, ShoppingCartOutlined, HomeOutlined, UnorderedListOutlined } from '@ant-design/icons';
 import { useState } from 'react';
 import Link from 'next/link';
+import { toast } from 'react-toastify'
+import axios from 'axios'
 
 
 const loginValidation = Yup.object().shape({
@@ -27,8 +29,20 @@ const Login = () => {
   const [isLogin, setIsLogin] = useState(false)
 
 
-  const loginAccount = (values) => {
-    console.log(values)
+  const loginAccount = async (values) => {
+    try {
+      const { data } = await axios.post('http://localhost:5000/api/login', values, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+
+      console.log(data)
+      // toast("Login successful")
+    } catch (err) {
+      toast.warn(err)
+
+    }
   };
 
   const registerAccount = (values) => {
@@ -48,6 +62,9 @@ const Login = () => {
     setIsLogin(false)
 
   }
+
+  //  // "proxy": "http://localhost:5000/api",
+
 
   return (
     <>
@@ -82,7 +99,7 @@ const Login = () => {
                         </Form.Item>
 
                         <p className={styles.forgotText}>
-                          <Link href="reset-password">
+                          <Link href="/reset-password">
                             <a  >
                               Forgot password ?
                             </a>

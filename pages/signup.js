@@ -1,17 +1,37 @@
 import styles from '../styles/login.module.css'
-import { Row, Col, Form, Input, Button } from 'antd';
+import { Row, Col, Button } from 'antd';
+import { Form, Input } from 'formik-antd'
 import { Formik } from 'formik'
 import * as Yup from 'yup';
 import { MailOutlined, UserOutlined, LockOutlined, DollarOutlined, ShoppingCartOutlined, HomeOutlined, UnorderedListOutlined } from '@ant-design/icons';
 import { useState } from 'react';
 
+
+const loginValidation = Yup.object().shape({
+  email: Yup.string().email('Please enter a valid email address').required('Email is required!'),
+  password: Yup.string().min(8, "Password must be at least 8 characters long").required('Password is required!')
+})
+
+const signupValidation = Yup.object().shape({
+  fullName: Yup.string().min(6, "Name must be at least 6 characters long").required('Name is required'),
+  email: Yup.string().email('Please enter a valid email!').required('Email is required'),
+  password: Yup.string().min(8, "Password must be at least 8 characters long").required('Password is required'),
+  cPassword: Yup.string()
+    .test('passwords-match', 'Passwords must match', function (value) {
+      return this.parent.password === value
+    })
+})
+
 const Login = () => {
   const [isLogin, setIsLogin] = useState(false)
-  const { Item } = Form
 
 
-  const onFinish = (values) => {
-    console.log('Received values of form: ', values);
+  const loginAccount = (values) => {
+    console.log(values)
+  };
+
+  const registerAccount = (values) => {
+    console.log(values)
   };
 
   const toggleForm = (e) => {
@@ -28,7 +48,6 @@ const Login = () => {
 
   }
 
-
   return (
     <>
       <Row>
@@ -40,113 +59,111 @@ const Login = () => {
               <div className={styles.logoDiv}>
                 <img className={styles.loginLogo} src="/favicon.ico" alt="logo" />
               </div>
-              {!isLogin ?
-                <Form
-                  className={styles.mainForm}
-                  onFinish={onFinish}
 
-                >
-                  <Item
-                    name="Email" type="email"
-                    rules={[{ required: true, message: 'Please input your Email address!' }]}
-                  >
-                    <Input prefix={<MailOutlined className="site-form-item-icon" />} name="email" placeholder="Email address..." />
-                  </Item>
-                  <Item
-                    name="password"
-                    rules={[{ required: true, message: 'Please input your Password!' }]}
-                  >
-                    <Input.Password
-                      prefix={<LockOutlined className="site-form-item-icon" />}
-                      type="password"
-                      name="password"
-                      placeholder="Password"
-                    />
-                  </Item>
+              {
+                !isLogin ?
+                  <Formik initialValues={{ email: "", password: "" }} onSubmit={loginAccount} validationSchema={loginValidation}>
+                    {({ errors, touched }) => (
 
-                  <p className={styles.forgotText}>
-                    <a href="" >
-                      Forgot password
-                    </a>
-                  </p>
+                      <Form
+                        className={styles.mainForm}>
+                        <Form.Item hasFeedback validateStatus={touched.email && errors.email ? "error" : ""}
+                          name="email">
+                          <Input prefix={<MailOutlined className="site-form-item-icon" />} name="email" placeholder="Email address..." />
+                        </Form.Item>
+                        <Form.Item
+                          name="password" hasFeedback validateStatus={touched.password && errors.password ? "error" : ""} >
+                          <Input.Password
+                            prefix={<LockOutlined className="site-form-item-icon" />}
+                            name="password"
+                            placeholder="Password"
+                          />
+                        </Form.Item>
 
-                  <div className={styles.formBottomSection}>
+                        <p className={styles.forgotText}>
+                          <a href="" >
+                            Forgot password
+                          </a>
+                        </p>
 
-                    <Item>
-                      <Button type="primary" htmlType="submit" className={styles.loginFormButton}>
-                        Log in
-                      </Button>
-                    </Item>
-                    <p className={styles.or}> Or </p>  <br />
-                    <a onClick={toggleForm}>Register now!</a>
-                  </div>
+                        <div className={styles.formBottomSection}>
+                          <Button htmlType="submit" className={styles.loginFormButton}>
+                            Log in
+                          </Button>
 
-                </Form>
+                        </div>
+                        <br />
+                        <div className={styles.formBottomtext}>
+                          <p className={styles.or}> Or </p>
 
-                :
+                          <br />
+                          <a onClick={toggleForm}>Register now!</a>
+                        </div>
+                      </Form>
+                    )}
+                  </Formik>
 
-                <Form
-                  className={styles.mainForm}
-                  initialValues={{ remember: true }}
-                  onFinish={onFinish}
-                >
-                  <Item
-                    name="Full Name"
-                    rules={[{ required: true, message: 'Please input your full name!' }]}
-                  >
-                    <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Full Name..." />
-                  </Item>
+                  :
+                  <Formik initialValues={{ email: "", password: "", fullName: "", cPassword: "" }} onSubmit={registerAccount} validationSchema={signupValidation} >
 
-                  <Item
-                    name="Email" type="email"
-                    rules={[{ required: true, message: 'Please input your Email address!' }]}
-                  >
-                    <Input prefix={<MailOutlined className="site-form-item-icon" />} placeholder="Email address..." />
-                  </Item>
+                    {({ errors, touched }) => (
 
-                  <Item
-                    name="password"
-                    rules={[{ required: true, message: 'Please input your Password!' }]}
-                  >
-                    <Input.Password
-                      prefix={<LockOutlined className="site-form-item-icon" />}
-                      type="password"
-                      placeholder="Password"
-                    />
 
-                  </Item>
-                  <Item
-                    name="Confirm Password"
-                    rules={[{ required: true, message: 'Please input your Confirm Password!' }]}
-                  >
-                    <Input.Password
-                      prefix={<LockOutlined className="site-form-item-icon" />}
-                      type="password"
-                      placeholder="Password"
-                    />
+                      <Form initialValues={{ remember: false }}
+                        className={styles.mainForm}>
+                        <Form.Item
+                          name="fullName"
+                        >
+                          <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Full Name..." name="fullName" />
+                        </Form.Item>
 
-                  </Item>
+                        <Form.Item
+                          name="email"
+                        >
+                          <Input prefix={<MailOutlined className="site-form-item-icon" />} placeholder="Email address..." name="email" />
+                        </Form.Item>
 
-                  <div className={styles.formBottomSection}>
+                        <Form.Item
+                          name="password"
+                        >
+                          <Input.Password
+                            prefix={<LockOutlined className="site-form-item-icon" />}
+                            name="password"
+                            placeholder="Password"
+                          />
 
-                    <Item>
-                      <Button type="primary" htmlType="submit" className={styles.loginFormButton}>
-                        Register
-                      </Button>
-                    </Item>
-                    <p className={styles.or}> Already have an account ? </p>  <br />
-                    <a onClick={toggleToFalse} >Login Here!</a>
-                  </div>
+                        </Form.Item>
+                        <Form.Item
+                          name="cPassword"
+                        >
+                          <Input.Password
+                            prefix={<LockOutlined className="site-form-item-icon" />}
+                            name="cPassword"
+                            placeholder="Confirm Password"
+                          />
 
-                </Form>
+                        </Form.Item>
 
+                        <div className={styles.formBottomSection}>
+                          <Button htmlType="submit" className={styles.loginFormButton}>
+                            Register
+                          </Button>
+
+                        </div>
+                        <br />
+                        <div className={styles.formBottomtext}>
+                          <p className={styles.or}> Already have an account ? </p>  <br />
+                          <a onClick={toggleToFalse} >Login Here!</a>
+                        </div>
+                      </Form>
+                    )}
+
+                  </Formik>
               }
 
             </div>
 
-
           </Col>
-
           <Col xs={0} md={12} className={styles.serviceContainer}>
             <div className={styles.ousrServices}>
               <h2>Our Services</h2>

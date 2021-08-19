@@ -21,6 +21,7 @@ body {
   overscroll-behavior: initial;
   z-index: 1;
   position: relative;
+  background-attachment: fixed;
 }
 
 
@@ -53,7 +54,7 @@ body {
   overflow: hidden;
   background-color: var(--primary-color);
   color: var(--text-color);
-  position: fixed;
+  position: sticky;
   top: 0;
   left: 0;
   width : 100%;
@@ -126,7 +127,7 @@ strong {
   background-color: var(--second-color);
   text-align: center;
   font-size: 12px;
-  color: #fff;
+  color:var(--text-black);
 }
 
 .linkAndContact {

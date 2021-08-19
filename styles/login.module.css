@@ -7,6 +7,7 @@
   overscroll-behavior: initial;
   z-index: 1;
   position: relative;
+  background-attachment: fixed;
 }
 
 
@@ -14,7 +15,7 @@
 .loginForm {
     position: absolute;
     left: 50%;
-    top : 20%;
+    top : 10%;
     transform: translate(-50%, -10%);
     border-radius: 15px;
     z-index: 10;
@@ -28,6 +29,11 @@
     border-bottom: 5px solid var(--hover-color);
     border-top: 5px solid var(--secondary-color);
 
+}
+
+.formBottomtext {
+    text-align: center;
+    margin-top: 5px;
 }
 
 .logoDiv {
@@ -51,7 +57,7 @@
 }
 
 .forgotText {
-    margin-top: -12px;
+    margin-top: -8px;
     text-align : end;
     margin-bottom: 0px;
 }
@@ -97,7 +103,7 @@
 
 .ousrServices {
     flex-direction: column;
-    margin: 5px 0 10px 0;
+    margin: 0px 0 10px 0;
     box-shadow: 5px 2px 25px 5px rgba(0,0,0,0.5);
     border-radius: 15px;
     border-bottom: 5px solid var(--hover-color);
@@ -109,6 +115,10 @@
 .ousrServices h2 {
     margin: 10px 0;
     border-bottom: 2px solid #000;
+}
+
+.loginFormButton {
+    background-color: #3667ed;
 }
 
 /* .serviceList {

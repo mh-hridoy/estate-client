@@ -8,7 +8,8 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { toast } from 'react-toastify'
 import axios from 'axios'
-import { useRouter } from 'next/router'
+import { useDispatch } from 'react-redux'
+import { login } from '../store/userInfoSlice'
 
 
 const loginValidation = Yup.object().shape({
@@ -26,11 +27,11 @@ const signupValidation = Yup.object().shape({
     })
 })
 
-const Login = () => {
+const Signup = () => {
   const [isLogin, setIsLogin] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
-  const router = useRouter()
+  const dispatch = useDispatch()
 
   const loginAccount = async (values) => {
     try {
@@ -41,13 +42,14 @@ const Login = () => {
         }
       })
 
+      data.token && delete data.token
       console.log(data)
+      dispatch(login(data))
       setIsLoading(false)
-
       toast.success("Login successful.")
     } catch (err) {
       setIsLoading(false)
-      toast.error(err.response.data.message)
+      toast.error(err.response.data.message || "Something went wrong!!!" || err)
 
     }
   };
@@ -60,7 +62,6 @@ const Login = () => {
           'Content-Type': 'application/json'
         }
       })
-
 
       console.log(data)
       setIsLoading(false)
@@ -251,4 +252,4 @@ const Login = () => {
 
 //next header and login and signup
 
-export default Login
+export default Signup

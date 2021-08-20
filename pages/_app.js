@@ -6,6 +6,7 @@ import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import Router from "next/router";
 import ProgressBar from "@badrap/bar-of-progress";
+import StoreProvider from '../store/store'
 
 
 const progress = new ProgressBar({
@@ -23,6 +24,7 @@ Router.events.on("routeChangeError", progress.finish);
 function MyApp({ Component, pageProps }) {
   return (
     <>
+      <StoreProvider>
       <Header />
       <Component {...pageProps} />
       <ToastContainer
@@ -35,7 +37,8 @@ function MyApp({ Component, pageProps }) {
         draggable
         pauseOnHover
       />
-      <Footer />
+        <Footer />
+      </StoreProvider>
     </>
   )
 }

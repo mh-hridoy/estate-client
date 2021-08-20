@@ -1,9 +1,11 @@
-import React from 'react'
+import { useState } from 'react'
 import { slide as Menu } from 'react-burger-menu'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { useSelector } from 'react-redux'
+import { Button } from 'antd'
 
-var styles = {
+var styless = {
     bmBurgerButton: {
         position: 'absolute',
         width: '27px',
@@ -59,12 +61,19 @@ var styles = {
 
 
 const Hamburger = () => {
+    const [isLoading, setIsLoading] = useState(false)
     const router = useRouter()
     const { pathname } = router
+    const user = useSelector((state) => state.user.user)
+
+    const logout = () => {
+
+    }
+
 
     return (
         <>
-            <Menu right styles={styles} width="30vw" >
+            <Menu right styles={styless} width="30vw" >
                 <ul className="burgerMenu">
                     <li>
                         <Link href="/" >
@@ -77,12 +86,21 @@ const Hamburger = () => {
                         </Link>
 
                     </li>
+                    {!user ?
                     <li>
                         <Link href="/signup">
                             <a id="signup" className={`menuItem ${pathname === "/signup" ? "active" : ""}`}>Sign Up</a>
                         </Link>
 
-                    </li>
+                        </li>
+                        :
+                        <li>
+                            <Button onClick={logout} htmlType="submit" disabled={isLoading} loading={isLoading}>
+                                Sign Out
+                            </Button>
+
+                        </li>
+                    }
                 </ul>
             </Menu>
 

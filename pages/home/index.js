@@ -1,10 +1,11 @@
 import React from 'react'
+import ProtectedPage from '../../components/ProtectedPage'
 
 const index = () => {
     return (
-        <div>
+        <ProtectedPage>
             <h1>Protected page started from this.</h1>
-        </div>
+        </ProtectedPage>
     )
 }
 

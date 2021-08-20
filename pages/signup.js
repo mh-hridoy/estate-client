@@ -41,7 +41,8 @@ const Signup = () => {
       const { data } = await axios.post(`http://localhost:5000/api/login`, values, {
         headers: {
           'Content-Type': 'application/json'
-        }
+        }, withCredentials: true //must include this shit.. otherwise cookies wont work
+
       })
 
       // data.token && delete data.token

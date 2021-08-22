@@ -25,18 +25,19 @@ function MyApp({ Component, pageProps }) {
   return (
     <>
       <StoreProvider>
-      <Header />
-      <Component {...pageProps} />
-      <ToastContainer
-        position="bottom-left"
+        <Header />
+        <Component {...pageProps} />
+        <ToastContainer
+          position="bottom-left"
           autoClose={4000}
-        hideProgressBar={true}
-        newestOnTop={false}
-        closeOnClick
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
+          hideProgressBar={true}
+          newestOnTop={false}
+          closeOnClick
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+
+        />
         <Footer />
       </StoreProvider>
     </>

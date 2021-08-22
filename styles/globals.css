@@ -49,28 +49,6 @@ body {
 
 }
 
-.burgerMenu li {
-  margin-top: 20px;
-  color: #fff;
-  font-size: 16px;
-  width : 100%
-}
-
-.burgerMenu li a{
-  color: #fff;
-  font-size: 18px;
-
-}
-
-.menuItem.active {
-  color: var(--secondary-color);
-}
-
-
-.burgerMenu li a:hover {
-  color: var(--secondary-color);
-}
-
 .header {
   height: 10vh;
   width: 100vw;
@@ -101,6 +79,60 @@ align-items: center;
 width : 100vw;
 height: 70vh;
 }
+
+/* .menuContainer {
+  position: relative;
+  z-index: 50;
+} */
+
+
+.menuInner {
+  padding : 10px;
+  display : flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 50px;
+  top : 0;
+  left: 0;
+  right : 0;
+  bottom : 0;
+ 
+}
+
+.burgerMenu {
+  position: absolute;
+  z-index: 100;
+  transform : translate(50%, 90%) !important;
+
+}
+
+.burgerMenuList {
+  padding : 10px;
+  text-align: center;
+  height:  100%;
+}
+
+.burgerMenuList li {
+  margin : 15px 0;
+}
+
+.menuItem {
+  color: var(--text-color);
+  font-size: 18px;
+}
+
+.menuItem.active {
+  color: var(--secondary-color);
+  font-size: 20px;
+}
+
+.menuItem:hover{
+  color: var(--secondary-color);
+}
+
+
+/* hamBurger header */
+
 
 /* .carouselImage {
     height : 100vh;
@@ -144,11 +176,7 @@ height: 70vh;
   padding: 5px;
 }
 
-.hamBurger {
-  height: 100%;
-  width: 100%;
-  position: relative;
-}
+
 
 strong {
   font-size: 16px;

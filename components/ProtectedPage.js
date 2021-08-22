@@ -23,7 +23,7 @@ const ProtectedPage = (props) => {
 
         }
 
-    }, [])
+    }, [user])
 
 
     return (

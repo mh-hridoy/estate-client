@@ -24,6 +24,12 @@ const StoreProvider = (props) => {
     }, [])
 
 
+    //declare the axios instance method to chcek if the token is valid unless forece the client to logout.
+
+
+
+    //declare the function for csurf protection.
+
     return (
         <Provider store={store}>
             {props.children}

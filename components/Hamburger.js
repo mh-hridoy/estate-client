@@ -5,6 +5,8 @@ import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
 import { Button } from 'antd'
 import HamburgerMenu from 'react-hamburger-menu'
+import axios from 'axios'
+import { toast } from 'react-toastify'
 
 
 
@@ -16,8 +18,23 @@ const Hamburger = () => {
     const { pathname } = router
 
 
-    const logout = () => {
-        setIsOpen(false)
+
+    const logout = async () => {
+        setIsOpen(true)
+        setIsLoading(true)
+        try {
+            const { data } = await axios.get('http://localhost:5000/api/logout', { withCredentials: true })
+            setIsLoading(false)
+            localStorage.clear('user')
+            toast.success(data.message)
+            router.push('/')
+            setIsOpen(false)
+        } catch (err) {
+            setIsLoading(false)
+            setIsOpen(false)
+            toast.warn("Something went wrong!")
+
+        }
 
     }
     //need to declare if the menu is open or not. otherwise cross button  wont work 
@@ -51,19 +68,26 @@ const Hamburger = () => {
                 <ul className="burgerMenuList">
                     <li>
                         <Link href="/" >
-                            <a id="home" name='/' className={`menuItem ${pathname === "/" ? "active" : ""}`}>Home</a>
+                            <a onClick={closeMenu} id="home" name='/' className={`menuItem ${pathname === "/" ? "active" : ""}`}>Home</a>
                         </Link>
                     </li>
+                    {user &&
+                        <li>
+                            <Link href="/home/dashboard" >
+                                <a onClick={closeMenu} id="dashboard" name='/home/dashboard' className={`menuItem ${pathname === "/home/dashboard" ? "active" : ""}`}>Dashboard</a>
+                            </Link>
+                        </li>
+                    }
                     <li >
                         <Link href="/community">
-                            <a id="community" className={`menuItem ${pathname === "/community" ? "active" : ""}`}>Community</a>
+                            <a onClick={closeMenu} id="community" className={`menuItem ${pathname === "/community" ? "active" : ""}`}>Community</a>
                         </Link>
 
                     </li>
                     {!user ?
                         <li>
                             <Link href="/signup">
-                                <a id="signup" className={`menuItem ${pathname === "/signup" ? "active" : ""}`}>Sign Up</a>
+                                <a onClick={closeMenu} id="signup" className={`menuItem ${pathname === "/signup" ? "active" : ""}`}>Sign Up</a>
                             </Link>
 
                         </li>

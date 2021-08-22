@@ -51,7 +51,7 @@ const Signup = () => {
       localStorage.setItem('user', JSON.stringify(data))
       setIsLoading(false)
       toast.success("Login successful.")
-      router.push('/home')
+      router.push('/home/dashboard')
     } catch (err) {
       setIsLoading(false)
       toast.error(err.response.data.message || "Something went wrong!!!" || err)

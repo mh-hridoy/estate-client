@@ -1,7 +1,7 @@
 import React from 'react'
 import ProtectedPage from '../../components/ProtectedPage'
 
-const index = () => {
+const dashboard = () => {
     return (
         <ProtectedPage>
             <h1>Protected page started from this.</h1>
@@ -9,4 +9,4 @@ const index = () => {
     )
 }
 
-export default index
+export default dashboard

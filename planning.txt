@@ -6,3 +6,6 @@ Store, localstorage, Protected routes, logout, menuItem....//running....
 
 *****************************
 sent token .. csurf and the status.
+
+
+//make change for the selectedRole . Put an endpoint and update all the data.

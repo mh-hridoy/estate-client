@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import { toast } from 'react-toastify'
 import { useRouter } from 'next/router'
 import { SyncOutlined } from '@ant-design/icons'
 import ShowMoreText from "react-show-more-text";

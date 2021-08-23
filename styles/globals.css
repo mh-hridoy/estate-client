@@ -132,12 +132,41 @@ height: 70vh;
 .menuItem {
   color: var(--secondary-color);
   font-size: 18px;
+ 
 }
 
 .menuItem.active, .menuItem:hover {
   font-size: 20px;
   border-bottom: 1px solid var(--hover-color);  
   font-weight: 500;
+}
+
+.fullMenu {
+  height : 100%;
+   display : flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fullMenuList {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  height : 105%;
+  text-align: center;
+}
+
+.fullMenuItem {
+  margin : 0 15px;
+  font-size: 18px;
+  color: var(--secondary-color);
+}
+
+.fullMenuItem.active, .fullMenuItem:hover {
+  border-bottom: 1px solid var(--hover-color);
+  font-weight: bolder;
+
 }
 
 
@@ -253,6 +282,16 @@ img {
     object-fit : cover;
 } */
 
+.fullMenuItem {
+  font-size: 15px;
+}
+
+.fullMenuItem.active, .fullMenuItem:hover {
+  border-bottom: 1px solid var(--hover-color);
+  font-weight: bolder;
+  font-size: 14px;
+
+}
 
 .searchBox {
     width: 50vw;
@@ -272,4 +311,7 @@ img {
 }
 
 
+
 }
+
+

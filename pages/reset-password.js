@@ -55,7 +55,7 @@ const resetPassword = () => {
             isRequestedMail(email)
         } catch (err) {
             setIsLoading(false)
-            toast.error(err.response.data.message || "Something went wrong!!!")
+            toast.error(err.response.data.message ? err.response.data.message : "Something went wrong!!!")
 
         }
     }

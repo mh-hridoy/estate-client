@@ -17,7 +17,7 @@ const Header = () => {
     return (
         <>
             <Row className="header" justify="space-between">
-                <Col xs={20} md={8} wrap="true" >
+                <Col xs={16} md={8} wrap="true" >
                     <div className="logo-section">
                         <div className="logo">
                             <Image src="/favicon.ico" alt="logo" width="40" height="40" />
@@ -34,7 +34,9 @@ const Header = () => {
                     </div>
 
                 </Col>
-                <Col xs={4} md={0}>
+                <Col xs={8} md={0} style={{
+                    float: "right"
+                }}>
                     <div className="hamBurger">
                         <Hamburger />
                     </div>

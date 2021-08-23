@@ -14,3 +14,8 @@ Store, localstorage, Protected routes, logout, menuItem....//Partially completed
 
 //make change for the selectedRole . Put an endpoint and update all the data.
 sent token .. csurf and the status.
+
+//add steps on reset - pass for better UI
+//check on avatar and Popover
+//use Backtop for better UI
+

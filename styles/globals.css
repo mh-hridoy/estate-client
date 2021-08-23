@@ -137,7 +137,7 @@ height: 70vh;
 
 .menuItem.active, .menuItem:hover {
   font-size: 20px;
-  border-bottom: 1px solid var(--hover-color);  
+  border-bottom: 3px solid var(--hover-color);  
   font-weight: 500;
 }
 
@@ -164,8 +164,9 @@ height: 70vh;
 }
 
 .fullMenuItem.active, .fullMenuItem:hover {
-  border-bottom: 1px solid var(--hover-color);
+  border-bottom: 4px solid var(--hover-color);
   font-weight: bolder;
+  padding-bottom: 22px;
 
 }
 
@@ -283,13 +284,16 @@ img {
 } */
 
 .fullMenuItem {
-  font-size: 15px;
+  font-size: 14px;
 }
 
 .fullMenuItem.active, .fullMenuItem:hover {
-  border-bottom: 1px solid var(--hover-color);
   font-weight: bolder;
-  font-size: 14px;
+  font-size: 1px;
+   border-bottom: 4px solid var(--hover-color);
+  padding-bottom: 22px;
+    font-size: 14px;
+
 
 }
 

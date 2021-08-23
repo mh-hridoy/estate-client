@@ -39,6 +39,8 @@
     background-color: var(--primary-color);
     border-bottom: 5px solid var(--hover-color);
     border-top: 5px solid var(--secondary-color);
+        box-shadow: 5px 2px 25px rgba(0,0,0,0.5);
+
 
 }
 
@@ -84,7 +86,7 @@
 
 .or{
     margin : -20px;
-    color : var(--text-color)
+    color : var(--secondary-color)
 }
 
 
@@ -115,7 +117,7 @@
 .ousrServices {
     flex-direction: column;
     margin: 0px 0 10px 0;
-    box-shadow: 5px 2px 25px 5px rgba(0,0,0,0.5);
+    box-shadow: 5px 2px 25px rgba(0,0,0,0.5);
     border-radius: 15px;
     border-bottom: 5px solid var(--hover-color);
     border-top: 5px solid var(--secondary-color);

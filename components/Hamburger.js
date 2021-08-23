@@ -64,7 +64,7 @@ const Hamburger = () => {
 
     return (
         <>
-            <CheeseburgerMenu right isOpen={isOpen} closeCallback={closeMenu} width="25vh" className="menuContainer" overlayClassName="menuOverly" outerClassName="menuOuter" innerClassName="menuInner" shadowClassName="menuShadow" backgroundColor="#520a99de" topOffset="10vh">
+            <CheeseburgerMenu right isOpen={isOpen} closeCallback={closeMenu} width={180} className="menuContainer" overlayClassName="menuOverly" outerClassName="menuOuter" innerClassName="menuInner" shadowClassName="menuShadow" backgroundColor="#fff" topOffset="10vh">
                 <ul className="burgerMenuList">
                     <li>
                         <Link href="/" >

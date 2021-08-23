@@ -4,6 +4,9 @@ import Image from 'next/image'
 import Hamburger from './Hamburger'
 
 
+//need to create menu for big screen. customize bar for avatar and notification menu.
+
+
 const Header = () => {
     return (
         <>

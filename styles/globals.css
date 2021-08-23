@@ -1,11 +1,10 @@
 :root {
-  --first-color: #27323a;
-  --second-color: #FFEBDA;
-  --primary-color: #520a99de;
-  --secondary-color: #55882B; 
-  --hover-color: #0e0222b9;
-  --text-color: #fff;
-  --text-black : #000;
+  --primary-color: #fff;
+  --secondary-color: #000;
+  --hover-color : #57033E;
+  --footer-color : #3f3d3e;
+  --optional-color : #b6b3b5;
+
 }
 
 body {
@@ -24,6 +23,15 @@ body {
   background-attachment: fixed;
 }
 
+
+.warningContainer {
+  padding : 10px;
+  margin : 20px;
+   box-shadow: 0px 0px 5px rgba(0,0,0,0.5);
+    border-radius: 15px;
+    border-bottom: 2px solid var(--hover-color);
+    border-top: 2px solid var(--secondary-color);
+}
 
 .homeContent {
     position: absolute;
@@ -60,6 +68,7 @@ body {
   left: 0;
   width : 100%;
   z-index: 1000;
+  border-bottom: 1px solid var(--optional-color);
 }
 
 .bar-of-progress {
@@ -103,7 +112,11 @@ height: 70vh;
   position: absolute;
   z-index: 100;
   transform : translate(50%, 90%) !important;
+  cursor: pointer;
+}
 
+.burgerMenu:hover {
+  color: var(--hover-color);
 }
 
 .burgerMenuList {
@@ -117,17 +130,14 @@ height: 70vh;
 }
 
 .menuItem {
-  color: var(--text-color);
+  color: var(--secondary-color);
   font-size: 18px;
 }
 
-.menuItem.active {
-  color: var(--secondary-color);
+.menuItem.active, .menuItem:hover {
   font-size: 20px;
-}
-
-.menuItem:hover{
-  color: var(--secondary-color);
+  border-bottom: 1px solid var(--hover-color);  
+  font-weight: 500;
 }
 
 
@@ -183,7 +193,7 @@ strong {
 }
 
 .footer {
-  background-color: var(--first-color);
+  background-color: var(--footer-color);
   box-shadow: 0px 2px 10px 5px rgba(0, 0, 0, 0.2);
   color: #fff;
 }
@@ -193,10 +203,10 @@ strong {
 }
 
 .copyrightSection {
-  background-color: var(--second-color);
+  background-color: var(--optional-color);
   text-align: center;
   font-size: 12px;
-  color:var(--text-black);
+  color:var(--secondary-color);
 }
 
 .linkAndContact {

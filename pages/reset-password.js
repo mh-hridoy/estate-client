@@ -28,7 +28,6 @@ const validatePassword = Yup.object().shape({
 
 })
 
-
 const resetPassword = () => {
     const [emailSubmitted, isEmailSubmitted] = useState(false)
     const [codeSubmitted, isCodeSubmitted] = useState(false)

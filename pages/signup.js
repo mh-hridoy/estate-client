@@ -255,6 +255,5 @@ const Signup = () => {
 
 }
 
-//next header and login and signup
 
 export default Signup

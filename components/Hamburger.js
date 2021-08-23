@@ -28,6 +28,7 @@ const Hamburger = () => {
             localStorage.clear('user')
             toast.success(data.message)
             router.push('/')
+            router.reload()
             setIsOpen(false)
         } catch (err) {
             setIsLoading(false)
@@ -50,7 +51,6 @@ const Hamburger = () => {
     }
 
     //need to declare if the menu is open or not. otherwise cross button  wont work 
-
     const openMenu = () => {
         if (isOpen) {
             setIsOpen(false)
@@ -81,6 +81,12 @@ const Hamburger = () => {
                     <li >
                         <Link href="/community">
                             <a onClick={closeMenu} id="community" className={`menuItem ${pathname === "/community" ? "active" : ""}`}>Community</a>
+                        </Link>
+
+                    </li>
+                    <li >
+                        <Link href="/services">
+                            <a onClick={closeMenu} id="services" className={`menuItem ${pathname === "/services" ? "active" : ""}`}>Our Services</a>
                         </Link>
 
                     </li>

@@ -10,9 +10,10 @@ const ProtectedPage = (props) => {
     const user = useSelector((state) => state.user.user)
     const [isLoading, setIsLoading] = useState(false)
 
+
     useEffect(() => {
-        setIsLoading(true)
         const userInfo = localStorage.getItem('user')
+        setIsLoading(true)
         if (userInfo || user !== null) {
             setIsLoading(false)
 

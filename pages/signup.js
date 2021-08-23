@@ -3,14 +3,15 @@ import { Row, Col, Button } from 'antd';
 import { Form, Input } from 'formik-antd'
 import { Formik } from 'formik'
 import * as Yup from 'yup';
-import { MailOutlined, UserOutlined, LockOutlined, DollarOutlined, ShoppingCartOutlined, HomeOutlined, UnorderedListOutlined } from '@ant-design/icons';
-import { useState } from 'react';
+import { MailOutlined, UserOutlined, LockOutlined, DollarOutlined, ShoppingCartOutlined, HomeOutlined, UnorderedListOutlined, SyncOutlined } from '@ant-design/icons';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { toast } from 'react-toastify'
 import axios from 'axios'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { login } from '../store/userInfoSlice'
 import { useRouter } from 'next/router'
+
 
 
 const loginValidation = Yup.object().shape({
@@ -28,9 +29,13 @@ const signupValidation = Yup.object().shape({
     })
 })
 
+
+
 const Signup = () => {
   const [isLogin, setIsLogin] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [pageLoading, setPageLoading] = useState(false)
+  const user = useSelector((state) => state.user.user)
 
   const router = useRouter()
   const dispatch = useDispatch()
@@ -94,8 +99,21 @@ const Signup = () => {
 
   }
 
+  useEffect(() => {
+
+    if (user) {
+      setPageLoading(true)
+      router.push('/home/dashboard')
+    }
+
+  }, [user])
+
   return (
     <>
+      {pageLoading ? <div className="loadingDiv">
+        <SyncOutlined spin size="large" className="pageLoading" />
+      </div>
+        :
       <Row>
         <div className={styles.loginPage}>
 
@@ -247,7 +265,8 @@ const Signup = () => {
           </div>
         </Col>
 
-      </Row>
+        </Row>
+      }
 
     </>
 

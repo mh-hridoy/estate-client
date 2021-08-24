@@ -222,6 +222,7 @@ height: 70vh;
   position: relative;
   display: block;
   float: left;
+  text-transform: capitalize;
 }
 
 

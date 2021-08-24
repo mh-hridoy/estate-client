@@ -22,5 +22,6 @@ sent token .. csurf and the status.
 
 //add steps on reset - for better UI
 //use Backtop for better UI
-//need to craete custom see more componenet. tird party sucks.
+//need to craete custom see more componenet. third party sucks.
+//make home page and redirect the user to "/"
 

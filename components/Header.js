@@ -5,14 +5,65 @@ import Hamburger from './Hamburger'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
+import UserAvatar from './UserAvatar';
+import { Button } from 'antd'
+import { toast } from 'react-toastify'
+import axios from 'axios'
+import NotiBar from './NotiBar'
 
-//need to create menu for big screen. customize bar for avatar and notification menu.
 
 
 const Header = () => {
     const user = useSelector((state) => state.user.user)
     const router = useRouter()
     const { pathname } = router
+    const [isLoading, setIsLoading] = useState(false)
+
+
+    const logout = async () => {
+        try {
+            setIsLoading(true)
+            const { data } = await axios.get('http://localhost:5000/api/logout', { withCredentials: true })
+
+            setIsLoading(false)
+            localStorage.clear('user')
+            toast.success(data.message)
+            router.push('/')
+            router.reload()
+        } catch (err) {
+            setIsLoading(false)
+            toast.warn("Something went wrong!")
+
+        }
+
+    }
+
+    const content = (
+        <>
+            {user &&
+                <ul className="avatarList">
+                    <li>
+                        <Link href="/home/dashboard" >
+                            <a id="dashboard" name='/home/dashboard' className={`avatarMenuItem ${pathname === "/home/dashboard" ? "active" : ""}`}>Dashboard</a>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link href="/" >
+                            <a id="userAccount" name='/' className={`avatarMenuItem ${pathname === "/" ? "active" : ""}`}>My Account</a>
+                        </Link>
+                    </li>
+                    <li>
+                        <Button onClick={logout} htmlType="submit" disabled={isLoading} loading={isLoading}>
+                            Sign Out
+                        </Button>
+                    </li>
+
+
+                </ul>
+            }
+
+        </>
+    )
 
     return (
         <>
@@ -34,15 +85,28 @@ const Header = () => {
                     </div>
 
                 </Col>
-                <Col xs={8} md={0} style={{
-                    float: "right"
-                }}>
-                    <div className="hamBurger">
-                        <Hamburger />
+                <Col xs={8} md={0}>
+                    <div className="burgerContainer">
+                        {user &&
+                            <>
+                                <NotiBar />
+
+
+                                <div className="avatarContainer">
+                                    <UserAvatar content={content} />
+                                </div>
+
+                            </>
+                        }
+
+                        <div className="hamBurger">
+                            <Hamburger />
+                        </div>
                     </div>
+
                 </Col>
                 <Col xs={0} md={12}>
-                    <div className="fullMenu">
+                    <div className="fullMenu" >
                         <ul className="fullMenuList">
                             <li>
                                 <Link href="/" >
@@ -72,12 +136,21 @@ const Header = () => {
                             }
 
                             {user &&
-                                <li>
-                                    <Link href="/home/dashboard" >
-                                        <a id="dashboard" name='/home/dashboard' className={`fullMenuItem ${pathname === "/home/dashboard" ? "active" : ""}`}>Dashboard</a>
-                                    </Link>
+                                <>
+                                    <li style={{ transform: "translateY(20%)", marginLeft: "5px" }}>
+                                        <NotiBar />
+                                    </li>
+
+                                <li style={{ marginLeft: '30px', transform: "translateY(5%)" }}>
+                                    <div className="avatarContainer">
+                                        <UserAvatar content={content} />
+                                    </div>
+
                                 </li>
+
+                            </>
                             }
+
                         </ul>
                     </div>
                 </Col>

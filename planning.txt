@@ -2,7 +2,8 @@ work on login , register , reset Password apis. // Done..
 //change color pallete //Done
 need to work on sign in and signout component useeffect// Done
 
-Store, localstorage, Protected routes, logout, menuItem....//Partially completed....
+Store, localstorage, Protected routes, logout, menuItem....//Partially completed, also working on this along other task.... 
+*******
 ** make store **save data while login the user **also save data to localstorage **fetch the data from localstorage to store **update all the protected endpoints to check if the user role is allowed to make any change** put a axios interceptor into the store to check if the token is valid and redirect to login page **
 
 
@@ -15,7 +16,9 @@ Store, localstorage, Protected routes, logout, menuItem....//Partially completed
 //make change for the selectedRole . Put an endpoint and update all the data.
 sent token .. csurf and the status.
 
-//add steps on reset - pass for better UI
 //check on avatar and Popover
+
+
+//add steps on reset - for better UI
 //use Backtop for better UI
 

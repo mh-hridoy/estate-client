@@ -59,7 +59,8 @@ const Signup = () => {
       router.push('/home/dashboard')
     } catch (err) {
       setIsLoading(false)
-      toast.error(err.response.data.message || "Something went wrong!!!" || err)
+      const errorMsg = err.response.data.message || "Something went wrong!!!"
+      toast.error(errorMsg)
 
     }
   };

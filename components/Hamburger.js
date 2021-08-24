@@ -3,15 +3,11 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
-import { Button } from 'antd'
 import HamburgerMenu from 'react-hamburger-menu'
-import axios from 'axios'
-import { toast } from 'react-toastify'
 
 
 
 const Hamburger = () => {
-    const [isLoading, setIsLoading] = useState(false)
     const user = useSelector((state) => state.user.user)
     const router = useRouter()
     const [isOpen, setIsOpen] = useState(false)
@@ -19,25 +15,6 @@ const Hamburger = () => {
 
 
 
-    const logout = async () => {
-        setIsOpen(true)
-        setIsLoading(true)
-        try {
-            const { data } = await axios.get('http://localhost:5000/api/logout', { withCredentials: true })
-            setIsLoading(false)
-            localStorage.clear('user')
-            toast.success(data.message)
-            router.push('/')
-            router.reload()
-            setIsOpen(false)
-        } catch (err) {
-            setIsLoading(false)
-            setIsOpen(false)
-            toast.warn("Something went wrong!")
-
-        }
-
-    }
     //need to declare if the menu is open or not. otherwise cross button  wont work 
 
     const closeMenu = () => {
@@ -71,13 +48,7 @@ const Hamburger = () => {
                             <a onClick={closeMenu} id="home" name='/' className={`menuItem ${pathname === "/" ? "active" : ""}`}>Home</a>
                         </Link>
                     </li>
-                    {user &&
-                        <li>
-                            <Link href="/home/dashboard" >
-                                <a onClick={closeMenu} id="dashboard" name='/home/dashboard' className={`menuItem ${pathname === "/home/dashboard" ? "active" : ""}`}>Dashboard</a>
-                            </Link>
-                        </li>
-                    }
+
                     <li >
                         <Link href="/community">
                             <a onClick={closeMenu} id="community" className={`menuItem ${pathname === "/community" ? "active" : ""}`}>Community</a>
@@ -90,18 +61,11 @@ const Hamburger = () => {
                         </Link>
 
                     </li>
-                    {!user ?
+                    {!user &&
                         <li>
                             <Link href="/signup">
                                 <a onClick={closeMenu} id="signup" className={`menuItem ${pathname === "/signup" ? "active" : ""}`}>Sign Up</a>
                             </Link>
-
-                        </li>
-                        :
-                        <li>
-                            <Button onClick={logout} htmlType="submit" disabled={isLoading} loading={isLoading}>
-                                Sign Out
-                            </Button>
 
                         </li>
                     }

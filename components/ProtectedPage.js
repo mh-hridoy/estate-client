@@ -3,6 +3,8 @@ import { useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
 import { SyncOutlined } from '@ant-design/icons'
 import ShowMoreText from "react-show-more-text";
+import Breadcrumbs from 'nextjs-breadcrumbs';
+
 
 
 
@@ -28,7 +30,6 @@ const ProtectedPage = (props) => {
 
 
 
-
     return (
 
         <>
@@ -38,7 +39,9 @@ const ProtectedPage = (props) => {
                 </div>
                 :
                 <>
-                    {/* //add breadcrumb here */}
+
+                    <Breadcrumbs omitRootLabel listClassName="crumbList" containerClassName="crumbContainer" inactiveItemClassName="inActiveCrumb" activeItemClassName="activeCrumb" />
+
 
                     <ShowMoreText lines={4} more="More"
                         less="Less" expanded={false} truncatedEndingComponent={"..."} className="warningContainer" >

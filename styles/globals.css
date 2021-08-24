@@ -202,7 +202,57 @@ height: 70vh;
 
 
 
+.crumbList {
+  list-style: none;
+  color : var(--secondary-color);
+   overflow: hidden;
+  font: 16px Sans-Serif;
+}
 
+.crumbList li {
+  float: left;
+}
+
+
+.crumbList li a {
+  color: rgb(0, 0, 0);
+  text-decoration: none;
+  padding: 0 2px;
+  position: relative;
+  display: block;
+  float: left;
+}
+
+
+.crumbList li a::after {
+  content: "/";
+  margin-left: 5px;
+}
+
+.crumbList li:last-child a {
+  color: black;
+  pointer-events: none;
+  cursor: default;
+  padding-right: 20px;
+}
+.crumbList li:last-child a::after {
+  content: "";
+}
+
+.crumbContainer {
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.inActiveCrumb {
+  color: var(--optional-color);
+  font-weight: 300;
+}
+
+.activeCrumb {
+  color: var(--secondary-color);
+  font-weight: bolder;
+}
 
 
 /* hamBurger header */

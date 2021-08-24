@@ -8,7 +8,6 @@ import Router from "next/router";
 import ProgressBar from "@badrap/bar-of-progress";
 import StoreProvider from '../store/store'
 
-
 const progress = new ProgressBar({
   size: 3,
   color: "red",

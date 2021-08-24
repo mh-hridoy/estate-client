@@ -1,6 +1,9 @@
 work on login , register , reset Password apis. // Done..
 //change color pallete //Done
 need to work on sign in and signout component useeffect// Done
+//check on avatar and Popover //Done
+//need to work on hearder component to customize space for avatar and notification menu. //Done
+
 
 Store, localstorage, Protected routes, logout, menuItem....//Partially completed, also working on this along other task.... 
 *******
@@ -9,14 +12,12 @@ Store, localstorage, Protected routes, logout, menuItem....//Partially completed
 
 *****************************
 
-//need to work on hearder component to customize space for avatar and notification menu.
 //add breadcrumb menu on protected page component.
 
 
 //make change for the selectedRole . Put an endpoint and update all the data.
 sent token .. csurf and the status.
 
-//check on avatar and Popover
 
 
 //add steps on reset - for better UI

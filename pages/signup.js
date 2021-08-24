@@ -59,7 +59,8 @@ const Signup = () => {
       router.push('/home/dashboard')
     } catch (err) {
       setIsLoading(false)
-      const errorMsg = err.response.data.message || "Something went wrong!!!"
+      //do not put here err.response.data.message ? err.response.data.message : "Something went wrong!!!".. otherwise it wont catch the error.
+      const errorMsg = err.response ? err.response.data.message : "Something went wrong!!!"
       toast.error(errorMsg)
 
     }

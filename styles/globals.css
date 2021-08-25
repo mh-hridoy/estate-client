@@ -238,6 +238,9 @@ height: 70vh;
   display: block;
   float: left;
   text-transform: capitalize;
+  font-style: italic;
+  font-size: 14px;
+  font-family: Sans-Serif;
 }
 
 

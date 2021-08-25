@@ -10,7 +10,25 @@
 .searchForm {
     display : flex;
     align-items: center;
-    justify-content:center;
+    justify-content:flex-start;
     flex-wrap: wrap;
 
+}
+
+.saleAndRedemp {
+    display : flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.saleDate , .redemp {
+    width : 45%;
+
+
+}
+
+.searchItem {
+    display : flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 }

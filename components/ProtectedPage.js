@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
 import { SyncOutlined } from '@ant-design/icons'
+import { BackTop } from 'antd';
 import Breadcrumbs from 'nextjs-breadcrumbs';
 import useWindowSize from "../utils/useWindowSize"; //window mehtods sucks in react and next.. be carefull to play around with it.
 
@@ -14,6 +15,18 @@ const alltext = (
 const miniText = (
     <p> <b>ATTENTION/WARNING: </b> THESE TRANSACTIONS INVOLVE RISK.YOU MAY LOSE SOME OR ALL OF YOUR CAPITAL.The services offered may not be suitable for you.You must do your own due diligence and verify any information provided.We encourage you to seek advice from an independent financial advisor, real estate professional, accountant, tax advisor </p>
 )
+
+const style = {
+    height: 40,
+    width: 40,
+    lineHeight: '40px',
+    borderRadius: 4,
+    backgroundColor: 'var(--hover-color)',
+    color: '#fff',
+    textAlign: 'center',
+    fontSize: 14,
+    transform: "translateX(150%)",
+};
 
 
 const ProtectedPage = (props) => {
@@ -65,6 +78,9 @@ const ProtectedPage = (props) => {
     return (
 
         <>
+            <BackTop visibilityHeight={100}>
+                <div style={style}>UP</div>
+            </BackTop>
             {isLoading ?
                 <div className="loadingDiv">
                     <SyncOutlined spin size="large" className="pageLoading" />

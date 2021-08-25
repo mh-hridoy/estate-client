@@ -7,6 +7,7 @@ need to work on sign in and signout component useeffect// Done
 //make home page and redirect the user to "/" //Done
 //add steps on reset - for better UI //Done
 //need to craete custom see more componenet. third party sucks. //Done
+//use Backtop for better UI//Done
 
 
 
@@ -18,11 +19,11 @@ Store, localstorage, Protected routes, logout, menuItem....//Partially completed
 *****************************
 
 
+//next
+make form for advance inquiry.// 
+
+************
+
 //make change for the selectedRole . Put an endpoint and update all the data.
 sent token .. csurf and the status.
 
-
-//next
-//use Backtop for better UI
-
-************

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Avatar, Popover } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
-
+import { useRouter } from 'next/router'
 
 // const content = (
 //     <div>
@@ -10,11 +10,12 @@ import { UserOutlined } from '@ant-design/icons';
 //     </div>
 // );
 const UserAvatar = (props) => {
+    const router = useRouter()
 
 
     return (
         <Popover content={props.content} title="User Information" trigger="click" placement="bottom" >
-            <Avatar style={{ backgroundColor: '#87d068', cursor: "pointer" }} icon={<UserOutlined />} />
+            <Avatar style={{ backgroundColor: '#87d068', cursor: "pointer" }} icon={<UserOutlined />} className={`headerUser ${router.pathname === "/home/dashboard" && "active"}`} />
 
         </Popover>
     )

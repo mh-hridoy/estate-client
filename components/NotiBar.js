@@ -9,7 +9,9 @@ const NotiBar = () => {
     )
     return (
         <Popover content={content} title="Notification" trigger="click" placement="bottom">
-            <BellOutlined style={{ fontSize: "20px" }} />
+            <div className="notiIcon">
+                <BellOutlined style={{ fontSize: "20px" }} />
+            </div>
         </Popover>
     )
 }

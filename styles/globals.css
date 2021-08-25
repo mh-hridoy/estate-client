@@ -23,6 +23,21 @@ body {
   background-attachment: fixed;
 }
 
+.headerUser:hover, .headerUser:active {
+  transform : scale(1.1);
+}
+
+.headerUser.active {
+  border-bottom: 4px solid var(--hover-color);
+  padding-bottom: 20px;
+    transform : scale(1.1);
+
+}
+
+.notiIcon:hover, .notiIcon:active {
+    transform : scale(1.1);
+
+}
 
 .warningContainer {
   padding : 10px;

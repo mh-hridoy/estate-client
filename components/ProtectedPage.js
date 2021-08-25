@@ -13,7 +13,7 @@ const alltext = (
 )
 
 const miniText = (
-    <p> <b>ATTENTION/WARNING: </b> THESE TRANSACTIONS INVOLVE RISK.YOU MAY LOSE SOME OR ALL OF YOUR CAPITAL.The services offered may not be suitable for you.You must do your own due diligence and verify any information provided.We encourage you to seek advice from an independent financial advisor, real estate professional, accountant, tax advisor </p>
+    <p> <b>ATTENTION/WARNING: </b> THESE TRANSACTIONS INVOLVE RISK.YOU MAY LOSE SOME OR ALL OF YOUR CAPITAL.The services offered may not be suitable for you.You must do your own due diligence and verify any information provided.We encourage you to seek advice from an independent financial advisor, real estate professional, accountant, tax advisor...... </p>
 )
 
 const style = {
@@ -93,7 +93,9 @@ const ProtectedPage = (props) => {
                     <div className="warningContainer">
                         {!isFullScreen &&
                             <>
-                                {!isSeeMore ? miniText : alltext}{!isSeeMore ? <a onClick={seeMoreHandler}>...See More</a> : <a onClick={seeLessHandler}>...See Less</a>}
+                            {!isSeeMore ? miniText : alltext}
+
+                            {!isSeeMore ? <a onClick={seeMoreHandler}>See More</a> : <a onClick={seeLessHandler}>See Less</a>}
 
                             </>
                         }

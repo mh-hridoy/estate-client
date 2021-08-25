@@ -1,0 +1,16 @@
+.searchUi {
+ box-shadow: 0px 0px 5px rgba(0,0,0,0.5);
+    border-radius: 15px;
+    border-bottom: 2px solid var(--hover-color);
+    border-top: 2px solid var(--secondary-color);    padding : 10px;
+    margin: 15px;
+    padding: 15px;
+}
+
+.searchForm {
+    display : flex;
+    align-items: center;
+    justify-content:center;
+    flex-wrap: wrap;
+
+}

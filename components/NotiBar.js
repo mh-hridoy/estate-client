@@ -8,7 +8,7 @@ const NotiBar = () => {
         <h3>Working on it</h3>
     )
     return (
-        <Popover content={content} title="Notification" trigger="click" placement="bottom">
+        <Popover content={content} title="Notification" trigger="hover" placement="bottom">
             <div className="notiIcon">
                 <BellOutlined style={{ fontSize: "20px" }} />
             </div>

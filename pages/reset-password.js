@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import styles from '../styles/login.module.css'
-import { Row, Col, Button } from 'antd'
+import { Row, Col, Button, Steps } from 'antd'
 import { Form, Input } from 'formik-antd'
 import { Formik } from 'formik'
 import * as Yup from 'yup';
-import { MailOutlined, QrcodeOutlined, LockOutlined, SyncOutlined } from '@ant-design/icons';
+import { MailOutlined, QrcodeOutlined, LockOutlined, SyncOutlined, UserOutlined, SolutionOutlined, SmileOutlined } from '@ant-design/icons';
 import { toast } from 'react-toastify'
 import axios from 'axios'
 import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
+
+
 
 const validateEmail = Yup.object().shape({
     email: Yup.string().email("Please enter a valid email address").required("Email address is required")
@@ -35,13 +37,19 @@ const resetPassword = () => {
     const [isLoading, setIsLoading] = useState(false)
     const [pageLoading, setPageLoading] = useState(false)
     const user = useSelector((state) => state.user.user)
+    const [firstStatus, setFirstStatus] = useState("wait")
+    const [secondStatus, setSecondStatus] = useState("wait")
+    const [thirdStatus, setThirdStatus] = useState("wait")
 
+    //wait process finish error
 
     const router = useRouter()
+    const { Step } = Steps
 
     const submitEmail = async (values) => {
         const email = values.email
         try {
+            setFirstStatus("process")
             setIsLoading(true)
             await axios.post(`http://localhost:5000/api/reset-password`, values, {
                 headers: {
@@ -52,15 +60,18 @@ const resetPassword = () => {
             toast.success("Your password reset code has been sent to your email.")
             setIsLoading(false)
             isEmailSubmitted(true)
+            setFirstStatus("finish")
             isRequestedMail(email)
         } catch (err) {
             setIsLoading(false)
+            setFirstStatus("error")
             toast.error(err.response.data.message ? err.response.data.message : "Something went wrong!!!")
 
         }
     }
     const submitCode = async ({ code }) => {
         try {
+            setSecondStatus("process")
             setIsLoading(true)
             await axios.post(`http://localhost:5000/api/verify-code`, { email: requestedMail, resetCode: code }, {
                 headers: {
@@ -70,9 +81,11 @@ const resetPassword = () => {
 
             toast.success("Please change your password now.")
             setIsLoading(false)
+            setSecondStatus("finish")
             isCodeSubmitted(true)
         } catch (err) {
             setIsLoading(false)
+            setSecondStatus("error")
             toast.error(err.response.data.message || "Something went wrong!!!")
 
         }
@@ -80,6 +93,7 @@ const resetPassword = () => {
 
     const submitPassword = async ({ password, cPassword }) => {
         try {
+            setThirdStatus("process")
             setIsLoading(true)
             await axios.patch(`http://localhost:5000/api/change-password`, { email: requestedMail, password, cPassword }, {
                 headers: {
@@ -90,10 +104,12 @@ const resetPassword = () => {
             toast.success("Password successfully changed!, Please login now.")
             router.push("/signup")
             setIsLoading(false)
+            setThirdStatus("finish")
             isRequestedMail('')
         } catch (err) {
             setIsLoading(false)
             router.push("/reset-password")
+            setThirdStatus("error")
             toast.error(err.response.data.message || "Something went wrong!!!")
 
         }
@@ -197,10 +213,22 @@ const resetPassword = () => {
                             </div>
 
                         </Col>
+
+
                     </div>
 
                 </Row>
             }
+
+            <div className={styles.stepContainer}>
+                <Steps>
+                    <Step status={firstStatus} title="User" icon={<UserOutlined />} />
+                    <Step status={secondStatus} title="Verification" icon={<SolutionOutlined />} />
+                    <Step status={thirdStatus} title="Done" icon={<SmileOutlined />} />
+                </Steps>
+            </div>
+
+
         </>
     )
 }

@@ -4,6 +4,10 @@ need to work on sign in and signout component useeffect// Done
 //check on avatar and Popover //Done
 //need to work on hearder component to customize space for avatar and notification menu. //Done
 //add breadcrumb menu on protected page component. //Done
+//make home page and redirect the user to "/" //Done
+//add steps on reset - for better UI //Done
+//need to craete custom see more componenet. third party sucks. //Done
+
 
 
 Store, localstorage, Protected routes, logout, menuItem....//Partially completed, also working on this along other task.... 
@@ -14,14 +18,11 @@ Store, localstorage, Protected routes, logout, menuItem....//Partially completed
 *****************************
 
 
-
 //make change for the selectedRole . Put an endpoint and update all the data.
 sent token .. csurf and the status.
 
 
-
-//add steps on reset - for better UI
+//next
 //use Backtop for better UI
-//need to craete custom see more componenet. third party sucks.
-//make home page and redirect the user to "/"
 
+************

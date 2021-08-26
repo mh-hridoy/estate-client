@@ -3,12 +3,12 @@ work on login , register , reset Password apis. // Done..
 need to work on sign in and signout component useeffect// Done
 //check on avatar and Popover //Done
 //need to work on hearder component to customize space for avatar and notification menu. //Done
-//add breadcrumb menu on protected page component. //Done
+//add breadcrumb/accordion menu on protected page component. //Done
 //make home page and redirect the user to "/" //Done
 //add steps on reset - for better UI //Done
 //need to craete custom see more componenet. third party sucks. //Done
 //use Backtop for better UI//Done
-
+delete all unusal spaces.// Done
 
 
 Store, localstorage, Protected routes, logout, menuItem....//Partially completed, also working on this along other task.... 

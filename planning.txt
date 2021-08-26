@@ -9,6 +9,7 @@ need to work on sign in and signout component useeffect// Done
 //need to craete custom see more componenet. third party sucks. //Done
 //use Backtop for better UI//Done
 delete all unusal spaces.// Done
+make form for advance inquiry.// Done
 
 
 Store, localstorage, Protected routes, logout, menuItem....//Partially completed, also working on this along other task.... 
@@ -20,10 +21,14 @@ Store, localstorage, Protected routes, logout, menuItem....//Partially completed
 
 
 //next
-make form for advance inquiry.// 
+make a requestable URI for both basic and advance search request// Done
+fix all the name of input to match with the backend//
+make a get request//
 
 ************
 
 //make change for the selectedRole . Put an endpoint and update all the data.
 sent token .. csurf and the status.
+fix the sale date search//
+must lookup on aggregation method.
 

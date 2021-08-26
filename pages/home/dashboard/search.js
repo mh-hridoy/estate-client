@@ -11,7 +11,27 @@ const search = () => {
     const { TabPane } = Tabs;
 
     const basicSearch = (values) => {
-        console.log(values);
+
+        //setup an array for single URI
+        const arrayOfURI = []
+
+        for (const [key, value] of Object.entries(values)) {
+
+            //first delete all the undefined values.
+            if (values[key] !== undefined) {
+                delete values[key]
+                // console.log(`${key}: ${value}`);
+                arrayOfURI.push(`${key.trim()}=${value.split(' ').join("+")}`)
+            }
+        }
+
+        const URI = arrayOfURI.join("&")
+
+        console.log(URI)
+
+
+        //propertyAddress=308+james+palace
+
     };
 
     const advanceSearch = (values) => {

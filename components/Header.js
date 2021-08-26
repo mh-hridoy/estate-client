@@ -27,7 +27,6 @@ const Header = () => {
 
             setIsLoading(false)
             localStorage.clear('user')
-            toast.success(data.message)
             router.push('/')
             router.reload()
         } catch (err) {

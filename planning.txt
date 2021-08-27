@@ -10,6 +10,11 @@ need to work on sign in and signout component useeffect// Done
 //use Backtop for better UI//Done
 delete all unusal spaces.// Done
 make form for advance inquiry.// Done
+Will be working on sort iteration and join with main URI.//Done
+need to recreate search functionality//Done
+make a requestable URI for both basic and advance search request// Done
+fix all the name of input to match with the backend//Done
+make a get request//Done
 
 
 Store, localstorage, Protected routes, logout, menuItem....//Partially completed, also working on this along other task.... 
@@ -19,12 +24,7 @@ Store, localstorage, Protected routes, logout, menuItem....//Partially completed
 
 *****************************
 
-Will be working on sort iteration and join with main URI.
 //next
-need to recreate search functionality//
-make a requestable URI for both basic and advance search request// Done
-fix all the name of input to match with the backend//
-make a get request//
 add protected menu item and services.//
 fix active link on avatar.. try using dropdown menuItem for dashboard. otherwise it sucks.😒
 

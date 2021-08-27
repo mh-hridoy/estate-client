@@ -15,7 +15,7 @@ const UserAvatar = (props) => {
 
     return (
         <Popover content={props.content} title="User Information" trigger="hover" placement="bottom" >
-            <Avatar style={{ backgroundColor: '#87d068', cursor: "pointer" }} icon={<UserOutlined />} className={`headerUser ${router.pathname === "/home/dashboard" || router.pathname.includes("dashboard") && "active"}`} />
+            <Avatar style={{ backgroundColor: '#87d068', cursor: "pointer" }} icon={<UserOutlined />} className={`headerUser ${router.pathname.includes("dashboard") && "active"}`} />
 
         </Popover>
     )

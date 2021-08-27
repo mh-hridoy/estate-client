@@ -25,8 +25,8 @@ Store, localstorage, Protected routes, logout, menuItem....//Partially completed
 *****************************
 
 //next
-add protected menu item and services.//
-fix active link on avatar.. try using dropdown menuItem for dashboard. otherwise it sucks.😒
+add all menu item and services on top in every protected routes.//
+fix active link on avatar.. 😒
 
 ************
 
@@ -34,4 +34,12 @@ fix active link on avatar.. try using dropdown menuItem for dashboard. otherwise
 sent token .. csurf and the status.
 fix the sale date search//
 must lookup on aggregation method.
+
+*******
+
+//use collapse component for sale date and bidderinfo.
+//use table component for property result.
+//consider to change the reset page ui with progress component.
+//use result component for the blocked or inactive users.
+
 

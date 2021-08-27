@@ -65,25 +65,61 @@ const search = () => {
             setIsLoading(false)
             const errorMsg = err.response ? err.response.data.message : "Something went wrong!!!"
             toast.error(errorMsg)
-
         }
-
     };
 
 
 
-    const advanceSearch = (values) => {
+    const advanceSearch = async (values) => {
         const arrayOfURI = []
+        const allSort = []
+
+        const { fSort, fOrder, sSort, sOrder } = { ...values }
 
         for (const [key, value] of Object.entries(values)) {
 
+            // it worked... 
+            values.fSort = undefined
+            values.sSort = undefined
+            values.fOrder = undefined
+            values.sOrder = undefined
             if (values[key] !== undefined) {
                 delete values[key]
-                arrayOfURI.push(`${key.trim()}=${value.split(' ').join("+")}`)
+                const iteratedData = `${key.trim()}=${value.split(' ').join("+")}`
+                arrayOfURI.push(iteratedData)
             }
         }
+        arrayOfURI.push(`page=1`)
+
+        //sort and push to array
+        const fSortBy = fSort && `${fOrder == "ASC" ? "" : "-"}${fSort ? fSort : ""}`
+        const sSortBy = sSort && `${sOrder == "ASC" ? "" : "-"}${sSort ? sSort : ""}`
+        allSort.push(fSortBy, sSortBy)
+        const sortBy = allSort.join(",")
+        const correctedSortBy = sortBy && `sort=${sortBy ? sortBy : ""}`
+        arrayOfURI.push(correctedSortBy)
 
         const URI = arrayOfURI.join("&")
+        const URL = `http://localhost:5000/api/properties?${URI && URI}`
+
+        const requestableURL = URL.replace(/,\s*$/, "");
+
+        try {
+            setIsLoading(true)
+            const { data } = await axios.get(requestableURL, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }, withCredentials: true
+            })
+            setIsLoading(false)
+
+            console.log(data)
+
+        } catch (err) {
+            setIsLoading(false)
+            const errorMsg = err.response ? err.response.data.message : "Something went wrong!!!"
+            toast.error(errorMsg)
+        }
 
     };
 

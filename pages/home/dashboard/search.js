@@ -1,6 +1,6 @@
 import React from 'react'
 import ProtectedPage from '../../../components/ProtectedPage'
-import { Row, Col, Button, Form, Input, Select, DatePicker, Space, Tabs } from 'antd'
+import { Row, Col, Button, Form, Input, Select, DatePicker, Tabs } from 'antd'
 import styles from '../../../styles/search.module.css'
 import axios from 'axios'
 
@@ -12,38 +12,47 @@ const search = () => {
     const { TabPane } = Tabs;
 
     const basicSearch = async (values) => {
-        //setup an array for single URI
         const arrayOfURI = []
-        const arrayOfSort = []
+        const allSort = []
+
+        const { fSort, fOrder, sSort, sOrder } = { ...values }
 
         for (const [key, value] of Object.entries(values)) {
 
-            //first delete all the undefined values.
+            // it worked... 
+            values.fSort = undefined
+            values.sSort = undefined
+            values.fOrder = undefined
+            values.sOrder = undefined
             if (values[key] !== undefined) {
                 delete values[key]
-                // console.log(`${key}: ${value}`);
-                //need to emmit the sort part . craete another array for sort and order then marge them by join. EVERYTHING SUCKS😠
-                //need to send page and limit everytime
-
-                values.sort && delete values.sort
-                values.sSort && delete values.sSort
-                values.fOrder && delete values.fOrder
-                values.sOrder && delete values.sOrder
-
                 const iteratedData = `${key.trim()}=${value.split(' ').join("+")}`
                 arrayOfURI.push(iteratedData)
             }
         }
+        arrayOfURI.push(`page=1`)
+
+        //sort and push to array
+        const fSortBy = fSort && `${fOrder == "ASC" ? "" : "-"}${fSort ? fSort : ""}`
+        const sSortBy = sSort && `${sOrder == "ASC" ? "" : "-"}${sSort ? sSort : ""}`
+        allSort.push(fSortBy, sSortBy)
+        const sortBy = allSort.join(",")
+        const correctedSortBy = sortBy && `sort=${sortBy ? sortBy : ""}`
+        arrayOfURI.push(correctedSortBy)
 
         const URI = arrayOfURI.join("&")
+        const URL = `http://localhost:5000/api/properties?${URI && URI}`
 
-        console.log(URI)
+        const requestableURL = URL.replace(/,\s*$/, "");
 
+        const { data } = await axios.get(requestableURL, { withCredentials: true })
 
+        console.log(data)
 
-        //propertyAddress=308+james+palace
 
     };
+
+
 
     const advanceSearch = (values) => {
         const arrayOfURI = []
@@ -304,16 +313,14 @@ const search = () => {
                                         <div className={styles.searchItem}>
 
                                             <Col xs={12} sm={8} md={6} style={{ height: "70px" }} >
-                                                <Item label="1st Sort : " htmlFor="sort" name="sort" >
-                                                    <Select style={{ width: "100%", border: "1px solid black" }} placeholder="Select Sort" name="sort" id="sort" >
-                                                        <Option value="Sale Date">Sale Date</Option>
-                                                        <Option value="LotSqf">LotSqf</Option>
-                                                        <Option value="Property Address">Property Address</Option>
-                                                        <Option value="Total Sqf">Total Sqf</Option>
-                                                        <Option value="Owner Name">Owner Name</Option>
-                                                        <Option value="Borrower Name">Borrower Name</Option>
-                                                        <Option value="Bidder Name">Bidder Name</Option>
-                                                        <Option value="Winning Bidder Name">Winning Bidder Name</Option>
+                                                <Item label="1st Sort : " htmlFor="fSort" name="fSort">
+                                                    <Select style={{ width: "100%", border: "1px solid black" }} placeholder="Select Sort" name="fSort" id="fSort" >
+                                                        <Option value="saleinfo.saleDate">Sale Date</Option>
+                                                        <Option value="lotSqf">LotSqf</Option>
+                                                        <Option value="propertyAddress">Property Address</Option>
+                                                        <Option value="totalSqf">Total Sqf</Option>
+                                                        <Option value="ownerInfo.ownerFullName">Owner Name</Option>
+                                                        <Option value="borrowerInfo.borrowerName">Borrower Name</Option>
                                                     </Select>
                                                 </Item>
                                             </Col>
@@ -321,7 +328,7 @@ const search = () => {
 
                                             <Col xs={12} sm={8} md={6} style={{ height: "70px" }} >
 
-                                                <Item label="Order : " htmlFor="fOrder" name="fOrder" initialValue="ASC" >
+                                                <Item label="Order : " htmlFor="fOrder" name="fOrder"  >
                                                     <Select style={{ width: "100%", border: "1px solid black" }} placeholder="Select Sort" name="fOrder" id="fOrder" >
                                                         <Option value="ASC">ASC</Option>
                                                         <Option value="DESC">DESC</Option>
@@ -333,14 +340,12 @@ const search = () => {
 
                                                 <Item label="2nd Sort : " htmlFor="sSort" name="sSort" >
                                                     <Select style={{ width: "100%", border: "1px solid black" }} placeholder="Select Sort" name="sSort" id="sSort" >
-                                                        <Option value="Sale Date">Sale Date</Option>
-                                                        <Option value="LotSqf">LotSqf</Option>
-                                                        <Option value="Property Address">Property Address</Option>
-                                                        <Option value="Total Sqf">Total Sqf</Option>
-                                                        <Option value="Owner Name">Owner Name</Option>
-                                                        <Option value="Borrower Name">Borrower Name</Option>
-                                                        <Option value="Bidder Name">Bidder Name</Option>
-                                                        <Option value="Winning Bidder Name">Winning Bidder Name</Option>
+                                                        <Option value="saleinfo.saleDate">Sale Date</Option>
+                                                        <Option value="lotSqf">LotSqf</Option>
+                                                        <Option value="propertyAddress">Property Address</Option>
+                                                        <Option value="totalSqf">Total Sqf</Option>
+                                                        <Option value="ownerInfo.ownerFullName">Owner Name</Option>
+                                                        <Option value="borrowerInfo.borrowerName">Borrower Name</Option>
                                                     </Select>
                                                 </Item>
                                             </Col>
@@ -348,7 +353,7 @@ const search = () => {
                                             <Col xs={12} sm={8} md={6} style={{ height: "70px" }} >
 
                                                 <Item label="Order : " htmlFor="sOrder" name="sOrder" >
-                                                    <Select style={{ width: "100%", border: "1px solid black" }} placeholder="Select Sort" name="sOrder" id="sOrder" >
+                                                    <Select style={{ width: "100%", border: "1px solid black" }} placeholder="Select Order" name="sOrder" id="sOrder" >
                                                         <Option value="ASC">ASC</Option>
                                                         <Option value="DESC">DESC</Option>
                                                     </Select>
@@ -554,16 +559,14 @@ const search = () => {
                                         <div className={styles.searchItem}>
 
                                             <Col xs={12} sm={8} md={6} style={{ height: "70px" }} >
-                                                <Item label="1st Sort : " htmlFor="sort" name="sort" >
-                                                    <Select style={{ width: "100%", border: "1px solid black" }} placeholder="Select Sort" name="sort" id="sort" >
-                                                        <Option value="Sale Date">Sale Date</Option>
-                                                        <Option value="LotSqf">LotSqf</Option>
-                                                        <Option value="Property Address">Property Address</Option>
-                                                        <Option value="Total Sqf">Total Sqf</Option>
-                                                        <Option value="Owner Name">Owner Name</Option>
-                                                        <Option value="Borrower Name">Borrower Name</Option>
-                                                        <Option value="Bidder Name">Bidder Name</Option>
-                                                        <Option value="Winning Bidder Name">Winning Bidder Name</Option>
+                                                <Item label="1st Sort : " htmlFor="fSort" name="fSort" >
+                                                    <Select style={{ width: "100%", border: "1px solid black" }} placeholder="Select Sort" name="fSort" id="fSort" >
+                                                        <Option value="saleinfo.saleDate">Sale Date</Option>
+                                                        <Option value="lotSqf">LotSqf</Option>
+                                                        <Option value="propertyAddress">Property Address</Option>
+                                                        <Option value="totalSqf">Total Sqf</Option>
+                                                        <Option value="ownerInfo.ownerFullName">Owner Name</Option>
+                                                        <Option value="borrowerInfo.borrowerName">Borrower Name</Option>
                                                     </Select>
                                                 </Item>
                                             </Col>
@@ -572,7 +575,7 @@ const search = () => {
                                             <Col xs={12} sm={8} md={6} style={{ height: "70px" }} >
 
                                                 <Item label="Order : " htmlFor="fOrder" name="fOrder" >
-                                                    <Select style={{ width: "100%", border: "1px solid black" }} placeholder="Select Sort" name="fOrder" id="fOrder" >
+                                                    <Select style={{ width: "100%", border: "1px solid black" }} placeholder="Select Order" name="fOrder" id="fOrder" >
                                                         <Option value="ASC">ASC</Option>
                                                         <Option value="DESC">DESC</Option>
                                                     </Select>
@@ -583,14 +586,13 @@ const search = () => {
 
                                                 <Item label="2nd Sort : " htmlFor="sSort" name="sSort" >
                                                     <Select style={{ width: "100%", border: "1px solid black" }} placeholder="Select Sort" name="sSort" id="sSort" >
-                                                        <Option value="Sale Date">Sale Date</Option>
-                                                        <Option value="LotSqf">LotSqf</Option>
-                                                        <Option value="Property Address">Property Address</Option>
-                                                        <Option value="Total Sqf">Total Sqf</Option>
-                                                        <Option value="Owner Name">Owner Name</Option>
-                                                        <Option value="Borrower Name">Borrower Name</Option>
-                                                        <Option value="Bidder Name">Bidder Name</Option>
-                                                        <Option value="Winning Bidder Name">Winning Bidder Name</Option>
+                                                        <Option value="saleinfo.saleDate">Sale Date</Option>
+                                                        <Option value="lotSqf">LotSqf</Option>
+                                                        <Option value="propertyAddress">Property Address</Option>
+                                                        <Option value="totalSqf">Total Sqf</Option>
+                                                        <Option value="ownerInfo.ownerFullName">Owner Name</Option>
+                                                        <Option value="borrowerInfo.borrowerName">Borrower Name</Option>
+
                                                     </Select>
                                                 </Item>
                                             </Col>
@@ -620,7 +622,7 @@ const search = () => {
                                                     <Button htmlType="submit" type="primary" style={{ width: "100%" }}>Submit</Button>
                                                 </Col>
                                                 <Col xs={12} sm={8} md={6} >
-                                                    <Item label="Display Row" htmlFor="limit" name="limit" initialValue="10" >
+                                                    <Item label="Display Row" htmlFor="limit" name="limit" >
                                                         <Select style={{ border: "1px solid black", width: "100%" }} name="limit" id="limit" >
                                                             <Option value="10">10</Option>
                                                             <Option value="20">20</Option>

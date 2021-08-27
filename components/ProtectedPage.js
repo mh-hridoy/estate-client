@@ -5,6 +5,7 @@ import { SyncOutlined } from '@ant-design/icons'
 import { BackTop } from 'antd';
 import Breadcrumbs from 'nextjs-breadcrumbs';
 import useWindowSize from "../utils/useWindowSize"; //window mehtods sucks in react and next.. be carefull to play around with it.
+import MenuInsideProtected from './MenuInsideProtected';
 
 
 
@@ -87,6 +88,7 @@ const ProtectedPage = (props) => {
                 </div>
                 :
                 <>
+                    <MenuInsideProtected />
 
                     <Breadcrumbs omitRootLabel listClassName="crumbList" containerClassName="crumbContainer" inactiveItemClassName="inActiveCrumb" activeItemClassName="activeCrumb" />
 

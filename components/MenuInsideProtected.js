@@ -1,10 +1,59 @@
-import React from 'react'
+import React, { useState, useEffect, useLayoutEffect } from 'react'
+import { Affix, Menu } from 'antd'
+import { useRouter } from 'next/router'
+import { DollarOutlined, LineChartOutlined, NotificationOutlined, PlusOutlined, SearchOutlined, StarOutlined } from '@ant-design/icons'
 
-const MenuInsideProtected = () => {
+typeof window !== 'undefined' ? useLayoutEffect : useEffect
+const MenuInsideProtected = (props) => {
+    const { Item } = Menu;
+    const router = useRouter()
+    const [current, setCurrent] = useState(null)
+
+    const pathname = router.pathname
+
+    const handleClick = e => {
+        router.push(e.key)
+        setCurrent(e.key)
+    }
+
+
+    useEffect(() => {
+        setCurrent(pathname)
+
+    }, [pathname])
+
     return (
-        <div>
+        <>
+            <Affix offsetTop={58}>
+                <Menu onClick={handleClick} selectedKeys={current} mode="horizontal" style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+                    <Item key="/home/dashboard/search" icon={<SearchOutlined />}>
+                        Search Property
+                    </Item>
+                    <Item key="caseInput" icon={<PlusOutlined />}>
+                        Case Input
+                    </Item>
+                    <Item key="buyIt" icon={<DollarOutlined />}>
+                        BuyIt Request
+                    </Item>
+                    <Item key="favorite" icon={<StarOutlined />}>
+                        Favorite Property
+                    </Item>
+                    <Item key="alarm" icon={<NotificationOutlined />}>
+                        Show Alarm
+                    </Item>
+                    <Item key="report" icon={<LineChartOutlined />}>
+                        Report
+                    </Item>
+                    <Item key="AAreport" icon={<LineChartOutlined />}>
+                        AA Report
+                    </Item>
+                </Menu>
 
-        </div>
+            </Affix>
+
+            {props.children}
+
+        </>
     )
 }
 

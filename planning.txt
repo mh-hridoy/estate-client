@@ -15,7 +15,8 @@ need to recreate search functionality//Done
 make a requestable URI for both basic and advance search request// Done
 fix all the name of input to match with the backend//Done
 make a get request//Done
-
+add all menu item and services on top in every protected routes.//Done
+fix active link on avatar.. 😒//Done
 
 Store, localstorage, Protected routes, logout, menuItem....//Partially completed, also working on this along other task.... 
 *******
@@ -25,8 +26,9 @@ Store, localstorage, Protected routes, logout, menuItem....//Partially completed
 *****************************
 
 //next
-add all menu item and services on top in every protected routes.//
-fix active link on avatar.. 😒
+//Work on result functionality.
+//use table component for property result.
+
 
 ************
 
@@ -38,7 +40,6 @@ must lookup on aggregation method.
 *******
 
 //use collapse component for sale date and bidderinfo.
-//use table component for property result.
 //consider to change the reset page ui with progress component.
 //use result component for the blocked or inactive users.
 

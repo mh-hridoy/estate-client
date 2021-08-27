@@ -51,8 +51,8 @@ const Signup = () => {
       })
 
       // data.token && delete data.token
-      console.log(data)
       dispatch(login(data))
+
       localStorage.setItem('user', JSON.stringify(data))
       setIsLoading(false)
       toast.success("Login successful.")

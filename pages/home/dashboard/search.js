@@ -1,12 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
 import ProtectedPage from '../../../components/ProtectedPage'
 import { Row, Col, Button, Form, Input, Select, DatePicker, Tabs } from 'antd'
 import styles from '../../../styles/search.module.css'
 import axios from 'axios'
+import { useSelector } from 'react-redux'
+import { toast } from 'react-toastify'
 
 const search = () => {
+    const [isLoading, setIsLoading] = useState(false)
     const { Item } = Form
     const { Option } = Select
+    const token = useSelector((state) => state.user.token)
+
 
     const [form] = Form.useForm();
     const { TabPane } = Tabs;
@@ -45,10 +50,23 @@ const search = () => {
 
         const requestableURL = URL.replace(/,\s*$/, "");
 
-        const { data } = await axios.get(requestableURL, { withCredentials: true })
+        try {
+            setIsLoading(true)
+            const { data } = await axios.get(requestableURL, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }, withCredentials: true
+            })
+            setIsLoading(false)
 
-        console.log(data)
+            console.log(data)
 
+        } catch (err) {
+            setIsLoading(false)
+            const errorMsg = err.response ? err.response.data.message : "Something went wrong!!!"
+            toast.error(errorMsg)
+
+        }
 
     };
 
@@ -372,7 +390,7 @@ const search = () => {
 
                                                 <Col xs={12} sm={8} md={6} >
 
-                                                    <Button htmlType="submit" type="primary" style={{ width: "100%" }}>Submit</Button>
+                                                    <Button htmlType="submit" loading={isLoading} disabled = {false} type="primary" style={{ width: "100%" }}>Submit</Button>
                                                 </Col>
                                                 <Col xs={12} sm={8} md={6} >
                                                     <Item label="Display Row" htmlFor="limit" name="limit" initialValue="10" >
@@ -619,7 +637,7 @@ const search = () => {
 
                                                 <Col xs={12} sm={8} md={6} >
 
-                                                    <Button htmlType="submit" type="primary" style={{ width: "100%" }}>Submit</Button>
+                                                    <Button loading={isLoading} disabled={false} htmlType="submit" type="primary" style={{ width: "100%" }}>Submit</Button>
                                                 </Col>
                                                 <Col xs={12} sm={8} md={6} >
                                                     <Item label="Display Row" htmlFor="limit" name="limit" >

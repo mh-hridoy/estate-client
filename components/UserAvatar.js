@@ -3,12 +3,6 @@ import { Avatar, Popover } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router'
 
-// const content = (
-//     <div>
-//         <p>Content</p>
-//         <p>Content</p>
-//     </div>
-// );
 const UserAvatar = (props) => {
     const router = useRouter()
 

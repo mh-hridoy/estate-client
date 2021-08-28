@@ -5,12 +5,15 @@ import styles from '../../../styles/search.module.css'
 import axios from 'axios'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
+import Results from '../../../components/Results'
 
 const search = () => {
     const [isLoading, setIsLoading] = useState(false)
+    const [results, setResults] = useState(null)
     const { Item } = Form
     const { Option } = Select
     const token = useSelector((state) => state.user.token)
+
 
 
     const [form] = Form.useForm();
@@ -58,8 +61,7 @@ const search = () => {
                 }, withCredentials: true
             })
             setIsLoading(false)
-
-            console.log(data)
+            setResults(data)
 
         } catch (err) {
             setIsLoading(false)
@@ -709,6 +711,13 @@ const search = () => {
                 </Row>
 
             </div>
+
+            {results &&
+                <div className="result">
+                    <Results />
+
+                </div>
+            }
 
         </ProtectedPage >
     )

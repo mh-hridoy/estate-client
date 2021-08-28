@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useLayoutEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Affix, Menu } from 'antd'
 import { useRouter } from 'next/router'
 import { DollarOutlined, LineChartOutlined, NotificationOutlined, PlusOutlined, SearchOutlined, StarOutlined } from '@ant-design/icons'
 
-typeof window !== 'undefined' ? useLayoutEffect : useEffect
 const MenuInsideProtected = (props) => {
     const { Item } = Menu;
     const router = useRouter()

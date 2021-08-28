@@ -27,7 +27,8 @@ Store, localstorage, Protected routes, logout, menuItem....//Partially completed
 
 //next
 //Work on result functionality.
-//use table component for property result.
+//need to create  component for property result.
+//check sale date search// got an doubt for the date format.//
 
 
 ************
@@ -39,6 +40,7 @@ must lookup on aggregation method.
 
 *******
 
+//if the user login then redirect to requested page.
 //use collapse component for sale date and bidderinfo.
 //consider to change the reset page ui with progress component.
 //use result component for the blocked or inactive users.

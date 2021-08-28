@@ -1,8 +1,13 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
+
 
 const Footer = () => {
+    const user = useSelector((state) => state.user.user)
+
     return (
         <>
+            {!user &&
             <div className="footer">
 
                 <div className="allContent">
@@ -47,7 +52,7 @@ const Footer = () => {
                 </div>
 
             </div>
-
+            }
 
         </>
     )

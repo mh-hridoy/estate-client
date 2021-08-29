@@ -73,7 +73,7 @@ body {
 }
 
 .header {
-  height: 10vh;
+  height: 65px;
   width: 100vw;
   overflow: hidden;
   background-color: var(--primary-color);
@@ -182,7 +182,7 @@ height: 70vh;
 .fullMenuItem.active, .fullMenuItem:hover {
   border-bottom: 4px solid var(--hover-color);
   font-weight: bolder;
-  padding-bottom: 20px;
+  padding-bottom: 22px;
     transition: border-bottom 0.1s ease-in-out;
 
 }

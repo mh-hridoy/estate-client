@@ -1,12 +1,15 @@
 import React from 'react'
-import { Image, Button } from 'antd'
+import { Image, Button, Checkbox } from 'antd'
 import styles from '../styles/results.module.css'
 
-const SingleResult = () => {
+const SingleResult = (props) => {
+
+
+
     return (
         <>
             <div className={styles.singleResultCard}>
-                <input className={styles.propertyId} type="checkbox" id="propertyId" name="propertyId" value="propertyId" />
+                <Checkbox value={props.value} style={{ marginRight: "5px" }} />
                 <div className={styles.imageContainer}>
                     <div className={styles.mainImage}>
                         <Image width={150} height={150} src="" />

@@ -10,7 +10,7 @@ import StoreProvider from '../store/store'
 
 const progress = new ProgressBar({
   size: 3,
-  color: "red",
+  color: "blue",
   className: "bar-of-progress",
   delay: 100,
 });

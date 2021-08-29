@@ -23,6 +23,14 @@ const search = () => {
         const arrayOfURI = []
         const allSort = []
 
+        // const { startDate, endDate } = values
+
+        // const newSatartDate = new Date(startDate._d).toISOString().split('T')[0]
+        // const newEndDate = new Date(endDate._d).toISOString().split('T')[0]
+
+        // console.log(newSatartDate, newEndDate)
+        // return;
+
         const { fSort, fOrder, sSort, sOrder } = { ...values }
 
         for (const [key, value] of Object.entries(values)) {
@@ -270,8 +278,8 @@ const search = () => {
                                                 <div className={styles.searchItem}>
 
                                                     <Col xs={24} md={12} style={{ height: "70px" }} >
-                                                        <Item label="Start Date : " htmlFor="sStartDate" name="sStartDate"  >
-                                                            <DatePicker allowClear placeholder="Select Start Date" id="sStartDate" style={{ width: '100%' }} style={{ border: "1px solid black" }} />
+                                                        <Item label="Start Date : " htmlFor="startDate" name="startDate"  >
+                                                            <DatePicker allowClear placeholder="Select Start Date" id="startDate" style={{ width: '100%' }} style={{ border: "1px solid black" }} />
                                                         </Item>
                                                     </Col>
 

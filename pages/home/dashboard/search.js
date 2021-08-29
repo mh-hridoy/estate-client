@@ -712,12 +712,11 @@ const search = () => {
 
             </div>
 
-            {results &&
                 <div className="result">
                     <Results />
 
                 </div>
-            }
+
 
         </ProtectedPage >
     )

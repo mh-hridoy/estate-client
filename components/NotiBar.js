@@ -1,6 +1,6 @@
 import React from 'react'
 import { BellOutlined } from '@ant-design/icons'
-import { Popover } from 'antd';
+import { Popover, Badge } from 'antd';
 
 const NotiBar = () => {
 
@@ -9,9 +9,13 @@ const NotiBar = () => {
     )
     return (
         <Popover content={content} title="Notification" trigger="hover" placement="bottom">
+            <Badge count={1}>
+
             <div className="notiIcon">
-                <BellOutlined style={{ fontSize: "20px" }} />
-            </div>
+                    <BellOutlined style={{ fontSize: "20px" }} />
+                </div>
+            </Badge>
+
         </Popover>
     )
 }

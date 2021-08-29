@@ -13,6 +13,7 @@ const search = () => {
     const { Item } = Form
     const { Option } = Select
     const token = useSelector((state) => state.user.token)
+    let limit;
 
 
 
@@ -22,6 +23,7 @@ const search = () => {
     const basicSearch = async (values) => {
         const arrayOfURI = []
         const allSort = []
+        limit = values.limit
 
         // const { startDate, endDate } = values
 
@@ -35,7 +37,7 @@ const search = () => {
 
         for (const [key, value] of Object.entries(values)) {
 
-            // it worked... 
+            // undefined the values before the conditional loop. otherwise it wont work. 
             values.fSort = undefined
             values.sSort = undefined
             values.fOrder = undefined
@@ -70,6 +72,8 @@ const search = () => {
             })
             setIsLoading(false)
             setResults(data)
+            console.log(data)
+
 
         } catch (err) {
             setIsLoading(false)
@@ -77,7 +81,6 @@ const search = () => {
             toast.error(errorMsg)
         }
     };
-
 
 
     const advanceSearch = async (values) => {
@@ -720,10 +723,19 @@ const search = () => {
 
             </div>
 
+            {results && results.totalCount !== 0 &&
                 <div className="result">
-                    <Results />
+                    <Results properties={results.allProperty} totalCount={results.totalCount} totalPage={results.totalPage} totalProperty={results.totalProperty} limit={limit} />
 
                 </div>
+            }
+
+            {results && results.totalCount == 0 &&
+                <div className="zeroResult" style={{ textAlign: "center" }} >
+                    <h3>No Result Found</h3>
+                </div>
+            }
+
 
 
         </ProtectedPage >

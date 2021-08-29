@@ -26,10 +26,10 @@
 }
 
 .singleResultCard:hover {
-border-bottom: 2px solid var(--hover-color);
-    border-top: 2px solid var(--secondary-color);
+border-bottom: 1px solid var(--hover-color);
+    border-top: 1px solid var(--secondary-color);
     transform : scale(1, 1.1, 1.2);
-    border-radius: 5px;
+    border-radius: 10px;
 
 }
 
@@ -88,7 +88,7 @@ border-bottom: 2px solid var(--hover-color);
     .singleResultCard {
         flex-direction: column;
         margin: 15px 0;
-        padding : 5px;
+        padding : 0px 5px;
         height : fit-content;
     }
 
@@ -105,12 +105,20 @@ border-bottom: 2px solid var(--hover-color);
     }
 
     .allInfo {
-        padding : 0;
+        margin: 5px 0;
+            justify-content: space-between;
+
+        
     }
 
     .fullResult{
         margin : 2px;
         padding : 5px;
+    }
+
+    .propertyInfo , .otherInfo, .otherInfoTwo {
+        margin : 0 5px;
+        word-wrap: break-word;
     }
 
 }

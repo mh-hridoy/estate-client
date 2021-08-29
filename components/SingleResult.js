@@ -4,6 +4,8 @@ import styles from '../styles/results.module.css'
 
 const SingleResult = (props) => {
 
+    const { info } = props
+
 
 
     return (
@@ -26,18 +28,19 @@ const SingleResult = (props) => {
 
                     <div className={styles.propertyInfo}>
                         <ul>
-                            <li>Property Address : 308 jamse st</li>
-                            <li>City : Charlotte</li>
-                            <li>County : Wake</li>
-                            <li>State : North Carolina</li>
-                            <li>Zip : 65545</li>
-                            <li>Year Built : 1999</li>
-                            <li>Parcel : 2454xxxxx</li>
-                            <li>Total Sqf : 2455</li>
-                            <li>Lot/Acre : 1.2 acre</li>
-                            <li>Owner Name : Craig Brooksby</li>
-                            <li>Borrower Name : Craig Brooksby</li>
-                            <li>Borrower Name : Craig Brooksby</li>
+                            <li>Property Address : {info.propertyAddress}</li>
+                            <li>City : {info.city}</li>
+                            <li>County : {info.county}</li>
+                            <li>State : {info.state}</li>
+                            <li>Zip : {info.zip}</li>
+                            <li>Year Built : {info.yearBuilt}</li>
+                            <li>Parcel : {info.parcelId}</li>
+                            <li>Total Sqf : {info.totalSqf}</li>
+                            <li>Lot/Acre : {info.lotSqf}</li>
+                            <li>Owner Name : {info.ownerFullName}</li>
+                            <li>Borrower Name : {info.borrowerName}</li>
+                            <li>Bed : {info.bed} </li>
+                            <li>Bath : {info.bath}</li>
 
 
                         </ul>
@@ -46,37 +49,38 @@ const SingleResult = (props) => {
 
                     <div className={styles.otherInfo}>
                         <ul>
-                            <li>Trustee : Some trustee</li>
-                            <li>Trustee Address : Charlotte</li>
-                            <li>Sale Type : Some Type</li>
-                            <li>Sale Date : Some Date</li>
-                            <li>Case No. : 20cvd250</li>
-                            <li>1st Lien Amount : 1999</li>
-                            <li>1st Lien Bank : 2454xxxxx</li>
-                            <li>2nd Lien Amount : 1999</li>
-                            <li>2nd Lien Bank : 2454xxxxx</li>
-                            <li>HOA Name : Craig Brooksby</li>
-                            <li>DTC By : Craig Brooksby</li>
-                            <li>DTC By : Craig Brooksby</li>
-
+                            <li>Trustee : {info.saleinfo[info.saleinfo.length - 1].trustee}</li>
+                            <li>Trustee Address : {info.saleinfo[info.saleinfo.length - 1].trusteeAddress}</li>
+                            <li>Sale Type : {info.saleinfo[info.saleinfo.length - 1].saleType}</li>
+                            <li>Sale Date : {info.saleinfo[info.saleinfo.length - 1].saleDate}</li>
+                            <li>Case No. : {info.saleinfo[info.saleinfo.length - 1].caseNumber}</li>
+                            <li>1st Lien Amount :  {info.mortgageInfo[0].lienAmount}</li>
+                            <li>1st Lien Bank : {info.mortgageInfo[0].lender}</li>
+                            <li>2nd Lien Amount : {info.mortgageInfo[1].lienAmount}</li>
+                            <li>2nd Lien Bank : {info.mortgageInfo[1].lender}</li>
+                            <li>HOA Name : {info.hoaLien.hoaName}</li>
+                            <li>DTC By : {info.firstComp.firstDTC}</li>
+                            <li>DTC By Date : {info.firstComp.date}</li>
+                            <li>DCA By : {info.secondComp.secondDCA}</li>
                         </ul>
 
                     </div>
 
                     <div className={styles.otherInfoTwo}>
                         <ul>
-                            <li>DTC By Date : Craig Brooksby</li>
-                            <li>DCA By : Craig Brooksby</li>
-                            <li>DCA By Date: Craig Brooksby</li>
-                            <li>Third Level By : Craig Brooksby</li>
-                            <li>Third Level By Date: Craig Brooksby</li>
-                            <li>Opening Bid: Craig Brooksby</li>
-                            <li>Leading/Winning Bidder: Craig Brooksby</li>
-                            <li>Leading/Winning Bidder Amount: Craig Brooksby</li>
-                            <li>Leading/Winning Bidder Amount: Craig Brooksby</li>
-                            <li>Leading/Winning Bidder Amount: Craig Brooksby</li>
-                            <li>Leading/Winning Bidder Amount: Craig Brooksby</li>
-                            <li>Leading/Winning Bidder Amount: Craig Brooksby</li>
+                            <li>DCA By Date: {info.secondComp.date} </li>
+                            <li>Third Check By : {info.thirdComp.thirdDCA} </li>
+                            <li>Third Check Date: {info.thirdComp.date} </li>
+                            <li>Opening Bid : {info.saleinfo[info.saleinfo.length - 1].firstBidderInfo.amountOfBid} </li>
+                            <li>County Value: {info.countyValue}</li>
+                            <li>Zestimates: {info.zestimate}</li>
+                            <li>CMA: {info.mortgageInfo.cmaArv}</li>
+                            <li>NOS By: {info.saleinfo[info.saleinfo.length - 1].nosName} </li>
+                            <li>NOS By Date: {info.saleinfo[info.saleinfo.length - 1].nosDate} </li>
+                            <li>Image By: {info.saleinfo[info.saleinfo.length - 1].firstBidderInfo.imby}</li>
+                            <li>Image By Date: {info.saleinfo[info.saleinfo.length - 1].firstBidderInfo.imByDate}</li>
+                            <li>1st Buy It: pending...</li>
+                            <li>2nd Buy It: pending...</li>
                         </ul>
                     </div>
                 </div>

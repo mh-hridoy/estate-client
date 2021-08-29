@@ -187,6 +187,14 @@ height: 70vh;
 
 }
 
+.zeroResult {
+  margin : 20px 10px;
+  padding : 10px;
+  border-bottom: 2px solid var(--hover-color);
+  border-top: 2px solid var(--secondary-color);
+  border-radius: 15px;
+}
+
 .burgerContainer {
   display: flex;
   flex-direction: row;

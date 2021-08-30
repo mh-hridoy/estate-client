@@ -35,7 +35,7 @@ const Result = (props) => {
         !checkAll ? setCheckAll(true) : setCheckAll(false)
     };
 
-    console.log(newDefaultCheckedList)
+    // console.log(newDefaultCheckedList)
 
 
     return (

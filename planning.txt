@@ -17,6 +17,12 @@ fix all the name of input to match with the backend//Done
 make a get request//Done
 add all menu item and services on top in every protected routes.//Done
 fix active link on avatar.. 😒//Done
+//Work on result functionality. /Done
+//need to create  component for property result. //Done
+//fix result not found properties. // Done
+//check on antd checked component.//Done
+//check sale date search// got an doubt for the date format.//partially completed... // 
+
 
 Store, localstorage, Protected routes, logout, menuItem....//Partially completed, also working on this along other task.... 
 *******
@@ -26,16 +32,13 @@ Store, localstorage, Protected routes, logout, menuItem....//Partially completed
 *****************************
 
 //next
-//Work on result functionality. /Done
-//need to create  component for property result. //Done
-//fix result not found properties. // Done
-
-//check sale date search// got an doubt for the date format.//partially completed...
-//check on antd checked component.
+work on merge functionality//
 
 
 ************
 
+Others
+*****************************
 //make change for the selectedRole . Put an endpoint and update all the data.
 sent token .. csurf and the status.
 must lookup on aggregation method.
@@ -48,3 +51,8 @@ must lookup on aggregation method.
 //use result component for the blocked or inactive users.
 
 
+to add the export functionality...
+//push all the data or if possible all the selected data to an array...
+//if alldata pushed in array then use the selected ID values array and filter the allData array.
+//use the npm package (npm i react-csv)  for the export.
+wont add PDF functionality for now.//

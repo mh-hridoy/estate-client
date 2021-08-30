@@ -27,15 +27,9 @@ const search = () => {
 
         setLimit(values.limit)
 
-        // const { startDate, endDate } = values
 
-        // const newSatartDate = new Date(startDate._d).toISOString().split('T')[0]
-        // const newEndDate = new Date(endDate._d).toISOString().split('T')[0]
 
-        // console.log(newSatartDate, newEndDate)
-        // return;
-
-        const { fSort, fOrder, sSort, sOrder } = { ...values }
+        const { startDate, endDate, fSort, fOrder, sSort, sOrder } = { ...values }
 
         for (const [key, value] of Object.entries(values)) {
 
@@ -44,6 +38,8 @@ const search = () => {
             values.sSort = undefined
             values.fOrder = undefined
             values.sOrder = undefined
+            values.startDate = undefined
+            values.endDate = undefined
             if (values[key] !== undefined) {
                 delete values[key]
                 const iteratedData = `${key.trim()}=${value.split(' ').join("+")}`
@@ -60,10 +56,17 @@ const search = () => {
         const correctedSortBy = sortBy && `sort=${sortBy ? sortBy : ""}`
         arrayOfURI.push(correctedSortBy)
 
+        const newSatartDate = startDate ? new Date(startDate._d).toISOString().split('T')[0] : ""
+        const newEndDate = endDate ? new Date(endDate._d).toISOString().split('T')[0] : ""
+        arrayOfURI.unshift(`endDate=${newEndDate && newEndDate}`)
+        arrayOfURI.unshift(`startDate=${newSatartDate && newSatartDate}`)
+
+
         const URI = arrayOfURI.join("&")
         const URL = `http://localhost:5000/api/properties?${URI && URI}`
 
         const requestableURL = URL.replace(/,\s*$/, "");
+
 
         try {
             setIsLoading(true)

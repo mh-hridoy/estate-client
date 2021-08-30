@@ -3,31 +3,40 @@ import { Button, Checkbox, Pagination } from 'antd'
 import styles from '../styles/results.module.css'
 import SingleResult from './SingleResult'
 
-
-const plainOptions = []; //need to push all the results id.
-const defaultCheckedList = [];
-
+//need to push all the results id.
+const plainOptions = [];
+const defaultCheckedList = []; //push value after click on the cheked element.
 
 const Result = (props) => {
+    //use let newPlainOptins... and push the data from map funtion. otherwise it wont render the data with the very first render.
+    let newPlainOptins;
     const [checkedList, setCheckedList] = useState(defaultCheckedList);
     const [checkAll, setCheckAll] = useState(false);
+    let newDefaultCheckedList = [...new Set(checkedList)]
+
 
     const { properties, limit, totalSearchedProperty } = props
 
     const onChange = list => {
         setCheckedList(list)
-        setCheckAll(list.length === plainOptions.length);
+        if (list.length == newPlainOptins.length) {
+            setCheckAll(true);
+        } else {
+            setCheckAll(false);
+
+        }
     };
 
+    //having trouble when checkinig all and uncheck one value. 
     const onCheckAllChange = e => {
-        setCheckedList(e.target.checked ? plainOptions : []);
+        setCheckedList(e.target.checked ? newPlainOptins : [])
+
         setCheckAll(e.target.checked);
         !checkAll ? setCheckAll(true) : setCheckAll(false)
-
     };
 
-    // console.log(checkedList) //check the checkedlist here.
-    //need to check totalProperty.
+    console.log(newDefaultCheckedList)
+
 
     return (
         <div className={styles.fullResult}>
@@ -38,9 +47,9 @@ const Result = (props) => {
             </div>
             <div className={styles.operations}>
                 <div className={styles.otherOper}>
-                    <Button >  <Checkbox onChange={onCheckAllChange} checked={checkAll}>
-                        {checkedList.length !== plainOptions.length || checkedList.length == 0 ? "Check all" : "Uncheck all"}
-                    </Checkbox> </Button>
+                    <Button >  <Checkbox onChange={onCheckAllChange} checked={checkAll}  > {!checkAll ? "Check all" : "Uncheck all"}
+                    </Checkbox>
+                    </Button>
                     <Button className={styles.btn}>Export</Button>
                 </div>
                 <div className={styles.merge}>
@@ -50,14 +59,12 @@ const Result = (props) => {
 
             <Checkbox.Group style={{ width: '100%' }} onChange={onChange} value={checkedList} >
 
-                {/* send saleinfo and mortgage info from here */}
-
                 {properties && properties.map((property) => {
-                    const lastSaleinfo = property.saleinfo && property.saleinfo[property.saleinfo.length - 1]
-                    const firstMortgageInfo = property.mortgageInfo[0] && property.mortgageInfo[0]
-                    const secondMortgageInfo = property.mortgageInfo[1] && property.mortgageInfo[1]
+                    plainOptions.push(property._id)
+                    //Push the data from here. Othrwise it wont work for the first render.. See above newPlainOptins variable.
+                    newPlainOptins = [...new Set(plainOptions)]
                     return (
-                        <SingleResult value={property._id} info={property} key={property._id} lastSaleinfo={lastSaleinfo} firstMortgageInfo={firstMortgageInfo && firstMortgageInfo} secondMortgageInfo={secondMortgageInfo && secondMortgageInfo} />
+                        <SingleResult value={property._id} info={property} key={property._id} />
                     )
                 })
                 }
@@ -73,4 +80,4 @@ const Result = (props) => {
     )
 }
 
-export default Result
+export default Result;

@@ -691,7 +691,7 @@ const search = () => {
                                                     <Button loading={isLoading} disabled={false} htmlType="submit" type="primary" style={{ width: "100%" }}>Submit</Button>
                                                 </Col>
                                                 <Col xs={12} sm={8} md={6} >
-                                                    <Item label="Display Row" htmlFor="limit" name="limit" initialValue="10" >
+                                                    <Item label="Display Row" htmlFor="limit" name="limit" >
                                                         <Select style={{ border: "1px solid black", width: "100%" }} name="limit" id="limit" >
                                                             <Option value="10">10</Option>
                                                             <Option value="20">20</Option>

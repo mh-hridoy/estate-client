@@ -4,7 +4,13 @@ import styles from '../styles/results.module.css'
 
 const SingleResult = (props) => {
 
-    const { info, lastSaleinfo, firstMortgageInfo, secondMortgageInfo } = props
+    const { info } = props
+
+    const lastSaleinfo = info.saleinfo && info.saleinfo[info.saleinfo.length - 1]
+    const firstMortgageInfo = info.mortgageInfo[0] && info.mortgageInfo[0]
+    const secondMortgageInfo = info.mortgageInfo[1] && info.mortgageInfo[1]
+
+
 
     const dtcDate = info.firstComp && info.firstComp.date.split("T")[0]
     const dcaDate = info.secondComp && info.secondComp.date.split("T")[0]
@@ -12,6 +18,8 @@ const SingleResult = (props) => {
     const saleDate = lastSaleinfo && lastSaleinfo.saleDate.split("T")[0]
 
     // console.log(lastSaleinfo, firstMortgageInfo, secondMortgageInfo)
+
+
 
     return (
         <>

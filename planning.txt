@@ -29,14 +29,15 @@ Store, localstorage, Protected routes, logout, menuItem....//Partially completed
 //Work on result functionality. /Done
 //need to create  component for property result. //Done
 //fix result not found properties. // Done
-//check sale date search// got an doubt for the date format.//partially done...
+
+//check sale date search// got an doubt for the date format.//partially completed...
+//check on antd checked component.
 
 
 ************
 
 //make change for the selectedRole . Put an endpoint and update all the data.
 sent token .. csurf and the status.
-fix the sale date search//
 must lookup on aggregation method.
 
 *******

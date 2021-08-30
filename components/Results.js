@@ -12,8 +12,7 @@ const Result = (props) => {
     const [checkedList, setCheckedList] = useState(defaultCheckedList);
     const [checkAll, setCheckAll] = useState(false);
 
-    const { properties, totalProperty, limit } = props
-
+    const { properties, limit, totalSearchedProperty } = props
 
     const onChange = list => {
         setCheckedList(list)
@@ -27,20 +26,20 @@ const Result = (props) => {
 
     };
 
-
     // console.log(checkedList) //check the checkedlist here.
+    //need to check totalProperty.
 
     return (
         <div className={styles.fullResult}>
             <div className={styles.paginationArea}>
-                <p>Total records : {totalProperty}</p>
-                <Pagination defaultCurrent={1} hideOnSinglePage={true} responsive={true} total={totalProperty} defaultPageSize={limit} showSizeChanger={false} />
+                <p>Total records : {totalSearchedProperty}</p>
+                <Pagination defaultCurrent={1} hideOnSinglePage={true} responsive={true} total={totalSearchedProperty} defaultPageSize={limit} showSizeChanger={false} />
 
             </div>
             <div className={styles.operations}>
                 <div className={styles.otherOper}>
                     <Button >  <Checkbox onChange={onCheckAllChange} checked={checkAll}>
-                        {checkedList.length !== plainOptions.length ? "Check all" : "Uncheck all"}
+                        {checkedList.length !== plainOptions.length || checkedList.length == 0 ? "Check all" : "Uncheck all"}
                     </Checkbox> </Button>
                     <Button className={styles.btn}>Export</Button>
                 </div>
@@ -49,24 +48,25 @@ const Result = (props) => {
                 </div>
             </div>
 
-
-
             <Checkbox.Group style={{ width: '100%' }} onChange={onChange} value={checkedList} >
 
+                {/* send saleinfo and mortgage info from here */}
+
                 {properties && properties.map((property) => {
-                    plainOptions.push(property._id)
+                    const lastSaleinfo = property.saleinfo && property.saleinfo[property.saleinfo.length - 1]
+                    const firstMortgageInfo = property.mortgageInfo[0] && property.mortgageInfo[0]
+                    const secondMortgageInfo = property.mortgageInfo[1] && property.mortgageInfo[1]
                     return (
-                        <SingleResult value={property._id} info={property} />
+                        <SingleResult value={property._id} info={property} key={property._id} lastSaleinfo={lastSaleinfo} firstMortgageInfo={firstMortgageInfo && firstMortgageInfo} secondMortgageInfo={secondMortgageInfo && secondMortgageInfo} />
                     )
                 })
                 }
 
             </Checkbox.Group>
 
-
             <div className={styles.paginationArea} style={{ borderTop: "1px solid var(--optional-color)", paddingTop: "10px" }}>
-                <p>Total records : {totalProperty}</p>
-                <Pagination defaultCurrent={1} hideOnSinglePage={true} responsive={true} total={totalProperty} defaultPageSize={limit} showSizeChanger={false} />
+                <p>Total records : {totalSearchedProperty}</p>
+                <Pagination defaultCurrent={1} hideOnSinglePage={true} responsive={true} total={totalSearchedProperty} defaultPageSize={limit} showSizeChanger={false} />
 
             </div>
         </div>

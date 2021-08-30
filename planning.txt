@@ -26,9 +26,10 @@ Store, localstorage, Protected routes, logout, menuItem....//Partially completed
 *****************************
 
 //next
-//Work on result functionality.
-//need to create  component for property result.
-//check sale date search// got an doubt for the date format.//
+//Work on result functionality. /Done
+//need to create  component for property result. //Done
+//fix result not found properties. // Done
+//check sale date search// got an doubt for the date format.//partially done...
 
 
 ************

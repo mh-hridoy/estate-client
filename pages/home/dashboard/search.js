@@ -10,20 +10,22 @@ import Results from '../../../components/Results'
 const search = () => {
     const [isLoading, setIsLoading] = useState(false)
     const [results, setResults] = useState(null)
+    const [limit, setLimit] = useState(10)
     const { Item } = Form
     const { Option } = Select
     const token = useSelector((state) => state.user.token)
-    let limit;
 
 
 
     const [form] = Form.useForm();
     const { TabPane } = Tabs;
 
+
     const basicSearch = async (values) => {
         const arrayOfURI = []
         const allSort = []
-        limit = values.limit
+
+        setLimit(values.limit)
 
         // const { startDate, endDate } = values
 
@@ -72,7 +74,7 @@ const search = () => {
             })
             setIsLoading(false)
             setResults(data)
-            console.log(data)
+            // console.log(data)
 
 
         } catch (err) {
@@ -146,7 +148,7 @@ const search = () => {
 
             <h1 style={{ textAlign: "center", textTransform: "capitalize", fontWeight: "bold" }}>Search your desire properties :</h1>
 
-            <div className={styles.searchUi}>
+            <div className={styles.searchUi} >
                 <Row gutter={15} wrap={true} justify="center">
                     <Col span={24} >
 
@@ -689,7 +691,7 @@ const search = () => {
                                                     <Button loading={isLoading} disabled={false} htmlType="submit" type="primary" style={{ width: "100%" }}>Submit</Button>
                                                 </Col>
                                                 <Col xs={12} sm={8} md={6} >
-                                                    <Item label="Display Row" htmlFor="limit" name="limit" >
+                                                    <Item label="Display Row" htmlFor="limit" name="limit" initialValue="10" >
                                                         <Select style={{ border: "1px solid black", width: "100%" }} name="limit" id="limit" >
                                                             <Option value="10">10</Option>
                                                             <Option value="20">20</Option>
@@ -725,7 +727,7 @@ const search = () => {
 
             {results && results.totalCount !== 0 &&
                 <div className="result">
-                    <Results properties={results.allProperty} totalCount={results.totalCount} totalPage={results.totalPage} totalProperty={results.totalProperty} limit={limit} />
+                <Results properties={results.allProperty} totalSearchedProperty={results.totalSearchedProperty} limit={limit} />
 
                 </div>
             }

@@ -5,6 +5,7 @@
     border-top: 2px solid var(--secondary-color);    padding : 10px;
     margin: 15px;
     padding: 15px;
+    padding-bottom: 0px;
 }
 
 .searchForm {

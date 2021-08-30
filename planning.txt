@@ -56,3 +56,7 @@ to add the export functionality...
 //if alldata pushed in array then use the selected ID values array and filter the allData array.
 //use the npm package (npm i react-csv)  for the export.
 wont add PDF functionality for now.//
+
+
+//Automation
+//Research for the Automation on logs.com

@@ -1,0 +1,25 @@
+.mergeContainer {
+    width: 100%;
+    border : 1px solid red;
+    height : fit-content;
+    display : flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    overflow: auto;
+    
+}
+
+.imageContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.singleContainer {
+    margin: 5px 0px;
+    display : flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width : 100%;
+    border : 1px solid var(--optional-color)
+}

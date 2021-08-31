@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Button, Checkbox, Pagination } from 'antd'
 import styles from '../styles/results.module.css'
 import SingleResult from './SingleResult'
 import MergeModal from './MergeModal';
 import WarningModal from './WarningModal';
 import axios from 'axios'
-import { toast } from 'react-toastify'
 import { useSelector } from 'react-redux'
+import { message } from 'antd'
+import Export from './Export';
 
 //need to push all the results id.
 const plainOptions = [];
@@ -83,11 +84,11 @@ const Result = (props) => {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
 
-            toast.success(data)
+            message.success(data + " Please reload or search property again!")
             setModalLoading(false)
             setVisible(false)
         } catch (err) {
-            toast.warn(err.response.data.message || "Something went wrong!")
+            message.error(err.response.data.message || "Something went wrong!")
             setModalLoading(false)
 
 
@@ -113,7 +114,7 @@ const Result = (props) => {
                     <Button >  <Checkbox onChange={onCheckAllChange} checked={checkAll}  > {!checkAll ? "Check all" : "Uncheck all"}
                     </Checkbox>
                     </Button>
-                    <Button className={styles.btn}>Export</Button>
+                    <Export exportList={mergeThisRecord} />
                 </div>
                 <div className={styles.merge}>
                     <Button onClick={openMergeModal} className={styles.btn}> {newDefaultCheckedList.length !== 0 ? "Merge Selected?" : "Merge Record?"} </Button>

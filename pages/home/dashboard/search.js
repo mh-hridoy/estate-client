@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import ProtectedPage from '../../../components/ProtectedPage'
-import { Row, Col, Button, Form, Input, Select, DatePicker, Tabs } from 'antd'
+import { Row, Col, Button, Form, Input, Select, DatePicker, Tabs, message } from 'antd'
 import styles from '../../../styles/search.module.css'
 import axios from 'axios'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import Results from '../../../components/Results'
+
 
 const search = () => {
     const [isLoading, setIsLoading] = useState(false)
@@ -69,21 +70,21 @@ const search = () => {
 
 
         try {
+            message.loading({ content: 'Loading...', key: "1" });
             setIsLoading(true)
             const { data } = await axios.get(requestableURL, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
             })
+            message.success({ content: 'Loaded successfully!', key: "1" });
             setIsLoading(false)
             setResults(data)
             // console.log(data)
-
-
         } catch (err) {
             setIsLoading(false)
             const errorMsg = err.response ? err.response.data.message : "Something went wrong!!!"
-            toast.error(errorMsg)
+            message.error(errorMsg);
         }
     };
 

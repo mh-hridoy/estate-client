@@ -21,8 +21,10 @@ fix active link on avatar.. 😒//Done
 //need to create  component for property result. //Done
 //fix result not found properties. // Done
 //check on antd checked component.//Done
-//check sale date search// got an doubt for the date format.//partially completed... // 
+//check sale date search// got an doubt for the date format.//Done 
 work on merge functionality//Done
+work on export functionality//Done
+
 
 
 Store, localstorage, Protected routes, logout, menuItem....//Partially completed, also working on this along other task.... 
@@ -33,9 +35,11 @@ Store, localstorage, Protected routes, logout, menuItem....//Partially completed
 *****************************
 
 //next
-work on export functionality//
+work on pagination httpRequest//
 work on overview component//
-
+make disabled to false Search button//
+craete axios cancel token//
+//show loading spinner when search button clicke.. that way result component will reRender.//
 
 ************
 

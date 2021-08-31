@@ -10,15 +10,13 @@ const WarningModal = (props) => {
             onCancel={props.handleTerminate}
             confirmLoading={props.modalLoading}
 
+
             footer={[
                 <Button key="back" onClick={props.handleTerminate}>
                     Ok
                 </Button>
             ]}
         >
-
-
-
 
             <p> <ExclamationCircleOutlined /> {props.mergerWarning}</p>
 

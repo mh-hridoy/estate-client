@@ -26,12 +26,9 @@ const MergeModal = (props) => {
             <div className={styles.mergeContainer}>
                 {info.map(record => {
                     const lastSaleinfo = record.saleinfo && record.saleinfo[record.saleinfo.length - 1]
-
                     const saleDate = lastSaleinfo && lastSaleinfo.saleDate.split("T")[0]
-
-
                     return (
-                        <div className={styles.singleContainer}>
+                        <div className={styles.singleContainer} key={record._id} >
                             <div className={styles.imageContainer}>
                                 <Image alt="image" height={80} width={80} />
                             </div>
@@ -44,10 +41,6 @@ const MergeModal = (props) => {
                                     <li>Year Built : {record.yearBuilt}</li>
                                     <li>Sale Type : {lastSaleinfo.saleType}</li>
                                     <li>1st Buy It: pending...</li>
-
-
-
-
                                 </ul>
                             </div>
 
@@ -70,5 +63,6 @@ const MergeModal = (props) => {
         </Modal>
     )
 }
+
 
 export default MergeModal

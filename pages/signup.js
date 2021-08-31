@@ -116,8 +116,8 @@ const Signup = () => {
         <SyncOutlined spin size="large" className="pageLoading" />
       </div>
         :
-      <Row>
-        <div className={styles.loginPage}>
+        <Row>
+          <div className={styles.loginPage}>
 
           <Col xs={24} md={12} className={styles.fullForm}>
             <div className={styles.loginForm}>

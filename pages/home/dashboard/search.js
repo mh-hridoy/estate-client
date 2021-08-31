@@ -73,7 +73,7 @@ const search = () => {
             const { data } = await axios.get(requestableURL, {
                 headers: {
                     'Authorization': `Bearer ${token}`
-                }, withCredentials: true
+                }
             })
             setIsLoading(false)
             setResults(data)
@@ -730,7 +730,7 @@ const search = () => {
 
             {results && results.totalCount !== 0 &&
                 <div className="result">
-                <Results properties={results.allProperty} totalSearchedProperty={results.totalSearchedProperty} limit={limit} />
+                <Results properties={results.allProperty} totalSearchedProperty={results.totalSearchedProperty} limit={limit} basicSearch={basicSearch} />
 
                 </div>
             }
@@ -741,7 +741,9 @@ const search = () => {
                 </div>
             }
 
+            <div className={styles.bottomPart}>
 
+            </div>
 
         </ProtectedPage >
     )

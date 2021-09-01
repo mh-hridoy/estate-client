@@ -24,6 +24,11 @@ fix active link on avatar.. 😒//Done
 //check sale date search// got an doubt for the date format.//Done 
 work on merge functionality//Done
 work on export functionality//Done
+//add warning on merge component//Done
+work on pagination httpRequest//Done
+//fix advance search pagination and form.//Done
+//show loading spinner when search button clicke.. that way result component will reRender.// Done
+make disabled to false Search button//Done
 
 
 
@@ -35,12 +40,7 @@ Store, localstorage, Protected routes, logout, menuItem....//Partially completed
 *****************************
 
 //next
-//add warning on merge component//Done
-work on pagination httpRequest//Done
-//fix advance search pagination and form.//Done
-//show loading spinner when search button clicke.. that way result component will reRender.// Done
-make disabled to false Search button//
-work on overview component//
+work on overview component// use top drawer components//
 craete axios cancel token//
 //research on dynamic query url//
 //fix 304code request.

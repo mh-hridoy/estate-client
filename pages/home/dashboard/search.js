@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect } from 'react'
 import ProtectedPage from '../../../components/ProtectedPage'
 import { Row, Col, Button, Form, Input, Select, DatePicker, Tabs, message } from 'antd'
 import styles from '../../../styles/search.module.css'
@@ -23,6 +23,7 @@ const search = () => {
     const [changePage, setChangePage] = useState(false)
     const [resultLoading, setResultIsLoading] = useState(false)
 
+
     const [form] = Form.useForm();
     const { TabPane } = Tabs;
 
@@ -30,7 +31,6 @@ const search = () => {
     const limitChange = (value) => {
         setLimit(value)
     }
-
 
     const onPageChange = (pageNumber) => {
         setSelectedPage(pageNumber)
@@ -88,6 +88,7 @@ const search = () => {
     };
 
     useEffect(() => {
+
         if (isSearched) {
             const arrayOfURI = []
             const allSort = []
@@ -136,6 +137,7 @@ const search = () => {
 
             // console.log(requestableURL)
 
+
             const basicSearchReq = async () => {
                 try {
                     setSelectedPage('1')
@@ -146,7 +148,9 @@ const search = () => {
                         headers: {
                             'Authorization': `Bearer ${token}`
                         }
-                    })
+                    }
+
+                    )
                     message.success({ content: 'Loaded successfully!', key: "1" });
                     setIsLoading(false)
                     setResultIsLoading(false)
@@ -161,7 +165,9 @@ const search = () => {
                     message.error({ content: errorMsg, key: "1" });
                 }
             }
+
             basicSearchReq()
+
         } else if (isASearched) {
             const arrayOfURI = []
             const allSort = []
@@ -226,6 +232,10 @@ const search = () => {
             advanceSearchReq()
 
         }
+
+
+
+
     }, [isSearched, searchValue, isASearched])
 
 
@@ -534,7 +544,7 @@ const search = () => {
 
                                                 <Col xs={12} sm={8} md={6} >
 
-                                                    <Button htmlType="submit" loading={isLoading} disabled={false} type="primary" style={{ width: "100%" }}>Submit</Button>
+                                                    <Button htmlType="submit" type="primary" style={{ width: "100%" }}> {!isLoading ? "Submit" : <SyncOutlined spin />} </Button>
                                                 </Col>
                                                 <Col xs={12} sm={8} md={6} >
                                                     <Item label="Display Row" htmlFor="limit" name="limit" >
@@ -782,7 +792,7 @@ const search = () => {
 
                                                 <Col xs={12} sm={8} md={6} >
 
-                                                    <Button loading={isLoading} disabled={false} htmlType="submit" type="primary" style={{ width: "100%" }}>Submit</Button>
+                                                    <Button htmlType="submit" type="primary" style={{ width: "100%" }}> {!isLoading ? "Submit" : <SyncOutlined spin />} </Button>
                                                 </Col>
                                                 <Col xs={12} sm={8} md={6} >
                                                     <Item label="Display Row" htmlFor="limit" name="limit" >

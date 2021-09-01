@@ -23,7 +23,7 @@ const SingleResult = (props) => {
 
     return (
         <>
-            <div className={styles.singleResultCard}>
+            <div className={styles.singleResultCard} onClick={() => props.onClick(info._id)} >
                 <Checkbox value={props.value} style={{ marginRight: "5px" }} />
                 <div className={styles.imageContainer}>
                     <div className={styles.mainImage}>

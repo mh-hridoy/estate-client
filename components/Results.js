@@ -8,6 +8,7 @@ import axios from 'axios'
 import { useSelector } from 'react-redux'
 import { message } from 'antd'
 import Export from './Export';
+import PropertyOverview from './PropertyOverview';
 
 //need to push all the results id.
 const plainOptions = [];
@@ -23,6 +24,9 @@ const Result = (props) => {
     const [visible, setVisible] = useState(false)
     const [mergerWarning, setMergeWarning] = useState("")
     const [warningModal, showWarningModal] = useState(false)
+
+    const [showOverviewDrawer, setShowOverviewDrawer] = useState(false)
+
 
     const [modalLoading, setModalLoading] = useState(false)
     const newDefaultCheckedList = [...new Set(checkedList)] // will use this to check the full list.
@@ -71,6 +75,16 @@ const Result = (props) => {
 
     }
 
+    const closeOverviewDrawer = () => {
+        setShowOverviewDrawer(false)
+    }
+
+    const openOverviewDrawer = (pId) => {
+        console.log(pId)
+        setShowOverviewDrawer(true)
+
+    }
+
     const handleSubmit = async () => {
         setModalLoading(true)
         const mergeSelectedItem = []
@@ -103,6 +117,7 @@ const Result = (props) => {
     }
     //this will check all the properties._id and if it matched with newDefaultCheckedList(id) then it will stage the data. //Do NOT USE (every) method OR DO NOT CHNAGE THE ORDER OF FILTER. LIKE newDefaultCheckedList.filter && properties.some ***DONT DO THAT. IT WILL RETURN ONLY ID SINCE ITS FILTERING ONLY IDs.
     return (
+        <>
         <div className={styles.fullResult}>
             <div className={styles.paginationArea}>
                 <p>Total records : {totalSearchedProperty}</p>
@@ -129,7 +144,7 @@ const Result = (props) => {
                     //Push the data from here. Othrwise it wont work for the first render.. See above newPlainOptins variable.
                     newPlainOptins = [...new Set(plainOptions)]
                     return (
-                        <SingleResult value={property._id} info={property} key={property._id} />
+                        <SingleResult value={property._id} info={property} key={property._id} onClick={openOverviewDrawer} />
                     )
                 })
                 }
@@ -148,7 +163,9 @@ const Result = (props) => {
             {warningModal && <WarningModal warningModal={warningModal} handleTerminate={handleTerminate} mergerWarning={mergerWarning} />}
 
 
-        </div>
+            </div>
+            {showOverviewDrawer && <PropertyOverview closeOverviewDrawer={closeOverviewDrawer} showOverviewDrawer={showOverviewDrawer} />}
+        </>
     )
 }
 

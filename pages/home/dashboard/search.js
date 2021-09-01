@@ -5,6 +5,7 @@ import styles from '../../../styles/search.module.css'
 import axios from 'axios'
 import { useSelector } from 'react-redux'
 import Results from '../../../components/Results'
+import { SyncOutlined } from '@ant-design/icons'
 
 
 const search = () => {
@@ -20,6 +21,7 @@ const search = () => {
     const [limit, setLimit] = useState('10')
     const [requesteURI, setRequestedUri] = useState()
     const [changePage, setChangePage] = useState(false)
+    const [resultLoading, setResultIsLoading] = useState(false)
 
     const [form] = Form.useForm();
     const { TabPane } = Tabs;
@@ -43,9 +45,8 @@ const search = () => {
 
             const requestableURL = `http://localhost:5000/api/properties?${emmitSpace}`
 
-            console.log(requestableURL)
-
             const onChangeSearch = async () => {
+                setResultIsLoading(true)
                 try {
                     message.loading({ content: 'Loading...', key: "1" });
                     setIsLoading(true)
@@ -56,9 +57,13 @@ const search = () => {
                     })
                     message.success({ content: 'Loaded successfully!', key: "1" });
                     setIsLoading(false)
+                    setResultIsLoading(false)
+
                     setResults(data)
+
                     // console.log(data)
                 } catch (err) {
+                    setResultIsLoading(false)
                     setIsLoading(false)
                     const errorMsg = err.response ? err.response.data.message : "Something went wrong!!!"
                     message.error({ content: errorMsg, key: "1" });
@@ -68,7 +73,7 @@ const search = () => {
 
 
         }
-    }, [selectedPage, requesteURI])
+    }, [selectedPage])
 
 
     const basicSearch = async (values) => {
@@ -133,6 +138,8 @@ const search = () => {
 
             const basicSearchReq = async () => {
                 try {
+                    setSelectedPage('1')
+                    setResultIsLoading(true)
                     message.loading({ content: 'Loading...', key: "1" });
                     setIsLoading(true)
                     const { data } = await axios.get(requestableURL, {
@@ -142,9 +149,13 @@ const search = () => {
                     })
                     message.success({ content: 'Loaded successfully!', key: "1" });
                     setIsLoading(false)
+                    setResultIsLoading(false)
+
                     setResults(data)
                     // console.log(data)
                 } catch (err) {
+                    setResultIsLoading(false)
+
                     setIsLoading(false)
                     const errorMsg = err.response ? err.response.data.message : "Something went wrong!!!"
                     message.error({ content: errorMsg, key: "1" });
@@ -190,6 +201,8 @@ const search = () => {
             console.log(requestableURL)
             const advanceSearchReq = async () => {
                 try {
+                    setResultIsLoading(true)
+                    setSelectedPage('1')
                     message.loading({ content: 'Loading...', key: "1" });
                     setIsLoading(true)
                     const { data } = await axios.get(requestableURL, {
@@ -199,10 +212,13 @@ const search = () => {
                     })
                     message.success({ content: 'Loaded successfully!', key: "1" });
                     setIsLoading(false)
+                    setResultIsLoading(false)
+
                     setResults(data)
                     // console.log(data)
                 } catch (err) {
                     setIsLoading(false)
+                    setResultIsLoading(false)
                     const errorMsg = err.response ? err.response.data.message : "Something went wrong!!!"
                     message.error({ content: errorMsg, key: "1" });
                 }
@@ -210,7 +226,7 @@ const search = () => {
             advanceSearchReq()
 
         }
-    }, [isSearched, searchValue, isASearched, limit])
+    }, [isSearched, searchValue, isASearched])
 
 
 
@@ -803,7 +819,11 @@ const search = () => {
 
             </div>
 
-            {results && results.totalCount !== 0 &&
+            {resultLoading && <div style={{ textAlign: "center", width: "100%", height: "45px", display: "flex", alignItems: "center", justifyContent: "center" }} >
+                <SyncOutlined spin style={{ fontSize: "30px" }} />
+            </div>}
+
+            {!resultLoading && results && results.totalCount !== 0 &&
                 <div className="result">
                 <Results properties={results.allProperty} totalSearchedProperty={results.totalSearchedProperty} limit={limit} basicSearch={basicSearch} onPageChange={onPageChange} selectedPage={selectedPage} />
 

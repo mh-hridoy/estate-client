@@ -27,9 +27,12 @@ const Result = (props) => {
     const [modalLoading, setModalLoading] = useState(false)
     const newDefaultCheckedList = [...new Set(checkedList)] // will use this to check the full list.
 
-    const { properties, limit, totalSearchedProperty } = props
+    const { properties, limit, totalSearchedProperty, selectedPage } = props
 
     const mergeThisRecord = properties.filter(({ _id: id1 }) => newDefaultCheckedList.some((id2) => id2 === id1));
+
+    const pageLimit = +limit
+    const nSelectedPage = +selectedPage || 1
 
     const onChange = list => {
 
@@ -98,15 +101,13 @@ const Result = (props) => {
     const handleTerminate = () => {
         showWarningModal(false)
     }
-
-
-    //this will check all the properties._id and if it matched with newDefaultCheckedList(id) then it will stage the data. //Do NOT USE EVERY OR DO NOT CHNAGE THE ORDER OF FILTER. LIKE newDefaultCheckedList.filter && properties.some ***DONT DO THAT. IT WILL RETURN ONLY ID SINCE ITS FILTERING ONLY ID.
-
+    //this will check all the properties._id and if it matched with newDefaultCheckedList(id) then it will stage the data. //Do NOT USE (every) method OR DO NOT CHNAGE THE ORDER OF FILTER. LIKE newDefaultCheckedList.filter && properties.some ***DONT DO THAT. IT WILL RETURN ONLY ID SINCE ITS FILTERING ONLY IDs.
     return (
         <div className={styles.fullResult}>
             <div className={styles.paginationArea}>
                 <p>Total records : {totalSearchedProperty}</p>
-                <Pagination defaultCurrent={1} hideOnSinglePage={true} responsive={true} total={totalSearchedProperty} defaultPageSize={limit} showSizeChanger={false} />
+                {/* //need to add result perpage and hide that and pass the same value as the form. also add current prop. */}
+                <Pagination responsive={true} onChange={props.onPageChange} total={+totalSearchedProperty} pageSize={pageLimit} hideOnSinglePage current={nSelectedPage} defaultCurrent={nSelectedPage} showSizeChanger={false} />
 
             </div>
             <div className={styles.operations}>
@@ -137,7 +138,8 @@ const Result = (props) => {
 
             <div className={styles.paginationArea} style={{ borderTop: "1px solid var(--optional-color)", paddingTop: "10px" }}>
                 <p>Total records : {totalSearchedProperty}</p>
-                <Pagination defaultCurrent={1} hideOnSinglePage={true} responsive={true} total={totalSearchedProperty} defaultPageSize={limit} showSizeChanger={false} />
+                {/* //need to add result perpage and hide that and pass the same value as the form. also add current prop. */}
+                <Pagination responsive={true} onChange={props.onPageChange} total={+totalSearchedProperty} pageSize={pageLimit} hideOnSinglePage current={nSelectedPage} defaultCurrent={nSelectedPage} showSizeChanger={false} />
 
             </div>
 

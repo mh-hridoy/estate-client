@@ -35,11 +35,16 @@ Store, localstorage, Protected routes, logout, menuItem....//Partially completed
 *****************************
 
 //next
-work on pagination httpRequest//
+//add warning on merge component//Done
+work on pagination httpRequest//Done
+//fix advance search pagination and form.//Done
+//show loading spinner when search button clicke.. that way result component will reRender.//
+
 work on overview component//
 make disabled to false Search button//
 craete axios cancel token//
-//show loading spinner when search button clicke.. that way result component will reRender.//
+//research on dynamic query url//
+//fix 304code request.
 
 ************
 

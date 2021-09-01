@@ -1,146 +1,219 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import ProtectedPage from '../../../components/ProtectedPage'
 import { Row, Col, Button, Form, Input, Select, DatePicker, Tabs, message } from 'antd'
 import styles from '../../../styles/search.module.css'
 import axios from 'axios'
 import { useSelector } from 'react-redux'
-import { toast } from 'react-toastify'
 import Results from '../../../components/Results'
 
 
 const search = () => {
     const [isLoading, setIsLoading] = useState(false)
     const [results, setResults] = useState(null)
-    const [limit, setLimit] = useState(10)
     const { Item } = Form
     const { Option } = Select
     const token = useSelector((state) => state.user.token)
-
-
+    const [selectedPage, setSelectedPage] = useState()
+    const [searchValue, setSearchValue] = useState()
+    const [isSearched, setIsSearched] = useState(false)
+    const [isASearched, setIsASearched] = useState(false)
+    const [limit, setLimit] = useState('10')
+    const [requesteURI, setRequestedUri] = useState()
+    const [changePage, setChangePage] = useState(false)
 
     const [form] = Form.useForm();
     const { TabPane } = Tabs;
 
 
-    const basicSearch = async (values) => {
-        const arrayOfURI = []
-        const allSort = []
-
-        setLimit(values.limit)
+    const limitChange = (value) => {
+        setLimit(value)
+    }
 
 
+    const onPageChange = (pageNumber) => {
+        setSelectedPage(pageNumber)
+        setChangePage(true)
+    }
 
-        const { startDate, endDate, fSort, fOrder, sSort, sOrder } = { ...values }
+    useEffect(() => {
+        if (changePage) {
+            const modifyURI = requesteURI.replace("page=1", `page=${selectedPage ? selectedPage : ""}`)
 
-        for (const [key, value] of Object.entries(values)) {
+            const emmitSpace = modifyURI.replace(/,\s*$/, "");
 
-            // undefined the values before the conditional loop. otherwise it wont work. 
-            values.fSort = undefined
-            values.sSort = undefined
-            values.fOrder = undefined
-            values.sOrder = undefined
-            values.startDate = undefined
-            values.endDate = undefined
-            if (values[key] !== undefined) {
-                delete values[key]
-                const iteratedData = `${key.trim()}=${value.split(' ').join("+")}`
-                arrayOfURI.push(iteratedData)
-            }
-        }
-        arrayOfURI.push(`page=1`)
+            const requestableURL = `http://localhost:5000/api/properties?${emmitSpace}`
 
-        //sort and push to array
-        const fSortBy = fSort && `${fOrder == "ASC" ? "" : "-"}${fSort ? fSort : ""}`
-        const sSortBy = sSort && `${sOrder == "ASC" ? "" : "-"}${sSort ? sSort : ""}`
-        allSort.push(fSortBy, sSortBy)
-        const sortBy = allSort.join(",")
-        const correctedSortBy = sortBy && `sort=${sortBy ? sortBy : ""}`
-        arrayOfURI.push(correctedSortBy)
+            console.log(requestableURL)
 
-        const newSatartDate = startDate ? new Date(startDate._d).toISOString().split('T')[0] : ""
-        const newEndDate = endDate ? new Date(endDate._d).toISOString().split('T')[0] : ""
-        arrayOfURI.unshift(`endDate=${newEndDate && newEndDate}`)
-        arrayOfURI.unshift(`startDate=${newSatartDate && newSatartDate}`)
-
-
-        const URI = arrayOfURI.join("&")
-        const URL = `http://localhost:5000/api/properties?${URI && URI}`
-
-        const requestableURL = URL.replace(/,\s*$/, "");
-
-
-        try {
-            message.loading({ content: 'Loading...', key: "1" });
-            setIsLoading(true)
-            const { data } = await axios.get(requestableURL, {
-                headers: {
-                    'Authorization': `Bearer ${token}`
+            const onChangeSearch = async () => {
+                try {
+                    message.loading({ content: 'Loading...', key: "1" });
+                    setIsLoading(true)
+                    const { data } = await axios.get(requestableURL, {
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    })
+                    message.success({ content: 'Loaded successfully!', key: "1" });
+                    setIsLoading(false)
+                    setResults(data)
+                    // console.log(data)
+                } catch (err) {
+                    setIsLoading(false)
+                    const errorMsg = err.response ? err.response.data.message : "Something went wrong!!!"
+                    message.error({ content: errorMsg, key: "1" });
                 }
-            })
-            message.success({ content: 'Loaded successfully!', key: "1" });
-            setIsLoading(false)
-            setResults(data)
-            // console.log(data)
-        } catch (err) {
-            setIsLoading(false)
-            const errorMsg = err.response ? err.response.data.message : "Something went wrong!!!"
-            message.error(errorMsg);
-        }
-    };
+            }
+            onChangeSearch()
 
+
+        }
+    }, [selectedPage, requesteURI])
+
+
+    const basicSearch = async (values) => {
+        setSearchValue(values)
+        setIsSearched(true)
+    };
 
     const advanceSearch = async (values) => {
-        const arrayOfURI = []
-        const allSort = []
-
-        const { fSort, fOrder, sSort, sOrder } = { ...values }
-
-        for (const [key, value] of Object.entries(values)) {
-
-            // it worked... 
-            values.fSort = undefined
-            values.sSort = undefined
-            values.fOrder = undefined
-            values.sOrder = undefined
-            if (values[key] !== undefined) {
-                delete values[key]
-                const iteratedData = `${key.trim()}=${value.split(' ').join("+")}`
-                arrayOfURI.push(iteratedData)
-            }
-        }
-        arrayOfURI.push(`page=1`)
-
-        //sort and push to array
-        const fSortBy = fSort && `${fOrder == "ASC" ? "" : "-"}${fSort ? fSort : ""}`
-        const sSortBy = sSort && `${sOrder == "ASC" ? "" : "-"}${sSort ? sSort : ""}`
-        allSort.push(fSortBy, sSortBy)
-        const sortBy = allSort.join(",")
-        const correctedSortBy = sortBy && `sort=${sortBy ? sortBy : ""}`
-        arrayOfURI.push(correctedSortBy)
-
-        const URI = arrayOfURI.join("&")
-        const URL = `http://localhost:5000/api/properties?${URI && URI}`
-
-        const requestableURL = URL.replace(/,\s*$/, "");
-
-        try {
-            setIsLoading(true)
-            const { data } = await axios.get(requestableURL, {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }, withCredentials: true
-            })
-            setIsLoading(false)
-
-            console.log(data)
-
-        } catch (err) {
-            setIsLoading(false)
-            const errorMsg = err.response ? err.response.data.message : "Something went wrong!!!"
-            toast.error(errorMsg)
-        }
+        setSearchValue(values)
+        setIsASearched(true)
 
     };
+
+    useEffect(() => {
+        if (isSearched) {
+            const arrayOfURI = []
+            const allSort = []
+            const { startDate, endDate, fSort, fOrder, sSort, sOrder } = { ...searchValue }
+
+            for (const [key, value] of Object.entries(searchValue)) {
+
+                // undefined the searchValue before the conditional loop. otherwise it wont work. 
+                searchValue.fSort = undefined
+                searchValue.sSort = undefined
+                searchValue.fOrder = undefined
+                searchValue.sOrder = undefined
+                searchValue.startDate = undefined
+                searchValue.endDate = undefined
+                searchValue.limit = undefined
+
+                if (searchValue[key] !== undefined) {
+                    delete searchValue[key]
+                    const iteratedData = `${key.trim()}=${value.split(' ').join("+")}`
+                    arrayOfURI.push(iteratedData)
+                }
+            }
+            arrayOfURI.push(`page=${"1"}`)
+            arrayOfURI.push(`limit=${limit ? limit : "10"}`)
+
+            //sort and push to array
+            const fSortBy = fSort && `${fOrder == "ASC" ? "" : "-"}${fSort ? fSort : ""}`
+            const sSortBy = sSort && `${sOrder == "ASC" ? "" : "-"}${sSort ? sSort : ""}`
+            allSort.push(fSortBy, sSortBy)
+            const sortBy = allSort.join(",")
+            const correctedSortBy = sortBy && `sort=${sortBy ? sortBy : ""}`
+            arrayOfURI.push(correctedSortBy)
+
+            const newSatartDate = startDate ? new Date(startDate._d).toISOString().split('T')[0] : ""
+            const newEndDate = endDate ? new Date(endDate._d).toISOString().split('T')[0] : ""
+            arrayOfURI.unshift(`endDate=${newEndDate && newEndDate}`)
+            arrayOfURI.unshift(`startDate=${newSatartDate && newSatartDate}`)
+
+
+            const URI = arrayOfURI.join("&")
+            setRequestedUri(URI)
+            const URL = `http://localhost:5000/api/properties?${URI && URI}`
+
+
+            const requestableURL = URL.replace(/,\s*$/, "");
+
+            // console.log(requestableURL)
+
+            const basicSearchReq = async () => {
+                try {
+                    message.loading({ content: 'Loading...', key: "1" });
+                    setIsLoading(true)
+                    const { data } = await axios.get(requestableURL, {
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    })
+                    message.success({ content: 'Loaded successfully!', key: "1" });
+                    setIsLoading(false)
+                    setResults(data)
+                    // console.log(data)
+                } catch (err) {
+                    setIsLoading(false)
+                    const errorMsg = err.response ? err.response.data.message : "Something went wrong!!!"
+                    message.error({ content: errorMsg, key: "1" });
+                }
+            }
+            basicSearchReq()
+        } else if (isASearched) {
+            const arrayOfURI = []
+            const allSort = []
+
+            const { fSort, fOrder, sSort, sOrder } = { ...searchValue }
+
+            for (const [key, value] of Object.entries(searchValue)) {
+
+                // it worked...
+                searchValue.fSort = undefined
+                searchValue.sSort = undefined
+                searchValue.fOrder = undefined
+                searchValue.sOrder = undefined
+                if (searchValue[key] !== undefined) {
+                    delete searchValue[key]
+                    const iteratedData = `${key.trim()}=${value.split(' ').join("+")}`
+                    arrayOfURI.push(iteratedData)
+                }
+            }
+            arrayOfURI.push(`page=1`)
+
+            arrayOfURI.push(`page=${"1"}`)
+            arrayOfURI.push(`limit=${limit ? limit : "10"}`)
+
+            //sort and push to array
+            const fSortBy = fSort && `${fOrder == "ASC" ? "" : "-"}${fSort ? fSort : ""}`
+            const sSortBy = sSort && `${sOrder == "ASC" ? "" : "-"}${sSort ? sSort : ""}`
+            allSort.push(fSortBy, sSortBy)
+            const sortBy = allSort.join(",")
+            const correctedSortBy = sortBy && `sort=${sortBy ? sortBy : ""}`
+            arrayOfURI.push(correctedSortBy)
+
+            const URI = arrayOfURI.join("&")
+            const URL = `http://localhost:5000/api/properties?${URI && URI}`
+
+            const requestableURL = URL.replace(/,\s*$/, "");
+            console.log(requestableURL)
+            const advanceSearchReq = async () => {
+                try {
+                    message.loading({ content: 'Loading...', key: "1" });
+                    setIsLoading(true)
+                    const { data } = await axios.get(requestableURL, {
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    })
+                    message.success({ content: 'Loaded successfully!', key: "1" });
+                    setIsLoading(false)
+                    setResults(data)
+                    // console.log(data)
+                } catch (err) {
+                    setIsLoading(false)
+                    const errorMsg = err.response ? err.response.data.message : "Something went wrong!!!"
+                    message.error({ content: errorMsg, key: "1" });
+                }
+            }
+            advanceSearchReq()
+
+        }
+    }, [isSearched, searchValue, isASearched, limit])
+
+
+
 
 
     const onReset = () => {
@@ -159,7 +232,7 @@ const search = () => {
                         <Tabs type="card" size="large" animated>
                             <TabPane tab="Basic Search" key="1">
 
-                                <Form form={form} layout="vertical" name="control-hooks" className={styles.searchForm} onFinish={basicSearch} >
+                                <Form form={form} layout="vertical" name="control-hooks" className={styles.searchForm} onFinish={basicSearch} initialValues={{ limit: "10" }} >
                                     <h3 style={{ textAlign: "center", width: "100%" }}> Property Descripton Search : </h3>
                                     <hr style={{ width: "100%", marginBottom: "10px" }}
                                     />
@@ -288,13 +361,13 @@ const search = () => {
 
                                                     <Col xs={24} md={12} style={{ height: "70px" }} >
                                                         <Item label="Start Date : " htmlFor="startDate" name="startDate"  >
-                                                            <DatePicker allowClear placeholder="Select Start Date" id="startDate" style={{ width: '100%' }} style={{ border: "1px solid black" }} />
+                                                            <DatePicker placeholder="Select Start Date" id="startDate" style={{ width: '100%' }} style={{ border: "1px solid black" }} />
                                                         </Item>
                                                     </Col>
 
                                                     <Col xs={24} md={12} style={{ height: "70px" }} >
                                                         <Item label="End Date : " htmlFor="endDate" name="endDate"  >
-                                                            <DatePicker allowClear placeholder="Select End Date" id="endDate" style={{ width: '100%' }} style={{ border: "1px solid black" }} />
+                                                            <DatePicker placeholder="Select End Date" id="endDate" style={{ width: '100%' }} style={{ border: "1px solid black" }} />
                                                         </Item>
                                                     </Col>
                                                 </div>
@@ -310,13 +383,13 @@ const search = () => {
                                                 <div className={styles.searchItem}>
                                                     <Col xs={24} md={12} style={{ height: "70px" }} >
                                                         <Item label="Start Date : " htmlFor="rStartDate" name="rStartDate" >
-                                                            <DatePicker allowClear placeholder="Select Start Date" id="rStartDate" style={{ width: '100%' }} style={{ border: "1px solid black" }} />
+                                                            <DatePicker placeholder="Select Start Date" id="rStartDate" style={{ width: '100%' }} style={{ border: "1px solid black" }} />
                                                         </Item>
                                                     </Col>
 
                                                     <Col xs={24} md={12} style={{ height: "70px" }} >
                                                         <Item label="End Date : " htmlFor="rEndDate" name="rEndDate"  >
-                                                            <DatePicker allowClear placeholder="Select End Date" id="rEndDate" style={{ width: '100%' }} style={{ border: "1px solid black" }} />
+                                                            <DatePicker placeholder="Select End Date" id="rEndDate" style={{ width: '100%' }} style={{ border: "1px solid black" }} />
                                                         </Item>
                                                     </Col>
                                                 </div>
@@ -445,11 +518,12 @@ const search = () => {
 
                                                 <Col xs={12} sm={8} md={6} >
 
-                                                    <Button htmlType="submit" loading={isLoading} disabled = {false} type="primary" style={{ width: "100%" }}>Submit</Button>
+                                                    <Button htmlType="submit" loading={isLoading} disabled={false} type="primary" style={{ width: "100%" }}>Submit</Button>
                                                 </Col>
                                                 <Col xs={12} sm={8} md={6} >
-                                                    <Item label="Display Row" htmlFor="limit" name="limit" initialValue="10" >
-                                                        <Select style={{ border: "1px solid black", width: "100%" }} name="limit" id="limit" >
+                                                    <Item label="Display Row" htmlFor="limit" name="limit" >
+                                                        {/* //had to add the onchange function here to save the selected value */}
+                                                        <Select style={{ border: "1px solid black", width: "100%" }} name="limit" id="limit" onChange={limitChange} >
                                                             <Option value="10">10</Option>
                                                             <Option value="20">20</Option>
                                                             <Option value="100">100</Option>
@@ -477,7 +551,7 @@ const search = () => {
                             </TabPane>
 
                             <TabPane tab="Advance Search" key="2">
-                                <Form form={form} layout="vertical" name="control-hooks" className={styles.searchForm} onFinish={advanceSearch} >
+                                <Form form={form} layout="vertical" name="control-hooks" className={styles.searchForm} onFinish={advanceSearch} initialValues={{ limit: "10" }}  >
                                     <h3 style={{ textAlign: "center", width: "100%" }}> Owner Info : </h3>
                                     <hr style={{ width: "100%", marginBottom: "10px" }}
                                     />
@@ -544,12 +618,12 @@ const search = () => {
                                                 </Item>
                                             </Col>
 
-                                        
+
                                         </div>
                                     </Col>
 
 
-            
+
 
                                     <Col span={24} >
                                         <h3 style={{ textAlign: "center", width: "100%" }}> Property Info : </h3>
@@ -658,7 +732,7 @@ const search = () => {
                                             <Col xs={12} sm={8} md={6} style={{ height: "70px" }} >
 
                                                 <Item label="2nd Sort : " htmlFor="sSort" name="sSort" >
-                                                    <Select style={{ width: "100%", border: "1px solid black" }} placeholder="Select Sort" name="sSort" id="sSort" >
+                                                    <Select style={{ width: "100%", border: "1px solid black" }} placeholder="Select Sort" name="sSort" id="sSort"  >
                                                         <Option value="saleinfo.saleDate">Sale Date</Option>
                                                         <Option value="lotSqf">LotSqf</Option>
                                                         <Option value="propertyAddress">Property Address</Option>
@@ -696,7 +770,7 @@ const search = () => {
                                                 </Col>
                                                 <Col xs={12} sm={8} md={6} >
                                                     <Item label="Display Row" htmlFor="limit" name="limit" >
-                                                        <Select style={{ border: "1px solid black", width: "100%" }} name="limit" id="limit" >
+                                                        <Select style={{ border: "1px solid black", width: "100%" }} name="limit" id="limit" onChange={limitChange} >
                                                             <Option value="10">10</Option>
                                                             <Option value="20">20</Option>
                                                             <Option value="100">100</Option>
@@ -731,7 +805,7 @@ const search = () => {
 
             {results && results.totalCount !== 0 &&
                 <div className="result">
-                <Results properties={results.allProperty} totalSearchedProperty={results.totalSearchedProperty} limit={limit} basicSearch={basicSearch} />
+                <Results properties={results.allProperty} totalSearchedProperty={results.totalSearchedProperty} limit={limit} basicSearch={basicSearch} onPageChange={onPageChange} selectedPage={selectedPage} />
 
                 </div>
             }

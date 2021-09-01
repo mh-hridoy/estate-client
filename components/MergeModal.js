@@ -24,6 +24,8 @@ const MergeModal = (props) => {
             ]}
         >
             <div className={styles.mergeContainer}>
+                <h3 style={{ textAlign: "center", fontSize: "14px" }} >Selected {`${info.length > 1 ? "properties" : "property"}`} will be merged from the system permanently.</h3>
+                <pre style={{ fontSize: "10px", textAlign: "center" }}>(Please click on <b> "Submit" </b> button to continue...)</pre>
                 {info.map(record => {
                     const lastSaleinfo = record.saleinfo && record.saleinfo[record.saleinfo.length - 1]
                     const saleDate = lastSaleinfo && lastSaleinfo.saleDate.split("T")[0]

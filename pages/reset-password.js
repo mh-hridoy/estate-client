@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import styles from '../styles/login.module.css'
-import { Row, Col, Button, Steps } from 'antd'
+import { Row, Col, Button, Steps, message } from 'antd'
 import { Form, Input } from 'formik-antd'
 import { Formik } from 'formik'
 import * as Yup from 'yup';
 import { MailOutlined, QrcodeOutlined, LockOutlined, SyncOutlined, UserOutlined, SolutionOutlined, SmileOutlined } from '@ant-design/icons';
-import { toast } from 'react-toastify'
 import axios from 'axios'
 import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
@@ -57,7 +56,7 @@ const resetPassword = () => {
                 }
             })
 
-            toast.success("Your password reset code has been sent to your email.")
+            message.success("Your password reset code has been sent to your email.")
             setIsLoading(false)
             isEmailSubmitted(true)
             setFirstStatus("finish")
@@ -65,7 +64,7 @@ const resetPassword = () => {
         } catch (err) {
             setIsLoading(false)
             setFirstStatus("error")
-            toast.error(err.response.data.message ? err.response.data.message : "Something went wrong!!!")
+            message.error(err.response.data.message ? err.response.data.message : "Something went wrong!!!")
 
         }
     }
@@ -79,14 +78,14 @@ const resetPassword = () => {
                 }
             })
 
-            toast.success("Please change your password now.")
+            message.success("Please change your password now.")
             setIsLoading(false)
             setSecondStatus("finish")
             isCodeSubmitted(true)
         } catch (err) {
             setIsLoading(false)
             setSecondStatus("error")
-            toast.error(err.response.data.message || "Something went wrong!!!")
+            message.error(err.response.data.message || "Something went wrong!!!")
 
         }
     }
@@ -101,7 +100,7 @@ const resetPassword = () => {
                 }
             })
 
-            toast.success("Password successfully changed!, Please login now.")
+            message.success("Password successfully changed!, Please login now.")
             router.push("/signup")
             setIsLoading(false)
             setThirdStatus("finish")
@@ -110,7 +109,7 @@ const resetPassword = () => {
             setIsLoading(false)
             router.push("/reset-password")
             setThirdStatus("error")
-            toast.error(err.response.data.message || "Something went wrong!!!")
+            message.error(err.response.data.message || "Something went wrong!!!")
 
         }
 

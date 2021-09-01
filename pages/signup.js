@@ -1,12 +1,11 @@
 import styles from '../styles/login.module.css'
-import { Row, Col, Button } from 'antd';
+import { Row, Col, Button, message } from 'antd';
 import { Form, Input } from 'formik-antd'
 import { Formik } from 'formik'
 import * as Yup from 'yup';
 import { MailOutlined, UserOutlined, LockOutlined, DollarOutlined, ShoppingCartOutlined, HomeOutlined, UnorderedListOutlined, SyncOutlined } from '@ant-design/icons';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { toast } from 'react-toastify'
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import { login } from '../store/userInfoSlice'
@@ -55,13 +54,13 @@ const Signup = () => {
 
       localStorage.setItem('user', JSON.stringify(data))
       setIsLoading(false)
-      toast.success("Login successful.")
+      message.success("Login successful.")
       router.push('/home/dashboard')
     } catch (err) {
       setIsLoading(false)
       //do not put here err.response.data.message ? err.response.data.message : "Something went wrong!!!".. otherwise it wont catch the error.
       const errorMsg = err.response ? err.response.data.message : "Something went wrong!!!"
-      toast.error(errorMsg)
+      message.error(errorMsg)
 
     }
   };
@@ -77,12 +76,12 @@ const Signup = () => {
 
       console.log(data)
       setIsLoading(false)
-      toast.success("Signup successful. Please login Now.")
+      message.success("Signup successful. Please login Now.")
       setIsLogin(false)
 
     } catch (err) {
       setIsLoading(false)
-      toast.error(err.response.data.message || "Please provide the correct data & try again.")
+      message.error(err.response.data.message || "Please provide the correct data & try again.")
 
     }
   };

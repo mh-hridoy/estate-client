@@ -27,6 +27,7 @@ const Result = (props) => {
 
     const [showOverviewDrawer, setShowOverviewDrawer] = useState(false)
 
+    const [selectedForOverview, setSelectedForOverview] = useState()
 
     const [modalLoading, setModalLoading] = useState(false)
     const newDefaultCheckedList = [...new Set(checkedList)] // will use this to check the full list.
@@ -80,7 +81,8 @@ const Result = (props) => {
     }
 
     const openOverviewDrawer = (pId) => {
-        console.log(pId)
+        const selectedPropertyToOverview = properties.filter(({ _id: id1 }) => id1 === pId)
+        setSelectedForOverview(selectedPropertyToOverview)
         setShowOverviewDrawer(true)
 
     }
@@ -144,7 +146,7 @@ const Result = (props) => {
                     //Push the data from here. Othrwise it wont work for the first render.. See above newPlainOptins variable.
                     newPlainOptins = [...new Set(plainOptions)]
                     return (
-                        <SingleResult value={property._id} info={property} key={property._id} onClick={openOverviewDrawer} />
+                        <SingleResult key={property._id} value={property._id} info={property} onClick={openOverviewDrawer} />
                     )
                 })
                 }
@@ -164,7 +166,7 @@ const Result = (props) => {
 
 
             </div>
-            {showOverviewDrawer && <PropertyOverview closeOverviewDrawer={closeOverviewDrawer} showOverviewDrawer={showOverviewDrawer} />}
+            {showOverviewDrawer && selectedForOverview && <PropertyOverview closeOverviewDrawer={closeOverviewDrawer} showOverviewDrawer={showOverviewDrawer} property={selectedForOverview} />}
         </>
     )
 }

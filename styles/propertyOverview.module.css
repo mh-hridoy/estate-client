@@ -1,0 +1,51 @@
+.carousel {
+    height : 400px;
+    width : 400px;
+}
+
+
+
+.fullPropertyOverView {
+    display : flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-around;
+}
+
+.propertyMap {
+     height : 250px;
+    width : 400px;
+    border: 1px solid var(--optional-color);
+
+} 
+
+.comparisonSection {
+    margin-top: 26px;
+}
+
+
+/* .propertyAndImage {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width : 90%;
+}
+
+
+.compareAndOtherAndMap {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width : 90%;
+}
+*/
+@media screen and (max-width: 680px) {
+.fullPropertyOverView {
+    flex-direction: column;
+    align-items: center;
+}
+  
+}
+
+
+

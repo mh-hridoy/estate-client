@@ -258,7 +258,7 @@ const search = () => {
                         <Tabs type="card" size="large" animated>
                             <TabPane tab="Basic Search" key="1">
 
-                                <Form form={form} layout="vertical" name="control-hooks" className={styles.searchForm} onFinish={basicSearch} initialValues={{ limit: "10" }} >
+                                <Form form={form} layout="vertical" name="control-hooks" className={styles.searchForm} onFinish={basicSearch} initialValues={{ limit: "10" }} name="BasicForm" >
                                     <h3 style={{ textAlign: "center", width: "100%" }}> Property Descripton Search : </h3>
                                     <hr style={{ width: "100%", marginBottom: "10px" }}
                                     />
@@ -575,6 +575,9 @@ const search = () => {
                                 </Form>
 
                             </TabPane>
+
+
+
 
                             <TabPane tab="Advance Search" key="2">
                                 <Form form={form} layout="vertical" name="control-hooks" className={styles.searchForm} onFinish={advanceSearch} initialValues={{ limit: "10" }}  >

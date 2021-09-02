@@ -14,35 +14,38 @@ const Export = (props) => {
     const [modalLoading, setModalLoading] = useState(false)
     const [selectedData, setSelectedData] = useState([])
 
-    const exportableList = []
+
 
     const fileType =
         "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
     const fileExtension = ".xlsx";
 
+    const exportableList = []
 
     const OpenExportModal = () => {
         if (exportList.length == 0) {
             setWarningText('Please select at least one property to export.')
             setWarningVisible(true)
         } else {
+            exportList.forEach((record) => {
+                const iteratedData = { propertyAddress: record.propertyAddress, yearBuilt: record.yearBuilt }
+                exportableList.push(iteratedData)
+
+            })
+            setSelectedData(exportableList)
+
             setModalVisible(true)
         }
 
 
     }
 
+
     const closeWarningModal = () => {
         setWarningVisible(false)
     }
 
     const handleSubmit = (apiData, fileName) => {
-
-        exportList.map((record) => {
-            const iteratedData = { propertyAddress: record.propertyAddress, yearBuilt: record.yearBuilt }
-            exportableList.push(iteratedData)
-            setSelectedData(exportableList)
-        })
 
         setModalLoading(true)
         try {

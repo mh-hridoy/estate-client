@@ -29,7 +29,7 @@ work on pagination httpRequest//Done
 //fix advance search pagination and form.//Done
 //show loading spinner when search button clicke.. that way result component will reRender.// Done
 make disabled to false Search button//Done
-
+work on overview component// use top drawer components// Done
 
 
 Store, localstorage, Protected routes, logout, menuItem....//Partially completed, also working on this along other task.... 
@@ -40,33 +40,19 @@ Store, localstorage, Protected routes, logout, menuItem....//Partially completed
 *****************************
 
 //next
-work on overview component// use top drawer components//
 craete axios cancel token//
 //research on dynamic query url//
 //fix 304code request.
 
 ************
 
-Others
+Others features and security
 *****************************
-//make change for the selectedRole . Put an endpoint and update all the data.
-sent token .. csurf and the status.
-must lookup on aggregation method.
-
-*******
-
 //if the user login then redirect to requested page.
 //use collapse component for sale date and bidderinfo.
 //consider to change the reset page ui with progress component.
 //use result component for the blocked or inactive users.
-
-
-to add the export functionality...
-//push all the data or if possible all the selected data to an array...
-//if alldata pushed in array then use the selected ID values array and filter the allData array.
-//use the npm package (npm i react-csv)  for the export.
-wont add PDF functionality for now.//
-
-
-//Automation
+//make change for the selectedRole . Put an endpoint and update all the data.
+sent token .. csurf and the status.
+must lookup on aggregation method.
 //Research for the Automation on logs.com

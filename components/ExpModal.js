@@ -1,11 +1,10 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Modal, Button } from 'antd'
 
 
 const ExpModal = (props) => {
     const fileName = "Exported info";
 
-    console.log(props.exportList)
 
     return (
         <>

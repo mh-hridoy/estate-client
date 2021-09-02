@@ -23,7 +23,7 @@ const SingleResult = (props) => {
 
     return (
         <>
-            <div className={styles.singleResultCard} onClick={() => props.onClick(info._id)} >
+            <div className={styles.singleResultCard}>
                 <Checkbox value={props.value} style={{ marginRight: "5px" }} />
                 <div className={styles.imageContainer}>
                     <div className={styles.mainImage}>
@@ -37,7 +37,7 @@ const SingleResult = (props) => {
                     </div>
                 </div>
 
-                <div className={styles.allInfo}>
+                <div className={styles.allInfo} onClick={() => props.onClick(info._id)}>
 
                     <div className={styles.propertyInfo}>
                         <ul>
@@ -60,7 +60,7 @@ const SingleResult = (props) => {
 
                     </div>
 
-                    <div className={styles.otherInfo}>
+                    <div className={styles.otherInfo} onClick={() => props.onClick(info._id)}>
                         <ul>
                             <li>Trustee : {lastSaleinfo.trustee && lastSaleinfo.trustee}</li>
                             <li>Trustee Address : {lastSaleinfo.trusteeAddress && lastSaleinfo.trusteeAddress}</li>
@@ -83,7 +83,7 @@ const SingleResult = (props) => {
 
                     </div>
 
-                    <div className={styles.otherInfoTwo}>
+                    <div className={styles.otherInfoTwo} onClick={() => props.onClick(info._id)}>
                         <ul>
                             <li>DCA By Date: {dcaDate} </li>
                             <li>Third Check By : {info.thirdComp.thirdDCA} </li>

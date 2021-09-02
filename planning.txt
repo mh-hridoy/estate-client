@@ -30,6 +30,9 @@ work on pagination httpRequest//Done
 //show loading spinner when search button clicke.. that way result component will reRender.// Done
 make disabled to false Search button//Done
 work on overview component// use top drawer components// Done
+craete axios cancel token// Researched on that. //had added on basic search ..
+//fix 304code request.// this will show up if the httpRequest data does not changed.
+//lookup on cookie-parser //Done// Added notes on server and protectedRouts page.
 
 
 Store, localstorage, Protected routes, logout, menuItem....//Partially completed, also working on this along other task.... 
@@ -40,9 +43,11 @@ Store, localstorage, Protected routes, logout, menuItem....//Partially completed
 *****************************
 
 //next
-craete axios cancel token//
-//research on dynamic query url//
-//fix 304code request.
+**research on dynamic query url**
+make export customized url//
+make merge customized url//
+make overview customized url//
+
 
 ************
 

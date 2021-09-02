@@ -76,9 +76,13 @@ const search = () => {
     }, [selectedPage])
 
 
-    const basicSearch = async (values) => {
+    const basicSearch = (values) => {
+
         setSearchValue(values)
         setIsSearched(true)
+
+
+
     };
 
     const advanceSearch = async (values) => {
@@ -88,6 +92,7 @@ const search = () => {
     };
 
     useEffect(() => {
+        // const httpRequest = axios.CancelToken.source()
 
         if (isSearched) {
             const arrayOfURI = []
@@ -147,7 +152,8 @@ const search = () => {
                     const { data } = await axios.get(requestableURL, {
                         headers: {
                             'Authorization': `Bearer ${token}`
-                        }
+                        }, withCredentials: true,
+                        // cancelToken: httpRequest.token
                     }
 
                     )
@@ -233,8 +239,10 @@ const search = () => {
 
         }
 
+        // return () => {
 
-
+        //     httpRequest.cancel('Cancelled previous request due to new request')
+        // }
 
     }, [isSearched, searchValue, isASearched])
 

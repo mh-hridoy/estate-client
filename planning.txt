@@ -35,6 +35,7 @@ craete axios cancel token// Researched on that. //had added on basic search ..
 //lookup on cookie-parser //Done// Added notes on server and protectedRouts page.
 make onPageReloadFetch data// Done
 change URL on search// Done
+Fix sale date 1day behind problem in backend//Done
 
 
 Store, localstorage, Protected routes, logout, menuItem....//Partially completed, also working on this along other task.... 
@@ -45,8 +46,8 @@ Store, localstorage, Protected routes, logout, menuItem....//Partially completed
 *****************************
 
 //next
-Fix sale date 1day behind problem in backend//
-
+work on single page property info UI//
+create endpoints for single property info//
 
 ************
 

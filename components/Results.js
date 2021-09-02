@@ -29,6 +29,7 @@ const Result = (props) => {
 
     const [selectedForOverview, setSelectedForOverview] = useState()
 
+
     const [modalLoading, setModalLoading] = useState(false)
     const newDefaultCheckedList = [...new Set(checkedList)] // will use this to check the full list.
 
@@ -84,6 +85,9 @@ const Result = (props) => {
         const selectedPropertyToOverview = properties.filter(({ _id: id1 }) => id1 === pId)
         setSelectedForOverview(selectedPropertyToOverview)
         setShowOverviewDrawer(true)
+
+
+        //setup shallow router setup
 
     }
 
@@ -141,7 +145,7 @@ const Result = (props) => {
 
             <Checkbox.Group style={{ width: '100%' }} onChange={onChange} value={checkedList} >
 
-                {properties && properties.map((property) => {
+                    {properties && properties.length !== 0 && properties.map((property) => {
                     plainOptions.push(property._id)
                     //Push the data from here. Othrwise it wont work for the first render.. See above newPlainOptins variable.
                     newPlainOptins = [...new Set(plainOptions)]
@@ -149,7 +153,9 @@ const Result = (props) => {
                         <SingleResult key={property._id} value={property._id} info={property} onClick={openOverviewDrawer} />
                     )
                 })
-                }
+                    }
+
+                    {properties.length === 0 && <h3 style={{ textAlign: "center", margin: "10px", fontSize: "14px" }}> No Data Found </h3>}
 
             </Checkbox.Group>
 

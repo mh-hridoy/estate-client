@@ -35,6 +35,7 @@ const Export = (props) => {
             setSelectedData(exportableList)
 
             setModalVisible(true)
+
         }
 
 

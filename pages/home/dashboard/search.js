@@ -6,6 +6,7 @@ import axios from 'axios'
 import { useSelector } from 'react-redux'
 import Results from '../../../components/Results'
 import { SyncOutlined } from '@ant-design/icons'
+import { useRouter } from 'next/router'
 
 
 const search = () => {
@@ -22,6 +23,9 @@ const search = () => {
     const [requesteURI, setRequestedUri] = useState()
     const [changePage, setChangePage] = useState(false)
     const [resultLoading, setResultIsLoading] = useState(false)
+    const [shallowUrl, setShallowUrl] = useState()
+    // const [pageLoadFetch, setPageLoadFetch] = useState(false)
+    const router = useRouter()
 
 
     const [form] = Form.useForm();
@@ -40,6 +44,7 @@ const search = () => {
     useEffect(() => {
         if (changePage) {
             const modifyURI = requesteURI.replace("page=1", `page=${selectedPage ? selectedPage : ""}`)
+            setShallowUrl(modifyURI)
 
             const emmitSpace = modifyURI.replace(/,\s*$/, "");
 
@@ -77,13 +82,72 @@ const search = () => {
 
 
     const basicSearch = (values) => {
-
         setSearchValue(values)
         setIsSearched(true)
-
-
-
     };
+
+    useEffect(() => {
+        if (shallowUrl) {
+            const modifiedShollowUrl = shallowUrl.replace(/,\s*$/, "")
+            router.push(`?${modifiedShollowUrl}`, undefined, { shallow: true })
+
+            // setPageLoadFetch(true)
+        }
+    }, [shallowUrl])
+
+
+
+    useEffect(() => {
+        const arrayOfURI = []
+        if (Object.keys(router.query).length !== 0) {
+
+            const query = router.query
+
+            for (const [key, value] of Object.entries(query)) {
+
+                if (query[key] !== undefined) {
+                    delete query[key]
+                    const iteratedData = `${key.trim()}=${value.split(' ').join("+")}`
+                    arrayOfURI.push(iteratedData)
+                }
+            }
+            const joinedUrl = arrayOfURI.join('&')
+            const requestableURL = `http://localhost:5000/api/properties?${joinedUrl}`
+
+            const onPageReloadFetch = async () => {
+                try {
+                    setSelectedPage('1')
+                    setResultIsLoading(true)
+                    message.loading({ content: 'Loading...', key: "1" });
+                    setIsLoading(true)
+                    const { data } = await axios.get(requestableURL, {
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }, withCredentials: true,
+                        // cancelToken: httpRequest.token
+                    }
+
+                    )
+                    message.success({ content: 'Loaded successfully!', key: "1" });
+                    setIsLoading(false)
+                    setResultIsLoading(false)
+
+                    setResults(data)
+                    // console.log(data)
+                } catch (err) {
+                    setResultIsLoading(false)
+
+                    setIsLoading(false)
+                    const errorMsg = err.response ? err.response.data.message : "Something went wrong!!!"
+                    message.error({ content: errorMsg, key: "1" });
+                }
+            }
+
+            onPageReloadFetch()
+
+        }
+
+    }, [Object.keys(router.query).length !== 0])
 
     const advanceSearch = async (values) => {
         setSearchValue(values)
@@ -135,6 +199,8 @@ const search = () => {
 
             const URI = arrayOfURI.join("&")
             setRequestedUri(URI)
+            setShallowUrl(URI)
+
             const URL = `http://localhost:5000/api/properties?${URI && URI}`
 
 
@@ -207,6 +273,8 @@ const search = () => {
             arrayOfURI.push(correctedSortBy)
 
             const URI = arrayOfURI.join("&")
+            setShallowUrl(URI)
+
             const URL = `http://localhost:5000/api/properties?${URI && URI}`
 
             const requestableURL = URL.replace(/,\s*$/, "");
@@ -252,6 +320,9 @@ const search = () => {
 
     const onReset = () => {
         form.resetFields();
+        setShallowUrl("")
+        // setPageLoadFetch(false)
+        router.replace('')
     };
 
     return (

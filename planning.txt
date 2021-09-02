@@ -33,6 +33,8 @@ work on overview component// use top drawer components// Done
 craete axios cancel token// Researched on that. //had added on basic search ..
 //fix 304code request.// this will show up if the httpRequest data does not changed.
 //lookup on cookie-parser //Done// Added notes on server and protectedRouts page.
+make onPageReloadFetch data// Done
+change URL on search// Done
 
 
 Store, localstorage, Protected routes, logout, menuItem....//Partially completed, also working on this along other task.... 
@@ -43,10 +45,7 @@ Store, localstorage, Protected routes, logout, menuItem....//Partially completed
 *****************************
 
 //next
-**research on dynamic query url**
-make export customized url//
-make merge customized url//
-make overview customized url//
+Fix sale date 1day behind problem in backend//
 
 
 ************

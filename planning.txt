@@ -47,7 +47,6 @@ Store, localstorage, Protected routes, logout, menuItem....//Partially completed
 *****************************
 
 //next
-
 work on single page property info UI//
 create endpoints for single property info//
 
@@ -62,3 +61,8 @@ Others features and security
 sent token .. csurf and the status.
 must lookup on aggregation method.
 //Research for the Automation on logs.com
+
+
+Warnings :::::
+****************
+** Cannot update a component while rendering a different component.//checkout the requested url and query state. It might be coming from redux state managment..//goto userInfoSlice.js

@@ -2,7 +2,9 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
     user: null,
-    token: ""
+    token: "",
+    requestedUrl: "",
+    storeQuery: ""
 }
 
 export const userInfoSlice = createSlice({
@@ -12,14 +14,24 @@ export const userInfoSlice = createSlice({
         login: (state, action) => {
             return { ...state, user: action.payload.user, token: action.payload.token }
         },
-        logout: (state) => {
-            return { ...state, user: null, token: "" }
+        // logout: (state) => {
+        //     state.user = null
+        //     state.token = ""
+        //     state.requestedUrl = ""
+        //     return state;
+        // },
+        storeRequestedUrl: (state, action) => {
+            return { ...state, requestedUrl: action.payload }
+        },
+        storeFullQuery: (state, action) => {
+            return { ...state, requestedUrl: action.payload }
+
         }
 
     },
 })
 
 // Action creators are generated for each case reducer function
-export const { login, logout } = userInfoSlice.actions
+export const { login, storeRequestedUrl, storeFullQuery } = userInfoSlice.actions
 
 export default userInfoSlice.reducer

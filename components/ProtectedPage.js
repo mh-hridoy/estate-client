@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { useRouter } from 'next/router'
 import { SyncOutlined } from '@ant-design/icons'
-import { BackTop } from 'antd';
+import { BackTop, message } from 'antd';
 import Breadcrumbs from 'nextjs-breadcrumbs';
 import useWindowSize from "../utils/useWindowSize"; //window mehtods sucks in react and next.. be carefull to play around with it.
 import MenuInsideProtected from './MenuInsideProtected';
+import { storeRequestedUrl, storeFullQuery } from '../store/userInfoSlice'
 
 
 
@@ -37,8 +38,28 @@ const ProtectedPage = (props) => {
 
     const [isSeeMore, setIsSeeMore] = useState(false)
     const [isFullScreen, setIsFullScreen] = useState(false)
+    const [requestedUrl, setRequestedUrl] = useState()
 
     const { width } = useWindowSize()
+    const dispatch = useDispatch()
+
+    const arrayOfURI = []
+    let joinedUrl;
+
+    const query = router.query
+
+    if (Object.keys(query).length !== 0) {
+        for (const [key, value] of Object.entries(query)) {
+
+            const iteratedData = `${key.trim()}=${value.split(' ').join("+")}`
+            arrayOfURI.push(iteratedData)
+
+        }
+        joinedUrl = arrayOfURI.join('&')
+        dispatch(storeFullQuery(joinedUrl))
+
+    }
+
 
     useEffect(() => {
         const userInfo = localStorage.getItem('user')
@@ -47,11 +68,20 @@ const ProtectedPage = (props) => {
             setIsLoading(false)
 
         } else if (!userInfo || user === null) {
-
-            router.push('/')
+            message.warning("You are not authenticated! Please login and try again.")
+            router.push('/signup')
+            setRequestedUrl(router.pathname)
         }
 
     }, [user])
+
+    if (requestedUrl) {
+        const requestableURL = joinedUrl ? `${requestedUrl}?${joinedUrl}` : requestedUrl
+        dispatch(storeRequestedUrl(requestableURL))
+    }
+
+
+
 
     useEffect(() => {
         if (width <= 1000) {
@@ -73,7 +103,6 @@ const ProtectedPage = (props) => {
 
         setIsSeeMore(false)
     }
-
 
 
     return (

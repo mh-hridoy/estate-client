@@ -8,7 +8,6 @@ import Results from '../../../components/Results'
 import { SyncOutlined } from '@ant-design/icons'
 import { useRouter } from 'next/router'
 
-
 const search = () => {
     const [isLoading, setIsLoading] = useState(false)
     const [results, setResults] = useState(null)
@@ -24,9 +23,13 @@ const search = () => {
     const [changePage, setChangePage] = useState(false)
     const [resultLoading, setResultIsLoading] = useState(false)
     const [shallowUrl, setShallowUrl] = useState()
-    // const [pageLoadFetch, setPageLoadFetch] = useState(false)
+
+    // const requestdQuery = useSelector((state) => state.user.storeQuery)
+    const user = useSelector((state) => state.user.user)
+
     const router = useRouter()
 
+    // console.log(requestdQuery)
 
     const [form] = Form.useForm();
     const { TabPane } = Tabs;
@@ -40,6 +43,7 @@ const search = () => {
         setSelectedPage(pageNumber)
         setChangePage(true)
     }
+
 
     useEffect(() => {
         if (changePage) {
@@ -96,10 +100,10 @@ const search = () => {
     }, [shallowUrl])
 
 
-
+    //for the reload page fetch and redirect to fecth request.
     useEffect(() => {
         const arrayOfURI = []
-        if (Object.keys(router.query).length !== 0) {
+        if (!isSearched && !isASearched && user !== null && Object.keys(router.query).length !== 0) {
 
             const query = router.query
 
@@ -114,11 +118,13 @@ const search = () => {
             const joinedUrl = arrayOfURI.join('&')
             const requestableURL = `http://localhost:5000/api/properties?${joinedUrl}`
 
+            // console.log(joinedUrl)
             const onPageReloadFetch = async () => {
                 try {
+                    console.log("im onPageReloadFetch")
                     setSelectedPage('1')
                     setResultIsLoading(true)
-                    message.loading({ content: 'Loading...', key: "1" });
+                    message.loading({ content: 'Loading...', key: "3" });
                     setIsLoading(true)
                     const { data } = await axios.get(requestableURL, {
                         headers: {
@@ -128,7 +134,7 @@ const search = () => {
                     }
 
                     )
-                    message.success({ content: 'Loaded successfully!', key: "1" });
+                    message.success({ content: 'Loaded successfully!', key: "3" });
                     setIsLoading(false)
                     setResultIsLoading(false)
 
@@ -139,7 +145,7 @@ const search = () => {
 
                     setIsLoading(false)
                     const errorMsg = err.response ? err.response.data.message : "Something went wrong!!!"
-                    message.error({ content: errorMsg, key: "1" });
+                    message.error({ content: errorMsg, key: "3" });
                 }
             }
 
@@ -147,7 +153,9 @@ const search = () => {
 
         }
 
-    }, [Object.keys(router.query).length !== 0])
+
+    }, [!isSearched && !isASearched && user !== null && Object.keys(router.query).length !== 0])
+
 
     const advanceSearch = async (values) => {
         setSearchValue(values)
@@ -211,9 +219,11 @@ const search = () => {
 
             const basicSearchReq = async () => {
                 try {
+                    console.log("im basicSearchReq")
+
                     setSelectedPage('1')
                     setResultIsLoading(true)
-                    message.loading({ content: 'Loading...', key: "1" });
+                    message.loading({ content: 'Loading...', key: "4" });
                     setIsLoading(true)
                     const { data } = await axios.get(requestableURL, {
                         headers: {
@@ -223,7 +233,7 @@ const search = () => {
                     }
 
                     )
-                    message.success({ content: 'Loaded successfully!', key: "1" });
+                    message.success({ content: 'Loaded successfully!', key: "4" });
                     setIsLoading(false)
                     setResultIsLoading(false)
 
@@ -234,7 +244,7 @@ const search = () => {
 
                     setIsLoading(false)
                     const errorMsg = err.response ? err.response.data.message : "Something went wrong!!!"
-                    message.error({ content: errorMsg, key: "1" });
+                    message.error({ content: errorMsg, key: "4" });
                 }
             }
 
@@ -278,19 +288,20 @@ const search = () => {
             const URL = `http://localhost:5000/api/properties?${URI && URI}`
 
             const requestableURL = URL.replace(/,\s*$/, "");
-            console.log(requestableURL)
             const advanceSearchReq = async () => {
                 try {
+                    console.log("im advanceSearchReq")
+
                     setResultIsLoading(true)
                     setSelectedPage('1')
-                    message.loading({ content: 'Loading...', key: "1" });
+                    message.loading({ content: 'Loading...', key: "2" });
                     setIsLoading(true)
                     const { data } = await axios.get(requestableURL, {
                         headers: {
                             'Authorization': `Bearer ${token}`
                         }
                     })
-                    message.success({ content: 'Loaded successfully!', key: "1" });
+                    message.success({ content: 'Loaded successfully!', key: "2" });
                     setIsLoading(false)
                     setResultIsLoading(false)
 
@@ -300,7 +311,7 @@ const search = () => {
                     setIsLoading(false)
                     setResultIsLoading(false)
                     const errorMsg = err.response ? err.response.data.message : "Something went wrong!!!"
-                    message.error({ content: errorMsg, key: "1" });
+                    message.error({ content: errorMsg, key: "2" });
                 }
             }
             advanceSearchReq()

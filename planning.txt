@@ -46,6 +46,8 @@ Store, localstorage, Protected routes, logout, menuItem....//Partially completed
 *****************************
 
 //next
+//check if the protected route can store the requested url.// if it does then store it in a variable or state. or use redux.//
+also add query string if requested url contains query.//
 work on single page property info UI//
 create endpoints for single property info//
 

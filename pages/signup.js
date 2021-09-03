@@ -34,36 +34,57 @@ const Signup = () => {
   const [isLogin, setIsLogin] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [pageLoading, setPageLoading] = useState(false)
+  const [clickedOnLogin, setClickedOnLogin] = useState(false)
+  const [loginData, setLoginData] = useState()
   const user = useSelector((state) => state.user.user)
+  const requestedUrl = useSelector((state) => state.user.requestedUrl)
+
+  // console.log(requestedUrl)
 
   const router = useRouter()
   const dispatch = useDispatch()
 
-  const loginAccount = async (values) => {
-    try {
-      setIsLoading(true)
-      const { data } = await axios.post(`http://localhost:5000/api/login`, values, {
-        headers: {
-          'Content-Type': 'application/json'
-        }, withCredentials: true //must include this shit.. otherwise cookies wont work
 
-      })
+  const loginAccount = (values) => {
+    setClickedOnLogin(true)
+    setLoginData(values)
 
-      // data.token && delete data.token
-      dispatch(login(data))
-
-      localStorage.setItem('user', JSON.stringify(data))
-      setIsLoading(false)
-      message.success("Login successful.")
-      router.push('/home/dashboard')
-    } catch (err) {
-      setIsLoading(false)
-      //do not put here err.response.data.message ? err.response.data.message : "Something went wrong!!!".. otherwise it wont catch the error.
-      const errorMsg = err.response ? err.response.data.message : "Something went wrong!!!"
-      message.error(errorMsg)
-
-    }
   };
+
+  // console.log(requestedUrl)
+
+
+
+  useEffect(() => {
+    if (loginData && clickedOnLogin) {
+      const loginHandler = async () => {
+        try {
+
+          setIsLoading(true)
+          const { data } = await axios.post(`http://localhost:5000/api/login`, loginData, {
+            headers: {
+              'Content-Type': 'application/json'
+            }, withCredentials: true //must include this shit.. otherwise cookies wont work
+
+          })
+          // data.token && delete data.token
+          dispatch(login(data))
+          localStorage.setItem('user', JSON.stringify(data))
+          setIsLoading(false)
+          message.success("Login successful.")
+          router.push(requestedUrl ? requestedUrl : "/home/dashboard")
+        } catch (err) {
+          setIsLoading(false)
+          //do not put here err.response.data.message ? err.response.data.message : "Something went wrong!!!".. otherwise it wont catch the error.
+          const errorMsg = err.response ? err.response.data.message : "Something went wrong!!!"
+          message.error(errorMsg)
+
+        }
+      }
+      loginHandler()
+    }
+
+  }, [clickedOnLogin, loginData])
 
   const registerAccount = async ({ email, fullName: name, password, cPassword }) => {
     try {
@@ -74,7 +95,6 @@ const Signup = () => {
         }
       })
 
-      console.log(data)
       setIsLoading(false)
       message.success("Signup successful. Please login Now.")
       setIsLogin(false)
@@ -104,7 +124,7 @@ const Signup = () => {
 
     if (user) {
       setPageLoading(true)
-      router.push('/home/dashboard')
+      router.push(requestedUrl ? requestedUrl : "/home/dashboard")
     }
 
   }, [user])

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Row, Col } from 'antd'
 import Image from 'next/image'
 import Hamburger from './Hamburger'
@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
 import UserAvatar from './UserAvatar';
-import { Button } from 'antd'
+import { Button, message } from 'antd'
 import { toast } from 'react-toastify'
 import axios from 'axios'
 import NotiBar from './NotiBar'
@@ -18,24 +18,49 @@ const Header = () => {
     const router = useRouter()
     const { pathname } = router
     const [isLoading, setIsLoading] = useState(false)
+    const [clickedToLogOut, setClickedToLogOut] = useState(false)
 
 
     const logout = async () => {
-        try {
-            setIsLoading(true)
-            const { data } = await axios.get('http://localhost:5000/api/logout', { withCredentials: true })
+        setClickedToLogOut(true)
 
-            setIsLoading(false)
-            localStorage.clear('user')
+    }
+
+    useEffect(() => {
+        if (clickedToLogOut) {
             router.push('/')
-            router.reload()
-        } catch (err) {
-            setIsLoading(false)
-            toast.warn("Something went wrong!")
+
+            setTimeout(() => {
+
+
+                const logOutHandler = async () => {
+                    try {
+                        setIsLoading(true)
+                        await axios.get('http://localhost:5000/api/logout', { withCredentials: true })
+                        setIsLoading(false)
+                        localStorage.clear('user')
+                        message.loading({ content: "Logging Out...", key: "1" })
+                        router.reload()
+
+                    } catch (err) {
+                        setIsLoading(false)
+                        message.warning("Something went wrong!")
+                        router.push("/home/dashboard")
+
+                    }
+
+                }
+
+                logOutHandler()
+            }, 1500);
+
 
         }
 
-    }
+
+
+
+    }, [clickedToLogOut])
 
     const content = (
         <>

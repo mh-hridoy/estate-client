@@ -89,14 +89,14 @@ const Signup = () => {
   const registerAccount = async ({ email, fullName: name, password, cPassword }) => {
     try {
       setIsLoading(true)
-      const { data } = await axios.post(`http://localhost:5000/api/signup`, { email, name, password, cPassword }, {
+      await axios.post(`http://localhost:5000/api/signup`, { email, name, password, cPassword }, {
         headers: {
           'Content-Type': 'application/json'
         }
       })
 
       setIsLoading(false)
-      message.success("Signup successful. Please login Now.")
+      message.success("Signup successfully. Please login Now.")
       setIsLogin(false)
 
     } catch (err) {
@@ -124,7 +124,7 @@ const Signup = () => {
 
     if (user) {
       setPageLoading(true)
-      router.push(requestedUrl ? requestedUrl : "/home/dashboard")
+      // router.push(requestedUrl ? requestedUrl : "/home/dashboard")
     }
 
   }, [user])

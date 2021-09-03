@@ -42,6 +42,7 @@ const Signup = () => {
   // console.log(requestedUrl)
 
   const router = useRouter()
+
   const dispatch = useDispatch()
 
 
@@ -72,7 +73,8 @@ const Signup = () => {
           localStorage.setItem('user', JSON.stringify(data))
           setIsLoading(false)
           message.success("Login successful.")
-          router.push(requestedUrl ? requestedUrl : "/home/dashboard")
+          const route = requestedUrl ? requestedUrl : "/home/dashboard"
+          router.push(route)
         } catch (err) {
           setIsLoading(false)
           //do not put here err.response.data.message ? err.response.data.message : "Something went wrong!!!".. otherwise it wont catch the error.
@@ -84,7 +86,7 @@ const Signup = () => {
       loginHandler()
     }
 
-  }, [clickedOnLogin, loginData])
+  }, [loginData && clickedOnLogin])
 
   const registerAccount = async ({ email, fullName: name, password, cPassword }) => {
     try {

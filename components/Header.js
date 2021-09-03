@@ -29,9 +29,7 @@ const Header = () => {
     useEffect(() => {
         if (clickedToLogOut) {
             router.push('/')
-
-            setTimeout(() => {
-
+            message.loading({ content: "Logging Out...", key: "1" })
 
                 const logOutHandler = async () => {
                     try {
@@ -44,19 +42,19 @@ const Header = () => {
 
                     } catch (err) {
                         setIsLoading(false)
-                        message.warning("Something went wrong!")
+                        message.warning({ content: "Something went wrong!", key: "1" })
                         router.push("/home/dashboard")
 
                     }
 
-                }
+            }
+            setTimeout(() => {
+
 
                 logOutHandler()
-            }, 1500);
-
+            }, 2000);
 
         }
-
 
 
 

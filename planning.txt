@@ -36,7 +36,8 @@ craete axios cancel token// Researched on that. //had added on basic search ..
 make onPageReloadFetch data// Done
 change URL on search// Done
 Fix sale date 1day behind problem in backend//Done
-
+//check if the protected route can store the requested url.// if it does then store it in a variable or state. or use redux.// Done
+also add query string if requested url contains query.// Done
 
 Store, localstorage, Protected routes, logout, menuItem....//Partially completed, also working on this along other task.... 
 *******
@@ -46,8 +47,7 @@ Store, localstorage, Protected routes, logout, menuItem....//Partially completed
 *****************************
 
 //next
-//check if the protected route can store the requested url.// if it does then store it in a variable or state. or use redux.//
-also add query string if requested url contains query.//
+
 work on single page property info UI//
 create endpoints for single property info//
 
@@ -55,7 +55,6 @@ create endpoints for single property info//
 
 Others features and security
 *****************************
-//if the user login then redirect to requested page.
 //use collapse component for sale date and bidderinfo.
 //consider to change the reset page ui with progress component.
 //use result component for the blocked or inactive users.

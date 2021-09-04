@@ -31,7 +31,9 @@ work on pagination httpRequest//Done
 make disabled to false Search button//Done
 work on overview component// use top drawer components// Done
 craete axios cancel token// Researched on that. //had added on basic search ..
-//fix 304code request.// this will show up if the httpRequest data does not changed.
+
+//fix 304code request.// this will show up if the httpRequest data does not changed. //An HTTP 304 not modified status code means that the website you're requesting hasn't been updated since the last time you accessed it. Typically, your browser will save (or cache) web pages so it doesn't have to repeatedly download the same information. This is an attempt to speed up page delivery//
+
 //lookup on cookie-parser //Done// Added notes on server and protectedRouts page.
 make onPageReloadFetch data// Done
 change URL on search// Done
@@ -63,6 +65,6 @@ must lookup on aggregation method.
 //Research for the Automation on logs.com
 
 
-Warnings :::::
+Warnings that need to be fixed.:::::
 ****************
-** Cannot update a component while rendering a different component.//checkout the requested url and query state. It might be coming from redux state managment..//goto userInfoSlice.js
+** Cannot update a component while rendering a different component.//checkout the requested url and query state. It might be coming from redux state managment..//goto userInfoSlice.js /// this problem gone once i removed the store query state of redux state managment//

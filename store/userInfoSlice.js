@@ -4,7 +4,7 @@ const initialState = {
     user: null,
     token: "",
     requestedUrl: "",
-    storeQuery: ""
+    // storeQuery: ""
 }
 
 export const userInfoSlice = createSlice({
@@ -23,15 +23,15 @@ export const userInfoSlice = createSlice({
         storeRequestedUrl: (state, action) => {
             return { ...state, requestedUrl: action.payload }
         },
-        storeFullQuery: (state, action) => {
-            return { ...state, requestedUrl: action.payload }
+        // storeFullQuery: (state, action) => {
+        //     return { ...state, requestedUrl: action.payload }
 
-        }
+        // }
 
     },
 })
 
 // Action creators are generated for each case reducer function
-export const { login, storeRequestedUrl, storeFullQuery } = userInfoSlice.actions
+export const { login, storeRequestedUrl } = userInfoSlice.actions
 
 export default userInfoSlice.reducer

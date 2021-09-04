@@ -6,7 +6,7 @@ import { BackTop, message } from 'antd';
 import Breadcrumbs from 'nextjs-breadcrumbs';
 import useWindowSize from "../utils/useWindowSize"; //window mehtods sucks in react and next.. be carefull to play around with it.
 import MenuInsideProtected from './MenuInsideProtected';
-import { storeRequestedUrl, storeFullQuery } from '../store/userInfoSlice'
+import { storeRequestedUrl } from '../store/userInfoSlice'
 
 
 
@@ -56,7 +56,6 @@ const ProtectedPage = (props) => {
 
         }
         joinedUrl = arrayOfURI.join('&')
-        dispatch(storeFullQuery(joinedUrl))
 
     }
 

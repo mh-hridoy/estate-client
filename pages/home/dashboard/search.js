@@ -5,7 +5,7 @@ import styles from '../../../styles/search.module.css'
 import axios from 'axios'
 import { useSelector } from 'react-redux'
 import Results from '../../../components/Results'
-import { ConsoleSqlOutlined, SyncOutlined } from '@ant-design/icons'
+import { SyncOutlined } from '@ant-design/icons'
 import { useRouter } from 'next/router'
 import BasicSearchForm from '../../../components/BasicSearchForm'
 import AdvanceSearchForm from '../../../components/AdvanceSearchForm'
@@ -24,25 +24,26 @@ const search = () => {
     const [changePage, setChangePage] = useState(false)
     const [resultLoading, setResultIsLoading] = useState(false)
     const [shallowUrl, setShallowUrl] = useState()
-    // const requestdQuery = useSelector((state) => state.user.storeQuery)
     const user = useSelector((state) => state.user.user)
 
     const router = useRouter()
 
-    // console.log(requestdQuery)
+    const [basicForm] = Form.useForm()
+    const [advanceForm] = Form.useForm()
 
-    const [form] = Form.useForm();
+
     const { TabPane } = Tabs;
 
     const basicSearch = (values) => {
-        setSearchValue(values)
         setIsSearched(true)
+        setSearchValue(values)
+        setChangePage(false)
     };
 
     const advanceSearch = async (values) => {
-        setSearchValue(values)
         setIsASearched(true)
-
+        setSearchValue(values)
+        setChangePage(false)
     };
 
     const limitChange = (value) => {
@@ -55,16 +56,20 @@ const search = () => {
     }
 
     const onReset = () => {
-        form.resetFields();
+        basicForm.resetFields();
         setShallowUrl("")
-        // setPageLoadFetch(false)
         router.replace('')
     };
 
-    useEffect(() => {
-        // const httpRequest = axios.CancelToken.source()
+    const onAReset = () => {
+        advanceForm.resetFields();
+        setShallowUrl("")
+        router.replace('')
+    };
 
-        if (!changePage && isSearched) {
+
+    useEffect(() => {
+        if (!changePage && searchValue && isSearched) {
             const arrayOfURI = []
             const allSort = []
             const { startDate, endDate, fSort, fOrder, sSort, sOrder } = { ...searchValue }
@@ -106,7 +111,6 @@ const search = () => {
 
             const URL = `http://localhost:5000/api/properties?${URI && URI}`
             const requestableURL = URL.replace(/,\s*$/, "");
-            // console.log(requestableURL)
             const basicSearchReq = async () => {
                 try {
                     console.log("im basicSearchReq")
@@ -119,7 +123,6 @@ const search = () => {
                         headers: {
                             'Authorization': `Bearer ${token}`
                         }, withCredentials: true,
-                        // cancelToken: httpRequest.token
                     }
 
                     )
@@ -128,7 +131,6 @@ const search = () => {
                     setResultIsLoading(false)
 
                     setResults(data)
-                    // console.log(data)
                 } catch (err) {
                     setResultIsLoading(false)
 
@@ -139,8 +141,14 @@ const search = () => {
             }
 
             basicSearchReq()
+        }
 
-        } else if (!changePage && isASearched) {
+
+    }, [!changePage && searchValue && isSearched])
+
+
+    useEffect(() => {
+        if (!changePage && searchValue && isASearched) {
             const arrayOfURI = []
             const allSort = []
 
@@ -196,7 +204,6 @@ const search = () => {
                     setResultIsLoading(false)
 
                     setResults(data)
-                    // console.log(data)
                 } catch (err) {
                     setIsLoading(false)
                     setResultIsLoading(false)
@@ -207,16 +214,11 @@ const search = () => {
             advanceSearchReq()
 
         }
-        // return () => {
-
-        //     httpRequest.cancel('Cancelled previous request due to new request')
-        // }
-    }, [!changePage && isSearched, searchValue, isASearched])
+    }, [!changePage && searchValue && isASearched])
 
 
     useEffect(() => {
         if (changePage) {
-            // console.log(selectedPage)
             const modifyURI = requesteURI && requesteURI.replace("page=1", `page=${selectedPage ? selectedPage : ""}`)
             setShallowUrl(modifyURI && modifyURI)
 
@@ -240,7 +242,6 @@ const search = () => {
                     setResults(data)
                     console.log('Im onPageChange')
 
-                    // console.log(data)
                 } catch (err) {
                     setResultIsLoading(false)
                     setIsLoading(false)
@@ -258,7 +259,6 @@ const search = () => {
             const modifiedShollowUrl = shallowUrl.replace(/,\s*$/, "")
             router.push(`?${modifiedShollowUrl}`, undefined, { shallow: true })
 
-            // setPageLoadFetch(true)
         }
     }, [shallowUrl])
 
@@ -274,7 +274,7 @@ const search = () => {
 
                 if (query[key] !== undefined) {
                     delete query[key]
-                    const iteratedData = `${key.trim()}=${value.split(' ').join("+")}`
+                    const iteratedData = `${key.trim()}=${value && value.split(' ').join("+")}`
                     arrayOfURI.push(iteratedData)
                 }
             }
@@ -282,7 +282,6 @@ const search = () => {
             setRequestedUri(joinedUrl)
             const requestableURL = `http://localhost:5000/api/properties?${joinedUrl}`
 
-            // console.log(joinedUrl)
             const onPageReloadFetch = async () => {
                 try {
                     console.log("im onPageReloadFetch")
@@ -294,7 +293,6 @@ const search = () => {
                         headers: {
                             'Authorization': `Bearer ${token}`
                         }, withCredentials: true,
-                        // cancelToken: httpRequest.token
                     }
 
                     )
@@ -303,7 +301,6 @@ const search = () => {
                     setResultIsLoading(false)
 
                     setResults(data)
-                    // console.log(data)
                 } catch (err) {
                     setResultIsLoading(false)
 
@@ -318,11 +315,6 @@ const search = () => {
 
     }, [!isSearched && !isASearched && user !== null && !changePage && Object.keys(router.query).length !== 0])
 
-
-
-
-
-
     return (
         <ProtectedPage>
 
@@ -330,16 +322,16 @@ const search = () => {
 
             <div className={styles.searchUi} >
                 <Row gutter={15} wrap={true} justify="center">
-                    <Col span={24} >
+                    <Col span={24}>
 
-                        <Tabs type="card" size="large" animated>
-                            <TabPane tab="Basic Search" key="BasicSearch">
-                                <BasicSearchForm basicSearch={basicSearch} isLoading={isLoading} limitChange={limitChange} onReset={onReset} form={form} />
+                        <Tabs type="card" size="large" animated type="card"  >
+                            <TabPane tab="Basic Search" key="BasicSearch"  >
+                                <BasicSearchForm basicSearch={basicSearch} isLoading={isLoading} limitChange={limitChange} onReset={onReset} form={basicForm} />
                             </TabPane>
 
 
-                            <TabPane tab="Advance Search" key="AdvanceSearch">
-                                <AdvanceSearchForm advanceSearch={advanceSearch} limitChange={limitChange} onReset={onReset} form={form} isLoading={isLoading} />
+                            <TabPane tab="Advance Search" key="AdvanceSearch" >
+                                <AdvanceSearchForm advanceSearch={advanceSearch} limitChange={limitChange} onReset={onAReset} isLoading={isLoading} form={advanceForm} />
                             </TabPane>
 
                         </Tabs>

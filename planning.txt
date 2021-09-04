@@ -69,5 +69,7 @@ Warnings that fixed and the solutions:::::
 ****************
 ** Cannot update a component while rendering a different component.//checkout the requested url and query state. It might be coming from redux state managment..//goto userInfoSlice.js /// this problem gone once i removed the store query state of redux state managment//
 
-Warnings that fixed.:::::
-****************
+
+Warnings that need to be fixed.:::::
+***********************
+Duplicate key warning from antd form component. No fix found yet!!!!!!!

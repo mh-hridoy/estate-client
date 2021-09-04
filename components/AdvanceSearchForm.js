@@ -3,11 +3,13 @@ import { Row, Col, Button, Form, Input, Select } from 'antd'
 import styles from '../styles/search.module.css'
 import { SyncOutlined } from '@ant-design/icons'
 
-const AdvanceSearchForm = ({ advanceSearch, limitChange, onReset, form, isLoading }) => {
+const AdvanceSearchForm = ({ advanceSearch, limitChange, onReset, isLoading, form }) => {
     const { Item } = Form
     const { Option } = Select
+
+
     return (
-        <Form form={form} layout="vertical" name="control-hooks" className={styles.searchForm} onFinish={advanceSearch} initialValues={{ limit: "10" }}  >
+        <Form form={form} layout="vertical" name="advancedForm" className={styles.searchForm} onFinish={advanceSearch} initialValues={{ limit: "10" }}  >
             <h3 style={{ textAlign: "center", width: "100%" }}> Owner Info : </h3>
             <hr style={{ width: "100%", marginBottom: "10px" }}
             />

@@ -8,8 +8,9 @@ const BasicSearchForm = ({ basicSearch, isLoading, limitChange, onReset, form })
     const { Option } = Select
 
 
+
     return (
-        <Form form={form} layout="vertical" name="control-hooks" className={styles.searchForm} onFinish={basicSearch} initialValues={{ limit: "10" }} name="BasicForm" >
+        <Form form={form} layout="vertical" name="basicForm" className={styles.searchForm} onFinish={basicSearch} initialValues={{ limit: "10" }} >
             <h3 style={{ textAlign: "center", width: "100%" }}> Property Descripton Search : </h3>
             <hr style={{ width: "100%", marginBottom: "10px" }}
             />

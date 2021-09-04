@@ -23,7 +23,6 @@ function MyApp({ Component, pageProps }) {
   Router.events.on("routeChangeError", progress.finish);
 
 
-
   return (
     <>
       <StoreProvider>

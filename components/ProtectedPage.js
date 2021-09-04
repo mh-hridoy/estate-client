@@ -51,7 +51,7 @@ const ProtectedPage = (props) => {
     if (Object.keys(query).length !== 0) {
         for (const [key, value] of Object.entries(query)) {
 
-            const iteratedData = `${key.trim()}=${value.split(' ').join("+")}`
+            const iteratedData = `${key && key.trim()}=${value && value.split(' ').join("+")}`
             arrayOfURI.push(iteratedData)
 
         }

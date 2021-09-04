@@ -38,12 +38,17 @@ const search = () => {
         setIsSearched(true)
         setSearchValue(values)
         setChangePage(false)
+        setIsASearched(false)
+        console.log("Clicked on basicSearch")
     };
 
     const advanceSearch = async (values) => {
         setIsASearched(true)
         setSearchValue(values)
         setChangePage(false)
+        setIsSearched(false)
+        console.log("Clicked on basicSearch")
+
     };
 
     const limitChange = (value) => {
@@ -69,7 +74,7 @@ const search = () => {
 
 
     useEffect(() => {
-        if (!changePage && searchValue && isSearched) {
+        if (!changePage && !isASearched && searchValue && isSearched) {
             const arrayOfURI = []
             const allSort = []
             const { startDate, endDate, fSort, fOrder, sSort, sOrder } = { ...searchValue }
@@ -144,11 +149,11 @@ const search = () => {
         }
 
 
-    }, [!changePage && searchValue && isSearched])
+    }, [!changePage && !isASearched && searchValue && isSearched])
 
 
     useEffect(() => {
-        if (!changePage && searchValue && isASearched) {
+        if (!changePage && !isSearched && searchValue && isASearched) {
             const arrayOfURI = []
             const allSort = []
 
@@ -214,7 +219,7 @@ const search = () => {
             advanceSearchReq()
 
         }
-    }, [!changePage && searchValue && isASearched])
+    }, [!changePage && !isSearched && searchValue && isASearched])
 
 
     useEffect(() => {

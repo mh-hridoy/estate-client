@@ -67,9 +67,11 @@ must lookup on aggregation method.
 
 Warnings that fixed and the solutions:::::
 ****************
-** Cannot update a component while rendering a different component.//checkout the requested url and query state. It might be coming from redux state managment..//goto userInfoSlice.js /// this problem gone once i removed the store query state of redux state managment//
+** Cannot update a component while rendering a different component.//checkout the requested url and query state. It might be coming from redux state managment..//goto userInfoSlice.js /// this problem gone once i removed the store query state of redux state managment.
+
+**Duplicate key warning from antd form component. //Fixed// The problem was same (const  [form] = Form.useForm()) method . It works as a key for each form to prevent from get collide.
 
 
 Warnings that need to be fixed.:::::
 ***********************
-Duplicate key warning from antd form component. No fix found yet!!!!!!!
+

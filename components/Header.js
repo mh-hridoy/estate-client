@@ -28,17 +28,18 @@ const Header = () => {
 
     useEffect(() => {
         if (clickedToLogOut) {
-            router.push('/')
-            message.loading({ content: "Logging Out...", key: "1" })
-
                 const logOutHandler = async () => {
+
                     try {
                         setIsLoading(true)
                         await axios.get('http://localhost:5000/api/logout', { withCredentials: true })
                         setIsLoading(false)
                         localStorage.clear('user')
+                        router.push('/')
                         message.loading({ content: "Logging Out...", key: "1" })
-                        router.reload()
+                        setTimeout(() => {
+                            router.reload()
+                        }, 2000)
 
                     } catch (err) {
                         setIsLoading(false)
@@ -47,16 +48,10 @@ const Header = () => {
 
                     }
 
-            }
-            setTimeout(() => {
-
-
-                logOutHandler()
-            }, 2000);
+                }
+            logOutHandler()
 
         }
-
-
 
     }, [clickedToLogOut])
 

@@ -48,17 +48,28 @@ const ProtectedPage = (props) => {
 
     const query = router.query
 
+
     if (Object.keys(query).length !== 0) {
+        console.log(query)
         for (const [key, value] of Object.entries(query)) {
-
-            const iteratedData = `${key && key.trim()}=${value && value.split(' ').join("+")}`
+            const iteratedData = `${key.trim()}=${value.split(' ').join("+")}`
             arrayOfURI.push(iteratedData)
-
         }
-        joinedUrl = arrayOfURI.join('&')
 
+        joinedUrl = arrayOfURI.join("&")
     }
 
+
+
+    let requestableURL
+    if (requestedUrl && joinedUrl) {
+        requestableURL = `${requestedUrl}?${joinedUrl}`
+        dispatch(storeRequestedUrl(requestableURL))
+    } else {
+        requestableURL = requestedUrl
+        dispatch(storeRequestedUrl(requestableURL))
+
+    }
 
     useEffect(() => {
         const userInfo = localStorage.getItem('user')
@@ -74,10 +85,7 @@ const ProtectedPage = (props) => {
 
     }, [user])
 
-    if (requestedUrl) {
-        const requestableURL = joinedUrl ? `${requestedUrl}?${joinedUrl}` : requestedUrl
-        dispatch(storeRequestedUrl(requestableURL))
-    }
+
 
 
 

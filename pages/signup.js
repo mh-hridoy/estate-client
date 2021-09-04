@@ -60,6 +60,7 @@ const Signup = () => {
     if (loginData && clickedOnLogin) {
       const loginHandler = async () => {
         try {
+          // console.log(requestedUrl)
 
           setIsLoading(true)
           const { data } = await axios.post(`http://localhost:5000/api/login`, loginData, {

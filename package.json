@@ -5,8 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "start": "next start"
   },
   "dependencies": {
     "@ant-design/icons": "^4.6.3",
@@ -25,12 +24,8 @@
     "react-hamburger-menu": "^1.2.1",
     "react-redux": "^7.2.4",
     "react-responsive-carousel": "^3.2.20",
-    "react-toastify": "^7.0.4",
     "xlsx": "^0.17.1",
     "yup": "^0.32.9"
   },
-  "devDependencies": {
-    "eslint": "7.31.0",
-    "eslint-config-next": "11.0.1"
-  }
+  "devDependencies": {}
 }

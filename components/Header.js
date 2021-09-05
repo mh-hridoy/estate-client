@@ -7,7 +7,6 @@ import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
 import UserAvatar from './UserAvatar';
 import { Button, message } from 'antd'
-import { toast } from 'react-toastify'
 import axios from 'axios'
 import NotiBar from './NotiBar'
 
@@ -35,11 +34,8 @@ const Header = () => {
                         await axios.get('http://localhost:5000/api/logout', { withCredentials: true })
                         setIsLoading(false)
                         localStorage.clear('user')
-                        router.push('/')
                         message.loading({ content: "Logging Out...", key: "1" })
-                        setTimeout(() => {
-                            router.reload()
-                        }, 2000)
+                        router.push('/').then(() => router.reload())
 
                     } catch (err) {
                         setIsLoading(false)

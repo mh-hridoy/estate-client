@@ -18,7 +18,7 @@ const WarningModal = (props) => {
             ]}
         >
 
-            <p> <ExclamationCircleOutlined /> {props.mergerWarning}</p>
+            <p style={{ color: "red" }}> <ExclamationCircleOutlined /> {props.mergerWarning}</p>
 
 
         </Modal>

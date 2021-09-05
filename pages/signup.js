@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
-import { login } from '../store/userInfoSlice'
+import { login, setInLoginPage } from '../store/userInfoSlice'
 import { useRouter } from 'next/router'
 
 
@@ -31,20 +31,35 @@ const signupValidation = Yup.object().shape({
 
 
 const Signup = () => {
+
   const [isLogin, setIsLogin] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [pageLoading, setPageLoading] = useState(false)
   const [clickedOnLogin, setClickedOnLogin] = useState(false)
   const [loginData, setLoginData] = useState()
   const user = useSelector((state) => state.user.user)
-  const requestedUrl = useSelector((state) => state.user.requestedUrl)
-
-  // console.log(requestedUrl)
-
   const router = useRouter()
-
   const dispatch = useDispatch()
 
+  let requestedUrl;
+
+  const requestedPathname = useSelector((state) => state.user.requestedPath)
+  const requestedQuery = useSelector((state) => state.user.requestedQuery)
+
+  const arrayOfURI = []
+
+  if (requestedPathname && requestedQuery) {
+    try {
+      for (const [key, value] of Object.entries(requestedQuery)) {
+        const iteratedData = `${key.trim()}=${value.split(' ').join("+")}`
+        arrayOfURI.push(iteratedData)
+      }
+    } catch (err) { console.log(err) }
+    requestedUrl = `${requestedPathname}?${arrayOfURI.join("&")}`
+
+  } else {
+    requestedUrl = requestedPathname
+  }
 
   const loginAccount = (values) => {
     setClickedOnLogin(true)
@@ -52,11 +67,11 @@ const Signup = () => {
 
   };
 
+
   // console.log(requestedUrl)
 
-
-
   useEffect(() => {
+    dispatch(setInLoginPage(true))
     if (loginData && clickedOnLogin) {
       const loginHandler = async () => {
         try {
@@ -76,6 +91,7 @@ const Signup = () => {
           message.success("Login successful.")
           const route = requestedUrl ? requestedUrl : "/home/dashboard"
           router.push(route)
+          dispatch(setInLoginPage(false))
         } catch (err) {
           setIsLoading(false)
           //do not put here err.response.data.message ? err.response.data.message : "Something went wrong!!!".. otherwise it wont catch the error.

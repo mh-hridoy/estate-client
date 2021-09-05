@@ -38,6 +38,7 @@ const Result = (props) => {
     const mergeThisRecord = properties.filter(({ _id: id1 }) => newDefaultCheckedList.some((id2) => id2 === id1));
 
     const pageLimit = +limit
+    // console.log(limit)
     const nSelectedPage = +selectedPage || 1
 
     const onChange = list => {

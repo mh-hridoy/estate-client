@@ -16,15 +16,20 @@ const search = () => {
 
     const token = useSelector((state) => state.user.token)
     const [selectedPage, setSelectedPage] = useState()
-    const [searchValue, setSearchValue] = useState()
+    const [searchValue, setSearchValue] = useState(null)
+    const [searchAValue, setSearchAValue] = useState(null)
     const [isSearched, setIsSearched] = useState(false)
     const [isASearched, setIsASearched] = useState(false)
-    const [limit, setLimit] = useState('10')
+    const [limit, setLimit] = useState(10)
+    const [aLimit, setALimit] = useState(10)
     const [requesteURI, setRequestedUri] = useState()
     const [changePage, setChangePage] = useState(false)
     const [resultLoading, setResultIsLoading] = useState(false)
-    const [shallowUrl, setShallowUrl] = useState()
+    const [shallowUrl, setShallowUrl] = useState("")
+    const [queryOfArray, setQueryOfArray] = useState([])
+    const [resultLimit, setResultLimit] = useState(10)
     const user = useSelector((state) => state.user.user)
+
 
     const router = useRouter()
 
@@ -39,20 +44,39 @@ const search = () => {
         setSearchValue(values)
         setChangePage(false)
         setIsASearched(false)
-        console.log("Clicked on basicSearch")
+        setSearchAValue(null)
+        setShallowUrl("")
+
+        // console.log("Clicked on basicSearch")
+
     };
 
     const advanceSearch = async (values) => {
         setIsASearched(true)
-        setSearchValue(values)
+        setSearchAValue(values)
         setChangePage(false)
         setIsSearched(false)
-        console.log("Clicked on basicSearch")
+        setSearchValue(null)
+        setShallowUrl("")
 
+        // console.log("Clicked on advanceSearch")
     };
 
-    const limitChange = (value) => {
+    const basicLimitChange = (value) => {
+        // console.log(value)
         setLimit(value)
+        setResultLimit(value)
+        // console.log(value)
+    }
+
+
+    const advanceLimitChange = (value) => {
+        // console.log(value)
+        setALimit(value)
+        setResultLimit(value)
+        // console.log(value)
+
+
     }
 
     const onPageChange = (pageNumber) => {
@@ -64,17 +88,19 @@ const search = () => {
         basicForm.resetFields();
         setShallowUrl("")
         router.replace('')
+
     };
 
     const onAReset = () => {
         advanceForm.resetFields();
         setShallowUrl("")
         router.replace('')
+
     };
 
 
     useEffect(() => {
-        if (!changePage && !isASearched && searchValue && isSearched) {
+        if (!changePage && !isASearched && limit && searchValue && isSearched) {
             const arrayOfURI = []
             const allSort = []
             const { startDate, endDate, fSort, fOrder, sSort, sOrder } = { ...searchValue }
@@ -96,8 +122,7 @@ const search = () => {
                 }
             }
             arrayOfURI.push(`page=${"1"}`)
-            arrayOfURI.push(`limit=${limit ? limit : "10"}`)
-
+            arrayOfURI.push(`limit=${limit}`)
             //sort and push to array
             const fSortBy = fSort && `${fOrder == "ASC" ? "" : "-"}${fSort ? fSort : ""}`
             const sSortBy = sSort && `${sOrder == "ASC" ? "" : "-"}${sSort ? sSort : ""}`
@@ -114,9 +139,13 @@ const search = () => {
             setRequestedUri(URI)
             setShallowUrl(URI)
 
+            setQueryOfArray(arrayOfURI)
+
             const URL = `http://localhost:5000/api/properties?${URI && URI}`
             const requestableURL = URL.replace(/,\s*$/, "");
             const basicSearchReq = async () => {
+
+
                 try {
                     console.log("im basicSearchReq")
 
@@ -136,10 +165,13 @@ const search = () => {
                     setResultIsLoading(false)
 
                     setResults(data)
+                    setIsSearched(false)
+                    setIsASearched(false)
                 } catch (err) {
                     setResultIsLoading(false)
-
                     setIsLoading(false)
+                    setIsSearched(false)
+                    setIsASearched(false)
                     const errorMsg = err.response ? err.response.data.message : "Something went wrong!!!"
                     message.error({ content: errorMsg, key: "4" });
                 }
@@ -149,33 +181,36 @@ const search = () => {
         }
 
 
-    }, [!changePage && !isASearched && searchValue && isSearched])
+    }, [!changePage && !isASearched && limit && searchValue && isSearched])
 
 
     useEffect(() => {
-        if (!changePage && !isSearched && searchValue && isASearched) {
+        if (isASearched && searchAValue && aLimit && !isSearched && !changePage) {
             const arrayOfURI = []
             const allSort = []
+            console.log("im advanceSearchReq")
 
-            const { fSort, fOrder, sSort, sOrder } = { ...searchValue }
 
-            for (const [key, value] of Object.entries(searchValue)) {
+            const { fSort, fOrder, sSort, sOrder } = { ...searchAValue }
+
+            for (const [key, value] of Object.entries(searchAValue)) {
 
                 // it worked...
-                searchValue.fSort = undefined
-                searchValue.sSort = undefined
-                searchValue.fOrder = undefined
-                searchValue.sOrder = undefined
-                if (searchValue[key] !== undefined) {
-                    delete searchValue[key]
+                searchAValue.fSort = undefined
+                searchAValue.sSort = undefined
+                searchAValue.fOrder = undefined
+                searchAValue.sOrder = undefined
+                searchAValue.limit = undefined
+
+                if (searchAValue[key] !== undefined) {
+                    delete searchAValue[key]
                     const iteratedData = `${key.trim()}=${value.split(' ').join("+")}`
                     arrayOfURI.push(iteratedData)
                 }
             }
             arrayOfURI.push(`page=1`)
 
-            arrayOfURI.push(`page=${"1"}`)
-            arrayOfURI.push(`limit=${limit ? limit : "10"}`)
+            arrayOfURI.push(`limit=${aLimit}`)
 
             //sort and push to array
             const fSortBy = fSort && `${fOrder == "ASC" ? "" : "-"}${fSort ? fSort : ""}`
@@ -186,14 +221,16 @@ const search = () => {
             arrayOfURI.push(correctedSortBy)
 
             const URI = arrayOfURI.join("&")
+            setRequestedUri(URI)
             setShallowUrl(URI)
+            setQueryOfArray(arrayOfURI)
+
 
             const URL = `http://localhost:5000/api/properties?${URI && URI}`
 
             const requestableURL = URL.replace(/,\s*$/, "");
             const advanceSearchReq = async () => {
                 try {
-                    console.log("im advanceSearchReq")
 
                     setResultIsLoading(true)
                     setSelectedPage('1')
@@ -209,9 +246,13 @@ const search = () => {
                     setResultIsLoading(false)
 
                     setResults(data)
+                    setIsSearched(false)
+                    setIsASearched(false)
                 } catch (err) {
                     setIsLoading(false)
                     setResultIsLoading(false)
+                    setIsSearched(false)
+                    setIsASearched(false)
                     const errorMsg = err.response ? err.response.data.message : "Something went wrong!!!"
                     message.error({ content: errorMsg, key: "2" });
                 }
@@ -219,15 +260,21 @@ const search = () => {
             advanceSearchReq()
 
         }
-    }, [!changePage && !isSearched && searchValue && isASearched])
+    }, [isASearched && searchAValue && aLimit && !isSearched && !changePage])
 
 
     useEffect(() => {
         if (changePage) {
-            const modifyURI = requesteURI && requesteURI.replace("page=1", `page=${selectedPage ? selectedPage : ""}`)
-            setShallowUrl(modifyURI && modifyURI)
 
-            const emmitSpace = modifyURI && modifyURI.replace(/,\s*$/, "");
+            const oldPage = queryOfArray.find((e) => {
+                if (e.startsWith("page")) return e
+            })
+
+            const correctPage = `page=${selectedPage}`
+
+            let emmitSpace = requesteURI.replace(/,\s*$/, "");
+            emmitSpace = requesteURI.replace(oldPage, correctPage)
+            setShallowUrl(emmitSpace)
 
             const requestableURL = `http://localhost:5000/api/properties?${emmitSpace}`
 
@@ -246,10 +293,14 @@ const search = () => {
                     setResultIsLoading(false)
                     setResults(data)
                     console.log('Im onPageChange')
+                    setIsSearched(false)
+                    setIsASearched(false)
 
                 } catch (err) {
                     setResultIsLoading(false)
                     setIsLoading(false)
+                    setIsSearched(false)
+                    setIsASearched(false)
                     const errorMsg = err.response ? err.response.data.message : "Something went wrong!!!"
                     message.error({ content: errorMsg, key: "1" });
                 }
@@ -269,56 +320,66 @@ const search = () => {
 
 
     //for the reload page fetch and redirect to fecth request.
-    useEffect(() => {
-        const arrayOfURI = []
-        if (!isSearched && !isASearched && user !== null && !changePage && Object.keys(router.query).length !== 0) {
 
-            const query = router.query
+    // useEffect(() => {
+    //     const arrayOfURI = []
 
-            for (const [key, value] of Object.entries(query)) {
+    //     if (!isSearched && !isASearched && user !== null && !changePage && Object.keys(router.query).length !== 0) {
+    //         console.log("im onPageReloadFetch")
 
-                if (query[key] !== undefined) {
-                    delete query[key]
-                    const iteratedData = `${key.trim()}=${value && value.split(' ').join("+")}`
-                    arrayOfURI.push(iteratedData)
-                }
-            }
-            const joinedUrl = arrayOfURI.join('&')
-            setRequestedUri(joinedUrl)
-            const requestableURL = `http://localhost:5000/api/properties?${joinedUrl}`
+    //         let page;
+    //         const query = router.query
 
-            const onPageReloadFetch = async () => {
-                try {
-                    console.log("im onPageReloadFetch")
-                    setSelectedPage('1')
-                    setResultIsLoading(true)
-                    message.loading({ content: 'Loading...', key: "3" });
-                    setIsLoading(true)
-                    const { data } = await axios.get(requestableURL, {
-                        headers: {
-                            'Authorization': `Bearer ${token}`
-                        }, withCredentials: true,
-                    }
 
-                    )
-                    message.success({ content: 'Loaded successfully!', key: "3" });
-                    setIsLoading(false)
-                    setResultIsLoading(false)
+    //         // console.log(checkPage)
 
-                    setResults(data)
-                } catch (err) {
-                    setResultIsLoading(false)
+    //         for (const [key, value] of Object.entries(query)) {
 
-                    setIsLoading(false)
-                    const errorMsg = err.response ? err.response.data.message : "Something went wrong!!!"
-                    message.error({ content: errorMsg, key: "3" });
-                }
-            }
+    //             if (key == "page") page = value
 
-            onPageReloadFetch()
-        }
+    //             const iteratedData = `${key.trim()}=${value.split(' ').join("+")}`
+    //             arrayOfURI.push(iteratedData)
+    //         }
+    //         const joinedUrl = arrayOfURI.join('&')
 
-    }, [!isSearched && !isASearched && user !== null && !changePage && Object.keys(router.query).length !== 0])
+    //         setQueryOfArray(arrayOfURI)
+
+    //         setRequestedUri(joinedUrl)
+    //         const requestableURL = `http://localhost:5000/api/properties?${joinedUrl}`
+
+    //         const onPageReloadFetch = async () => {
+    //             try {
+    //                 setSelectedPage(page)
+    //                 setResultIsLoading(true)
+    //                 message.loading({ content: 'Loading...', key: "3" });
+    //                 setIsLoading(true)
+    //                 const { data } = await axios.get(requestableURL, {
+    //                     headers: {
+    //                         'Authorization': `Bearer ${token}`
+    //                     }, withCredentials: true,
+    //                 }
+
+    //                 )
+    //                 message.success({ content: 'Loaded successfully!', key: "3" });
+    //                 setIsLoading(false)
+    //                 setResultIsLoading(false)
+
+    //                 setResults(data)
+    //             } catch (err) {
+    //                 setResultIsLoading(false)
+
+    //                 setIsLoading(false)
+    //                 const errorMsg = err.response ? err.response.data.message : "Something went wrong!!!"
+    //                 message.error({ content: errorMsg, key: "3" });
+
+    //             }
+    //         }
+
+    //         onPageReloadFetch()
+    //     }
+
+    // }, [!isSearched && !isASearched && user !== null && !changePage && Object.keys(router.query).length !== 0])
+
 
     return (
         <ProtectedPage>
@@ -331,12 +392,12 @@ const search = () => {
 
                         <Tabs type="card" size="large" animated type="card"  >
                             <TabPane tab="Basic Search" key="BasicSearch"  >
-                                <BasicSearchForm basicSearch={basicSearch} isLoading={isLoading} limitChange={limitChange} onReset={onReset} form={basicForm} />
+                                <BasicSearchForm basicSearch={basicSearch} isLoading={isLoading} limitChange={basicLimitChange} onReset={onReset} basicForm={basicForm} />
                             </TabPane>
 
 
                             <TabPane tab="Advance Search" key="AdvanceSearch" >
-                                <AdvanceSearchForm advanceSearch={advanceSearch} limitChange={limitChange} onReset={onAReset} isLoading={isLoading} form={advanceForm} />
+                                <AdvanceSearchForm advanceSearch={advanceSearch} limitChange={advanceLimitChange} onReset={onAReset} isLoading={isLoading} advanceForm={advanceForm} />
                             </TabPane>
 
                         </Tabs>
@@ -352,7 +413,9 @@ const search = () => {
 
             {!resultLoading && results && results.totalCount !== 0 &&
                 <div className="result">
-                <Results properties={results.allProperty} totalSearchedProperty={results.totalSearchedProperty} limit={limit} basicSearch={basicSearch} onPageChange={onPageChange} selectedPage={selectedPage} />
+                <Results properties={results.allProperty} totalSearchedProperty={results.totalSearchedProperty}
+                    limit={resultLimit}
+                    basicSearch={basicSearch} onPageChange={onPageChange} selectedPage={selectedPage} />
 
                 </div>
             }

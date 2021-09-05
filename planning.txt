@@ -57,7 +57,7 @@ create endpoints for single property info//
 Others features and security
 *****************************
 //use collapse component for sale date and bidderinfo.
-//consider to change the reset page ui with progress component.
+//consider to change the reset page ui with progress component.// Also check for the form data collision problem.
 //use result component for the blocked or inactive users.
 //make change for the selectedRole . Put an endpoint and update all the data.
 sent token .. csurf and the status.

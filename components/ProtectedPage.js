@@ -6,7 +6,7 @@ import { BackTop, message } from 'antd';
 import Breadcrumbs from 'nextjs-breadcrumbs';
 import useWindowSize from "../utils/useWindowSize"; //window mehtods sucks in react and next.. be carefull to play around with it.
 import MenuInsideProtected from './MenuInsideProtected';
-import { storeRequestedUrl } from '../store/userInfoSlice'
+import { storeRequestedPath, storeRequestedQuery, setInLoginPage } from '../store/userInfoSlice'
 
 
 
@@ -38,38 +38,23 @@ const ProtectedPage = (props) => {
 
     const [isSeeMore, setIsSeeMore] = useState(false)
     const [isFullScreen, setIsFullScreen] = useState(false)
-    const [requestedUrl, setRequestedUrl] = useState()
 
     const { width } = useWindowSize()
     const dispatch = useDispatch()
 
-    const arrayOfURI = []
-    let joinedUrl;
-
     const query = router.query
 
 
-    if (Object.keys(query).length !== 0) {
-        console.log(query)
-        for (const [key, value] of Object.entries(query)) {
-            const iteratedData = `${key.trim()}=${value.split(' ').join("+")}`
-            arrayOfURI.push(iteratedData)
+
+
+    useEffect(() => {
+        if (Object.keys(query).length !== 0) {
+            dispatch(storeRequestedQuery(query))
         }
 
-        joinedUrl = arrayOfURI.join("&")
-    }
 
+    }, [Object.keys(query).length !== 0])
 
-
-    let requestableURL
-    if (requestedUrl && joinedUrl) {
-        requestableURL = `${requestedUrl}?${joinedUrl}`
-        dispatch(storeRequestedUrl(requestableURL))
-    } else {
-        requestableURL = requestedUrl
-        dispatch(storeRequestedUrl(requestableURL))
-
-    }
 
     useEffect(() => {
         const userInfo = localStorage.getItem('user')
@@ -80,15 +65,10 @@ const ProtectedPage = (props) => {
         } else if (!userInfo || user === null) {
             message.warning("You are not authenticated! Please login and try again.")
             router.push('/signup')
-            setRequestedUrl(router.pathname)
+            dispatch(storeRequestedPath((router.pathname)))
         }
 
     }, [user])
-
-
-
-
-
 
     useEffect(() => {
         if (width <= 1000) {

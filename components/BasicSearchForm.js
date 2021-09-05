@@ -3,14 +3,14 @@ import { Row, Col, Button, Form, Input, Select, DatePicker } from 'antd'
 import styles from '../styles/search.module.css'
 import { SyncOutlined } from '@ant-design/icons'
 
-const BasicSearchForm = ({ basicSearch, isLoading, limitChange, onReset, form }) => {
+const BasicSearchForm = ({ basicSearch, isLoading, limitChange, onReset, basicForm }) => {
     const { Item } = Form
     const { Option } = Select
 
 
 
     return (
-        <Form form={form} layout="vertical" name="basicForm" className={styles.searchForm} onFinish={basicSearch} initialValues={{ limit: "10" }} >
+        <Form form={basicForm} layout="vertical" className={styles.searchForm} onFinish={basicSearch} initialValues={{ limit: "10" }} >
             <h3 style={{ textAlign: "center", width: "100%" }}> Property Descripton Search : </h3>
             <hr style={{ width: "100%", marginBottom: "10px" }}
             />

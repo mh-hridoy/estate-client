@@ -3,7 +3,9 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
     user: null,
     token: "",
-    requestedUrl: "",
+    requestedPath: "",
+    requestedQuery: {},
+    inLoginPage: false
     // storeQuery: ""
 }
 
@@ -20,18 +22,24 @@ export const userInfoSlice = createSlice({
         //     state.requestedUrl = ""
         //     return state;
         // },
-        storeRequestedUrl: (state, action) => {
-            return { ...state, requestedUrl: action.payload }
+        storeRequestedPath: (state, action) => {
+            return { ...state, requestedPath: action.payload }
+        },
+
+        setInLoginPage: (state, action) => {
+            return { ...state, inLoginPage: action.payload }
+
+        },
+        storeRequestedQuery: (state, action) => {
+            return { ...state, requestedQuery: action.payload }
         },
         // storeFullQuery: (state, action) => {
         //     return { ...state, requestedUrl: action.payload }
-
         // }
-
     },
 })
 
 // Action creators are generated for each case reducer function
-export const { login, storeRequestedUrl } = userInfoSlice.actions
+export const { login, storeRequestedPath, setInLoginPage, storeRequestedQuery } = userInfoSlice.actions
 
 export default userInfoSlice.reducer

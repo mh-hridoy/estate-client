@@ -46,7 +46,6 @@ const search = () => {
         setIsASearched(false)
         setSearchAValue(null)
         setShallowUrl("")
-
         // console.log("Clicked on basicSearch")
 
     };
@@ -123,6 +122,7 @@ const search = () => {
             }
             arrayOfURI.push(`page=${"1"}`)
             arrayOfURI.push(`limit=${limit}`)
+            setResultLimit(limit)
             //sort and push to array
             const fSortBy = fSort && `${fOrder == "ASC" ? "" : "-"}${fSort ? fSort : ""}`
             const sSortBy = sSort && `${sOrder == "ASC" ? "" : "-"}${sSort ? sSort : ""}`
@@ -202,6 +202,7 @@ const search = () => {
                 searchAValue.sOrder = undefined
                 searchAValue.limit = undefined
 
+
                 if (searchAValue[key] !== undefined) {
                     delete searchAValue[key]
                     const iteratedData = `${key.trim()}=${value.split(' ').join("+")}`
@@ -211,6 +212,8 @@ const search = () => {
             arrayOfURI.push(`page=1`)
 
             arrayOfURI.push(`limit=${aLimit}`)
+            setResultLimit(aLimit)
+
 
             //sort and push to array
             const fSortBy = fSort && `${fOrder == "ASC" ? "" : "-"}${fSort ? fSort : ""}`
@@ -321,64 +324,63 @@ const search = () => {
 
     //for the reload page fetch and redirect to fecth request.
 
-    // useEffect(() => {
-    //     const arrayOfURI = []
+    useEffect(() => {
+        const arrayOfURI = []
 
-    //     if (!isSearched && !isASearched && user !== null && !changePage && Object.keys(router.query).length !== 0) {
-    //         console.log("im onPageReloadFetch")
+        if (Object.keys(router.query).length !== 0 && !isSearched && !isASearched && user != null && PerformanceNavigationTiming) {
+            console.log("im onPageReloadFetch")
+            let page;
+            let pageLimit;
+            const query = router.query
 
-    //         let page;
-    //         const query = router.query
+            // console.log(checkPage)
 
+            for (const [key, value] of Object.entries(query)) {
 
-    //         // console.log(checkPage)
+                if (key == "page") page = value
+                if (key == "limit") pageLimit = +value
 
-    //         for (const [key, value] of Object.entries(query)) {
+                const iteratedData = `${key.trim()}=${value.split(' ').join("+")}`
+                arrayOfURI.push(iteratedData)
+            }
+            const joinedUrl = arrayOfURI.join('&')
+            setQueryOfArray(arrayOfURI)
+            setResultLimit(pageLimit)
+            setRequestedUri(joinedUrl)
+            const requestableURL = `http://localhost:5000/api/properties?${joinedUrl}`
 
-    //             if (key == "page") page = value
+            const onPageReloadFetch = async () => {
+                try {
+                    setSelectedPage(page)
+                    setResultIsLoading(true)
+                    message.loading({ content: 'Loading...', key: "3" });
+                    setIsLoading(true)
+                    const { data } = await axios.get(requestableURL, {
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }, withCredentials: true,
+                    }
 
-    //             const iteratedData = `${key.trim()}=${value.split(' ').join("+")}`
-    //             arrayOfURI.push(iteratedData)
-    //         }
-    //         const joinedUrl = arrayOfURI.join('&')
+                    )
+                    message.success({ content: 'Loaded successfully!', key: "3" });
+                    setIsLoading(false)
+                    setResultIsLoading(false)
 
-    //         setQueryOfArray(arrayOfURI)
+                    setResults(data)
+                } catch (err) {
+                    setResultIsLoading(false)
 
-    //         setRequestedUri(joinedUrl)
-    //         const requestableURL = `http://localhost:5000/api/properties?${joinedUrl}`
+                    setIsLoading(false)
+                    const errorMsg = err.response ? err.response.data.message : "Something went wrong!!!"
+                    message.error({ content: errorMsg, key: "3" });
 
-    //         const onPageReloadFetch = async () => {
-    //             try {
-    //                 setSelectedPage(page)
-    //                 setResultIsLoading(true)
-    //                 message.loading({ content: 'Loading...', key: "3" });
-    //                 setIsLoading(true)
-    //                 const { data } = await axios.get(requestableURL, {
-    //                     headers: {
-    //                         'Authorization': `Bearer ${token}`
-    //                     }, withCredentials: true,
-    //                 }
+                }
+            }
 
-    //                 )
-    //                 message.success({ content: 'Loaded successfully!', key: "3" });
-    //                 setIsLoading(false)
-    //                 setResultIsLoading(false)
+            onPageReloadFetch()
+        }
 
-    //                 setResults(data)
-    //             } catch (err) {
-    //                 setResultIsLoading(false)
-
-    //                 setIsLoading(false)
-    //                 const errorMsg = err.response ? err.response.data.message : "Something went wrong!!!"
-    //                 message.error({ content: errorMsg, key: "3" });
-
-    //             }
-    //         }
-
-    //         onPageReloadFetch()
-    //     }
-
-    // }, [!isSearched && !isASearched && user !== null && !changePage && Object.keys(router.query).length !== 0])
+    }, [Object.keys(router.query).length !== 0 && user !== null && PerformanceNavigationTiming])
 
 
     return (

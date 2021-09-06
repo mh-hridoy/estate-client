@@ -49,7 +49,9 @@ Store, localstorage, Protected routes, logout, menuItem....//Partially completed
 *****************************
 
 //next
+//double check on search//
 work on single page property info UI//
+//use input suffix for adding URL
 create endpoints for single property info//
 
 ************

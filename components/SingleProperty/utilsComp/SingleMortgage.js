@@ -4,9 +4,10 @@ import InputField from "./InputField"
 import NumberField from "./NumberField"
 import DateField from "./DateField"
 import { UploadOutlined } from '@ant-design/icons'
+import { useState } from "react"
 
 
-const SingleMortgage = ({ fLienFCL, fNoStr, dfLien, exMatch, dtAddressMatch, attorneyFee, amortizationView, modAView, subAView, FResults, fLienVal,
+const SingleMortgage = ({ fLienFCL, fNoStrVal, dfLien, exMatch, dtAddressMatch, attorneyFee, amortizationView, modAView, subAView, FResults, fLienVal,
     dfLienVal,
     exMatchVal,
     dtAddressMatchVal,
@@ -16,18 +17,48 @@ const SingleMortgage = ({ fLienFCL, fNoStr, dfLien, exMatch, dtAddressMatch, att
     subAViewVal,
     FResultsVal }) => {
 
+    const [isOwnerOne, setisOwnerOne] = useState(false)
+    const [isOwnerTwo, setisOwnerTwo] = useState(false)
+    const [isOwnerThree, setisOwnerThree] = useState(false)
+    const [isOwnerFour, setisOwnerFour] = useState(false)
+    const [isDtcCheck, setisDtcCheck] = useState(false)
+    const [isDcaCheck, setisDcaCheck] = useState(false)
+    const [isThirdCheck, setisThirdCheck] = useState(false)
+
     const { Item } = Form
 
     //declare valriables for checked comp.
 
+    const ownerOne = () => {
+        setisOwnerOne(true)
+    }
+    const ownerTwo = () => {
+        setisOwnerTwo(true)
+    }
+    const ownerThree = () => {
+        setisOwnerThree(true)
+    }
 
+    const ownerFour = () => {
+        setisOwnerFour(true)
+    }
+    const dtcCheck = () => {
+        setisDtcCheck(true)
+    }
+
+    const dcaCheck = () => {
+        setisDcaCheck(true)
+    }
+    const thirdCheck = () => {
+        setisThirdCheck(true)
+    }
 
     return (
         <>
             <div className="headerPortion" style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
                 <CheckField htmlFor="fLienFCL" label="First Lien Foreclosing" id="fLienFCL" name="fLienFCL" onChange={fLienFCL} checked={fLienVal} />
-                <CheckField htmlFor="fNoStr" label="No STR | No APPT" id="fNoStr" name="fNoStr" onChange={fNoStr} checked={dfLienVal} />
-                <CheckField htmlFor="dfLien" label="Defective Lien" id="dfLien" name="dfLien" onChange={dfLien} checked={exMatchVal} />
+                <CheckField htmlFor="fNoStr" label="No STR | No APPT" id="fNoStr" name="fNoStr" onChange={fNoStr} checked={fNoStrVal} />
+                <CheckField htmlFor="dfLien" label="Defective Lien" id="dfLien" name="dfLien" onChange={dfLien} checked={dfLienVal} />
 
 
                 <Button
@@ -177,14 +208,14 @@ const SingleMortgage = ({ fLienFCL, fNoStr, dfLien, exMatch, dtAddressMatch, att
             </Col>
 
             <div className="details" style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
-                <CheckField htmlFor="owner1" label="Owner 1" id="owner1" name="owner1" />
-                <CheckField htmlFor="owner2" label="Owner 2" id="owner2" name="owner2" />
-                <CheckField htmlFor="owner3" label="Owner 3" id="owner3" name="owner3" />
-                <CheckField htmlFor="owner4" label="Owner 4" id="owner4" name="owner4" />
+                <CheckField htmlFor="owner1" label="Owner 1" id="owner1" name="owner1" onChange={ownerOne} checked={isOwnerOne} />
+                <CheckField htmlFor="owner2" label="Owner 2" id="owner2" name="owner2" onChange={ownerTwo} checked={isOwnerTwo} />
+                <CheckField htmlFor="owner3" label="Owner 3" id="owner3" name="owner3" onChange={ownerThree} checked={isOwnerThree} />
+                <CheckField htmlFor="owner4" label="Owner 4" id="owner4" name="owner4" onChange={ownerFour} checked={isOwnerFour} />
 
-                <CheckField htmlFor="dtc" label="DTC - First Check" id="dtc" name="dtc" />
-                <CheckField htmlFor="dca" label="DCA - Second Check" id="dca" name="dca" />
-                <CheckField htmlFor="thirdDca" label="DCA - Third Check" id="thirdDca" name="thirdDca" />
+                <CheckField htmlFor="dtc" label="DTC - First Check" id="dtc" name="dtc" onChange={dtcCheck} checked={isDtcCheck} />
+                <CheckField htmlFor="dca" label="DCA - Second Check" id="dca" name="dca" onChange={dcaCheck} checked={isDcaCheck} />
+                <CheckField htmlFor="thirdDca" label="DCA - Third Check" id="thirdDca" name="thirdDca" onChange={thirdCheck} checked={isThirdCheck} />
 
             </div>
 
@@ -194,5 +225,7 @@ const SingleMortgage = ({ fLienFCL, fNoStr, dfLien, exMatch, dtAddressMatch, att
         </>
     )
 }
+
+
 
 export default SingleMortgage

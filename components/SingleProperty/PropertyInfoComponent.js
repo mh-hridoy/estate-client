@@ -276,8 +276,8 @@ const PropertyInfo = ({ propertyinfo }) => {
                     <Col xs={24} md={8} lg={4} style={{ position: "sticky", bottom: "20px" }}>
                         <Button
                             type="primary"
-                            style={{ width: "100px", marginTop: "20px", borderRadius: "15px" }}>
-                            Save Data
+                            style={{ width: "160px", marginTop: "20px", borderRadius: "15px" }}>
+                            Save Property Data
                         </Button>
                     </Col>
 

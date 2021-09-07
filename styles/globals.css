@@ -329,7 +329,7 @@ height: 70vh;
 transform : scale(1.1);
 border-bottom: 2px solid var(--hover-color);
     border-top: 2px solid var(--secondary-color);
-    transition : all 0.2s ease-in-out
+    transition : all 0.2s ease-in-out;
 }
 
 

@@ -1,11 +1,14 @@
-import { Row, Col, Form, Select, Input, DatePicker, Upload, Button, Collapse } from 'antd'
+import { Row, Col, Form, Select, Input, Button, Collapse } from 'antd'
 import styles from '../../styles/search.module.css'
-import { UploadOutlined } from '@ant-design/icons';
-import NumberField from './utilsComp/NumberField';
 import InputWithSuffix from './utilsComp/InputWithSuffix';
 import CheckField from './utilsComp/CheckField';
 import SingleMortgage from './utilsComp/SingleMortgage';
 import { useState } from 'react';
+import SecondMortgage from './utilsComp/SecondMortgage';
+import ThirdMortgage from './utilsComp/ThirdMortgage';
+import HoaMortgage from './utilsComp/HoaMortgage';
+import TaxMortgage from './utilsComp/TaxMortgage';
+import OtherMortgage from './utilsComp/OtherMortgage';
 
 
 
@@ -88,7 +91,10 @@ const MortgageInfoComponent = ({ mortgageInfo }) => {
                         <Col span={24} style={{ width: "100%", magin: "0px", padding: "0px" }} >
                             <Collapse defaultActiveKey={['10']}
                                 expandIconPosition="right"
-                                style={{ marginTop: "10px" }}>
+                                style={{ marginTop: "10px" }}
+                                style={{ backgroundColor: "var(--optional-color)" }}
+
+                            >
 
                                 <Panel header="First Lien" key="10">
                                     <SingleMortgage fLienFCL={fLienFCL} fNoStr={fNoStr} dfLien={dfLien} exMatch={exMatch} dtAddressMatch={dtAddressMatch} attorneyFee={attorneyFee} amortizationView={amortizationView} modAView={modAView} subAView={subAView} FResults={FResults} fLienVal={fLienVal}
@@ -104,14 +110,39 @@ const MortgageInfoComponent = ({ mortgageInfo }) => {
 
                                 </Panel>
 
+                                <Panel header="Second Lien" key="11">
+                                    <SecondMortgage />
+
+                                </Panel>
+
+                                <Panel header="Third Lien" key="12">
+                                    <ThirdMortgage />
+
+                                </Panel>
+
+                                <Panel header="HOA Lien" key="13">
+                                    <HoaMortgage />
+
+                                </Panel>
+
+                                <Panel header="TAX Lien" key="14">
+                                    <TaxMortgage />
+
+                                </Panel>
+
+                                <Panel header="Other Lien" key="15">
+                                    <OtherMortgage />
+
+                                </Panel>
+
                             </Collapse>
                         </Col>
 
-                        <Col xs={24} md={8} lg={4} style={{ position: "sticky", bottom: "20px" }}>
+                        <Col xs={24} style={{ position: "sticky", bottom: "20px", right: "50vw", float: "right", margin: "0 65vw" }} >
                             <Button
                                 type="primary"
-                                style={{ width: "100px", marginTop: "20px", borderRadius: "15px" }}>
-                                Save Data
+                                style={{ width: "170px", borderRadius: "15px" }}>
+                                Save Mortgage Data
                             </Button>
                         </Col>
 

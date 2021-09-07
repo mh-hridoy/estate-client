@@ -1,6 +1,6 @@
 import React from 'react'
 import { useRouter } from 'next/router'
-import { Collapse, Form, Row, Col } from 'antd'
+import { Collapse, Form, Row, Col, Space } from 'antd'
 import PropertyInfoComponent from '../../../components/SingleProperty/PropertyInfoComponent'
 import ProtectedPage from '../../../components/ProtectedPage'
 import MortgageInfoComponent from '../../../components/SingleProperty/MortgageInfoComponent'
@@ -25,11 +25,15 @@ const singlePropertyInfo = () => {
                     <Collapse defaultActiveKey={['1']}
                         // onChange={callback}
                         expandIconPosition="right"
-                        style={{ marginTop: "10px" }}
+                        style={{ marginTop: "10px", backgroundColor: "var(--optional-color)" }}
+
+
                     >
+
                         <Panel header="Property Details (Building, Land, Assessment)" key="1" >
                             <PropertyInfoComponent propertyInfo={propertyInfoForm} />
                         </Panel>
+
 
                         <Panel header="Mortgage, Other Liens" key="2" >
                             <MortgageInfoComponent propertyInfo={mortgageInfo} />

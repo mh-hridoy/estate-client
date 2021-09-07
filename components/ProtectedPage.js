@@ -6,7 +6,7 @@ import { BackTop, message } from 'antd';
 import Breadcrumbs from 'nextjs-breadcrumbs';
 import useWindowSize from "../utils/useWindowSize"; //window mehtods sucks in react and next.. be carefull to play around with it.
 import MenuInsideProtected from './MenuInsideProtected';
-import { storeRequestedPath, storeRequestedQuery, setInLoginPage } from '../store/userInfoSlice'
+import { storeRequestedPath, storeRequestedQuery } from '../store/userInfoSlice'
 
 
 
@@ -49,6 +49,9 @@ const ProtectedPage = (props) => {
 
     useEffect(() => {
         if (Object.keys(query).length !== 0) {
+
+            if (query.propertyinfo) delete query.propertyinfo
+
             dispatch(storeRequestedQuery(query))
         }
 
@@ -65,7 +68,10 @@ const ProtectedPage = (props) => {
         } else if (!userInfo || user === null) {
             message.warning("You are not authenticated! Please login and try again.")
             router.push('/signup')
-            dispatch(storeRequestedPath((router.pathname)))
+            const windowLocation = window.location.href
+
+            const onlyPathname = windowLocation.split("3000")[1]
+            dispatch(storeRequestedPath((onlyPathname)))
         }
 
     }, [user])

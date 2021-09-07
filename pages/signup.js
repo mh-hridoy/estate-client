@@ -48,14 +48,19 @@ const Signup = () => {
 
   const arrayOfURI = []
 
-  if (requestedPathname && requestedQuery) {
+
+  if (requestedPathname && Object.entries(requestedQuery).length != 0) {
     try {
       for (const [key, value] of Object.entries(requestedQuery)) {
         const iteratedData = `${key.trim()}=${value.split(' ').join("+")}`
         arrayOfURI.push(iteratedData)
       }
+
+      const newArra = [new Set(arrayOfURI)]
+      const URI = `${requestedPathname}?${newArra.join("&")}`
+      const correctedUrl = URI.split("?[object Set]")[0]
+      requestedUrl = correctedUrl
     } catch (err) { console.log(err) }
-    requestedUrl = `${requestedPathname}?${arrayOfURI.join("&")}`
 
   } else {
     requestedUrl = requestedPathname
@@ -69,14 +74,14 @@ const Signup = () => {
 
 
   // console.log(requestedUrl)
+  dispatch(setInLoginPage(true))
 
   useEffect(() => {
-    dispatch(setInLoginPage(true))
-    if (loginData && clickedOnLogin) {
+    if (clickedOnLogin && loginData) {
       const loginHandler = async () => {
         try {
           // console.log(requestedUrl)
-
+          console.log("Iam loign")
           setIsLoading(true)
           const { data } = await axios.post(`http://localhost:5000/api/login`, loginData, {
             headers: {
@@ -103,7 +108,7 @@ const Signup = () => {
       loginHandler()
     }
 
-  }, [loginData && clickedOnLogin])
+  }, [clickedOnLogin && loginData])
 
   const registerAccount = async ({ email, fullName: name, password, cPassword }) => {
     try {

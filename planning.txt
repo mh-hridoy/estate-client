@@ -31,15 +31,17 @@ work on pagination httpRequest//Done
 make disabled to false Search button//Done
 work on overview component// use top drawer components// Done
 craete axios cancel token// Researched on that. //had added on basic search ..
-
 //fix 304code request.// this will show up if the httpRequest data does not changed. //An HTTP 304 not modified status code means that the website you're requesting hasn't been updated since the last time you accessed it. Typically, your browser will save (or cache) web pages so it doesn't have to repeatedly download the same information. This is an attempt to speed up page delivery//
-
 //lookup on cookie-parser //Done// Added notes on server and protectedRouts page.
 make onPageReloadFetch data// Done
 change URL on search// Done
 Fix sale date 1day behind problem in backend//Done
 //check if the protected route can store the requested url.// if it does then store it in a variable or state. or use redux.// Done
 also add query string if requested url contains query.// Done
+//double check on search//on first search it's including onPageReaload// Done
+//consider to remove Performance method if it's causing problem.//Done
+//use input suffix for adding URL//Done
+
 
 Store, localstorage, Protected routes, logout, menuItem....//Partially completed, also working on this along other task.... 
 *******
@@ -49,14 +51,15 @@ Store, localstorage, Protected routes, logout, menuItem....//Partially completed
 *****************************
 
 //next
-//double check on search//
 work on single page property info UI//
-//use input suffix for adding URL
+
 create endpoints for single property info//
+
+//need to fix property overview and result due to changes of shcema.
 
 ************
 
-Others features and security
+Others features, security and changes.
 *****************************
 //use collapse component for sale date and bidderinfo.
 //consider to change the reset page ui with progress component.// Also check for the form data collision problem.

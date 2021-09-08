@@ -26,9 +26,6 @@ const MortgageInfoComponent = ({ mortgageInfo }) => {
     const [subAViewVal, setsubAView] = useState(false)
     const [FResultsVal, setFResults] = useState(false)
 
-    const { Item } = Form
-    const { Option } = Select
-    const { TextArea } = Input
     const { Panel } = Collapse
 
 
@@ -138,7 +135,7 @@ const MortgageInfoComponent = ({ mortgageInfo }) => {
                             </Collapse>
                         </Col>
 
-                        <Col xs={24} style={{ position: "sticky", bottom: "20px", right: "50vw", float: "right", margin: "0 65vw" }} >
+                        <Col xs={24} style={{ position: "sticky", bottom: "20px" }} >
                             <Button
                                 type="primary"
                                 style={{ width: "170px", borderRadius: "15px" }}>

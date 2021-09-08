@@ -40,7 +40,7 @@ const Header = () => {
                     } catch (err) {
                         setIsLoading(false)
                         message.warning({ content: "Something went wrong!", key: "1" })
-                        router.push("/home/dashboard")
+                        router.push("/home/dashboard").then(() => router.reload())
 
                     }
 

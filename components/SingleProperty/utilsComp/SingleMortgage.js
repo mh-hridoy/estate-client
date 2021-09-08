@@ -7,8 +7,8 @@ import { UploadOutlined } from '@ant-design/icons'
 import { useState } from "react"
 
 
-const SingleMortgage = ({ fLienFCL, fNoStrVal, dfLien, exMatch, dtAddressMatch, attorneyFee, amortizationView, modAView, subAView, FResults, fLienVal,
-    dfLienVal,
+const SingleMortgage = ({ fLienFCL, fNoStr, dfLien, exMatch, dtAddressMatch, attorneyFee, amortizationView, modAView, subAView, FResults, fLienVal,
+    dfLienVal, fNoStrVal,
     exMatchVal,
     dtAddressMatchVal,
     attorneyFeeVal,

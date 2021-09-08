@@ -297,6 +297,15 @@ height: 70vh;
     height:  500px;
 }
 
+.site-collapse-custom-collapse .site-collapse-custom-panel,
+.site-collapse-custom-collapse .site-collapse-custom-panel {
+  margin-bottom: 24px;
+  /* overflow: hidden; */
+  background: var(--optional-color);
+  border: none;
+}
+
+
 .card {
   padding : 10px;
     box-shadow: 0px 0px 5px rgba(0,0,0,0.5);
@@ -305,7 +314,7 @@ height: 70vh;
     margin : 15px;
     cursor : pointer;
     transform : scale(1);
-    transition : transform 0.2s ease-in-out
+    transition : transform 0.2s ease-in-out;
 
 }
 

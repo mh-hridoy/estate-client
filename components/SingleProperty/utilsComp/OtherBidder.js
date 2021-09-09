@@ -6,8 +6,10 @@ import CheckField from './CheckField';
 import { UploadOutlined } from '@ant-design/icons'
 import DateField from './DateField';
 
-const UBComponent = () => {
+const OtherBidder = () => {
     const { Item } = Form
+
+
     return (
         <>
             <Col span={24} style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
@@ -90,7 +92,6 @@ const UBComponent = () => {
                     <Col xs={12} sm={8} md={6} >
 
                         <Button
-                            type="primary"
                             // onClick={this.handleUpload}
                             // disabled={fileList.length === 0}
                             // loading={uploading}
@@ -114,9 +115,8 @@ const UBComponent = () => {
                 </Col>
 
             </Col>
-
         </>
     )
 }
 
-export default UBComponent
+export default OtherBidder

@@ -4,10 +4,9 @@ import styles from '../../styles/search.module.css'
 import InputWithSuffix from './utilsComp/InputWithSuffix';
 import NumberField from './utilsComp/NumberField';
 import CheckField from './utilsComp/CheckField';
-import { useState } from 'react';
 import { UploadOutlined } from '@ant-design/icons'
 import DateField from './utilsComp/DateField';
-import UBComponent from './utilsComp/UBComponent'
+// import OtherBidder from './utilsComp/OtherBidder'
 
 
 const SaleInfoComponent = ({ saleInfoForm }) => {
@@ -366,7 +365,13 @@ const SaleInfoComponent = ({ saleInfoForm }) => {
                             </Collapse>
                         </Col>
 
-
+                        <Col xs={24} md={8} lg={4} style={{ position: "sticky", bottom: "20px" }}>
+                            <Button
+                                type="primary"
+                                style={{ width: "160px", marginTop: "20px", borderRadius: "15px" }}>
+                                Save Sale Data
+                            </Button>
+                        </Col>
 
                     </Form>
 

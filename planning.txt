@@ -52,10 +52,8 @@ Store, localstorage, Protected routes, logout, menuItem....//Partially completed
 
 //next
 work on single page property info UI//
-
 create endpoints for single property info//
-
-//need to fix property overview and result due to changes of shcema.
+//need to fix property overview and result due to changes of shcema//
 
 ************
 

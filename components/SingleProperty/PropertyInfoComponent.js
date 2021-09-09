@@ -5,6 +5,7 @@ import { UploadOutlined } from '@ant-design/icons';
 import PriceHistory from './PriceHistory';
 import NumberField from './utilsComp/NumberField';
 import InputWithSuffix from './utilsComp/InputWithSuffix';
+import DateField from './utilsComp/DateField'
 
 
 
@@ -269,9 +270,9 @@ const PropertyInfo = ({ propertyinfo }) => {
                     </Divider>
 
                     <NumberField label="Property Tax Owed" htmlFor="pTaxOwed" name="pTaxOwed" id="pTaxOwed" />
-                    <NumberField label="Owed Year" htmlFor="owedYear" name="owedYear" id="owedYear" />
+                    <DateField label="Owed Year" htmlFor="owedYear" name="owedYear" id="owedYear" />
                     <NumberField label="Tax Assessed" htmlFor="taxAssessed" name="taxAssessed" id="taxAssessed" />
-                    <NumberField label="Tax Year" htmlFor="taxYear" name="taxYear" id="taxYear" />
+                    <DateField label="Tax Year" htmlFor="taxYear" name="taxYear" id="taxYear" />
 
                     <Col xs={24} md={8} lg={4} style={{ position: "sticky", bottom: "20px" }}>
                         <Button

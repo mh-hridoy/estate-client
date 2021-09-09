@@ -1,11 +1,12 @@
 import React from 'react'
 import { useRouter } from 'next/router'
-import { Collapse, Form, Row, Col, Divider } from 'antd'
+import { Collapse, Form, Row, Col, Tabs } from 'antd'
 import PropertyInfoComponent from '../../../components/SingleProperty/PropertyInfoComponent'
 import ProtectedPage from '../../../components/ProtectedPage'
 import MortgageInfoComponent from '../../../components/SingleProperty/MortgageInfoComponent'
 import OwnerInfoComponent from '../../../components/SingleProperty/OwnerInfoComponent'
 import SaleInfoComponent from '../../../components/SingleProperty/SaleInfoComponent'
+import CmaArvComponent from '../../../components/SingleProperty/CmaArvComponent'
 
 const singlePropertyInfo = () => {
     const router = useRouter()
@@ -17,6 +18,8 @@ const singlePropertyInfo = () => {
     const [ownerAndBorrower] = Form.useForm()
     const [saleInfoForm] = Form.useForm()
 
+    const { TabPane } = Tabs;
+
     // function callback(key) {
     //     console.log(key);
     // }
@@ -24,6 +27,11 @@ const singlePropertyInfo = () => {
     return (
         <ProtectedPage>
             {/* useTabHere */}
+            <Tabs type="card" size="large" animated type="card" >
+
+                <TabPane tab="Property Details" key="propertyInfoTab" >
+
+
             <Row gutter={15} wrap={true} justify="center">
                 <Col span={23}>
                     <Collapse defaultActiveKey={['1']}
@@ -74,8 +82,23 @@ const singlePropertyInfo = () => {
 
                 </Col>
             </Row>
+                </TabPane>
+
+                <TabPane tab="CMA/ARV" key="cmaArv" >
+                    <Row gutter={15} wrap={true} justify="center">
+                        <Col span={23}>
+                            <CmaArvComponent />
+
+                        </Col>
+                    </Row>
+
+                </TabPane>
+
+            </Tabs>
+
 
             <div className="bottomPart" style={{ paddingBottom: "30px" }}> </div>
+
         </ProtectedPage>
     )
 }

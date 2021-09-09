@@ -12,15 +12,14 @@ const CmaArvComponent = ({ saleInfoForm }) => {
 
     return (
         <>
-            <Row gutter={20} wrap={true} justify="start"  >
+            <Row gutter={15} wrap={true} justify="start"  >
                 <Col span={24}>
                     <Form form={saleInfoForm} layout="vertical" className={styles.searchForm} onFinish={saleInfoHandler} >
                         <Col span={24}>
                             <Collapse defaultActiveKey={['50']}
                                 // onChange={callback}
                                 expandIconPosition="right"
-                                className="site-collapse-custom-collapse"
-                            >
+                                className="site-collapse-custom-collapse">
                                 <Panel header="FIRST COMP" key="50" className="site-collapse-custom-panel" >
                                     {/* cma arv info */}
                                     <CompData name="FIRST COMP" />
@@ -45,7 +44,7 @@ const CmaArvComponent = ({ saleInfoForm }) => {
                             <Button
                                 type="primary"
                                 style={{ width: "160px", marginTop: "20px", borderRadius: "15px" }}>
-                                Save Property Data
+                                Save Comp Data
                             </Button>
                         </Col>
 

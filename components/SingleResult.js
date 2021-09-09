@@ -7,9 +7,8 @@ const SingleResult = (props) => {
     const { info } = props
 
     const lastSaleinfo = info.saleinfo && info.saleinfo[info.saleinfo.length - 1]
-    const firstMortgageInfo = info.mortgageInfo[0] && info.mortgageInfo[0]
-    const secondMortgageInfo = info.mortgageInfo[1] && info.mortgageInfo[1]
-
+    const firstMortgageInfo = info.firstmortgageInfo && info.firstmortgageInfo
+    const secondMortgageInfo = info.secondMortgageInfo && info.secondMortgageInfo
 
 
     const dtcDate = info.firstComp && info.firstComp.date.split("T")[0]
@@ -91,7 +90,7 @@ const SingleResult = (props) => {
                             <li>Opening Bid : {lastSaleinfo.firstBidderInfo && lastSaleinfo.firstBidderInfo.amountOfBid} </li>
                             <li>County Value: {info.countyValue}</li>
                             <li>Zestimates: {info.zestimate}</li>
-                            <li>CMA: {info.mortgageInfo.cmaArv}</li>
+                            <li>CMA: {firstMortgageInfo.cmaArv}</li>
                             <li>NOS By: {lastSaleinfo.nosName && lastSaleinfo.nosName} </li>
                             <li>NOS By Date: {lastSaleinfo.nosDate && lastSaleinfo.nosDate} </li>
                             <li>Image By: {lastSaleinfo.firstBidderInfo.imby && lastSaleinfo.firstBidderInfo.imby}</li>

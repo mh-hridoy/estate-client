@@ -39,7 +39,7 @@ const MergeModal = (props) => {
                                     <li>Address : {record.propertyAddress}</li>
                                     <li>County : {record.county}</li>
                                     <li>Zip : {record.zip}</li>
-                                    <li>CMA: {record.mortgageInfo.cmaArv}</li>
+                                    <li>CMA: {record.firstmortgageInfo.cmaArv}</li>
                                     <li>Year Built : {record.yearBuilt}</li>
                                     <li>Sale Type : {lastSaleinfo.saleType}</li>
                                     <li>1st Buy It: pending...</li>

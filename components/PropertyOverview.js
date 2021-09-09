@@ -11,8 +11,8 @@ const PropertyOverview = (props) => {
 
 
     const lastSaleinfo = info.saleinfo && info.saleinfo[info.saleinfo.length - 1]
-    const firstMortgageInfo = info.mortgageInfo[0] && info.mortgageInfo[0]
-    const secondMortgageInfo = info.mortgageInfo[1] && info.mortgageInfo[1]
+    const firstMortgageInfo = info.firstmortgageInfo && info.firstmortgageInfo
+    const secondMortgageInfo = info.secondMortgageInfo && info.secondMortgageInfo
     const hoaLien = info.hoaLien
     const lastAssesment = info.assesmentAndTaxes[info.assesmentAndTaxes.length - 1]
     const lastBidder = lastSaleinfo.otherBidderInfo && lastSaleinfo.otherBidderInfo[lastSaleinfo.otherBidderInfo.length - 1]

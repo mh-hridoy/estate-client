@@ -9,14 +9,85 @@ import DateField from './utilsComp/DateField'
 
 
 
-const PropertyInfo = ({ propertyinfo }) => {
+const PropertyInfo = ({ propertyinfo, data }) => {
     const { Item } = Form
     const { Option } = Select
     const { TextArea } = Input
+
+    const initialValue = {
+        propertyAddress: data.propertyAddress,
+        city: data.city,
+        state: data.state,
+        county: data.county,
+        zip: data.zip,
+        lotAcre: data.lotSqf,
+        costPerSqf: data.costPerSqf,
+        totalLiving: data.totalLivingSQF,
+        mainFloor: data.mainFloor,
+        secondFloor: data.secondFloor,
+        thirdFloor: data.thirdFloor,
+        yearBuilt: data.yearBuilt,
+        bed: data.bed,
+        bath: data.bath,
+        fbath: data.fullBath,
+        hbath: data.halfBath,
+        tbath: data.oneThirdBath,
+        basement: data.basement,
+        fbasement: data.finishedBasement,
+        fAttic: data.finishedAttic,
+        garages: data.garages,
+        garageType: data.garageType,
+        garageSqf: data.garageSqf,
+        enclosedPorch: data.enclosedPorch,
+        bonusRoom: data.bonusRoom,
+        family: data.family,
+        kitchen: data.kitchen,
+        firePlaces: data.fireplace,
+        subdivision: data.subdivision,
+        propertyDesc: data.PropertyDescription,
+        legalDesc: data.legalDesc,
+        extWall: data.extWall,
+        roofing: data.roofing,
+        ac: data.ac,
+        heating: data.heating,
+        pool: data.poolSpa,
+        stories: data.stories,
+        propertyType: data.propertyType,
+        specificType: data.specificPropertyType,
+        parcelId: data.parcelId,
+        countyValue: data.countyValue,
+        prcUrl: data.prcURL,
+        countyAssUrl: data.countyAssessorURL,
+        gisUrl: data.gisURL,
+        treasurerUrl: data.treasurerURL,
+        taxBillUrl: data.taxBillUrl,
+        zillowUrl: data.zillowURL,
+        zestimate: data.zestimate,
+        redfinUrl: data.redfinUrl,
+        redfinEst: data.redfinEst,
+        realtorUrl: data.realtorURL,
+        realtorEst: data.realtorEst,
+        truliaUrl: data.truliaURL,
+        truliaEst: data.truliaEst,
+        harUrl: data.harUrl,
+        harEst: data.harEst,
+        bvUrl: data.beenVerifiedURL,
+        elemSchool: data.schoolsAndNeighbors.elementarySchool.name,
+        ranking: data.schoolsAndNeighbors.elementarySchool.ranking,
+        distance: data.schoolsAndNeighbors.elementarySchool.distance,
+
+        middleSchool: data.schoolsAndNeighbors.middleSchool.name,
+        mranking: data.schoolsAndNeighbors.middleSchool.ranking,
+        mDistance: data.schoolsAndNeighbors.middleSchool.distance,
+        highSchool: data.schoolsAndNeighbors.highSchool.name,
+        hranking: data.schoolsAndNeighbors.highSchool.ranking,
+        hDistance: data.schoolsAndNeighbors.highSchool.distance
+    }
+
     return (
         <Row gutter={20} wrap={true} justify="start" >
             <Col span={24}>
-                <Form form={propertyinfo} layout="vertical" className={styles.searchForm}  >
+                <Form form={propertyinfo} layout="vertical" className={styles.searchForm} initialValues={initialValue}  >
                     <InputField label="Property Address : " htmlFor="propertyAddress" name="propertyAddress" id="propertyAddress" />
 
                     <InputField label="City" htmlFor="city" name="city" id="city" />
@@ -268,6 +339,8 @@ const PropertyInfo = ({ propertyinfo }) => {
 
                     <Divider orientation="center">Assessment & Taxes
                     </Divider>
+
+                    {/* loop here */}
 
                     <NumberField label="Property Tax Owed" htmlFor="pTaxOwed" name="pTaxOwed" id="pTaxOwed" />
                     <DateField label="Owed Year" htmlFor="owedYear" name="owedYear" id="owedYear" />

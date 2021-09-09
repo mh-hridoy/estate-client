@@ -14,7 +14,7 @@ const CompData = ({ name }) => {
     return (
         <>
             <Divider orientation="center">{name}</Divider>
-            <div className="headerPortion" style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
+            <div className="headerPortion" style={{ display: "flex", flexDirection: "row", flexWrap: "wrap", width: "100%" }}>
 
                 <InputField label="Specific Supply & Demand" id="SSD" />
                 <InputField label="General Supply & Demand" id="GSD" />
@@ -32,24 +32,24 @@ const CompData = ({ name }) => {
                     </Item>
                 </Col>
 
-                <InputWithSuffix label="Sold Comps & SSD Maps" id="soldCompGsdMap" />
-                <InputWithSuffix label="GSD Sold Comps Maps" id="soldCompSSDMap" />
-                <InputWithSuffix label="Rental Comps & Map" id="RentalCompsMap" />
+                <InputWithSuffix label="Sold Comps & SSD Maps" name="soldCompGsdMap" id="soldCompGsdMap" />
+                <InputWithSuffix label="GSD Sold Comps Maps" name="soldCompSSDMap" id="soldCompSSDMap" />
+                <InputWithSuffix label="Rental Comps & Map" name="RentalCompsMap" id="RentalCompsMap" />
 
-                <NumberField label="P1 Value" id="p1Value" />
-                <NumberField label="P2 Value" id="p2Value" />
-                <NumberField label="P3 Value" id="p3Value" />
-                <NumberField label="Rents Zestimate" id="rentalZestimate" />
-                <NumberField label="Rental Rate" id="rentalRate" />
-                <InputWithSuffix label="Comp URL 1" id="compUrlOne" />
-                <InputWithSuffix label="Comp URL 2" id="compUrlTwo" />
-                <InputWithSuffix label="Comp URL 3" id="compUrlThree" />
-                <InputWithSuffix label="Comp URL 4" id="compUrlFour" />
+                <NumberField label="P1 Value" name="p1Value" id="p1Value" />
+                <NumberField label="P2 Value" name="p2Value" id="p2Value" />
+                <NumberField label="P3 Value" name="p3Value" id="p3Value" />
+                <NumberField label="Rents Zestimate" name="rentalZestimate" id="rentalZestimate" />
+                <NumberField label="Rental Rate" name="rentalRate" id="rentalRate" />
+                <InputWithSuffix label="Comp URL 1" name="compUrlOne" id="compUrlOne" />
+                <InputWithSuffix label="Comp URL 2" name="compUrlTwo" id="compUrlTwo" />
+                <InputWithSuffix label="Comp URL 3" name="compUrlThree" id="compUrlThree" />
+                <InputWithSuffix label="Comp URL 4" name="compUrlFour" id="compUrlFour" />
 
-                <NumberField label="Recommended CMA/ARV" id="recomCma" />
-                <NumberField label="Wholetail Value" id="wholetailVal" />
-                <InputField label="Comp By" id="compBy" />
-                <DateField label="Comp By Date" id="compByDate" />
+                <NumberField label="Recommended CMA/ARV" name="recomCma" id="recomCma" />
+                <NumberField label="Wholetail Value" name="wholetailVal" id="wholetailVal" />
+                <InputField label="Comp By" name="compBy" id="compBy" />
+                <DateField label="Comp By Date" name="compByDate" id="compByDate" />
 
 
                 <Col span={24} style={{ display: "flex", flexDirection: "row", flexWrap: "wrap", justifyContent: "flex-end" }}>

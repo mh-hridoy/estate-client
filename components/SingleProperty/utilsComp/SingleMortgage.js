@@ -15,7 +15,9 @@ const SingleMortgage = ({ fLienFCL, fNoStr, dfLien, exMatch, dtAddressMatch, att
     amortizationViewVal,
     modAViewVal,
     subAViewVal,
-    FResultsVal }) => {
+    FResultsVal, isAmortizeView, isModAview,
+    isSubAview,
+    isfClView }) => {
 
     const [isOwnerOne, setisOwnerOne] = useState(false)
     const [isOwnerTwo, setisOwnerTwo] = useState(false)
@@ -162,7 +164,7 @@ const SingleMortgage = ({ fLienFCL, fNoStr, dfLien, exMatch, dtAddressMatch, att
 
                     <Col xs={12} sm={8} md={4} >
                         <Item label="Date : " htmlFor="fLienFileDate" name="fLienFileDate"  >
-                            <DatePicker placeholder="Select Date" id="fLienFileDate" style={{ border: "1px solid black", width: "100%" }} />
+                            <DatePicker placeholder="Select Date" id="fLienFileDate" style={{ width: "100%" }} />
                         </Item>
                     </Col>
 

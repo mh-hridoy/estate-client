@@ -43,7 +43,7 @@ const OtherBidder = () => {
 
                 <Col xs={24} >
                     <Item label="Notes :" >
-                        <TextArea rows={4} id="UbBidderNote" style={{ border: "1px solid black", margin: "0px" }} />
+                        <TextArea rows={4} id="UbBidderNote" style={{ margin: "0px" }} />
                     </Item>
                 </Col>
 
@@ -72,7 +72,7 @@ const OtherBidder = () => {
 
                     <Col xs={12} sm={8} md={4} >
                         <Item label="Date :" >
-                            <DatePicker placeholder="Select Date" id="pdDate" style={{ border: "1px solid black", width: "100%" }} />
+                            <DatePicker placeholder="Select Date" id="pdDate" style={{ width: "100%" }} />
                         </Item>
                     </Col>
 

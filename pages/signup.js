@@ -93,7 +93,7 @@ const Signup = () => {
           dispatch(login(data))
           localStorage.setItem('user', JSON.stringify(data))
           setIsLoading(false)
-          message.success("Login successful.")
+          message.success("Logged in successfully.")
           const route = requestedUrl ? requestedUrl : "/home/dashboard"
           router.push(route)
           dispatch(setInLoginPage(false))

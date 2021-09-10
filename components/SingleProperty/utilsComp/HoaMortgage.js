@@ -4,17 +4,18 @@ import InputField from "./InputField"
 import NumberField from "./NumberField"
 import DateField from "./DateField"
 import { UploadOutlined } from '@ant-design/icons'
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 
-const HoaMortgage = () => {
+const HoaMortgage = ({ viewFcl,
+    viewRedemp }) => {
 
     const [fLienVal, setfLienVal] = useState(false)
     const [fNoStrVal, setfNoStrVal] = useState(false)
     const [dfLienVal, setdfLienVal] = useState(false)
     const [exMatchVal, setexMatchVal] = useState(false)
 
-    const [subAViewVal, setsubAView] = useState(false)
+    const [hoaRedemVal, sethoaRedemVal] = useState(false)
     const [FResultsVal, setFResults] = useState(false)
 
     const [isOwnerOne, setisOwnerOne] = useState(false)
@@ -47,8 +48,8 @@ const HoaMortgage = () => {
 
 
 
-    const subAView = (e) => {
-        setsubAView(e.target.checked)
+    const hoaRedemView = (e) => {
+        sethoaRedemVal(e.target.checked)
     }
 
     const FResults = (e) => {
@@ -80,6 +81,21 @@ const HoaMortgage = () => {
     const thirdCheck = () => {
         setisThirdCheck(true)
     }
+
+    useEffect(() => {
+        if (viewFcl) {
+            setFResults(viewFcl)
+        }
+
+
+        if (viewRedemp) {
+            sethoaRedemVal(viewRedemp)
+
+        }
+
+
+
+    }, [viewFcl, viewRedemp])
 
     return (
         <>
@@ -120,9 +136,9 @@ const HoaMortgage = () => {
 
             <div className="optional" style={{ display: "flex", flexDirection: "column" }}>
 
-                <CheckField htmlFor="hubAView" label="SUBORDINATION AGREEMENT (SUB/A)" id="hubAView" name="hubAView" onChange={subAView} checked={subAViewVal} />
+                <CheckField htmlFor="hoaRedemp" label="REDEMPTION INFO" id="hoaRedemp" name="hoaRedemp" onChange={hoaRedemView} checked={hoaRedemVal} />
 
-                {subAViewVal &&
+                {hoaRedemVal &&
                     <div style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
                         <DateField label="Affidavit (APM) Date" htmlFor="hfDate" name="hfDate" id="hfDate" />
                         <InputField label="Tax Code" htmlFor="hCode" name="hCode" id="hCode" />
@@ -153,7 +169,7 @@ const HoaMortgage = () => {
 
                     <Col xs={12} sm={8} md={4} >
                         <Item label="Date : " htmlFor="hLienFileDate" name="hLienFileDate"  >
-                            <DatePicker placeholder="Select Date" id="hLienFileDate" style={{ border: "1px solid black", width: "100%" }} />
+                            <DatePicker placeholder="Select Date" id="hLienFileDate" style={{ width: "100%" }} />
                         </Item>
                     </Col>
 

@@ -17,6 +17,7 @@
     "file-saver": "^2.0.5",
     "formik": "^2.2.9",
     "formik-antd": "^2.0.1",
+    "moment": "^2.29.1",
     "next": "^11.1.0",
     "nextjs-breadcrumbs": "^1.1.9",
     "react": "17.0.2",

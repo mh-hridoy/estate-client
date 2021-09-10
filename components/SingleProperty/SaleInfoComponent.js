@@ -39,7 +39,7 @@ const SaleInfoComponent = ({ saleInfoForm }) => {
                         <InputField label="Notice of Foreclosure" id="trusteeHours" />
                         <Col xs={24} >
                             <Item label="Notice of Foreclosure :"   >
-                                <TextArea rows={4} id="noticeOfFcl" style={{ border: "1px solid black", margin: "0px" }} />
+                                <TextArea rows={4} id="noticeOfFcl" style={{ margin: "0px" }} />
                             </Item>
                         </Col>
 
@@ -68,7 +68,7 @@ const SaleInfoComponent = ({ saleInfoForm }) => {
 
                                 <Col xs={12} sm={8} md={4} >
                                     <Item label="Date : " htmlFor="pdDate" name="pdDate"  >
-                                        <DatePicker placeholder="Select Date" id="pdDate" style={{ border: "1px solid black", width: "100%" }} />
+                                        <DatePicker placeholder="Select Date" id="pdDate" style={{ width: "100%" }} />
                                     </Item>
                                 </Col>
 
@@ -114,13 +114,13 @@ const SaleInfoComponent = ({ saleInfoForm }) => {
                         </Col>
                         <Col xs={24} >
                             <Item label="Before Sale Trustee Notes:"   >
-                                <TextArea rows={4} id="beforeSaleNote" style={{ border: "1px solid black", margin: "0px" }} />
+                                <TextArea rows={4} id="beforeSaleNote" style={{ margin: "0px" }} />
                             </Item>
                         </Col>
 
                         <Col xs={24} >
                             <Item label="After Sale Trustee Notes:"   >
-                                <TextArea rows={4} id="afterSaleNotes" style={{ border: "1px solid black", margin: "0px" }} />
+                                <TextArea rows={4} id="afterSaleNotes" style={{ margin: "0px" }} />
                             </Item>
                         </Col>
 
@@ -180,7 +180,7 @@ const SaleInfoComponent = ({ saleInfoForm }) => {
 
                                         <Col xs={24} >
                                             <Item label="Notes :" >
-                                                <TextArea rows={4} id="fBidderNote" style={{ border: "1px solid black", margin: "0px" }} />
+                                                <TextArea rows={4} id="fBidderNote" style={{ margin: "0px" }} />
                                             </Item>
                                         </Col>
 
@@ -198,7 +198,7 @@ const SaleInfoComponent = ({ saleInfoForm }) => {
 
                                             <Col xs={12} sm={8} md={4} >
                                                 <Item label="Date : " htmlFor="pdDate" name="pdDate"  >
-                                                    <DatePicker placeholder="Select Date" id="pdDate" style={{ border: "1px solid black", width: "100%" }} />
+                                                    <DatePicker placeholder="Select Date" id="pdDate" style={{ width: "100%" }} />
                                                 </Item>
                                             </Col>
 
@@ -282,7 +282,7 @@ const SaleInfoComponent = ({ saleInfoForm }) => {
 
                                             <Col xs={24} >
                                                 <Item label="Notes :" >
-                                                    <TextArea rows={4} id="UbBidderNote" style={{ border: "1px solid black", margin: "0px" }} />
+                                                    <TextArea rows={4} id="UbBidderNote" style={{ margin: "0px" }} />
                                                 </Item>
                                             </Col>
 
@@ -311,7 +311,7 @@ const SaleInfoComponent = ({ saleInfoForm }) => {
 
                                                 <Col xs={12} sm={8} md={4} >
                                                     <Item label="Date :" >
-                                                        <DatePicker placeholder="Select Date" id="pdDate" style={{ border: "1px solid black", width: "100%" }} />
+                                                        <DatePicker placeholder="Select Date" id="pdDate" style={{ width: "100%" }} />
                                                     </Item>
                                                 </Col>
 

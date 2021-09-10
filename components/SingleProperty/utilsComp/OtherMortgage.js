@@ -4,15 +4,14 @@ import InputField from "./InputField"
 import NumberField from "./NumberField"
 import DateField from "./DateField"
 import { UploadOutlined } from '@ant-design/icons'
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 
-const OtherMortgage = () => {
+const OtherMortgage = ({ viewRedemp }) => {
 
     const [exMatchVal, setexMatchVal] = useState(false)
 
-    const [subAViewVal, setsubAView] = useState(false)
-    const [FResultsVal, setFResults] = useState(false)
+    const [otherRedemView, setotherRedemView] = useState(false)
 
     const [isOwnerOne, setisOwnerOne] = useState(false)
     const [isOwnerTwo, setisOwnerTwo] = useState(false)
@@ -33,13 +32,11 @@ const OtherMortgage = () => {
 
 
 
-    const subAView = (e) => {
-        setsubAView(e.target.checked)
+    const otherRedem = (e) => {
+        setotherRedemView(e.target.checked)
     }
 
-    const FResults = (e) => {
-        setFResults(e.target.checked)
-    }
+
 
 
 
@@ -67,6 +64,15 @@ const OtherMortgage = () => {
         setisThirdCheck(true)
     }
 
+    useEffect(() => {
+        if (viewRedemp) {
+            setotherRedemView(viewRedemp)
+        }
+
+
+
+    }, [viewRedemp])
+
     return (
         <>
             <div className="headerPortion" style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
@@ -86,7 +92,7 @@ const OtherMortgage = () => {
 
 
             <div className="details" style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
-                <InputField label="Lender" htmlFor="otherLender" name="plaitiff" id="plaitiff" />
+                <InputField label="Lender" htmlFor="otherLender" name="otherLender" id="otherLender" />
                 <NumberField label="Lien Amount" htmlFor="otherAmount" name="otherAmount" id="otherAmount" />
                 <DateField label="Date Recorded" htmlFor="otherDate" name="otherDate" id="otherDate" />
                 <InputField label="Book/Page or Instrument #" htmlFor="otherBP" name="otherBP" id="otherBP" />
@@ -98,9 +104,9 @@ const OtherMortgage = () => {
 
             <div className="optional" style={{ display: "flex", flexDirection: "column" }}>
 
-                <CheckField htmlFor="otherubAView" label="SUBORDINATION AGREEMENT (SUB/A)" id="otherubAView" name="otherubAView" onChange={subAView} checked={subAViewVal} />
+                <CheckField htmlFor="otherubAView" label="REDEMPTION INFO" id="otherRedemp" name="otherRedemp" onChange={otherRedem} checked={otherRedemView} />
 
-                {subAViewVal &&
+                {otherRedemView &&
                     <div style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
                         <DateField label="Affidavit (APM) Date" htmlFor="otherfDate" name="otherfDate" id="otherfDate" />
                         <InputField label="Tax Code" htmlFor="otherCode" name="otherCode" id="otherCode" />
@@ -110,15 +116,6 @@ const OtherMortgage = () => {
                         <DateField label="Redemption Date" htmlFor="otherdNoticeDate" name="otherdNoticeDate" id="otherdNoticeDate" />
 
 
-                    </div>}
-
-                <CheckField htmlFor="otherResults" label="FORECLOSURE RESULT" id="otherResults" name="otherResults" onChange={FResults} checked={FResultsVal} />
-                {FResultsVal &&
-                    <div style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
-                        <InputField label="TRDeed Instrument #" htmlFor="otherrDeedIns" name="otherrDeedIns" id="otherrDeedIns" />
-                        <DateField label="TRDeed Date" htmlFor="otherrDeedDate" name="otherrDeedDate" id="otherrDeedDate" />
-                        <InputField label="Winning Bidder" htmlFor="otherwinningBidder" name="otherwinningBidder" id="otherwinningBidder" />
-                        <InputField label="Winning Bid" htmlFor="otherinningBid" name="otherinningBid" id="otherinningBid" id="otherinningBid" />
                     </div>}
 
             </div>
@@ -131,7 +128,7 @@ const OtherMortgage = () => {
 
                     <Col xs={12} sm={8} md={4} >
                         <Item label="Date : " htmlFor="otherLienFileDate" name="otherLienFileDate"  >
-                            <DatePicker placeholder="Select Date" id="otherLienFileDate" style={{ border: "1px solid black", width: "100%" }} />
+                            <DatePicker placeholder="Select Date" id="otherLienFileDate" style={{ width: "100%" }} />
                         </Item>
                     </Col>
 

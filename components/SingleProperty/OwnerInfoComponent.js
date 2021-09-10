@@ -136,7 +136,7 @@ const OwnerInfoComponent = ({ ownerAndBorrower }) => {
 
                                 <Col xs={12} sm={8} md={4} >
                                     <Item label="Date : " htmlFor="pdDate" name="pdDate"  >
-                                        <DatePicker placeholder="Select Date" id="pdDate" style={{ border: "1px solid black", width: "100%" }} />
+                                        <DatePicker placeholder="Select Date" id="pdDate" style={{ width: "100%" }} />
                                     </Item>
                                 </Col>
 
@@ -186,7 +186,7 @@ const OwnerInfoComponent = ({ ownerAndBorrower }) => {
                         <Col xs={24} style={{ position: "sticky", bottom: "20px" }} >
                             <Button
                                 type="primary"
-                                style={{ width: "170px", borderRadius: "15px" }}>
+                                style={{ width: "170px", marginTop: "20px", borderRadius: "15px" }}>
                                 Save Owner Data
                             </Button>
                         </Col>

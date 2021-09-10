@@ -5,7 +5,8 @@ import { UploadOutlined } from '@ant-design/icons';
 import PriceHistory from './PriceHistory';
 import NumberField from './utilsComp/NumberField';
 import InputWithSuffix from './utilsComp/InputWithSuffix';
-import DateField from './utilsComp/DateField'
+import TaxAssessed from './utilsComp/TaxAssessed';
+import moment from 'moment'
 
 
 
@@ -75,7 +76,6 @@ const PropertyInfo = ({ propertyinfo, data }) => {
         elemSchool: data.schoolsAndNeighbors.elementarySchool.name,
         ranking: data.schoolsAndNeighbors.elementarySchool.ranking,
         distance: data.schoolsAndNeighbors.elementarySchool.distance,
-
         middleSchool: data.schoolsAndNeighbors.middleSchool.name,
         mranking: data.schoolsAndNeighbors.middleSchool.ranking,
         mDistance: data.schoolsAndNeighbors.middleSchool.distance,
@@ -94,7 +94,7 @@ const PropertyInfo = ({ propertyinfo, data }) => {
 
                     <Col xs={12} sm={8} md={6} lg={4}  >
                         <Item label="State : " htmlFor="state" name="state" >
-                            <Select style={{ width: "100%", border: "1px solid black" }} placeholder="Select State" name="state" id="state" >
+                            <Select style={{ width: "100%" }} placeholder="Select State" name="state" id="state" >
                                 <Option value="North Carolina">North Carolina</Option>
                                 <Option value="South Carolina">South Carolina</Option>
                             </Select>
@@ -147,13 +147,13 @@ const PropertyInfo = ({ propertyinfo, data }) => {
 
                     <Col xs={24} >
                         <Item label="Property Description :" htmlFor="propertyDesc" name="propertyDesc" >
-                            <TextArea rows={4} id="propertyDesc" style={{ border: "1px solid black", margin: "0px" }} />
+                            <TextArea rows={4} id="propertyDesc" style={{  margin: "0px" }} />
                         </Item>
                     </Col>
 
                     <Col xs={24} >
                         <Item label="Legal Description :" htmlFor="legalDesc" name="legalDesc" >
-                            <TextArea rows={4} id="legalDesc" style={{ border: "1px solid black", margin: "0px" }} />
+                            <TextArea rows={4} id="legalDesc" style={{  margin: "0px" }} />
                         </Item>
                     </Col>
 
@@ -172,15 +172,15 @@ const PropertyInfo = ({ propertyinfo, data }) => {
 
                     <InputField label="County Value" htmlFor="countyValue" name="countyValue" id="countyValue" />
 
-                    <InputField label="PRC URL" htmlFor="prcUrl" name="prcUrl" id="prcUrl" />
+                    <InputWithSuffix label="PRC URL" htmlFor="prcUrl" name="prcUrl" id="prcUrl" />
 
-                    <InputField label="County Assessor URL" htmlFor="countyAssUrl" name="countyAssUrl" id="countyAssUrl" />
+                    <InputWithSuffix label="County Assessor URL" htmlFor="countyAssUrl" name="countyAssUrl" id="countyAssUrl" />
 
-                    <InputField label="GIS URL" htmlFor="gisUrl" name="gisUrl" id="gisUrl" />
+                    <InputWithSuffix label="GIS URL" htmlFor="gisUrl" name="gisUrl" id="gisUrl" />
 
-                    <InputField label="Treasurer URL" htmlFor="treasurerUrl" name="treasurerUrl" id="treasurerUrl" />
+                    <InputWithSuffix label="Treasurer URL" htmlFor="treasurerUrl" name="treasurerUrl" id="treasurerUrl" />
 
-                    <InputField label="Tax Bill URL" htmlFor="taxBillUrl" name="taxBillUrl" id="taxBillUrl" />
+                    <InputWithSuffix label="Tax Bill URL" htmlFor="taxBillUrl" name="taxBillUrl" id="taxBillUrl" />
 
                     <Col span={24} style={{ width: "100%", display: "flex", flexDirection: "column", flexWrap: "wrap" }} >
 
@@ -193,7 +193,7 @@ const PropertyInfo = ({ propertyinfo, data }) => {
 
                             <Col xs={12} sm={8} md={4} >
                                 <Item label="Date : " htmlFor="pdDate" name="pdDate"  >
-                                    <DatePicker placeholder="Select Date" id="pdDate" style={{ border: "1px solid black", width: "100%" }} />
+                                    <DatePicker placeholder="Select Date" id="pdDate" style={{  width: "100%" }} />
                                 </Item>
                             </Col>
 
@@ -312,7 +312,19 @@ const PropertyInfo = ({ propertyinfo, data }) => {
                     {/* need to create priceHistory  */}
                     <Divider orientation="center">Price History
                     </Divider>
-                    <PriceHistory />
+
+                    {/* loop here */}
+                    {!data.priceHistory && <PriceHistory />}
+
+                    {data.priceHistory && <>
+                        {data.priceHistory.map((data, inx) => {
+                            const date = data.date && data.date.split("T")[0]
+                            const newDate = moment(date)
+                            return <PriceHistory key={inx} index={inx} date={newDate} price={data.price} costPerSqf={data.costPerSqf} source={data.source} Description={data.Description} />
+                        })}
+                    </>
+                    }
+
 
                     <Col xs={24} md={8} lg={4} style={{ flex: "1" }}>
 
@@ -341,13 +353,30 @@ const PropertyInfo = ({ propertyinfo, data }) => {
                     </Divider>
 
                     {/* loop here */}
+                    {!data.assesmentAndTaxes && !data.assesmentAndTaxes.length == 0 && <TaxAssessed />}
 
-                    <NumberField label="Property Tax Owed" htmlFor="pTaxOwed" name="pTaxOwed" id="pTaxOwed" />
-                    <DateField label="Owed Year" htmlFor="owedYear" name="owedYear" id="owedYear" />
-                    <NumberField label="Tax Assessed" htmlFor="taxAssessed" name="taxAssessed" id="taxAssessed" />
-                    <DateField label="Tax Year" htmlFor="taxYear" name="taxYear" id="taxYear" />
+                    {data.assesmentAndTaxes && <>
+                        {data.assesmentAndTaxes.map((data, index) => {
+                            return <TaxAssessed key={index} index={index} propertyTaxOwed={data.propertyTaxOwed}
+                                owedYear={data.owedYear}
+                                taxAssessed={data.taxAssessed}
+                                taxYear={data.taxYear} />
+                        })}
 
-                    <Col xs={24} md={8} lg={4} style={{ position: "sticky", bottom: "20px" }}>
+
+                    </>
+                    }
+
+
+                    <Col xs={24} md={8} lg={4}>
+                        <Button
+                            type="primary"
+                            style={{ width: "160px", borderRadius: "15px" }}>
+                            Add More
+                        </Button>
+                    </Col>
+
+                    <Col xs={4} style={{ position: "sticky", bottom: "20px" }}>
                         <Button
                             type="primary"
                             style={{ width: "160px", marginTop: "20px", borderRadius: "15px" }}>

@@ -25,9 +25,9 @@ const CompData = ({ name }) => {
                 <Col xs={12} sm={8} md={6}>
                     <Item label="Price/sq.ft.on Sale Comps" style={{ display: "flex", flexDirection: "column", flexWrap: "wrap" }} >
                         <Group>
-                            <InputNumber id="priceSqfOnSaleComp1" style={{ border: "1px solid black", margin: "0px", width: "40%" }} />
+                            <InputNumber id="priceSqfOnSaleComp1" style={{ margin: "0px", width: "40%" }} />
                             To
-                            <InputNumber id="priceSqfOnSaleComp2" style={{ border: "1px solid black", margin: "0px", width: "40%" }} />
+                            <InputNumber id="priceSqfOnSaleComp2" style={{ margin: "0px", width: "40%" }} />
                         </Group>
                     </Item>
                 </Col>

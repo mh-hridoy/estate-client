@@ -4,10 +4,14 @@ import InputField from "./InputField"
 import NumberField from "./NumberField"
 import DateField from "./DateField"
 import { UploadOutlined } from '@ant-design/icons'
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 
-const ThirdMortgage = () => {
+
+const ThirdMortgage = ({ viewAmort,
+    viewModA,
+    viewSubA,
+    fclView }) => {
 
     const [fLienVal, setfLienVal] = useState(false)
     const [fNoStrVal, setfNoStrVal] = useState(false)
@@ -98,6 +102,30 @@ const ThirdMortgage = () => {
     const thirdCheck = () => {
         setisThirdCheck(true)
     }
+
+    useEffect(() => {
+        if (viewAmort) {
+            seamortizationViewVal(viewAmort)
+        }
+        if (viewModA) {
+            setmodAView(viewModA)
+
+        }
+
+        if (viewSubA) {
+            setsubAView(viewSubA)
+
+        }
+
+        if (fclView) {
+            setFResults(fclView)
+
+        }
+
+    }, [viewAmort, viewModA, viewSubA,
+        fclView])
+
+
 
     return (
         <>
@@ -208,7 +236,7 @@ const ThirdMortgage = () => {
 
                     <Col xs={12} sm={8} md={4} >
                         <Item label="Date : " htmlFor="tfLienFileDate" name="tfLienFileDate"  >
-                            <DatePicker placeholder="Select Date" id="tfLienFileDate" style={{ border: "1px solid black", width: "100%" }} />
+                            <DatePicker placeholder="Select Date" id="tfLienFileDate" style={{ width: "100%" }} />
                         </Item>
                     </Col>
 

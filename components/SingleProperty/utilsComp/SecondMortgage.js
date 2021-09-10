@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import CheckField from "./CheckField"
 import { Button, Col, Upload, Form, DatePicker } from 'antd'
 import InputField from "./InputField"
@@ -7,7 +8,10 @@ import { UploadOutlined } from '@ant-design/icons'
 import { useState } from "react"
 
 
-const SecondMortgage = () => {
+const SecondMortgage = ({ viewAmort,
+    viewModA,
+    viewSubA,
+    fclView }) => {
 
     const [fLienVal, setfLienVal] = useState(false)
     const [fNoStrVal, setfNoStrVal] = useState(false)
@@ -97,6 +101,28 @@ const SecondMortgage = () => {
     const thirdCheck = () => {
         setisThirdCheck(true)
     }
+
+    useEffect(() => {
+        if (viewAmort) {
+            seamortizationViewVal(viewAmort)
+        }
+        if (viewModA) {
+            setmodAView(viewModA)
+
+        }
+
+        if (viewSubA) {
+            setsubAView(viewSubA)
+
+        }
+
+        if (fclView) {
+            setFResults(fclView)
+
+        }
+
+    }, [viewAmort, viewModA, viewSubA,
+        fclView])
 
     return (
         <>
@@ -207,7 +233,7 @@ const SecondMortgage = () => {
 
                     <Col xs={12} sm={8} md={4} >
                         <Item label="Date : " htmlFor="sfLienFileDate" name="sfLienFileDate"  >
-                            <DatePicker placeholder="Select Date" id="sfLienFileDate" style={{ border: "1px solid black", width: "100%" }} />
+                            <DatePicker placeholder="Select Date" id="sfLienFileDate" style={{ width: "100%" }} />
                         </Item>
                     </Col>
 

@@ -4,16 +4,16 @@ import InputField from "./InputField"
 import NumberField from "./NumberField"
 import DateField from "./DateField"
 import { UploadOutlined } from '@ant-design/icons'
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 
-const TaxMortgage = () => {
+const TaxMortgage = ({ viewFcl, viewRedemp }) => {
 
     const [fLienVal, setfLienVal] = useState(false)
     const [dfLienVal, setdfLienVal] = useState(false)
     const [exMatchVal, setexMatchVal] = useState(false)
 
-    const [subAViewVal, setsubAView] = useState(false)
+    const [redempViewVal, setRedempViewVal] = useState(false)
     const [FResultsVal, setFResults] = useState(false)
 
     const [isOwnerOne, setisOwnerOne] = useState(false)
@@ -43,8 +43,8 @@ const TaxMortgage = () => {
 
 
 
-    const subAView = (e) => {
-        setsubAView(e.target.checked)
+    const taxRedempTionView = (e) => {
+        setRedempViewVal(e.target.checked)
     }
 
     const FResults = (e) => {
@@ -76,6 +76,22 @@ const TaxMortgage = () => {
     const thirdCheck = () => {
         setisThirdCheck(true)
     }
+
+    useEffect(() => {
+        if (viewFcl) {
+            setFResults(viewFcl)
+        }
+
+
+        if (viewRedemp) {
+            setRedempViewVal(viewRedemp)
+
+        }
+
+
+
+    }, [viewFcl, viewRedemp])
+
 
     return (
         <>
@@ -110,9 +126,9 @@ const TaxMortgage = () => {
 
             <div className="optional" style={{ display: "flex", flexDirection: "column" }}>
 
-                <CheckField htmlFor="txubAView" label="SUBORDINATION AGREEMENT (SUB/A)" id="txubAView" name="txubAView" onChange={subAView} checked={subAViewVal} />
+                <CheckField htmlFor="txubAView" label="REDEMPTION INFO" id="txubAView" name="txubAView" onChange={taxRedempTionView} checked={redempViewVal} />
 
-                {subAViewVal &&
+                {redempViewVal &&
                     <div style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
                         <DateField label="Affidavit (APM) Date" htmlFor="txfDate" name="txfDate" id="txfDate" />
                         <InputField label="Tax Code" htmlFor="txCode" name="txCode" id="txCode" />
@@ -143,7 +159,7 @@ const TaxMortgage = () => {
 
                     <Col xs={12} sm={8} md={4} >
                         <Item label="Date : " htmlFor="txLienFileDate" name="txLienFileDate"  >
-                            <DatePicker placeholder="Select Date" id="txLienFileDate" style={{ border: "1px solid black", width: "100%" }} />
+                            <DatePicker placeholder="Select Date" id="txLienFileDate" style={{ width: "100%" }} />
                         </Item>
                     </Col>
 

@@ -13,7 +13,6 @@ import AdvanceSearchForm from '../../../components/AdvanceSearchForm'
 const search = () => {
     const [isLoading, setIsLoading] = useState(false)
     const [results, setResults] = useState(null)
-    const token = useSelector((state) => state.user.token)
     const [selectedPage, setSelectedPage] = useState()
     const [searchValue, setSearchValue] = useState(null)
     const [searchAValue, setSearchAValue] = useState(null)
@@ -27,8 +26,10 @@ const search = () => {
     const [shallowUrl, setShallowUrl] = useState("")
     const [queryOfArray, setQueryOfArray] = useState([])
     const [resultLimit, setResultLimit] = useState(10)
-    const user = useSelector((state) => state.user.user)
     const [isNorReload, setIsNotReload] = useState(false)
+
+    const token = useSelector((state) => state.user.token)
+    const user = useSelector((state) => state.user.user)
 
 
     const router = useRouter()
@@ -85,7 +86,6 @@ const search = () => {
         setSelectedPage(pageNumber)
         setChangePage(true)
         setIsNotReload(true)
-
     }
 
     const onReset = () => {
@@ -93,8 +93,6 @@ const search = () => {
         setShallowUrl("")
         router.replace('')
         setIsNotReload(true)
-
-
     };
 
     const onAReset = () => {
@@ -104,8 +102,6 @@ const search = () => {
         setIsNotReload(true)
 
     };
-
-
 
     useEffect(() => {
         if (!changePage && !isASearched && limit && searchValue && isSearched) {

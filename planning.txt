@@ -41,7 +41,10 @@ also add query string if requested url contains query.// Done
 //double check on search//on first search it's including onPageReaload// Done
 //consider to remove Performance method if it's causing problem.//Done
 //use input suffix for adding URL//Done
-
+//use collapse component for sale date and bidderinfo.//done
+create endpoints for single property info//Done
+//need to fix property overview and result due to changes of shcema//Done
+work on single page property info UI//Done
 
 Store, localstorage, Protected routes, logout, menuItem....//Partially completed, also working on this along other task.... 
 *******
@@ -51,15 +54,16 @@ Store, localstorage, Protected routes, logout, menuItem....//Partially completed
 *****************************
 
 //next
-work on single page property info UI//
-create endpoints for single property info//
-//need to fix property overview and result due to changes of shcema//
+Fetch Single page Data//
+fix dynamc array field name and iD.//
+//limit getProperties endpoints.//
+//create another endpoints for the overview on result page.//
+//craete seperate endpoints for the unAuthorized request for property info & add there some data for better SEO.//
 
 ************
 
 Others features, security and changes.
 *****************************
-//use collapse component for sale date and bidderinfo.
 //consider to change the reset page ui with progress component.// Also check for the form data collision problem.
 //use result component for the blocked or inactive users.
 //make change for the selectedRole . Put an endpoint and update all the data.

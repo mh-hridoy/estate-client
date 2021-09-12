@@ -1,20 +1,12 @@
-import { Row, Col, Form, Button, Divider, Space, Upload, DatePicker, Input, Collapse } from 'antd'
-import InputField from './utilsComp/InputField'
+import { Row, Col, Form, Button, Input, Collapse } from 'antd'
 import styles from '../../styles/search.module.css'
-import InputWithSuffix from './utilsComp/InputWithSuffix';
-import NumberField from './utilsComp/NumberField';
-import CheckField from './utilsComp/CheckField';
-import { UploadOutlined } from '@ant-design/icons'
-import DateField from './utilsComp/DateField';
 import SaleInfo from './utilsComp/SaleInfo';
 import FirstBidder from './utilsComp/FirstBidder';
 import UbBidder from './utilsComp/UbBidder';
 // import OtherBidder from './utilsComp/OtherBidder'
 
 
-const SaleInfoComponent = ({ saleInfoForm }) => {
-    const { TextArea } = Input
-    const { Item } = Form
+const SaleInfoComponent = ({ saleInfoForm, data, inx }) => {
     const { Panel } = Collapse
 
     const saleInfoHandler = (values) => { }
@@ -25,8 +17,8 @@ const SaleInfoComponent = ({ saleInfoForm }) => {
                 <Col span={24}>
                     <Form form={saleInfoForm} layout="vertical" className={styles.searchForm} onFinish={saleInfoHandler} >
 
-                        <SaleInfo />
-
+                        <SaleInfo data={data} inx={inx} />
+                        {/* this will be dynamic */}
 
                         {/* firstBidder data */}
                         <Col span={24} style={{ marginTop: "10px" }}>
@@ -36,18 +28,31 @@ const SaleInfoComponent = ({ saleInfoForm }) => {
                                 className="site-collapse-custom-collapse">
 
                                 <Panel header="First Bidder" key="40" className="site-collapse-custom-panel" >
-                                    <FirstBidder />
+                                    <FirstBidder data={data} inx={inx} />
 
                                 </Panel>
+
+                                {data.otherBidderInfo.length === 0 && <>
+                                    <Panel header="Upset Bidder" key="41" className="site-collapse-custom-panel" >
+
+                                        <UbBidder />
+                                    </Panel>
+                                </>
+                                }
+
+                                {data.otherBidderInfo.length !== 0 && <>
+
+                                    {data.otherBidderInfo.map((ubData, index) => {
+                                        <Panel header={`Upset Bidder ${index + 1}`} key={`41${+ index}`} className="site-collapse-custom-panel" >
+                                            <UbBidder ubData={ubData} index={index} />
+                                        </Panel>
+                                    })}
+                                </>}
+
+
+
 
                                 {/* it will be dynamic if ther's extra bidder info */}
-
-                                <Panel header="Bidder 2" key="41" className="site-collapse-custom-panel" >
-
-                                    <UbBidder />
-                                </Panel>
-
-
 
 
                             </Collapse>
@@ -71,4 +76,4 @@ const SaleInfoComponent = ({ saleInfoForm }) => {
     )
 }
 
-export default SaleInfoComponent
+export default SaleInfoComponent;

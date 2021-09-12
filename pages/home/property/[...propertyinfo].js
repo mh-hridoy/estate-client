@@ -108,14 +108,28 @@ const singlePropertyInfo = () => {
                             {/* iterate sale info thorugh loop*/}
                             <Collapse defaultActiveKey={['30']}
                                 // onChange={callback}
-                                expandIconPosition="right"
+                                            expandIconPosition="right"
 
-                                className="site-collapse-custom-collapse"
+                                            className="site-collapse-custom-collapse">
 
-                            >
-                                <Panel header="Sale Date 1" key="30" className="site-collapse-custom-panel" >
+                                            <Panel header="Sale Date 1" key="30" className="site-collapse-custom-panel" >
 
-                                                <SaleInfoComponent saleInfo={saleInfoForm} data={requestedData} />
+                                                {requestedData.saleinfo.length === 0 &&
+
+                                                    <SaleInfoComponent saleInfo={saleInfoForm} />
+                                                }
+
+                                                {requestedData.saleinfo.length !== 0 &&
+                                                    <>
+                                                        {requestedData.saleinfo.map((data, inx) => {
+                                                            return (
+                                                                <SaleInfoComponent key={inx} data={data} inx={inx} />
+
+                                                            )
+                                                        })}
+
+                                                    </>
+                                                }
 
                                 </Panel>
 

@@ -1,4 +1,4 @@
-import { Col, Form, Button, Divider, Upload, DatePicker, Input, Collapse } from 'antd'
+import { Col, Form, Button, Divider, Upload, DatePicker, Input } from 'antd'
 import InputField from './InputField'
 import styles from '../../../styles/search.module.css'
 import NumberField from './NumberField';
@@ -6,7 +6,7 @@ import CheckField from './CheckField';
 import { UploadOutlined } from '@ant-design/icons'
 import DateField from './DateField';
 
-const UbBidder = () => {
+const UbBidder = ({ubData, index}) => {
     const { TextArea } = Input
     const { Item } = Form
 

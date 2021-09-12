@@ -5,8 +5,9 @@ import NumberField from './NumberField';
 import CheckField from './CheckField';
 import { UploadOutlined } from '@ant-design/icons'
 import DateField from './DateField';
+import moment from 'moment'
 
-const FirstBidder = () => {
+const FirstBidder = ({ data, inx }) => {
     const { TextArea } = Input
     const { Item } = Form
 
@@ -15,38 +16,41 @@ const FirstBidder = () => {
             <Divider orientation="center">Bidder - Trustee Site</Divider>
             <Col span={24} style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
 
-                <InputField label="Name of Bidder" id="nameOfBidder" />
-                <NumberField label="Bid Amount" id="bidAmount" />
+                <InputField label="Name of Bidder" id={`${inx ? inx : ""} nameOfBidder`} name={`${inx ? inx : ""} nameOfBidder`} htmlFor={`${inx ? inx : ""} nameOfBidder`} initVal={data.nameOfBidder ? data.nameOfBidder : ""} />
+                <NumberField label="Bid Amount" id={`${inx ? inx : ""} bidAmount`} name={`${inx ? inx : ""} bidAmount`} htmlFor={`${inx ? inx : ""} bidAmount`} initVal={data.bidAmount ? data.bidAmount : ""} />
             </Col>
 
             <Divider orientation="left">Bidder
             </Divider>
             <Col span={24} style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
 
-                <InputField label="Name of Purchaser" id="nameOfPurchaser" />
-                <NumberField label="Amount of Bid" id="amountOfBid" />
-                <DateField label="Bid Date" id="bidDate" />
-                <DateField label="LDTUB" id="ldtub" />
-                <NumberField label="Min. Amount of Next UB" id="minAmountOfNX" />
-                <NumberField label="Deposit Required to Upset" id="depositToBid" />
-                <InputField label="Address" id="bidderAddress" />
-                <InputField label="Phone" id="bidderPhone" />
-                <InputField label="Email" id="bidderEmail" />
-                <InputField label="Fax" id="bidderFax" />
-                <DateField label="Date of Report" id="dateOFReport" />
-                <InputField label="Name of Mortgagee" id="nameOfMortgage" />
-                <InputField label="Cryer" id="cryer" />
-                <InputField label="IM By" id="fImBy" />
-                <InputField label="IM By Date" id="fImByDate" />
-                <CheckField label="Bid Confirmed" />
-                <CheckField label="Bid Upset" />
-                <InputField label="Auction" id="auction" />
-                <InputField label="NOS Name" id="nosName" />
-                <InputField label="NOS By Date" id="nosByDate" />
+                <InputField label="Name of Purchaser" id={`${inx ? inx : ""} nameOfPurchaser`} name={`${inx ? inx : ""} nameOfPurchaser`} htmlFor={`${inx ? inx : ""} nameOfPurchaser`} initVal={data.nameOfPurchaser ? data.nameOfPurchaser : ""} />
+                <NumberField label="Amount of Bid" id={`${inx ? inx : ""} amountOfBid`} name={`${inx ? inx : ""} amountOfBid`} htmlFor={`${inx ? inx : ""} amountOfBid`} initVal={data.amountOfBid ? data.amountOfBid : ""} />
+                <DateField label="Bid Date" id={`${inx ? inx : ""} bidDate`} name={`${inx ? inx : ""} bidDate`} htmlFor={`${inx ? inx : ""} bidDate`} initVal={data.bidDate ? moment(data.bidDate) : ""} />
+                <DateField label="LDTUB" id={`${inx ? inx : ""} ldtub`} name={`${inx ? inx : ""} ldtub`} htmlFor={`${inx ? inx : ""} ldtub`} initVal={data.ldub ? moment(data.ldub) : ""} />
+
+                <NumberField label="Min. Amount of Next UB" id={`${inx ? inx : ""} minAmountOfNX`} name={`${inx ? inx : ""} minAmountOfNX`} htmlFor={`${inx ? inx : ""} minAmountOfNX`} initVal={data.minAmountOfNextBid ? data.minAmountOfNextBid : ""} />
+
+                <NumberField label="Deposit Required to Upset" id={`${inx ? inx : ""} depositToBid`} name={`${inx ? inx : ""} depositToBid`} htmlFor={`${inx ? inx : ""} depositToBid`} initVal={data.depositRequiredToIpset ? data.depositRequiredToIpset : ""} />
+                <InputField label="Address" id={`${inx ? inx : ""} bidderAddress`} name={`${inx ? inx : ""} bidderAddress`} htmlFor={`${inx ? inx : ""} bidderAddress`} initVal={data.address ? data.address : ""} />
+                <InputField label="Phone" id={`${inx ? inx : ""} bidderPhone`} name={`${inx ? inx : ""} bidderPhone`} htmlFor={`${inx ? inx : ""} bidderPhone`} initVal={data.phone ? data.phone : ""} />
+                <InputField label="Email" id={`${inx ? inx : ""} bidderEmail`} name={`${inx ? inx : ""} bidderEmail`} htmlFor={`${inx ? inx : ""} bidderEmail`} initVal={data.email ? data.email : ""} />
+                <InputField label="Fax" id={`${inx ? inx : ""} bidderFax`} name={`${inx ? inx : ""} bidderFax`} htmlFor={`${inx ? inx : ""} bidderFax`} initVal={data.fax ? data.fax : ""} />
+                <DateField label="Date of Report" id={`${inx ? inx : ""} dateOFReport`} name={`${inx ? inx : ""} dateOFReport`} htmlFor={`${inx ? inx : ""} dateOFReport`} initVal={data.dateOfReport ? moment(data.dateOfReport) : ""} />
+                <InputField label="Name of Mortgagee" id={`${inx ? inx : ""} nameOfMortgage`} name={`${inx ? inx : ""} nameOfMortgage`} htmlFor={`${inx ? inx : ""} nameOfMortgage`} initVal={data.nameOfMortgage ? data.nameOfMortgage : ""} />
+                <InputField label="Cryer" id={`${inx ? inx : ""} cryer`} name={`${inx ? inx : ""} cryer`} htmlFor={`${inx ? inx : ""} cryer`} initVal={data.cryer ? data.cryer : ""} />
+                <InputField label="IM By" id={`${inx ? inx : ""} fImBy`} name={`${inx ? inx : ""} fImBy`} htmlFor={`${inx ? inx : ""} fImBy`} initVal={data.imby ? data.imby : ""} />
+                <DateField label="IM By Date" id={`${inx ? inx : ""} fImByDate`} name={`${inx ? inx : ""} fImByDate`} htmlFor={`${inx ? inx : ""} fImByDate`} initVal={data.imByDate ? moment(data.imByDate) : ""} />
+                <CheckField label="Bid Confirmed" id={`${inx ? inx : ""} bidConfirmed`} name={`${inx ? inx : ""} bidConfirmed`} htmlFor={`${inx ? inx : ""} bidConfirmed`} initVal={data.bidConfirmed ? data.bidConfirmed : ""} />
+                <CheckField label="Bid Upset" id={`${inx ? inx : ""} bidUpset`} name={`${inx ? inx : ""} bidUpset`} htmlFor={`${inx ? inx : ""} bidUpset`} initVal={data.bidUpset ? data.bidUpset : ""} />
+
+                <InputField label="Auction" id={`${inx ? inx : ""} auction`} name={`${inx ? inx : ""} auction`} htmlFor={`${inx ? inx : ""} auction`} initVal={data.auction ? data.auction : ""} />
+                <InputField label="NOS Name" id={`${inx ? inx : ""} nosName`} name={`${inx ? inx : ""} nosName`} htmlFor={`${inx ? inx : ""} nosName`} initVal={data.nosName ? data.nosName : ""} />
+                <DateField label="NOS By Date" id={`${inx ? inx : ""} nosByDate`} name={`${inx ? inx : ""} nosByDate`} htmlFor={`${inx ? inx : ""} nosByDate`} initVal={data.nosDate ? moment(data.nosDate) : ""} />
 
                 <Col xs={24} >
-                    <Item label="Notes :" >
-                        <TextArea rows={4} id="fBidderNote" style={{ margin: "0px" }} />
+                    <Item label="Notes :" name={`${inx ? inx : ""} fBidderNote`} htmlFor={`${inx ? inx : ""} fBidderNote`} initialValue={data.notes ? data.notes : ""} >
+                        <TextArea rows={4} id={`${inx ? inx : ""} fBidderNote`} style={{ margin: "0px" }} />
                     </Item>
                 </Col>
 
@@ -63,8 +67,8 @@ const FirstBidder = () => {
                     <InputField label="File Name" htmlFor="pdFile" name="pdFile" id="pdFile" />
 
                     <Col xs={12} sm={8} md={4} >
-                        <Item label="Date : " htmlFor="pdDate" name="pdDate"  >
-                            <DatePicker placeholder="Select Date" id="pdDate" style={{ width: "100%" }} />
+                        <Item label="Date : " htmlFor={`${inx ? inx : ""} pdDate`} name={`${inx ? inx : ""} pdDate`}  >
+                            <DatePicker placeholder="Select Date" id={`${inx ? inx : ""} pdDate`} style={{ width: "100%" }} />
                         </Item>
                     </Col>
 

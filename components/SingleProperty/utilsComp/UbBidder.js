@@ -5,6 +5,7 @@ import NumberField from './NumberField';
 import CheckField from './CheckField';
 import { UploadOutlined } from '@ant-design/icons'
 import DateField from './DateField';
+import moment from 'moment'
 
 const UbBidder = ({ubData, index}) => {
     const { TextArea } = Input
@@ -16,12 +17,12 @@ const UbBidder = ({ubData, index}) => {
                 <Divider orientation="left">Bidder
                 </Divider>
 
-                <InputField label="Name of Upset Bidder" id="nameOfUBidder" />
-                <InputField label="Address Of Upset Bidder" id="addressOFUB" />
-                <InputField label="City Of Upset Bidder" id="cityOfUB" />
-                <NumberField label="Upset bidder Zipcode" id="UbZipcode" />
-                <InputField label="Phone" id="UbPhone" />
-                <NumberField label="E-mail" id="UbEmail" />
+                <InputField label="Name of Upset Bidder" id={`${index ? index : ""}nameOfUBidder`} name={`${index ? index : ""}nameOfUBidder`} htmlFor={`${index ? index : ""}nameOfUBidder`} initVal={ubData ? ubData.nameOfUpsetBidder : ""} />
+                <InputField label="Address Of Upset Bidder" id={`${index ? index : ""}addressOFUB`} name={`${index ? index : ""}addressOFUB`} htmlFor={`${index ? index : ""}addressOFUB`} initVal={ubData ? ubData.addressOfUpsetBidder : ""} />
+                <InputField label="City Of Upset Bidder" id={`${index ? index : ""}cityOfUB`} name={`${index ? index : ""}cityOfUB`} htmlFor={`${index ? index : ""}cityOfUB`} initVal={ubData ? ubData.cityOfUpsetBidder : ""} />
+                <NumberField label="Upset bidder Zipcode" id={`${index ? index : ""}UbZipcode`} htmlFor={`${index ? index : ""}UbZipcode`} name={`${index ? index : ""}UbZipcode`} initVal={ubData ? ubData.zipCode : ""} />
+                <InputField label="Phone" id={`${index ? index : ""}UbPhone`} name={`${index ? index : ""}UbPhone`} htmlFor={`${index ? index : ""}UbPhone`} initVal={ubData ? ubData.phone : ""} />
+                <InputField label="E-mail" id={`${index ? index : ""}UbEmail`} name={`${index ? index : ""}UbEmail`} htmlFor={`${index ? index : ""}UbEmail`} initVal={ubData ? ubData.email : ""} />
             </Col>
 
             <Divider orientation="left">UPST Report
@@ -29,34 +30,34 @@ const UbBidder = ({ubData, index}) => {
             </Divider>
             <Col span={24} style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
 
-                <NumberField label="Amount of New Upset Bid" id="amountOfUbBid" />
-                <DateField label="Bid Date" id="ubBidDate" />
-                <NumberField label="LDTUB" id="Ubldtub" />
-                <NumberField label="Deposit with the Clerk" id="depositWithClark" />
-                <NumberField label="Min. Amount of Next UB" id="UbminAmountOfNX" />
-                <InputField label="Name of Attorney or Agent" id="nameOfAttorney" />
-                <InputField label="Address of Attorney or Agent" id="addressOfAttorney" />
-                <InputField label="City of Attorney or Agent" id="cityOfAttorney" />
-                <NumberField label="Zipcode" id="attorneyZipcode" />
-                <NumberField label="Phone Number" id="attorneyPhone" />
-                <DateField label="Date of Filling" id="ubDateOfFilling" />
+                <NumberField label="Amount of New Upset Bid" id={`${index ? index : ""}amountOfUbBid`} name={`${index ? index : ""}amountOfUbBid`} htmlFor={`${index ? index : ""}amountOfUbBid`} initVal={ubData ? ubData.amountOfBid : ""} />
+                <DateField label="Bid Date" id={`${index ? index : ""}ubBidDate`} name={`${index ? index : ""}ubBidDate`} id={`${index ? index : ""}ubBidDate`} initVal={ubData ? moment(ubData.bidDate) : ""} />
+                <DateField label="LDTUB" id={`${index ? index : ""}Ubldtub`} name={`${index ? index : ""}Ubldtub`} htmlFor={`${index ? index : ""}Ubldtub`} initVal={ubData ? moment(ubData.lastDateForNextUb) : ""} />
+                <NumberField label="Deposit with the Clerk" id={`${index ? index : ""}depositWithClark`} name={`${index ? index : ""}depositWithClark`} htmlFor={`${index ? index : ""}depositWithClark`} initVal={ubData ? ubData.depositWithTheClerk : ""} />
+                <NumberField label="Min. Amount of Next UB" id={`${index ? index : ""}UbminAmountOfNX`} name={`${index ? index : ""}UbminAmountOfNX`} htmlFor={`${index ? index : ""}UbminAmountOfNX`} initVal={ubData ? ubData.minAmountOfNextUb : ""} />
+                <InputField label="Name of Attorney or Agent" id={`${index ? index : ""}nameOfAttorney`} name={`${index ? index : ""}nameOfAttorney`} htmlFor={`${index ? index : ""}nameOfAttorney`} initVal={ubData ? ubData.nameOfAttorneyOrAgent : ""} />
+                <InputField label="Address of Attorney or Agent" id={`${index ? index : ""}addressOfAttorney`} name={`${index ? index : ""}addressOfAttorney`} htmlFor={`${index ? index : ""}addressOfAttorney`} initVal={ubData ? ubData.addressofAttorneyOrAgent : ""} />
+                <InputField label="City of Attorney or Agent" id={`${index ? index : ""}cityOfAttorney`} name={`${index ? index : ""}cityOfAttorney`} htmlFor={`${index ? index : ""}cityOfAttorney`} initVal={ubData ? ubData.cityOfAttorneyOrAgent : ""} />
+                <NumberField label="Zipcode" id={`${index ? index : ""}attorneyZipcode`} name={`${index ? index : ""}attorneyZipcode`} htmlFor={`${index ? index : ""}attorneyZipcode`} initVal={ubData ? ubData.zipCode : ""} />
+                <NumberField label="Phone Number" id={`${index ? index : ""}attorneyPhone`} name={`${index ? index : ""}attorneyPhone`} id={`${index ? index : ""}attorneyPhone`} initVal={ubData ? ubData.phoneNumber : ""} />
+                <DateField label="Date of Filling" id={`${index ? index : ""}ubDateOfFilling`} name={`${index ? index : ""}ubDateOfFilling`} htmlFor={`${index ? index : ""}ubDateOfFilling`} initVal={ubData ? moment(ubData.dateOfFilling) : ""} />
 
                 <Col xs={24} >
-                    <Item label="Notes :" >
-                        <TextArea rows={4} id="UbBidderNote" style={{ margin: "0px" }} />
+                    <Item label="Notes :" name={`${index ? index : ""}UbBidderNote`} htmlFor={`${index ? index : ""}UbBidderNote`} initialValue={ubData ? ubData.Notes : ""}   >
+                        <TextArea rows={4} id={`${index ? index : ""}UbBidderNote`} style={{ margin: "0px" }} />
                     </Item>
                 </Col>
 
 
-                <InputField label="IM By" id="ubImBy" />
-                <InputField label="IM By Date" id="ubImByDate" />
-                <InputField label="Auction" id="ubauction" />
-                <InputField label="NOS Name" id="ubnosName" />
-                <InputField label="NOS By Date" id="ubnosByDate" />
+                <InputField label="IM By" id={`${index ? index : ""}ubImBy`} name={`${index ? index : ""}ubImBy`} htmlFor={`${index ? index : ""}ubImBy`} initVal={ubData ? ubData.imby : ""} />
+                <DateField label="IM By Date" id={`${index ? index : ""}ubImByDate`} name={`${index ? index : ""}ubImByDate`} htmlFor={`${index ? index : ""}ubImByDate`} initVal={ubData ? moment(ubData.imByDate) : ""} />
+                <InputField label="Auction" id={`${index ? index : ""}ubauction`} name={`${index ? index : ""}ubauction`} htmlFor={`${index ? index : ""}ubauction`} initVal={ubData ? ubData.auction : ""} />
+                <InputField label="NOS Name" id={`${index ? index : ""}ubnosName`} name={`${index ? index : ""}ubnosName`} htmlFor={`${index ? index : ""}ubnosName`} initVal={ubData ? ubData.nosName : ""} />
+                <InputField label="NOS By Date" id={`${index ? index : ""}ubnosByDate`} name={`${index ? index : ""}ubnosByDate`} htmlFor={`${index ? index : ""}ubnosByDate`} initVal={ubData ? ubData.nosDate : ""} />
 
-                <CheckField label="Deputy CSC" />
-                <CheckField label="Assistant CSC" />
-                <CheckField label="Clerk Of Superior Court" />
+                <CheckField label="Deputy CSC" id={`${index ? index : ""}deputyCSC`} name={`${index ? index : ""}deputyCSC`} htmlFor={`${index ? index : ""}deputyCSC`} initVal={ubData ? ubData.deputyCSC : ""} />
+                <CheckField label="Assistant CSC" id={`${index ? index : ""}assistantCSC`} name={`${index ? index : ""}assistantCSC`} htmlFor={`${index ? index : ""}assistantCSC`} initVal={ubData ? ubData.assistantCSC : ""} />
+                <CheckField label="Clerk Of Superior Court" id={`${index ? index : ""}clerkOfSuperiorCourt`} name={`${index ? index : ""}clerkOfSuperiorCourt`} htmlFor={`${index ? index : ""}clerkOfSuperiorCourt`} initVal={ubData ? ubData.clerkOfSuperiorCourt : ""} />
 
             </Col>
 
@@ -68,11 +69,11 @@ const UbBidder = ({ubData, index}) => {
                     <Divider orientation="center">Bidder Info Files
                     </Divider>
 
-                    <InputField label="File Name" id="ubFile" />
+                    <InputField label="File Name" id={`${index ? index : ""}ubFile`} name={`${index ? index : ""}ubFile`} htmlFor={`${index ? index : ""}ubFile`} />
 
                     <Col xs={12} sm={8} md={4} >
-                        <Item label="Date :" >
-                            <DatePicker placeholder="Select Date" id="pdDate" style={{ width: "100%" }} />
+                        <Item label="Date :" htmlFor={`${index ? index : ""}pdDate`} name={`${index ? index : ""}pdDate`}>
+                            <DatePicker placeholder="Select Date" id={`${index ? index : ""}pdDate`} style={{ width: "100%" }} />
                         </Item>
                     </Col>
 
@@ -116,7 +117,6 @@ const UbBidder = ({ubData, index}) => {
                 </Col>
 
             </Col>
-
 
         </>
     )

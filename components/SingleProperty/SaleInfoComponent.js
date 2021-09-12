@@ -1,9 +1,9 @@
-import { Row, Col, Form, Button, Input, Collapse } from 'antd'
+import { Row, Col, Form, Button, Collapse } from 'antd'
 import styles from '../../styles/search.module.css'
 import SaleInfo from './utilsComp/SaleInfo';
 import FirstBidder from './utilsComp/FirstBidder';
 import UbBidder from './utilsComp/UbBidder';
-// import OtherBidder from './utilsComp/OtherBidder'
+import UbDynamicBidder from './utilsComp/UbDynamicBidder';
 
 
 const SaleInfoComponent = ({ saleInfoForm, data, inx }) => {
@@ -40,12 +40,13 @@ const SaleInfoComponent = ({ saleInfoForm, data, inx }) => {
                                 </>
                                 }
 
+
                                 {data.otherBidderInfo.length !== 0 && <>
 
                                     {data.otherBidderInfo.map((ubData, index) => {
-                                        <Panel header={`Upset Bidder ${index + 1}`} key={`41${+ index}`} className="site-collapse-custom-panel" >
-                                            <UbBidder ubData={ubData} index={index} />
-                                        </Panel>
+                                        return (
+                                            <UbDynamicBidder key={index} ubData={ubData} index={index} />
+                                        )
                                     })}
                                 </>}
 

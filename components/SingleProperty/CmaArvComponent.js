@@ -1,20 +1,22 @@
 import { Row, Col, Form, Button, Collapse } from 'antd'
 import styles from '../../styles/search.module.css'
-
 import CompData from './utilsComp/CompData';
-// import OtherBidder from './utilsComp/OtherBidder'
+import SecondCompData from './utilsComp/SecondCompData';
+import ThirdCompData from './utilsComp/ThirdCompData';
+import compInitVal from '../../utils/compInitVal'
 
 
-const CmaArvComponent = ({ saleInfoForm }) => {
+const CmaArvComponent = ({ cmaInfoForm, firstComp, secondComp, thirdComp }) => {
     const { Panel } = Collapse
+    const initialVal = compInitVal(firstComp, secondComp, thirdComp)
 
-    const saleInfoHandler = (values) => { }
+    const cmaInfoHandler = (values) => { }
 
     return (
         <>
             <Row gutter={15} wrap={true} justify="start"  >
                 <Col span={24}>
-                    <Form form={saleInfoForm} layout="vertical" className={styles.searchForm} onFinish={saleInfoHandler} >
+                    <Form form={cmaInfoForm} layout="vertical" className={styles.searchForm} onFinish={cmaInfoHandler} initialValues={initialVal} >
                         <Col span={24}>
                             <Collapse defaultActiveKey={['50']}
                                 // onChange={callback}
@@ -22,17 +24,17 @@ const CmaArvComponent = ({ saleInfoForm }) => {
                                 className="site-collapse-custom-collapse">
                                 <Panel header="FIRST COMP" key="50" className="site-collapse-custom-panel" >
                                     {/* cma arv info */}
-                                    <CompData name="FIRST COMP" />
+                                    <CompData name="FIRST COMP" data={firstComp} />
                                 </Panel>
 
                                 <Panel header="SECOND COMP" key="51" className="site-collapse-custom-panel" >
                                     {/* cma arv info */}
-                                    <CompData name="SECOND COMP" />
+                                    <SecondCompData name="SECOND COMP" data={secondComp} />
                                 </Panel>
 
                                 <Panel header="THIRD COMP" key="52" className="site-collapse-custom-panel" >
                                     {/* cma arv info */}
-                                    <CompData name="THIRD COMP" />
+                                    <ThirdCompData name="THIRD COMP" data={thirdComp} />
                                 </Panel>
 
 

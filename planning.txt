@@ -59,6 +59,8 @@ fix dynamc array field name and iD.//
 //limit getProperties endpoints.//
 //create another endpoints for the overview on result page.//
 //craete seperate endpoints for the unAuthorized request for property info & add there some data for better SEO.//
+//change file upload section name and ID/
+//check on react-draggable
 
 ************
 

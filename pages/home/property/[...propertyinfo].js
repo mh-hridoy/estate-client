@@ -19,6 +19,8 @@ const singlePropertyInfo = () => {
     const [mortgageInfo] = Form.useForm()
     const [ownerAndBorrower] = Form.useForm()
     const [saleInfoForm] = Form.useForm()
+    const [cmaInfoForm] = Form.useForm()
+
     const [isLoading, setIsLoading] = useState(true)
     const [requestedData, setRequestedData] = useState(null)
 
@@ -155,7 +157,7 @@ const singlePropertyInfo = () => {
                                 >
 
                                     <Panel header="CMA/ARV Recommendations" key="60" className="site-collapse-custom-panel" >
-                                        <CmaArvComponent data={requestedData} />
+                                        <CmaArvComponent firstComp={requestedData.firstComp} secondComp={requestedData.secondComp} thirdComp={requestedData.thirdComp} cmaInfoForm={cmaInfoForm} />
                                     </Panel>
                                 </Collapse>
 

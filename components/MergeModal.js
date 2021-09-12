@@ -8,12 +8,12 @@ const MergeModal = (props) => {
 
     return (
         <Modal
-            title="Merge From System"
+            title="Merge Opertaion!!!"
             visible={props.visible}
             onOk={props.handleSubmit}
             confirmLoading={props.modalLoading}
             onCancel={props.handleCancel}
-
+            style={{ top: 20 }}
             footer={[
                 <Button key="back" onClick={props.handleCancel}>
                     Cancel

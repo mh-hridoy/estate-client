@@ -1,45 +1,49 @@
 import { Row, Col, Form, Button, Divider, Checkbox, Space, Upload, DatePicker } from 'antd'
 import InputField from './utilsComp/InputField'
 import styles from '../../styles/search.module.css'
-import InputWithSuffix from './utilsComp/InputWithSuffix';
-import { useState } from 'react';
 import { UploadOutlined } from '@ant-design/icons'
+import OwnerInfo from './OwnerInfo'
+import BorrowerInfo from './BorrowerInfo'
+import { useEffect, useState } from 'react';
 
 
-const OwnerInfoComponent = ({ ownerAndBorrower }) => {
+const OwnerInfoComponent = ({ ownerAndBorrower, data }) => {
     const [isSameOwner, setIsSameOwner] = useState(false)
     const [isPacer, setIsPacer] = useState(false)
+
     const [isSameOwnerAsB, setisSameOwnerAsB] = useState(false)
     const [isSameAddress, setisSameAddress] = useState(false)
+
 
     const { Item } = Form
 
     const checkIfSameOwner = () => {
-        setIsSameOwner(true)
+        setIsSameOwner(e.target.checked)
     }
 
     const checkNoPacer = (e) => {
-        if (e.target.checked == true) {
-            e.target.checked == false
-            setIsPacer(true)
 
-        } else if (e.target.checked == false) {
-            e.target.checked == true
-            setIsPacer(false)
-        }
-    }
-
-    const checkIfSameOwnerAsB = () => {
-        setisSameOwnerAsB(true)
-    }
-
-    const asSameAddressAsOwner = () => {
-        setisSameAddress(true)
+        setIsPacer(e.target.checked)
     }
 
     const ownerDataHandler = (values) => {
 
     }
+
+    const checkIfSameOwnerAsB = (e) => {
+        setisSameOwnerAsB(e.target.checked)
+    }
+
+    const asSameAddressAsOwner = (e) => {
+        setisSameAddress(e.target.checked)
+    }
+
+    useEffect(() => {
+        if (data.pacer) {
+            setIsPacer(data.pacer)
+
+        }
+    }, [])
 
     return (
         <>
@@ -47,34 +51,59 @@ const OwnerInfoComponent = ({ ownerAndBorrower }) => {
                 <Col span={24}>
                     <Form form={ownerAndBorrower} layout="vertical" className={styles.searchForm} onFinish={ownerDataHandler} >
 
-                        <Divider orientation="center">Owner Info
-                        </Divider>
-                        <Col span={24} style={{ display: "flex", flexDirection: "row", flexWrap: "wrap", justifyContent: "space-around" }}>
-                            <Col xs={12} style={{ height: "65px" }} >
-                                <Item htmlFor="checkIfSameOwner" name="checkIfSameOwner" valuePropName="checked" >
-                                    <Checkbox onChange={checkIfSameOwner} checked={isSameOwner} id="checkIfSameOwner">Check if the Owner Information is same as Property Information.</Checkbox>
-                                </Item>
-                            </Col>
+                        {/* Owner Section */}
 
-                            <Col xs={12} style={{ height: "65px" }} >
-                                <Item htmlFor="noPacer" name="noPacer" valuePropName="checked" >
-                                    <Checkbox onChange={checkNoPacer} checked={isPacer} id="noPacer">No Pacer Result</Checkbox>
-                                </Item>
-                            </Col>
-
-                        </Col>
-
-                        <InputField label="Owner Full Name" htmlFor="ownerFullName" name="ownerFullName" id="ownerFullName" />
-                        <InputField label="Owner Full Address" htmlFor="ownerAddress" name="ownerAddress" id="ownerAddress" />
-                        <InputField label="Owner Email" htmlFor="ownerEmail" name="ownerEmail" id="ownerEmail" />
-                        <InputField label="Owner Phone 1" htmlFor="ownerPhone" name="ownerPhone" id="ownerPhone" />
-
-                        {isPacer &&
+                        {data.ownerInfo.length === 0 &&
                             <>
-                                <InputWithSuffix label="Pacer URL" htmlFor="pacerUrl" name="pacerUrl" id="pacerUrl" />
-                                <InputWithSuffix label="Beenverified URL" htmlFor="bvUrl" name="bvUrl" id="bvUrl" />
+                            <Divider orientation="center">Owner Info
+                            </Divider>
+                            <Col span={24} style={{ display: "flex", flexDirection: "row", flexWrap: "wrap", justifyContent: "space-around" }}>
+                                <Col xs={12} style={{ height: "65px" }} >
+                                    <Item htmlFor="checkIfSameOwner" name="checkIfSameOwner" valuePropName="checked"  >
+                                        <Checkbox onChange={checkIfSameOwner} checked={isSameOwner} id="checkIfSameOwner">Check if the Owner Information is same as Property Information.</Checkbox>
+                                    </Item>
+                                </Col>
+
+                                <Col xs={12} style={{ height: "65px" }} >
+                                    <Item htmlFor="noPacer" name="noPacer" valuePropName="checked"  >
+                                        <Checkbox onChange={checkNoPacer} checked={isPacer} id="noPacer">No Pacer Result</Checkbox>
+                                    </Item>
+                                </Col>
+
+                            </Col>
+                                <OwnerInfo isPacer={isPacer} />
+                            </>
+                        }
+
+                        {data.ownerInfo.length !== 0 &&
+                            <>
+                            <Divider orientation="center" >Owner Info
+                            </Divider>
+                            <Col span={24} style={{ display: "flex", flexDirection: "row", flexWrap: "wrap", justifyContent: "space-around" }}>
+                                <Col xs={12} style={{ height: "65px" }} >
+                                    <Item htmlFor="checkIfSameOwner" name="checkIfSameOwner" valuePropName="checked" initialValue={data.sameOwner} >
+                                        <Checkbox onChange={checkIfSameOwner} checked={isSameOwner} id="checkIfSameOwner">Check if the Owner Information is same as Property Information.</Checkbox>
+                                    </Item>
+                                </Col>
+
+                                <Col xs={12} style={{ height: "65px" }} >
+                                    <Item htmlFor="noPacer" name="noPacer" valuePropName="checked" initialValue={data.pacer} >
+                                        <Checkbox onChange={checkNoPacer} checked={isPacer} id="noPacer">No Pacer Result</Checkbox>
+                                    </Item>
+                                </Col>
+
+                            </Col>
+                            {
+                                data.ownerInfo.map((owner, inx) => {
+                                    return (
+                                        <OwnerInfo owner={owner} inx={inx} key={inx} isPacer={isPacer} />
+                                    )
+                                })
+
+                            }
 
                             </>
+
 
                         }
 
@@ -83,47 +112,96 @@ const OwnerInfoComponent = ({ ownerAndBorrower }) => {
                             <Button>Add Notes</Button>
                         </Space>
 
+                        {data.ownerInfo.note && <>
+                            <Divider orientation="center">Owner Notes Section
+                            </Divider>
+                            {data.ownerInfo.note.map((note, inx) => {
+                                return (
+                                    <Col span={24} key={inx} >
+                                        Notes will bere
+                                    </Col>
+                                )
+                            })}
 
-                        <Divider orientation="center">Owner Notes Section
-                        </Divider>
-                        <Col span={24}>
-                            Notes will bere
-                        </Col>
+                        </>}
 
+
+                        {/* Borrower Section */}
+
+                        {data.borrowerInfo.length === 0 &&
+                            <>
                         <Divider orientation="center">Borrower Info
-                        </Divider>
+                            </Divider>
+                            <Col span={24} style={{ display: "flex", flexDirection: "row", flexWrap: "wrap", justifyContent: "space-around" }} >
+                                <Col xs={12} style={{ height: "65px" }} >
+                                    <Item htmlFor="checkIfSameOwnerAsBorrower" name="checkIfSameOwnerAsBorrower" valuePropName="checked" >
+                                        <Checkbox onChange={checkIfSameOwnerAsB} checked={isSameOwnerAsB} id="checkIfSameOwnerAsBorrower">Check if borrower full name is same as owner full name.</Checkbox>
+                                    </Item>
+                                </Col>
 
-                        <Col span={24} style={{ display: "flex", flexDirection: "row", flexWrap: "wrap", justifyContent: "space-around" }}>
-                            <Col xs={12} style={{ height: "65px" }} >
-                                <Item htmlFor="checkIfSameOwnerAsBorrower" name="checkIfSameOwnerAsBorrower" valuePropName="checked" >
-                                    <Checkbox onChange={checkIfSameOwnerAsB} checked={isSameOwnerAsB} id="checkIfSameOwner">Check if borrower full name is same as owner full name.</Checkbox>
-                                </Item>
+                                <Col xs={12} style={{ height: "65px" }} >
+                                    <Item htmlFor="asSameAddress" name="asSameAddress" valuePropName="checked" >
+                                        <Checkbox onChange={asSameAddressAsOwner} checked={isSameAddress} id="asSameAddress">Check if borrower address is same with owner address.</Checkbox>
+                                    </Item>
+                                </Col>
+
                             </Col>
 
-                            <Col xs={12} style={{ height: "65px" }} >
-                                <Item htmlFor="asSameAddress" name="asSameAddress" valuePropName="checked" >
-                                    <Checkbox onChange={asSameAddressAsOwner} checked={isSameAddress} id="asSameAddress">Check if borrower address is same with owner address.</Checkbox>
-                                </Item>
-                            </Col>
+                                <BorrowerInfo />
 
-                        </Col>
+                            </>
+                        }
 
-                        <InputField label="Borrower" htmlFor="borrowerName" name="borrowerName" id="borrowerName" />
-                        <InputField label="Borrower Address" htmlFor="borrowerAddress" name="borrowerAddress" id="borrowerAddress" />
-                        <InputField label="Borrower Email" htmlFor="borrowerEmail" name="borrowerEmail" id="borrowerEmail" />
-                        <InputField label="Borrower Phone 1" htmlFor="borrowerPhone" name="borrowerPhone" id="borrowerPhone" />
+                        {data.borrowerInfo.length !== 0 &&
+                            <>
+                                <Divider orientation="center" >Borrower Info
+                                </Divider>
+
+                                <Col span={24} style={{ display: "flex", flexDirection: "row", flexWrap: "wrap", justifyContent: "space-around" }} >
+                                    <Col xs={12} style={{ height: "65px" }} >
+                                        <Item htmlFor="checkIfSameOwnerAsBorrower" name="checkIfSameOwnerAsBorrower" valuePropName="checked" initialValue={data.sameAsOwner} >
+                                            <Checkbox onChange={checkIfSameOwnerAsB} checked={isSameOwnerAsB} id="checkIfSameOwnerAsBorrower">Check if borrower full name is same as owner full name.</Checkbox>
+                                        </Item>
+                                    </Col>
+
+                                    <Col xs={12} style={{ height: "65px" }} >
+                                        <Item htmlFor="asSameAddress" name="asSameAddress" valuePropName="checked" initialValue={data.addressSameAsOwner}>
+                                            <Checkbox onChange={asSameAddressAsOwner} checked={isSameAddress} id="asSameAddress">Check if borrower address is same with owner address.</Checkbox>
+                                        </Item>
+                                    </Col>
+
+                                </Col>
+
+                                {data.borrowerInfo.map((info, inx) => {
+                                    return (
+                                        <BorrowerInfo key={inx} info={info} inx={inx} />
+                                    )
+                                })}
+
+
+                            </>
+                        }
+
 
                         <Space >
                             <Button>Add Borrower</Button>
                             <Button>Add Notes</Button>
                         </Space>
 
-
+                        {data.borrowerInfo.note &&
+                            <>
                         <Divider orientation="center">Borrower Notes Section
-                        </Divider>
-                        <Col span={24}>
-                            Notes will bere
-                        </Col>
+                            </Divider>
+
+                            {data.borrowerInfo.note.map((note, inx) => {
+                                <Col span={24} key={inx} >
+                                    Notes will bere
+                                </Col>
+                            })}
+
+                            </>
+
+                        }
 
                         <Col span={24} style={{ width: "100%", display: "flex", flexDirection: "column", flexWrap: "wrap" }} >
 
@@ -180,6 +258,7 @@ const OwnerInfoComponent = ({ ownerAndBorrower }) => {
                             </Col>
 
                         </Col>
+
 
 
 

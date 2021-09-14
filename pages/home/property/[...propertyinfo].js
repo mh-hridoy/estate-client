@@ -16,7 +16,6 @@ const singlePropertyInfo = () => {
     const { propertyinfo } = router.query
     const { Panel } = Collapse
     const [propertyInfoForm] = Form.useForm()
-    const [mortgageInfo] = Form.useForm()
     const [ownerAndBorrower] = Form.useForm()
     const [saleInfoForm] = Form.useForm()
     const [cmaInfoForm] = Form.useForm()
@@ -46,7 +45,7 @@ const singlePropertyInfo = () => {
                                 'Authorization': `Bearer ${token}`
                             }
                         })
-
+                    console.log("getting single record data")
                     setRequestedData(data)
                     console.log(data)
                     setIsLoading(false)
@@ -85,30 +84,24 @@ const singlePropertyInfo = () => {
 
             <Row gutter={15} wrap={true} justify="center">
                 <Col span={23}>
-                    <Collapse defaultActiveKey={['1']}
-                        // onChange={callback}
-                                    expandIconPosition="right"
-                        className="site-collapse-custom-collapse"
-
-                    >
+                                <Collapse defaultActiveKey={['1']} expandIconPosition="right" className="site-collapse-custom-collapse">
 
                         <Panel header="Property Details (Building, Land, Assessment)" key="1" className="site-collapse-custom-panel" >
                                         <PropertyInfoComponent propertyInfo={propertyInfoForm} data={requestedData} />
-                        </Panel>
-
+                                    </Panel>
 
                         <Panel header="Mortgage, Other Liens" key="2" className="site-collapse-custom-panel" >
-                                        <MortgageInfoComponent mortgageInfo={mortgageInfo} data={requestedData} />
-                        </Panel>
+                                        <MortgageInfoComponent data={requestedData} />
+                                    </Panel>
+
 
                         <Panel header="Owner & Borrower Info" key="3" className="site-collapse-custom-panel" >
                                         <OwnerInfoComponent ownerAndBorrower={ownerAndBorrower} data={requestedData} />
-                        </Panel>
-
+                                    </Panel>
 
                         <Panel header="Sale Details or Foreclosure Info" key="4" className="site-collapse-custom-panel" >
                             {/* iterate sale info thorugh loop*/}
-                            <Collapse defaultActiveKey={['30']}
+                                        <Collapse defaultActiveKey={['30']}
                                 // onChange={callback}
                                             expandIconPosition="right"
 

@@ -10,9 +10,9 @@ import ThirdMortgage from './utilsComp/ThirdMortgage';
 import HoaMortgage from './utilsComp/HoaMortgage';
 import TaxMortgage from './utilsComp/TaxMortgage';
 import OtherMortgage from './utilsComp/OtherMortgage';
-import initVal from '../../utils/mortgageInitVal'
+import { mortgageHeaderInfoVal } from '../../utils/mortgageInitVal'
 
-const MortgageInfoComponent = ({ mortgageInfo, data }) => {
+const MortgageInfoComponent = ({ data }) => {
 
     const [fLienVal, setfLienVal] = useState(false)
     const [fNoStrVal, setfNoStrVal] = useState(false)
@@ -24,9 +24,11 @@ const MortgageInfoComponent = ({ mortgageInfo, data }) => {
     const [modAViewVal, setmodAView] = useState(false)
     const [subAViewVal, setsubAView] = useState(false)
     const [FResultsVal, setFResults] = useState(false)
-    const initialVal = initVal(data)
+    const mortgageHeaderVal = mortgageHeaderInfoVal(data)
 
     const { Panel } = Collapse
+
+    const [mortgageHeaderInfo] = Form.useForm()
 
 
     const fLienFCL = (e) => {
@@ -70,7 +72,7 @@ const MortgageInfoComponent = ({ mortgageInfo, data }) => {
         setFResults(e.target.checked)
     }
 
-    const mortgageFinish = (values) => {
+    const mortgageHeaderFinish = (values) => {
         console.log(values)
     }
 
@@ -105,10 +107,11 @@ const MortgageInfoComponent = ({ mortgageInfo, data }) => {
         <>
             <Row gutter={20} wrap={true} justify="start" >
                 <Col span={24}>
-                    <Form form={mortgageInfo} layout="vertical" className={styles.searchForm} onFinish={mortgageFinish} initialValues={initialVal}  >
+                    <Form form={mortgageHeaderInfo} layout="vertical" className={styles.searchForm} onFinish={mortgageHeaderFinish} initialValues={mortgageHeaderVal}  >
                         <InputWithSuffix label="County ROD URL" htmlFor="rodUrl" name="rodUrl" id="rodUrl" />
                         <CheckField label="Manual Search" htmlFor="manualSearch" name="manualSearch" id="manualSearch" />
                         <CheckField label="No Active Mortgage Lien" htmlFor="noActiveLien" name="noActiveLien" id="noActiveLien" />
+                    </Form>
 
                         <br />
 
@@ -175,9 +178,6 @@ const MortgageInfoComponent = ({ mortgageInfo, data }) => {
                                 Save Mortgage Data
                             </Button>
                         </Col>
-
-
-                    </Form>
 
                 </Col>
 

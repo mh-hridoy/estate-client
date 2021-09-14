@@ -8,8 +8,8 @@ const InputWithSuffix = ({ label, htmlFor, name, placeholder, id, initVal }) => 
 
     return (
         <Col xs={12} sm={8} md={6} lg={4} >
-            <Item label={label} htmlFor={htmlFor} name={name} initialValue={initVal} >
-                <Input placeholder={placeholder} id={id} style={{ margin: "0px" }} suffix={
+            <Item label={label} name={name} initialValue={initVal} >
+                <Input placeholder={placeholder} style={{ margin: "0px" }} suffix={
                     <Tooltip title="Open Link">
                         <MonitorOutlined style={{ color: 'rgba(0,0,0,.45)', cursor: "pointer" }} />
                     </Tooltip>

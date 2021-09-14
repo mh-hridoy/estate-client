@@ -45,9 +45,6 @@ const initVal = (data) => {
     const otherRedDate = data.otherMortgageInfo.redemptionInfo.redemptionDate && moment(data.otherMortgageInfo.redemptionInfo.redemptionDate)
 
     return {
-        rodUrl: data.countyRODURL,
-        manualSearch: data.manualSearch,
-        noActiveLien: data.noActiveMortgageLien,
         fLienFCL: data.firstmortgageInfo.lienForeclosing,
         fNoStr: data.firstmortgageInfo.noSTR,
         dfLien: data.firstmortgageInfo.defectiveLien,
@@ -339,4 +336,14 @@ const initVal = (data) => {
     }
 
 }
-export default initVal;
+
+const mortgageHeaderInfoVal = (data) => {
+    return {
+        rodUrl: data.countyRODURL,
+        manualSearch: data.manualSearch,
+        noActiveLien: data.noActiveMortgageLien,
+    }
+
+}
+
+export { initVal, mortgageHeaderInfoVal };

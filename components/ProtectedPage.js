@@ -19,14 +19,14 @@ const miniText = (
 )
 
 const style = {
-    height: 40,
-    width: 40,
+    height: 30,
+    width: 25,
     lineHeight: '40px',
     borderRadius: 4,
     backgroundColor: 'var(--hover-color)',
     color: '#fff',
     textAlign: 'center',
-    fontSize: 14,
+    fontSize: 10,
     transform: "translateX(150%)",
 };
 
@@ -101,7 +101,7 @@ const ProtectedPage = (props) => {
     return (
 
         <>
-            <BackTop visibilityHeight={100}>
+            <BackTop visibilityHeight={600}>
                 <div style={style}>UP</div>
             </BackTop>
             {isLoading ?

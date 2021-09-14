@@ -13,7 +13,6 @@ const HoaMortgage = ({ viewFcl,
     const [fLienVal, setfLienVal] = useState(false)
     const [fNoStrVal, setfNoStrVal] = useState(false)
     const [dfLienVal, setdfLienVal] = useState(false)
-    const [exMatchVal, setexMatchVal] = useState(false)
 
     const [hoaRedemVal, sethoaRedemVal] = useState(false)
     const [FResultsVal, setFResults] = useState(false)
@@ -25,10 +24,18 @@ const HoaMortgage = ({ viewFcl,
     const [isDtcCheck, setisDtcCheck] = useState(false)
     const [isDcaCheck, setisDcaCheck] = useState(false)
     const [isThirdCheck, setisThirdCheck] = useState(false)
+    const [redemedByOwnerVal, setRedemedByOwnerVal] = useState(false)
+
+
 
     const { Item } = Form
+    const [hoaForm] = Form.useForm()
 
     //declare valriables for checked comp.
+
+    const redemedByOwner = (e) => {
+        setRedemedByOwnerVal(e.target.checked)
+    }
 
     const fLienFCL = (e) => {
         setfLienVal(e.target.checked)
@@ -40,10 +47,6 @@ const HoaMortgage = ({ viewFcl,
 
     const dfLien = (e) => {
         setdfLienVal(e.target.checked)
-    }
-
-    const exMatch = (e) => {
-        setexMatchVal(e.target.checked)
     }
 
 
@@ -82,27 +85,30 @@ const HoaMortgage = ({ viewFcl,
         setisThirdCheck(true)
     }
 
+
     useEffect(() => {
         if (viewFcl) {
             setFResults(viewFcl)
         }
-
-
         if (viewRedemp) {
-            sethoaRedemVal(viewRedemp)
+            setmodAView(viewRedemp)
 
         }
 
 
-
     }, [viewFcl, viewRedemp])
+
+    const hoaMortgageHandler = (values) => {
+        console.log(values)
+    }
 
     return (
         <>
+            <Form form={hoaForm} name="hoaForm" layout="vertical" onFinish={hoaMortgageHandler} >
             <div className="headerPortion" style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
-                <CheckField htmlFor="hLienFCL" label="HOA Lien Foreclosing" id="hLienFCL" name="hLienFCL" onChange={fLienFCL} checked={fLienVal} />
-                <CheckField htmlFor="hNoStr" label="No STR | No APPT" id="hNoStr" name="hNoStr" onChange={fNoStr} checked={fNoStrVal} />
-                <CheckField htmlFor="hfLien" label="Defective HOA Lien" id="hfLien" name="hfLien" onChange={dfLien} checked={dfLienVal} />
+                    <CheckField htmlFor="hLienFCL" label="HOA Lien Foreclosing" id="hLienFCL" name="lienForeclosing" onChange={fLienFCL} checked={fLienVal} />
+                    <CheckField htmlFor="hNoStr" label="No STR | No APPT" id="hNoStr" name="noSTR" onChange={fNoStr} checked={fNoStrVal} />
+                    <CheckField htmlFor="hfLien" label="Defective HOA Lien" id="hfLien" name="defectiveLien" onChange={dfLien} checked={dfLienVal} />
 
 
                 <Button
@@ -119,44 +125,44 @@ const HoaMortgage = ({ viewFcl,
             </div>
 
             <div className="details" style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
-                <InputField label="HOA Name" htmlFor="hame" name="hame" id="hame" />
-                <NumberField label="HOA Amount" htmlFor="hmount" name="hmount" id="hmount" />
-                <DateField label="Date Recorded" htmlFor="hateRecorded" name="hateRecorded" id="hateRecorded" />
-                <InputField label="HOA Book/Page" htmlFor="htBookPage" name="htBookPage" id="htBookPage" />
-                <InputField label="Trustee Fees" htmlFor="hrusteeFees" name="hrusteeFees" id="hrusteeFees" />
-                <InputField label="Trustee HOA" htmlFor="husteeHOA" name="husteeHOA" id="husteeHOA" />
-                <NumberField label="Total Debt" htmlFor="hotalDebt" name="hotalDebt" id="hotalDebt" />
-                <InputField label="STR Book/Page" htmlFor="htrBP" name="htrBP" id="htrBP" />
-                <DateField label="STR Date" htmlFor="htrDate" name="htrDate" id="htrDate" />
-                <InputField label="CC&Rs Instrument #" htmlFor="hInstrument" name="hInstrument" id="hInstrument" />
-                <DateField label="CC&Rs Date" htmlFor="hDate" name="hDate" id="hDate" />
+                    <InputField label="HOA Name" htmlFor="hame" name="hoaName" id="hame" />
+                    <NumberField label="HOA Amount" htmlFor="hmount" name="hoaLienAmount" id="hmount" />
+                    <DateField label="Date Recorded" htmlFor="hateRecorded" name="hoaLienDate" id="hateRecorded" />
+                    <InputField label="HOA Book/Page" htmlFor="htBookPage" name="dtBookPage" id="htBookPage" />
+                    <InputField label="Trustee Fees" htmlFor="hrusteeFees" name="trusteeFees" id="hrusteeFees" />
+                    <InputField label="Trustee HOA" htmlFor="husteeHOA" name="trusteeHoa" id="husteeHOA" />
+                    <NumberField label="Total Debt" htmlFor="hotalDebt" name="totalDebt" id="hotalDebt" />
+                    <InputField label="STR Book/Page" htmlFor="htrBP" name="strBookPage" id="htrBP" />
+                    <DateField label="STR Date" htmlFor="htrDate" name="strDate" id="htrDate" />
+                    <InputField label="CC&Rs Instrument #" htmlFor="instrument" name="ccAndRsInstrument" id="hInstrument" />
+                    <DateField label="CC&Rs Date" htmlFor="hDate" name="ccAndRsDate" id="hDate" />
 
             </div>
 
 
             <div className="optional" style={{ display: "flex", flexDirection: "column" }}>
 
-                <CheckField htmlFor="hoaRedemp" label="REDEMPTION INFO" id="hoaRedemp" name="hoaRedemp" onChange={hoaRedemView} checked={hoaRedemVal} />
+                    <CheckField htmlFor="hoaRedemp" label="REDEMPTION INFO" id="hoaRedemp" name="isRedemptionInfo" onChange={hoaRedemView} checked={hoaRedemVal} />
 
                 {hoaRedemVal &&
                     <div style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
-                        <DateField label="Affidavit (APM) Date" htmlFor="hfDate" name="hfDate" id="hfDate" />
-                        <InputField label="Tax Code" htmlFor="hCode" name="hCode" id="hCode" />
-                        <DateField label="Redemption Expires" htmlFor="hdExp" name="hdExp" id="hdExp" />
-                        <CheckField htmlFor="hddemOwner" label="Redeemed By Owner" id="hddemOwner" name="hddemOwner" onChange={exMatch} checked={exMatchVal} />
-                        <InputField label="Redemption Notice Inst #" htmlFor="hdNotice" name="hdNotice" id="hdNotice" />
-                        <DateField label="Redemption Date" htmlFor="hdNoticeDate" name="hdNoticeDate" id="hdNoticeDate" />
+                        <DateField label="Affidavit (APM) Date" htmlFor="hfDate" name="affidavitDate" id="hfDate" />
+                        <InputField label="Tax Code" htmlFor="hCode" name="taxCode" id="hCode" />
+                        <DateField label="Redemption Expires" htmlFor="hdExp" name="redemptionExpires" id="hdExp" />
+                        <CheckField htmlFor="hddemOwner" label="Redeemed By Owner" id="redeemedByOwner" name="hddemOwner" onChange={redemedByOwner} checked={redemedByOwnerVal} />
+                        <InputField label="Redemption Notice Inst #" htmlFor="hdNotice" name="redemptionNoticeInst" id="hdNotice" />
+                        <DateField label="Redemption Date" htmlFor="hdNoticeDate" name="redemptionDate" id="hdNoticeDate" />
 
 
                     </div>}
 
-                <CheckField htmlFor="hResults" label="FORECLOSURE RESULT" id="hResults" name="hResults" onChange={FResults} checked={FResultsVal} />
+                    <CheckField htmlFor="hResults" label="FORECLOSURE RESULT" id="hResults" name="isForeclosureResult" onChange={FResults} checked={FResultsVal} />
                 {FResultsVal &&
                     <div style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
-                        <InputField label="TRDeed Instrument #" htmlFor="hrDeedIns" name="hrDeedIns" id="hrDeedIns" />
-                        <DateField label="TRDeed Date" htmlFor="hrDeedDate" name="hrDeedDate" id="hrDeedDate" />
-                        <InputField label="Winning Bidder" htmlFor="hwinningBidder" name="hwinningBidder" id="hwinningBidder" />
-                        <InputField label="Winning Bid" htmlFor="hinningBid" name="hinningBid" id="hinningBid" id="hinningBid" />
+                        <InputField label="TRDeed Instrument #" htmlFor="hrDeedIns" name="trDeedInstrument" id="hrDeedIns" />
+                        <DateField label="TRDeed Date" htmlFor="hrDeedDate" name="trDeedDate" id="hrDeedDate" />
+                        <InputField label="Winning Bidder" htmlFor="hwinningBidder" name="winningBidder" id="hwinningBidder" />
+                        <InputField label="Winning Bid" htmlFor="hinningBid" name="winningbid" id="hinningBid" id="hinningBid" />
                     </div>}
 
             </div>
@@ -215,18 +221,21 @@ const HoaMortgage = ({ viewFcl,
             </Col>
 
             <div className="details" style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
-                <CheckField htmlFor="hwner1" label="Owner 1" id="hwner1" name="hwner1" onChange={ownerOne} checked={isOwnerOne} />
-                <CheckField htmlFor="hwner2" label="Owner 2" id="hwner2" name="hwner2" onChange={ownerTwo} checked={isOwnerTwo} />
-                <CheckField htmlFor="hwner3" label="Owner 3" id="hwner3" name="hwner3" onChange={ownerThree} checked={isOwnerThree} />
-                <CheckField htmlFor="hwner4" label="Owner 4" id="hwner4" name="hwner4" onChange={ownerFour} checked={isOwnerFour} />
+                    <CheckField htmlFor="hwner1" label="Owner 1" id="hwner1" name="owner1" onChange={ownerOne} checked={isOwnerOne} />
+                    <CheckField htmlFor="hwner2" label="Owner 2" id="hwner2" name="owner2" onChange={ownerTwo} checked={isOwnerTwo} />
+                    <CheckField htmlFor="hwner3" label="Owner 3" id="hwner3" name="owner4" onChange={ownerThree} checked={isOwnerThree} />
+                    <CheckField htmlFor="hwner4" label="Owner 4" id="hwner4" name="owner4" onChange={ownerFour} checked={isOwnerFour} />
 
-                <CheckField htmlFor="htc" label="DTC - First Check" id="htc" name="htc" onChange={dtcCheck} checked={isDtcCheck} />
-                <CheckField htmlFor="hca" label="DCA - Second Check" id="hca" name="hca" onChange={dcaCheck} checked={isDcaCheck} />
-                <CheckField htmlFor="hhirdDca" label="DCA - Third Check" id="hhirdDca" name="hhirdDca" onChange={thirdCheck} checked={isThirdCheck} />
+                    <CheckField htmlFor="htc" label="DTC - First Check" id="htc" name="isDtcFirstCheck" onChange={dtcCheck} checked={isDtcCheck} />
+                    <CheckField htmlFor="hca" label="DCA - Second Check" id="hca" name="isDcaSecondCheck" onChange={dcaCheck} checked={isDcaCheck} />
+                    <CheckField htmlFor="hhirdDca" label="DCA - Third Check" id="hhirdDca" name="isDcaFinalCheck" onChange={thirdCheck} checked={isThirdCheck} />
 
-            </div>
+                </div>
+                <Col span={24} style={{ display: "flex", flexDirection: "row", flexWrap: "wrap", justifyContent: "flex-end" }} >
+                    <Button htmlType="submit" type="primary" >Save Data</Button>
+                </Col>
 
-
+            </Form>
 
 
         </>

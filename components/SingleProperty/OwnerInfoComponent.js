@@ -1,10 +1,9 @@
-import { Row, Col, Form, Button, Divider, Checkbox, Space, Upload, DatePicker } from 'antd'
+import { Row, Col, Form, Button, Divider, Checkbox, Input, Upload, DatePicker, Tooltip } from 'antd'
 import InputField from './utilsComp/InputField'
 import styles from '../../styles/search.module.css'
 import { UploadOutlined } from '@ant-design/icons'
-import OwnerInfo from './OwnerInfo'
-import BorrowerInfo from './BorrowerInfo'
 import { useEffect, useState } from 'react';
+import { MonitorOutlined } from '@ant-design/icons'
 
 
 const OwnerInfoComponent = ({ ownerAndBorrower, data }) => {
@@ -15,7 +14,7 @@ const OwnerInfoComponent = ({ ownerAndBorrower, data }) => {
     const [isSameAddress, setisSameAddress] = useState(false)
 
 
-    const { Item } = Form
+    const { Item, List } = Form
 
     const checkIfSameOwner = () => {
         setIsSameOwner(e.target.checked)
@@ -27,6 +26,7 @@ const OwnerInfoComponent = ({ ownerAndBorrower, data }) => {
     }
 
     const ownerDataHandler = (values) => {
+        console.log(values)
 
     }
 
@@ -45,72 +45,101 @@ const OwnerInfoComponent = ({ ownerAndBorrower, data }) => {
         }
     }, [])
 
+    //ownerInfo
+    // borrowerInfo
+
     return (
         <>
             <Row gutter={20} wrap={true} justify="start" >
                 <Col span={24}>
-                    <Form form={ownerAndBorrower} layout="vertical" className={styles.searchForm} onFinish={ownerDataHandler} >
-
-                        {/* Owner Section */}
-
-                        {data.ownerInfo.length === 0 &&
-                            <>
-                            <Divider orientation="center">Owner Info
-                            </Divider>
-                            <Col span={24} style={{ display: "flex", flexDirection: "row", flexWrap: "wrap", justifyContent: "space-around" }}>
-                                <Col xs={12} style={{ height: "65px" }} >
-                                    <Item htmlFor="checkIfSameOwner" name="checkIfSameOwner" valuePropName="checked"  >
-                                        <Checkbox onChange={checkIfSameOwner} checked={isSameOwner} id="checkIfSameOwner">Check if the Owner Information is same as Property Information.</Checkbox>
-                                    </Item>
-                                </Col>
-
-                                <Col xs={12} style={{ height: "65px" }} >
-                                    <Item htmlFor="noPacer" name="noPacer" valuePropName="checked"  >
-                                        <Checkbox onChange={checkNoPacer} checked={isPacer} id="noPacer">No Pacer Result</Checkbox>
-                                    </Item>
-                                </Col>
-
+                    <Form form={ownerAndBorrower} layout="vertical" className={styles.searchForm} onFinish={ownerDataHandler} initialValues={{ ownerInfo: data.ownerInfo ? data.ownerInfo : [""], borrowerInfo: data.borrowerInfo ? data.borrowerInfo : [""] }} >
+                        <Divider orientation="center">Owner Info
+                        </Divider>
+                        <Col span={24} style={{ display: "flex", flexDirection: "row", flexWrap: "wrap", justifyContent: "space-around" }}>
+                            <Col xs={12} style={{ height: "65px" }} >
+                                <Item htmlFor="checkIfSameOwner" name="checkIfSameOwner" valuePropName="checked"  >
+                                    <Checkbox onChange={checkIfSameOwner} checked={isSameOwner} id="checkIfSameOwner">Check if the Owner Information is same as Property Information.</Checkbox>
+                                </Item>
                             </Col>
-                                <OwnerInfo isPacer={isPacer} />
-                            </>
-                        }
 
-                        {data.ownerInfo.length !== 0 &&
-                            <>
-                            <Divider orientation="center" >Owner Info
-                            </Divider>
-                            <Col span={24} style={{ display: "flex", flexDirection: "row", flexWrap: "wrap", justifyContent: "space-around" }}>
-                                <Col xs={12} style={{ height: "65px" }} >
-                                    <Item htmlFor="checkIfSameOwner" name="checkIfSameOwner" valuePropName="checked" initialValue={data.sameOwner} >
-                                        <Checkbox onChange={checkIfSameOwner} checked={isSameOwner} id="checkIfSameOwner">Check if the Owner Information is same as Property Information.</Checkbox>
-                                    </Item>
-                                </Col>
-
-                                <Col xs={12} style={{ height: "65px" }} >
-                                    <Item htmlFor="noPacer" name="noPacer" valuePropName="checked" initialValue={data.pacer} >
-                                        <Checkbox onChange={checkNoPacer} checked={isPacer} id="noPacer">No Pacer Result</Checkbox>
-                                    </Item>
-                                </Col>
-
+                            <Col xs={12} style={{ height: "65px" }} >
+                                <Item htmlFor="noPacer" name="noPacer" valuePropName="checked"  >
+                                    <Checkbox onChange={checkNoPacer} checked={isPacer} id="noPacer">No Pacer Result</Checkbox>
+                                </Item>
                             </Col>
-                            {
-                                data.ownerInfo.map((owner, inx) => {
-                                    return (
-                                        <OwnerInfo owner={owner} inx={inx} key={inx} isPacer={isPacer} />
-                                    )
-                                })
 
-                            }
+                        </Col>
+                        <List name="ownerInfo" >
+                            {(fields, { add, remove }) => (
+                                <>
+                                    {fields.map(({ key, name, fieldKey, ...restField }) => (
+                                        <Col key={key} span={24} style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
 
-                            </>
+                                            <Col xs={12} sm={6} md={4}  >
+                                                <Item label="Owner Full Name" name={[name, "ownerFullName"]} {...restField} >
+                                                    <Input />
+                                                </Item>
+                                            </Col>
+
+                                            <Col xs={12} sm={6} md={4}  >
+                                                <Item label="Owner Full Address" name={[name, "ownerAddress"]} {...restField} >
+                                                    <Input />
+                                                </Item>
+                                            </Col>
 
 
-                        }
+                                            <Col xs={12} sm={6} md={4}  >
+                                                <Item label="Owner Email" name={[name, "ownerEmail"]} {...restField} >
+                                                    <Input />
+                                                </Item>
+                                            </Col>
 
-                        <Space >
-                            <Button>Add Owner</Button>
-                            <Button>Add Notes</Button>
-                        </Space>
+                                            <Col xs={12} sm={6} md={3}  >
+                                                <Item label="Owner Phone 1" name={[name, "ownerPhone"]} {...restField} >
+                                                    <Input />
+                                                </Item>
+                                            </Col>
+
+                                            {isPacer &&
+                                                <>
+                                                    <Col xs={12} sm={6} md={3}  >
+                                                        <Item label="Pacer URL" name={[name, "pacerUrl"]} {...restField} >
+                                                            <Input suffix={
+                                                                <Tooltip title="Open Link">
+                                                                    <MonitorOutlined style={{ color: 'rgba(0,0,0,.45)', cursor: "pointer" }} />
+                                                                </Tooltip>
+                                                            } />
+                                                        </Item>
+                                                    </Col>
+
+                                                    <Col xs={12} sm={6} md={3}  >
+                                                        <Item label="Beenverified" name={[name, "bvUrl"]} {...restField}  >
+                                                            <Input suffix={
+                                                                <Tooltip title="Open Link">
+                                                                    <MonitorOutlined style={{ color: 'rgba(0,0,0,.45)', cursor: "pointer" }} />
+                                                                </Tooltip>
+                                                            } />
+                                                        </Item>
+                                                    </Col>
+
+                                            </>
+                                            }
+                                            <Col xs={12} sm={6} md={3} style={{ display: "flex", justifyContent: "flex-start", alignItems: "center" }}>
+
+                                                <Button type="ghost" onClick={() => remove(name)}> Delete </Button>
+                                            </Col>
+
+                                        </Col>
+                                    ))}
+                                    <Item style={{ marginTop: "20px", marginLeft: "20px" }} >
+                                        <Button type="primary" onClick={() => add()} > Add Field </Button>
+                                    </Item>
+                                </>
+                            )}
+                        </List>
+
+                        <Col span={24} style={{ display: "flex", flexDirection: "row", flexWrap: "wrap", justifyContent: "flex-end" }} ><Button>Add Notes</Button>
+                        </Col>
 
                         {data.ownerInfo.note && <>
                             <Divider orientation="center">Owner Notes Section
@@ -125,72 +154,74 @@ const OwnerInfoComponent = ({ ownerAndBorrower, data }) => {
 
                         </>}
 
-
-                        {/* Borrower Section */}
-
-                        {data.borrowerInfo.length === 0 &&
-                            <>
                         <Divider orientation="center">Borrower Info
-                            </Divider>
-                            <Col span={24} style={{ display: "flex", flexDirection: "row", flexWrap: "wrap", justifyContent: "space-around" }} >
-                                <Col xs={12} style={{ height: "65px" }} >
-                                    <Item htmlFor="checkIfSameOwnerAsBorrower" name="checkIfSameOwnerAsBorrower" valuePropName="checked" >
-                                        <Checkbox onChange={checkIfSameOwnerAsB} checked={isSameOwnerAsB} id="checkIfSameOwnerAsBorrower">Check if borrower full name is same as owner full name.</Checkbox>
-                                    </Item>
-                                </Col>
-
-                                <Col xs={12} style={{ height: "65px" }} >
-                                    <Item htmlFor="asSameAddress" name="asSameAddress" valuePropName="checked" >
-                                        <Checkbox onChange={asSameAddressAsOwner} checked={isSameAddress} id="asSameAddress">Check if borrower address is same with owner address.</Checkbox>
-                                    </Item>
-                                </Col>
-
+                        </Divider>
+                        <Col span={24} style={{ display: "flex", flexDirection: "row", flexWrap: "wrap", justifyContent: "space-around" }} >
+                            <Col xs={12} style={{ height: "65px" }} >
+                                <Item htmlFor="checkIfSameOwnerAsBorrower" name="checkIfSameOwnerAsBorrower" valuePropName="checked" >
+                                    <Checkbox onChange={checkIfSameOwnerAsB} checked={isSameOwnerAsB} id="checkIfSameOwnerAsBorrower">Check if borrower full name is same as owner full name.</Checkbox>
+                                </Item>
                             </Col>
 
-                                <BorrowerInfo />
+                            <Col xs={12} style={{ height: "65px" }} >
+                                <Item htmlFor="asSameAddress" name="asSameAddress" valuePropName="checked" >
+                                    <Checkbox onChange={asSameAddressAsOwner} checked={isSameAddress} id="asSameAddress">Check if borrower address is same with owner address.</Checkbox>
+                                </Item>
+                            </Col>
 
-                            </>
-                        }
+                        </Col>
+                        <List name="borrowerInfo" >
+                            {(fields, { add, remove }) => (
+                                <>
+                                    {fields.map(({ key, name, fieldKey, ...restField }) => (
+                                        <Col key={key} span={24} style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
 
-                        {data.borrowerInfo.length !== 0 &&
-                            <>
-                                <Divider orientation="center" >Borrower Info
-                                </Divider>
+                                            <Col xs={12} sm={8} md={6} lg={4}  >
+                                                <Item label="Borrower" name={[name, "borrowerName"]} {...restField} >
+                                                    <Input />
+                                                </Item>
+                                            </Col>
 
-                                <Col span={24} style={{ display: "flex", flexDirection: "row", flexWrap: "wrap", justifyContent: "space-around" }} >
-                                    <Col xs={12} style={{ height: "65px" }} >
-                                        <Item htmlFor="checkIfSameOwnerAsBorrower" name="checkIfSameOwnerAsBorrower" valuePropName="checked" initialValue={data.sameAsOwner} >
-                                            <Checkbox onChange={checkIfSameOwnerAsB} checked={isSameOwnerAsB} id="checkIfSameOwnerAsBorrower">Check if borrower full name is same as owner full name.</Checkbox>
-                                        </Item>
-                                    </Col>
-
-                                    <Col xs={12} style={{ height: "65px" }} >
-                                        <Item htmlFor="asSameAddress" name="asSameAddress" valuePropName="checked" initialValue={data.addressSameAsOwner}>
-                                            <Checkbox onChange={asSameAddressAsOwner} checked={isSameAddress} id="asSameAddress">Check if borrower address is same with owner address.</Checkbox>
-                                        </Item>
-                                    </Col>
-
-                                </Col>
-
-                                {data.borrowerInfo.map((info, inx) => {
-                                    return (
-                                        <BorrowerInfo key={inx} info={info} inx={inx} />
-                                    )
-                                })}
+                                            <Col xs={12} sm={8} md={6} lg={4}  >
+                                                <Item label="Borrower Address" name={[name, "borrowerAddress"]} {...restField} >
+                                                    <Input />
+                                                </Item>
+                                            </Col>
 
 
-                            </>
-                        }
+                                            <Col xs={12} sm={8} md={6} lg={4}  >
+                                                <Item label="Borrower Email" name={[name, "borrowerEmail"]} {...restField} >
+                                                    <Input />
+                                                </Item>
+                                            </Col>
+
+                                            <Col xs={12} sm={8} md={6} lg={4}  >
+                                                <Item label="Owner Phone 1" name={[name, "borrowerPhone"]} {...restField} >
+                                                    <Input />
+                                                </Item>
+                                            </Col>
 
 
-                        <Space >
-                            <Button>Add Borrower</Button>
-                            <Button>Add Notes</Button>
-                        </Space>
+                                            <Col xs={12} sm={8} md={6} lg={4} style={{ display: "flex", justifyContent: "flex-start", alignItems: "center" }}>
+
+                                                <Button type="ghost" onClick={() => remove(name)}> Delete </Button>
+                                            </Col>
+
+                                        </Col>
+                                    ))}
+                                    <Item style={{ marginTop: "20px", marginLeft: "20px" }} >
+                                        <Button type="primary" onClick={() => add()} > Add Field </Button>
+                                    </Item>
+                                </>
+                            )}
+                        </List>
+
+                        <Col span={24} style={{ display: "flex", flexDirection: "row", flexWrap: "wrap", justifyContent: "flex-end" }} ><Button>Add Notes</Button>
+                        </Col>
 
                         {data.borrowerInfo.note &&
                             <>
-                        <Divider orientation="center">Borrower Notes Section
+                            <Divider orientation="center">Borrower Notes Section
                             </Divider>
 
                             {data.borrowerInfo.note.map((note, inx) => {
@@ -203,11 +234,12 @@ const OwnerInfoComponent = ({ ownerAndBorrower, data }) => {
 
                         }
 
+
                         <Col span={24} style={{ width: "100%", display: "flex", flexDirection: "column", flexWrap: "wrap" }} >
 
                             <Col span={24} style={{ display: "flex", alignItems: "center", justifyContent: "flex-start", width: "100%", flexWrap: "wrap", margin: "0", padding: "0" }}>
 
-                                <Divider orientation="center">Owner Info Files
+                                <Divider orientation="center">Related Files
                                 </Divider>
 
                                 <InputField label="File Name" htmlFor="pdFile" name="pdFile" id="pdFile" />
@@ -262,11 +294,12 @@ const OwnerInfoComponent = ({ ownerAndBorrower, data }) => {
 
 
 
-                        <Col xs={24} style={{ position: "sticky", bottom: "20px" }} >
+                        <Col span={24} style={{ display: "flex", flexDirection: "row", flexWrap: "wrap", justifyContent: "flex-end" }} >
                             <Button
                                 type="primary"
+                                htmlType="submit"
                                 style={{ width: "170px", marginTop: "20px", borderRadius: "15px" }}>
-                                Save Owner Data
+                                Save Data
                             </Button>
                         </Col>
 

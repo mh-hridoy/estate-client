@@ -95,9 +95,13 @@ const singlePropertyInfo = () => {
                                     </Panel>
 
 
+
                         <Panel header="Owner & Borrower Info" key="3" className="site-collapse-custom-panel" >
                                         <OwnerInfoComponent ownerAndBorrower={ownerAndBorrower} data={requestedData} />
                                     </Panel>
+
+
+
 
                         <Panel header="Sale Details or Foreclosure Info" key="4" className="site-collapse-custom-panel" >
                             {/* iterate sale info thorugh loop*/}

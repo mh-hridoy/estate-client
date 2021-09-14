@@ -1,106 +1,34 @@
-import { useEffect } from 'react'
 import { Row, Col, Form, Button, Collapse } from 'antd'
 import styles from '../../styles/search.module.css'
 import InputWithSuffix from './utilsComp/InputWithSuffix';
 import CheckField from './utilsComp/CheckField';
 import SingleMortgage from './utilsComp/SingleMortgage';
-import { useState } from 'react';
-import SecondMortgage from './utilsComp/SecondMortgage';
-import ThirdMortgage from './utilsComp/ThirdMortgage';
 import HoaMortgage from './utilsComp/HoaMortgage';
 import TaxMortgage from './utilsComp/TaxMortgage';
 import OtherMortgage from './utilsComp/OtherMortgage';
-import { mortgageHeaderInfoVal } from '../../utils/mortgageInitVal'
 
 const MortgageInfoComponent = ({ data }) => {
 
-    const [fLienVal, setfLienVal] = useState(false)
-    const [fNoStrVal, setfNoStrVal] = useState(false)
-    const [dfLienVal, setdfLienVal] = useState(false)
-    const [exMatchVal, setexMatchVal] = useState(false)
-    const [dtAddressMatchVal, setdtAddressMatchVal] = useState(false)
-    const [attorneyFeeVal, setattorneyFeeVal] = useState(false)
-    const [amortizationViewVal, seamortizationViewVal] = useState(false)
-    const [modAViewVal, setmodAView] = useState(false)
-    const [subAViewVal, setsubAView] = useState(false)
-    const [FResultsVal, setFResults] = useState(false)
-    const mortgageHeaderVal = mortgageHeaderInfoVal(data)
+
+    const [firstMortgageForm] = Form.useForm()
+    const [secondMortgageForm] = Form.useForm()
+    const [thirdMortgageForm] = Form.useForm()
+
+    const mortgageHeaderVal = {
+        rodUrl: data.countyRODURL,
+        manualSearch: data.manualSearch,
+        noActiveLien: data.noActiveMortgageLien,
+    }
+
 
     const { Panel } = Collapse
 
     const [mortgageHeaderInfo] = Form.useForm()
 
 
-    const fLienFCL = (e) => {
-        setfLienVal(e.target.checked)
-    }
-
-    const fNoStr = (e) => {
-        setfNoStrVal(e.target.checked)
-    }
-
-    const dfLien = (e) => {
-        setdfLienVal(e.target.checked)
-    }
-
-    const exMatch = (e) => {
-        setexMatchVal(e.target.checked)
-    }
-
-    const dtAddressMatch = (e) => {
-        setdtAddressMatchVal(e.target.checked)
-    }
-
-    const attorneyFee = (e) => {
-        setattorneyFeeVal(e.target.checked)
-    }
-
-
-    const amortizationView = (e) => {
-        seamortizationViewVal(e.target.checked)
-    }
-
-    const modAView = (e) => {
-        setmodAView(e.target.checked)
-    }
-
-    const subAView = (e) => {
-        setsubAView(e.target.checked)
-    }
-
-    const FResults = (e) => {
-        setFResults(e.target.checked)
-    }
-
     const mortgageHeaderFinish = (values) => {
         console.log(values)
     }
-
-    useEffect(() => {
-        if (data.firstmortgageInfo.amortizationView.type) {
-            seamortizationViewVal(data.firstmortgageInfo.amortizationView.type)
-        }
-
-
-
-        if (data.firstmortgageInfo.modA.type) {
-            setmodAView(data.firstmortgageInfo.modA.type)
-
-        }
-
-        if (data.firstmortgageInfo.subA.type) {
-            setsubAView(data.firstmortgageInfo.subA.type)
-
-        }
-
-        if (data.firstmortgageInfo.foreclosureResult.type) {
-            setFResults(data.firstmortgageInfo.foreclosureResult.type)
-
-        }
-
-    }, [data.firstmortgageInfo.amortizationView.type, data.firstmortgageInfo.modA.type, data.firstmortgageInfo.subA.type,
-    data.firstmortgageInfo.foreclosureResult.type])
-
 
 
     return (
@@ -111,60 +39,50 @@ const MortgageInfoComponent = ({ data }) => {
                         <InputWithSuffix label="County ROD URL" htmlFor="rodUrl" name="rodUrl" id="rodUrl" />
                         <CheckField label="Manual Search" htmlFor="manualSearch" name="manualSearch" id="manualSearch" />
                         <CheckField label="No Active Mortgage Lien" htmlFor="noActiveLien" name="noActiveLien" id="noActiveLien" />
+                        <Col xs={12} sm={8} md={6} lg={4} >
+                            <Button
+                                type="primary"
+                                htmlType="submit"
+                                style={{ width: "170px", borderRadius: "15px" }}>
+                                Save Data
+                            </Button>
+                        </Col>
                     </Form>
 
-                        <br />
+                    <br />
 
-                        <Col span={24} style={{ width: "100%", magin: "0px", padding: "0px" }} >
-                            <Collapse defaultActiveKey={['10']}
-                                expandIconPosition="right"
-                                style={{ marginTop: "10px" }}
-                                style={{ backgroundColor: "var(--optional-color)" }}
+                    <Col span={24} style={{ width: "100%", magin: "0px", padding: "0px" }} >
+                        <Collapse defaultActiveKey={['10']}
+                            expandIconPosition="right"
+                            style={{ marginTop: "10px" }}
+                            style={{ backgroundColor: "var(--optional-color)" }}
 
-                            >
+                        >
 
-                                <Panel header="First Lien" key="10">
-                                    <SingleMortgage fLienFCL={fLienFCL} fNoStr={fNoStr} dfLien={dfLien} exMatch={exMatch} dtAddressMatch={dtAddressMatch} attorneyFee={attorneyFee} amortizationView={amortizationView} modAView={modAView} subAView={subAView} FResults={FResults} fLienVal={fLienVal}
-                                        fNoStrVal={fNoStrVal}
-                                        dfLienVal={dfLienVal}
-                                        exMatchVal={exMatchVal}
-                                        dtAddressMatchVal={dtAddressMatchVal}
-                                        attorneyFeeVal={attorneyFeeVal}
-                                        amortizationViewVal={amortizationViewVal}
-                                        modAViewVal={modAViewVal}
-                                        subAViewVal={subAViewVal}
-                                        FResultsVal={FResultsVal}
-                                        isAmortizeView={data.firstmortgageInfo.amortizationView.type}
-                                        isModAview={data.firstmortgageInfo.modA.type}
-                                        isSubAview={data.firstmortgageInfo.subA.type}
-                                        isfClView={data.firstmortgageInfo.foreclosureResult.type}
+                            <Panel header="First Lien" key="10">
+                                <SingleMortgage formName={firstMortgageForm} viewAmort={data.firstmortgageInfo.isAmortizationView} viewModA={data.firstmortgageInfo.isModA} viewSubA={data.firstmortgageInfo.isSubA} fclView={data.firstmortgageInfo.isForeclosureResult} data={data.firstmortgageInfo} />
+                            </Panel>
 
-                                    />
+                            <Panel header="Second Lien" key="11">
+                                <SingleMortgage formName={secondMortgageForm} viewAmort={data.secondMortgageInfo.isAmortizationView} viewModA={data.secondMortgageInfo.isModA} viewSubA={data.secondMortgageInfo.isSubA} fclView={data.secondMortgageInfo.isForeclosureResult} data={data.secondMortgageInfo} />
+                            </Panel>
 
-                                </Panel>
+                            <Panel header="Third Lien" key="12">
+                                <SingleMortgage formName={thirdMortgageForm} viewAmort={data.thirdMortgageInfo.isAmortizationView} viewModA={data.thirdMortgageInfo.isModA} viewSubA={data.thirdMortgageInfo.isSubA} fclView={data.thirdMortgageInfo.isForeclosureResult} data={data.thirdMortgageInfo} />
+                            </Panel>
 
-                                <Panel header="Second Lien" key="11">
-                                    <SecondMortgage viewAmort={data.secondMortgageInfo.amortizationView.type} viewModA={data.secondMortgageInfo.modA.type} viewSubA={data.secondMortgageInfo.subA.type} fclView={data.secondMortgageInfo.foreclosureResult.type} />
 
-                                </Panel>
+                            <Panel header="HOA Lien" key="13">
+                                <HoaMortgage viewFcl={data.hoaLien.isForeclosureResult} viewRedemp={data.hoaLien.isRedemptionInfo} />
+                            </Panel>
 
-                                <Panel header="Third Lien" key="12">
-                                    <ThirdMortgage viewAmort={data.thirdMortgageInfo.amortizationView.type} viewModA={data.thirdMortgageInfo.modA.type} viewSubA={data.thirdMortgageInfo.subA.type} fclView={data.thirdMortgageInfo.foreclosureResult.type} />
+                            <Panel header="TAX Lien" key="14">
+                                <TaxMortgage viewFcl={data.taxLien.isForeclosureResult} viewRedemp={data.taxLien.isRedemptionInfo} />
 
-                                </Panel>
+                            </Panel>
 
-                                <Panel header="HOA Lien" key="13">
-                                    <HoaMortgage viewFcl={data.hoaLien.foreclosureResult.type} viewRedemp={data.hoaLien.redemptionInfo.type} />
-
-                                </Panel>
-
-                                <Panel header="TAX Lien" key="14">
-                                    <TaxMortgage viewFcl={data.taxLien.foreclosureResult.type} viewRedemp={data.taxLien.redemptionInfo.type} />
-
-                                </Panel>
-
-                                <Panel header="Other Lien" key="15">
-                                    <OtherMortgage viewRedemp={data.otherMortgageInfo.redemptionInfo.type}  />
+                            <Panel header="Other Lien" key="15">
+                                <OtherMortgage viewRedemp={data.otherMortgageInfo.isRedemptionInfo} />
 
                                 </Panel>
 

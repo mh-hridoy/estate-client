@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import CheckField from "./CheckField"
 import { Button, Col, Upload, Form, DatePicker } from 'antd'
 import InputField from "./InputField"
@@ -5,19 +6,25 @@ import NumberField from "./NumberField"
 import DateField from "./DateField"
 import { UploadOutlined } from '@ant-design/icons'
 import { useState } from "react"
+import { mortgageInfoVal } from '../../../utils/mortgageInitVal'
 
 
-const SingleMortgage = ({ fLienFCL, fNoStr, dfLien, exMatch, dtAddressMatch, attorneyFee, amortizationView, modAView, subAView, FResults, fLienVal,
-    dfLienVal, fNoStrVal,
-    exMatchVal,
-    dtAddressMatchVal,
-    attorneyFeeVal,
-    amortizationViewVal,
-    modAViewVal,
-    subAViewVal,
-    FResultsVal, isAmortizeView, isModAview,
-    isSubAview,
-    isfClView }) => {
+const SingleMortgage = ({ formName, viewAmort, viewModA, viewSubA, fclView, data }) => {
+
+    const initVal = mortgageInfoVal(data)
+
+    const [fLienVal, setfLienVal] = useState(false)
+    const [fNoStrVal, setfNoStrVal] = useState(false)
+    const [dfLienVal, setdfLienVal] = useState(false)
+    const [exMatchVal, setexMatchVal] = useState(false)
+
+    
+    const [dtAddressMatchVal, setdtAddressMatchVal] = useState(false)
+    const [attorneyFeeVal, setattorneyFeeVal] = useState(false)
+    const [amortizationViewVal, seamortizationViewVal] = useState(false)
+    const [modAViewVal, setmodAView] = useState(false)
+    const [subAViewVal, setsubAView] = useState(false)
+    const [FResultsVal, setFResults] = useState(false)
 
     const [isOwnerOne, setisOwnerOne] = useState(false)
     const [isOwnerTwo, setisOwnerTwo] = useState(false)
@@ -30,6 +37,52 @@ const SingleMortgage = ({ fLienFCL, fNoStr, dfLien, exMatch, dtAddressMatch, att
     const { Item } = Form
 
     //declare valriables for checked comp.
+
+    const mortgageHandler = (values) => {
+        console.log(values)
+    }
+
+    const fLienFCL = (e) => {
+        setfLienVal(e.target.checked)
+    }
+
+    const fNoStr = (e) => {
+        setfNoStrVal(e.target.checked)
+    }
+
+    const dfLien = (e) => {
+        setdfLienVal(e.target.checked)
+    }
+
+    const exMatch = (e) => {
+        setexMatchVal(e.target.checked)
+    }
+
+    const dtAddressMatch = (e) => {
+        setdtAddressMatchVal(e.target.checked)
+    }
+
+    const attorneyFee = (e) => {
+        setattorneyFeeVal(e.target.checked)
+    }
+
+
+    const amortizationView = (e) => {
+        seamortizationViewVal(e.target.checked)
+    }
+
+    const modAView = (e) => {
+        setmodAView(e.target.checked)
+    }
+
+    const subAView = (e) => {
+        setsubAView(e.target.checked)
+    }
+
+    const FResults = (e) => {
+        setFResults(e.target.checked)
+    }
+
 
     const ownerOne = () => {
         setisOwnerOne(true)
@@ -55,12 +108,38 @@ const SingleMortgage = ({ fLienFCL, fNoStr, dfLien, exMatch, dtAddressMatch, att
         setisThirdCheck(true)
     }
 
+    useEffect(() => {
+        if (viewAmort) {
+            seamortizationViewVal(viewAmort)
+        }
+        if (viewModA) {
+            setmodAView(viewModA)
+
+        }
+
+        if (viewSubA) {
+            setsubAView(viewSubA)
+
+        }
+
+        if (fclView) {
+            setFResults(fclView)
+
+        }
+
+    }, [viewAmort, viewModA, viewSubA,
+        fclView])
+
+
+
     return (
         <>
+            <Form form={formName} name="firstMortgageForm" layout="vertical" onFinish={mortgageHandler} initialValues={initVal}  >
+
             <div className="headerPortion" style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
-                <CheckField htmlFor="fLienFCL" label="First Lien Foreclosing" id="fLienFCL" name="fLienFCL" onChange={fLienFCL} checked={fLienVal} />
-                <CheckField htmlFor="fNoStr" label="No STR | No APPT" id="fNoStr" name="fNoStr" onChange={fNoStr} checked={fNoStrVal} />
-                <CheckField htmlFor="dfLien" label="Defective Lien" id="dfLien" name="dfLien" onChange={dfLien} checked={dfLienVal} />
+                    <CheckField htmlFor="sfLienFCL" label="Second Lien Foreclosing" id="sfLienFCL" name="lienForeclosing" onChange={fLienFCL} checked={fLienVal} />
+                    <CheckField htmlFor="sfNoStr" label="No STR | No APPT" id="sfNoStr" name="noSTR" onChange={fNoStr} checked={fNoStrVal} />
+                    <CheckField htmlFor="sdfLien" label="Defective Lien" id="sdfLien" name="defectiveLien" onChange={dfLien} checked={dfLienVal} />
 
 
                 <Button
@@ -77,81 +156,81 @@ const SingleMortgage = ({ fLienFCL, fNoStr, dfLien, exMatch, dtAddressMatch, att
             </div>
 
             <div className="details" style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
-                <InputField label="Lender" htmlFor="lender" name="lender" id="lender" />
-                <NumberField label="Lien Amount" htmlFor="amount" name="amount" id="amount" />
-                <DateField label="Date Recorded" htmlFor="dateRecorder" name="dateRecorder" id="dateRecorder" />
-                <InputField label="Instrument #" htmlFor="instrument" name="instrument" id="instrument" />
-                <InputField label="DT Book/Page" htmlFor="dtBookPage" name="dtBookPage" id="dtBookPage" />
-                <InputField label="Assignment BP" htmlFor="assignmentBP" name="assignmentBP" id="assignmentBP" />
-                <InputField label="Loan Type" htmlFor="loanType" name="loanType" id="loanType" />
-                <InputField label="Loan Term" htmlFor="loanterm" name="loanterm" id="loanterm" />
-                <DateField label="Maturity Date" htmlFor="maturityDate" name="maturityDate" id="maturityDate" />
-                <InputField label="Right to Cure" htmlFor="rightToCure" name="rightToCure" id="rightToCure" />
-                <InputField label="Trustee Fees" htmlFor="trusteeFees" name="trusteeFees" id="trusteeFees" />
-                <InputField label="Trustee" htmlFor="trustee" name="trustee" id="trustee" />
-                <InputField label="STR Book/Page" htmlFor="strBP" name="strBP" id="strBP" />
-                <InputField label="STR Date" htmlFor="strDate" name="strDate" id="strDate" />
-                <InputField label="Loan Estimated Balance" htmlFor="loanEstimatedB" name="loanEstimatedB" id="loanEstimatedB" />
-                <InputField label="Est Late Payments & Fees" htmlFor="estLateFee" name="estLateFee" id="estLateFee" />
-                <InputField label="Total Estimated Debt w/ Late Payments & Attorney Fees $" htmlFor="totalestDebt" name="totalestDebt" id="totalestDebt" />
-                <InputField label="CMA/ARV Value" htmlFor="cmaArv" name="cmaArv" id="cmaArv" />
-                <InputField label="Total Debt" htmlFor="totalDebt" name="totalDebt" id="totalDebt" />
-                <InputField label="Rental Rate" htmlFor="rentalRate" name="rentalRate" id="rentalRate" />
+                    <InputField label="Lender" htmlFor="slender" name="lender" id="slender" />
+                    <NumberField label="Lien Amount" htmlFor="samount" name="lienAmount" id="samount" />
+                    <DateField label="Date Recorded" htmlFor="sdateRecorder" name="dateRecorded" id="sdateRecorder" />
+                    <InputField label="Instrument #" htmlFor="sinstrument" name="instrument" id="sinstrument" />
+                    <InputField label="DT Book/Page" htmlFor="sdtBookPage" name="dtBookPage" id="sdtBookPage" />
+                    <InputField label="Assignment BP" htmlFor="sassignmentBP" name="assignmentBookPage" id="sassignmentBP" />
+                    <InputField label="Loan Type" htmlFor="sloanType" name="loanType" id="sloanType" />
+                    <InputField label="Loan Term" htmlFor="sloanterm" name="loanTerm" id="sloanterm" />
+                    <DateField label="Maturity Date" htmlFor="smaturityDate" name="maturityDate" id="smaturityDate" />
+                    <InputField label="Right to Cure" htmlFor="srightToCure" name="rightToCure" id="srightToCure" />
+                    <InputField label="Trustee Fees" htmlFor="strusteeFees" name="tursteeFee" id="strusteeFees" />
+                    <InputField label="Trustee" htmlFor="strustee" name="trustee" id="strustee" />
+                    <InputField label="STR Book/Page" htmlFor="sstrBP" name="strBookPage" id="sstrBP" />
+                    <InputField label="STR Date" htmlFor="sstrDate" name="strDate" id="sstrDate" />
+                    <InputField label="Loan Estimated Balance" htmlFor="sloanEstimatedB" name="loanEstimatedBalance" id="sloanEstimatedB" />
+                    <InputField label="Est Late Payments & Fees" htmlFor="sestLateFee" name="estLatePaymentAndFees" id="sestLateFee" />
+                    <InputField label="Total Estimated Debt w/ Late Payments & Attorney Fees $" htmlFor="stotalestDebt" name="totalEstimatedDebt" id="stotalestDebt" />
+                    <InputField label="CMA/ARV Value" htmlFor="scmaArv" name="cmaArv" id="scmaArv" />
+                    <InputField label="Total Debt" htmlFor="stotalDebt" name="totalDebt" id="stotalDebt" />
+
             </div>
 
             <div className="headerPortion" style={{ display: "flex", flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between" }}>
-                <CheckField htmlFor="exMatch" label="Exhibit A match w/ the Legal Description in the NOS" id="exMatch" name="exMatch" onChange={exMatch} checked={exMatchVal} />
-                <CheckField htmlFor="dtAddressMatch" label="DT & NOS property address both match" id="dtAddressMatch" name="dtAddressMatch" onChange={dtAddressMatch} checked={dtAddressMatchVal} />
-                <CheckField htmlFor="attorneyFee" label="Reasonable Attorney Fees" id="attorneyFee" name="attorneyFee" onChange={attorneyFee} checked={attorneyFeeVal} />
+                    <CheckField htmlFor="sexMatch" label="Exhibit A match w/ the Legal Description in the NOS" id="sexMatch" name="legalDescMatch" onChange={exMatch} checked={exMatchVal} />
+                    <CheckField htmlFor="sdtAddressMatch" label="DT & NOS property address both match" id="sdtAddressMatch" name="propertyAddressMatch" onChange={dtAddressMatch} checked={dtAddressMatchVal} />
+                    <CheckField htmlFor="sattorneyFee" label="Reasonable Attorney Fees" id="sattorneyFee" name="resonableFees" onChange={attorneyFee} checked={attorneyFeeVal} />
             </div>
 
             <div className="optional" style={{ display: "flex", flexDirection: "column" }}>
-                <CheckField htmlFor="amortizationView" label="AMORTIZATION View Calculation" id="amortizationView" name="amortizationView" onChange={amortizationView} checked={amortizationViewVal} />
+                    <CheckField htmlFor="samortizationView" label="AMORTIZATION View Calculation" id="samortizationView" name="isAmortizationView" onChange={amortizationView} checked={amortizationViewVal} />
 
                 {amortizationViewVal &&
                     <div style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
-                        <NumberField label="Annual Interest Rate %" name="annualRate" htmlFor="annualRate" id="annualRate" />
-                        <NumberField label="Monthly Payment" name="monthlyPayment" htmlFor="monthlyPayment" id="monthlyPayment" />
-                        <NumberField label="Monthly Principal Payment" name="mPrincipalPayment" htmlFor="mPrincipalPayment" id="mPrincipalPayment" />
-                        <NumberField label="Monthly Interest Payment" name="mInterestPay" htmlFor="mInterestPay" id="mInterestPay" />
-                        <NumberField label="Estimated Equity" name="estEquity" htmlFor="estEquity" id="estEquity" />
+                        <NumberField label="Annual Interest Rate %" name="amortAnnualInterestRate" htmlFor="sannualRate" id="sannualRate" />
+                        <NumberField label="Monthly Payment" name="amortMonthlyPayment" htmlFor="smonthlyPayment" id="smonthlyPayment" />
+                        <NumberField label="Monthly Principal Payment" name="monthlyPrincipalPayment" htmlFor="smPrincipalPayment" id="smPrincipalPayment" />
+                        <NumberField label="Monthly Interest Payment" name="monthlyInterestPayment" htmlFor="smInterestPay" id="smInterestPay" />
+                        <NumberField label="Estimated Equity" name="estimatedEquity" htmlFor="sestEquity" id="sestEquity" />
 
                     </div>
                 }
 
-                <CheckField htmlFor="modAView" label="MODIFICATION AGREEMENT (MOD)" id="modAView" name="modAView" onChange={modAView} checked={modAViewVal} />
+                    <CheckField htmlFor="smodAView" label="MODIFICATION AGREEMENT (MOD)" id="smodAView" name="isModA" onChange={modAView} checked={modAViewVal} />
                 {modAViewVal &&
                     <div style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
-                        <InputField label="Modification Book/Page" htmlFor="modBP" name="modBP" id="modBP" />
-                        <DateField label="Modification Date" htmlFor="modADate" name="modADate" id="modADate" />
-                        <NumberField label="Modified Lien Amount" name="modLienAmount" htmlFor="modLienAmount" id="modLienAmount" />
-                        <NumberField label="Modified Loan Term" name="modATerm" htmlFor="modATerm" id="modATerm" />
-                        <DateField label="Modification Maturity Date" htmlFor="modAmaturityDate" name="modAmaturityDate" id="modAmaturityDate" />
-                        <NumberField label="Annual Interest %" htmlFor="annualIterest" name="annualIterest" id="annualIterest" />
-                        <NumberField label="Monthly Payment $" htmlFor="mMonthlyPay" name="mMonthlyPay" id="mMonthlyPay" />
-                        <NumberField label="Loan Estimated Balance" htmlFor="mloanEst" name="mloanEst" id="mloanEst" />
-                        <NumberField label="Est Late Payments and Fees" htmlFor="estLPay" name="estLPay" id="estLPay" />
-                        <NumberField label="Total Estimated Debt w/ Late Payments & Attorney Fees $" htmlFor="totalEstDebt" name="totalEstDebt" id="totalEstDebt" />
+                        <InputField label="Modification Book/Page" htmlFor="smodBP" name="modABookPage" id="smodBP" />
+                        <DateField label="Modification Date" htmlFor="smodADate" name="modADate" id="smodADate" />
+                        <NumberField label="Modified Lien Amount" name="modALienAmount" htmlFor="smodLienAmount" id="smodLienAmount" />
+                        <NumberField label="Modified Loan Term" name="modALoanTerm" htmlFor="smodATerm" id="smodATerm" />
+                        <DateField label="Modification Maturity Date" htmlFor="smodAmaturityDate" name="modAmaturityDate" id="smodAmaturityDate" />
+                        <NumberField label="Annual Interest %" htmlFor="sannualIterest" name="annualInterestRate" id="sannualIterest" />
+                        <NumberField label="Monthly Payment $" htmlFor="smMonthlyPay" name="monthlyPayment" id="smMonthlyPay" />
+                        <NumberField label="Loan Estimated Balance" htmlFor="smloanEst" name="loanEstBalance" id="smloanEst" />
+                        <NumberField label="Est Late Payments and Fees" htmlFor="sestLPay" name="modAEstLatePaymentAndFees" id="sestLPay" />
+                        <NumberField label="Total Estimated Debt w/ Late Payments & Attorney Fees $" htmlFor="stotalEstDebt" name="modAtotalEstimatedDebt" id="stotalEstDebt" />
 
                     </div>}
 
-                <CheckField htmlFor="subAView" label="SUBORDINATION AGREEMENT (SUB/A)" id="subAView" name="subAView" onChange={subAView} checked={subAViewVal} />
+                    <CheckField htmlFor="ssubAView" label="SUBORDINATION AGREEMENT (SUB/A)" id="ssubAView" name="isSubA" onChange={subAView} checked={subAViewVal} />
 
                 {subAViewVal &&
                     <div style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
-                        <InputField label="SubA Book/Page" htmlFor="subABp" name="subABp" id="subABp" />
-                        <DateField label="SubA Date" htmlFor="subADate" name="subADate" id="subADate" />
-                        <InputField label="Lien Position" htmlFor="lienPosition" name="lienPosition" id="lienPosition" />
+                        <InputField label="SubA Book/Page" htmlFor="ssubABp" name="subABookPage" id="ssubABp" />
+                        <DateField label="SubA Date" htmlFor="ssubADate" name="subADate" id="ssubADate" />
+                        <InputField label="Lien Position" htmlFor="slienPosition" name="lienPosition" id="slienPosition" />
 
                     </div>}
 
-                <CheckField htmlFor="FResults" label="FORECLOSURE RESULT" id="FResults" name="FResults" onChange={FResults} checked={FResultsVal} />
+                    <CheckField htmlFor="sFResults" label="FORECLOSURE RESULT" id="sFResults" name="isForeclosureResult" onChange={FResults} checked={FResultsVal} />
                 {FResultsVal &&
                     <div style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
-                        <InputField label="TRDeed Instrument #" htmlFor="trDeedIns" name="trDeedIns" id="trDeedIns" />
-                        <DateField label="TRDeed Date" htmlFor="trDeedDate" name="trDeedDate" id="trDeedDate" />
-                        <InputField label="Winning Bidder" htmlFor="FwinningBidder" name="FwinningBidder" id="FwinningBidder" />
-                        <InputField label="Winning Bid" htmlFor="winningBid" name="winningBid" id="winningBid" id="winningBid" />
+                        <InputField label="TRDeed Instrument #" htmlFor="strDeedIns" name="trDeedInstrument" id="strDeedIns" />
+                        <DateField label="TRDeed Date" htmlFor="strDeedDate" name="trDeedDate" id="strDeedDate" />
+                        <InputField label="Winning Bidder" htmlFor="sFwinningBidder" name="winningBidder" id="sFwinningBidder" />
+                        <InputField label="Winning Bid" htmlFor="swinningBid" name="winningbid" id="swinningBid" id="swinningBid" />
                     </div>}
 
             </div>
@@ -160,18 +239,18 @@ const SingleMortgage = ({ fLienFCL, fNoStr, dfLien, exMatch, dtAddressMatch, att
 
                 <Col span={24} style={{ display: "flex", alignItems: "center", justifyContent: "flex-start", width: "100%", flexWrap: "wrap", margin: "0", padding: "0" }}>
 
-                    <InputField label="File Name" htmlFor="fLienFile" name="fLienFile" id="fLienFile" />
+                        <InputField label="File Name" htmlFor="sfLienFile" name="sfLienFile" id="sfLienFile" />
 
                     <Col xs={12} sm={8} md={4} >
-                        <Item label="Date : " htmlFor="fLienFileDate" name="fLienFileDate"  >
-                            <DatePicker placeholder="Select Date" id="fLienFileDate" style={{ width: "100%" }} />
+                            <Item label="Date : " htmlFor="sfLienFileDate" name="sfLienFileDate"  >
+                                <DatePicker placeholder="Select Date" id="sfLienFileDate" style={{ width: "100%" }} />
                         </Item>
                     </Col>
 
 
                     <Col xs={12} sm={8} md={4} style={{ paddingTop: "10px" }} >
 
-                        <Upload id="fLienFiles"
+                            <Upload id="sfLienFiles"
                         // {...props}
                         >
                             <Button
@@ -200,7 +279,7 @@ const SingleMortgage = ({ fLienFCL, fNoStr, dfLien, exMatch, dtAddressMatch, att
 
                 <Col xs={12} sm={8} md={6} lg={4} style={{ marginTop: "15px" }}>
 
-                    <div >
+                        <div>
                         Files will be here
 
                     </div>
@@ -210,24 +289,26 @@ const SingleMortgage = ({ fLienFCL, fNoStr, dfLien, exMatch, dtAddressMatch, att
             </Col>
 
             <div className="details" style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
-                <CheckField htmlFor="owner1" label="Owner 1" id="owner1" name="owner1" onChange={ownerOne} checked={isOwnerOne} />
-                <CheckField htmlFor="owner2" label="Owner 2" id="owner2" name="owner2" onChange={ownerTwo} checked={isOwnerTwo} />
-                <CheckField htmlFor="owner3" label="Owner 3" id="owner3" name="owner3" onChange={ownerThree} checked={isOwnerThree} />
-                <CheckField htmlFor="owner4" label="Owner 4" id="owner4" name="owner4" onChange={ownerFour} checked={isOwnerFour} />
+                    <CheckField htmlFor="sowner1" label="Owner 1" id="sowner1" name="owner1" onChange={ownerOne} checked={isOwnerOne} />
+                    <CheckField htmlFor="sowner2" label="Owner 2" id="sowner2" name="owner2" onChange={ownerTwo} checked={isOwnerTwo} />
+                    <CheckField htmlFor="sowner3" label="Owner 3" id="sowner3" name="owner3" onChange={ownerThree} checked={isOwnerThree} />
+                    <CheckField htmlFor="sowner4" label="Owner 4" id="sowner4" name="owner4" onChange={ownerFour} checked={isOwnerFour} />
 
-                <CheckField htmlFor="dtc" label="DTC - First Check" id="dtc" name="dtc" onChange={dtcCheck} checked={isDtcCheck} />
-                <CheckField htmlFor="dca" label="DCA - Second Check" id="dca" name="dca" onChange={dcaCheck} checked={isDcaCheck} />
-                <CheckField htmlFor="thirdDca" label="DCA - Third Check" id="thirdDca" name="thirdDca" onChange={thirdCheck} checked={isThirdCheck} />
+                    <CheckField htmlFor="sdtc" label="DTC - First Check" id="sdtc" name="isDtcFirstCheck" onChange={dtcCheck} checked={isDtcCheck} />
+                    <CheckField htmlFor="sdca" label="DCA - Second Check" id="sdca" name="isDcaSecondCheck" onChange={dcaCheck} checked={isDcaCheck} />
+                    <CheckField htmlFor="sthirdDca" label="DCA - Third Check" id="sthirdDca" name="isDcaFinalCheck" onChange={thirdCheck} checked={isThirdCheck} />
 
             </div>
 
+                <Col span={24} style={{ display: "flex", flexDirection: "row", flexWrap: "wrap", justifyContent: "flex-end" }} >
+                    <Button htmlType="submit" type="primary" >Save Data</Button>
+                </Col>
 
+            </Form>
 
 
         </>
     )
 }
 
-
-
-export default SingleMortgage
+export default SingleMortgage;

@@ -3,7 +3,7 @@ import { Col, Form, Input, Tooltip } from 'antd'
 import { MonitorOutlined } from '@ant-design/icons'
 
 
-const InputWithSuffix = ({ label, htmlFor, name, placeholder, id, initVal }) => {
+const InputWithSuffix = ({ label, name, placeholder, initVal }) => {
     const { Item } = Form
 
     return (

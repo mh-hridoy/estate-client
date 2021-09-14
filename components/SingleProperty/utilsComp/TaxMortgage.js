@@ -25,6 +25,7 @@ const TaxMortgage = ({ viewFcl, viewRedemp }) => {
     const [isThirdCheck, setisThirdCheck] = useState(false)
 
     const { Item } = Form
+    const [taxForm] = Form.useForm()
 
     //declare valriables for checked comp.
 
@@ -92,12 +93,17 @@ const TaxMortgage = ({ viewFcl, viewRedemp }) => {
 
     }, [viewFcl, viewRedemp])
 
+    const taxFormHandler = (values) => {
+        console.log(values)
+    }
+
 
     return (
         <>
+            <Form form={taxForm} name="taxForm" label="vertical" onFinish={taxFormHandler} >
             <div className="headerPortion" style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
-                <CheckField htmlFor="txLienFCL" label="Tax Lien Foreclosing" id="txLienFCL" name="txLienFCL" onChange={fLienFCL} checked={fLienVal} />
-                <CheckField htmlFor="txfLien" label="Defective Notice of Sale" id="txfLien" name="txfLien" onChange={dfLien} checked={dfLienVal} />
+                    <CheckField htmlFor="txLienFCL" label="Tax Lien Foreclosing" id="txLienFCL" name="lienForeclosing" onChange={fLienFCL} checked={fLienVal} />
+                    <CheckField htmlFor="txfLien" label="Defective Notice of Sale" id="txfLien" name="defectiveLien" onChange={dfLien} checked={dfLienVal} />
 
 
                 <Button
@@ -114,39 +120,39 @@ const TaxMortgage = ({ viewFcl, viewRedemp }) => {
             </div>
 
             <div className="details" style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
-                <InputField label="Plaintiff" htmlFor="plaitiff" name="plaitiff" id="plaitiff" />
-                <NumberField label="Judgment Amount" htmlFor="jdAmount" name="jdAmount" id="jdAmount" />
-                <DateField label="Judgment Date" htmlFor="txateRecorded" name="txateRecorded" id="txateRecorded" />
-                <InputField label="BP or Instrument#" htmlFor="txtBookPage" name="txtBookPage" id="txtBookPage" />
-                <InputField label="Cause#" htmlFor="txInstrument" name="txInstrument" id="txInstrument" />
-                <InputField label="Sheriff or Constable" htmlFor="shConstable" name="shConstable" id="shConstable" />
+                    <InputField label="Plaintiff" htmlFor="plaitiff" name="plaintiff" id="plaitiff" />
+                    <NumberField label="Judgment Amount" htmlFor="jdAmount" name="judgmentAmount" id="jdAmount" />
+                    <DateField label="Judgment Date" htmlFor="txateRecorded" name="judgmentDate" id="txateRecorded" />
+                    <InputField label="BP or Instrument#" htmlFor="txtBookPage" name="bpOrInstrument" id="txtBookPage" />
+                    <InputField label="Cause#" htmlFor="txInstrument" name="txInstrument" id="case" />
+                    <InputField label="Sheriff or Constable" htmlFor="shConstable" name="sheriffOrConstable" id="shConstable" />
 
             </div>
 
 
             <div className="optional" style={{ display: "flex", flexDirection: "column" }}>
 
-                <CheckField htmlFor="txubAView" label="REDEMPTION INFO" id="txubAView" name="txubAView" onChange={taxRedempTionView} checked={redempViewVal} />
+                    <CheckField htmlFor="txubAView" label="REDEMPTION INFO" id="txubAView" name="isRedemptionInfo" onChange={taxRedempTionView} checked={redempViewVal} />
 
                 {redempViewVal &&
                     <div style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
-                        <DateField label="Affidavit (APM) Date" htmlFor="txfDate" name="txfDate" id="txfDate" />
-                        <InputField label="Tax Code" htmlFor="txCode" name="txCode" id="txCode" />
-                        <DateField label="Redemption Expires" htmlFor="txdExp" name="txdExp" id="txdExp" />
-                        <CheckField htmlFor="txddemOwner" label="Redeemed By Owner" id="txddemOwner" name="txddemOwner" onChange={exMatch} checked={exMatchVal} />
-                        <InputField label="Redemption Notice Inst #" htmlFor="txdNotice" name="txdNotice" id="txdNotice" />
-                        <DateField label="Redemption Date" htmlFor="txdNoticeDate" name="txdNoticeDate" id="txdNoticeDate" />
+                        <DateField label="Affidavit (APM) Date" htmlFor="txfDate" name="affidavitDate" id="txfDate" />
+                        <InputField label="Tax Code" htmlFor="txCode" name="taxCode" id="txCode" />
+                        <DateField label="Redemption Expires" htmlFor="txdExp" name="redemptionExpires" id="txdExp" />
+                        <CheckField htmlFor="txddemOwner" label="Redeemed By Owner" id="txddemOwner" name="redeemedByOwner" onChange={exMatch} checked={exMatchVal} />
+                        <InputField label="Redemption Notice Inst #" htmlFor="txdNotice" name="redemptionNoticeInst" id="txdNotice" />
+                        <DateField label="Redemption Date" htmlFor="txdNoticeDate" name="redemptionDate" id="txdNoticeDate" />
 
 
                     </div>}
 
-                <CheckField htmlFor="txResults" label="FORECLOSURE RESULT" id="txResults" name="txResults" onChange={FResults} checked={FResultsVal} />
+                    <CheckField htmlFor="txResults" label="FORECLOSURE RESULT" id="txResults" name="isForeclosureResult" onChange={FResults} checked={FResultsVal} />
                 {FResultsVal &&
                     <div style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
-                        <InputField label="TRDeed Instrument #" htmlFor="txrDeedIns" name="txrDeedIns" id="txrDeedIns" />
-                        <DateField label="TRDeed Date" htmlFor="txrDeedDate" name="txrDeedDate" id="txrDeedDate" />
-                        <InputField label="Winning Bidder" htmlFor="txwinningBidder" name="txwinningBidder" id="txwinningBidder" />
-                        <InputField label="Winning Bid" htmlFor="txinningBid" name="txinningBid" id="txinningBid" id="txinningBid" />
+                        <InputField label="TRDeed Instrument #" htmlFor="txrDeedIns" name="trDeedInstrument" id="txrDeedIns" />
+                        <DateField label="TRDeed Date" htmlFor="txrDeedDate" name="trDeedDate" id="txrDeedDate" />
+                        <InputField label="Winning Bidder" htmlFor="txwinningBidder" name="winningBidder" id="txwinningBidder" />
+                        <InputField label="Winning Bid" htmlFor="txinningBid" name="winningbid" id="txinningBid" id="txinningBid" />
                     </div>}
 
             </div>
@@ -205,22 +211,25 @@ const TaxMortgage = ({ viewFcl, viewRedemp }) => {
             </Col>
 
             <div className="details" style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
-                <CheckField htmlFor="txwner1" label="Owner 1" id="txwner1" name="txwner1" onChange={ownerOne} checked={isOwnerOne} />
-                <CheckField htmlFor="txwner2" label="Owner 2" id="txwner2" name="txwner2" onChange={ownerTwo} checked={isOwnerTwo} />
-                <CheckField htmlFor="txwner3" label="Owner 3" id="txwner3" name="txwner3" onChange={ownerThree} checked={isOwnerThree} />
-                <CheckField htmlFor="txwner4" label="Owner 4" id="txwner4" name="txwner4" onChange={ownerFour} checked={isOwnerFour} />
+                    <CheckField htmlFor="txwner1" label="Owner 1" id="txwner1" name="owner1" onChange={ownerOne} checked={isOwnerOne} />
+                    <CheckField htmlFor="txwner2" label="Owner 2" id="txwner2" name="owner2" onChange={ownerTwo} checked={isOwnerTwo} />
+                    <CheckField htmlFor="txwner3" label="Owner 3" id="txwner3" name="owner3" onChange={ownerThree} checked={isOwnerThree} />
+                    <CheckField htmlFor="txwner4" label="Owner 4" id="txwner4" name="owner4" onChange={ownerFour} checked={isOwnerFour} />
 
-                <CheckField htmlFor="txtc" label="DTC - First Check" id="txtc" name="txtc" onChange={dtcCheck} checked={isDtcCheck} />
-                <CheckField htmlFor="txca" label="DCA - Second Check" id="txca" name="txca" onChange={dcaCheck} checked={isDcaCheck} />
-                <CheckField htmlFor="txhirdDca" label="DCA - Third Check" id="txhirdDca" name="txhirdDca" onChange={thirdCheck} checked={isThirdCheck} />
+                    <CheckField htmlFor="txtc" label="DTC - First Check" id="txtc" name="isDtcFirstCheck" onChange={dtcCheck} checked={isDtcCheck} />
+                    <CheckField htmlFor="txca" label="DCA - Second Check" id="txca" name="isDcaSecondCheck" onChange={dcaCheck} checked={isDcaCheck} />
+                    <CheckField htmlFor="txhirdDca" label="DCA - Third Check" id="txhirdDca" name="isDcaFinalCheck" onChange={thirdCheck} checked={isThirdCheck} />
 
-            </div>
+                </div>
 
+                <Col span={24} style={{ display: "flex", flexDirection: "row", flexWrap: "wrap", justifyContent: "flex-end" }} >
+                    <Button htmlType="submit" type="primary" >Save Data</Button>
+                </Col>
 
-
+            </Form>
 
         </>
     )
 }
 
-export default TaxMortgage
+export default TaxMortgage;

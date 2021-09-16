@@ -16,7 +16,7 @@ const OwnerInfoComponent = ({ ownerAndBorrower, data }) => {
 
     const { Item, List } = Form
 
-    const checkIfSameOwner = () => {
+    const checkIfSameOwner = (e) => {
         setIsSameOwner(e.target.checked)
     }
 

@@ -1,77 +1,112 @@
-import { Row, Col, Form, Button, Collapse } from 'antd'
+import { Row, Col, Form, Button, Collapse, Divider } from 'antd'
 import styles from '../../styles/search.module.css'
 import SaleInfo from './utilsComp/SaleInfo';
 import FirstBidder from './utilsComp/FirstBidder';
 import UbBidder from './utilsComp/UbBidder';
-import UbDynamicBidder from './utilsComp/UbDynamicBidder';
+import { DeleteOutlined } from '@ant-design/icons'
 
 
-const SaleInfoComponent = ({ saleInfoForm, data, inx }) => {
+const SaleInfoComponent = ({ data, inx }) => {
     const { Panel } = Collapse
+    const [saleInfoForm] = Form.useForm()
+    const { Item, List } = Form
+
+    const genExtra = (remove) => (
+        <DeleteOutlined
+            onClick={event => {
+                // If you don't want click extra trigger collapse, you can prevent this:
+                event.stopPropagation();
+                remove()
+            }}
+        />
+    );
 
     const saleInfoHandler = (values) => { }
 
+
     return (
         <>
-            <Row gutter={20} wrap={true} justify="start" >
-                <Col span={24}>
-                    <Form form={saleInfoForm} layout="vertical" className={styles.searchForm} onFinish={saleInfoHandler} >
-
-                        <SaleInfo data={data} inx={inx} />
-                        {/* this will be dynamic */}
-
-                        {/* firstBidder data */}
-                        <Col span={24} style={{ marginTop: "10px" }}>
-
-                            <Collapse // onChange={callback}
-                                expandIconPosition="right"
-                                className="site-collapse-custom-collapse">
-
-                                <Panel header="First Bidder" key="40" className="site-collapse-custom-panel" >
-                                    <FirstBidder data={data} inx={inx} />
-
-                                </Panel>
-
-                                {data.otherBidderInfo.length === 0 && <>
-                                    <Panel header="Upset Bidder" key="41" className="site-collapse-custom-panel" >
-
-                                        <UbBidder />
-                                    </Panel>
-                                </>
-                                }
+            {/* declare collapse here */}
 
 
-                                {data.otherBidderInfo.length !== 0 && <>
+            {/* making dynamic form  */}
+            <Form form={saleInfoForm} layout="vertical" className={styles.searchForm} onFinish={saleInfoHandler} initialValues={{ saleinfo: [""] }}  >
 
-                                    {data.otherBidderInfo.map((ubData, index) => {
-                                        return (
-                                            <UbDynamicBidder key={index} ubData={ubData} index={index} />
-                                        )
-                                    })}
-                                </>}
+                <Col span={24} >
+                    <List name="saleinfo" >
+                        {(fields, { add, remove }) => (
+                            <>
+                                {fields.map(({ key, name, fieldKey, ...restField }) => (
+                                    <Item key={key} {...restField}  >
+                                        Okay Im here
+                                        <Collapse expandIconPosition="right"
+                                            destroyInactivePanel
+                                            className="site-collapse-custom-collapse"
+                                        >
+                                            <Panel header={`Sale Date ${key + 1}`} key={key + 1} className="site-collapse-custom-panel"   >
+                                                <Row gutter={20} wrap={true} justify="start" >
+                                                    <Col span={24} style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }} >
+                                                        <Divider orientation="center"> Sale Info </Divider>
+
+                                                        {key > 0 &&
+                                                            <Col span={24} style={{ display: "flex", flexDirection: "row", flexWrap: "wrap", justifyContent: "flex-end" }}>
+                                                                <Button onClick={() => { remove(name) }} >
+                                                                    Remove Sale Info
+                                                                </Button>
+                                                            </Col>
+                                                        }
+
+                                                        <SaleInfo name={name} fieldKey={fieldKey} {...restField} />
 
 
+                                                    </Col>
+
+                                                    <Col span={24} style={{ display: "flex", flexDirection: "row", flexWrap: "wrap", justifyContent: "flex-end", margin: "15px 0" }}>
+                                                        <Button onClick={() => add()} >
+                                                            Add Sale Date
+                                                        </Button>
+                                                    </Col>
+
+                                                    <Col span={24} >
+                                                        <Collapse expandIconPosition="right"
+                                                            destroyInactivePanel
+                                                            className="site-collapse-custom-collapse">
+
+                                                            <Panel header="Bidder 1" key="FirstBidder" className="site-collapse-custom-panel"  >
+
+                                                                <FirstBidder key={key} name={name} fieldKey={fieldKey} {...restField} />
+
+                                                            </Panel>
+
+                                                        </Collapse>
+
+                                                    </Col>
+
+                                                    <Col span={24} >
+
+                                                        <UbBidder name={name} />
+
+                                                    </Col>
 
 
-                                {/* it will be dynamic if ther's extra bidder info */}
+                                                </Row>
+
+                                            </Panel>
+                                        </Collapse>
+                                    </Item>
+
+                                ))}
+
+                            </>
+                        )}
 
 
-                            </Collapse>
-                        </Col>
-
-                        <Col xs={24} md={8} lg={4} style={{ position: "sticky", bottom: "20px" }}>
-                            <Button
-                                type="primary"
-                                style={{ width: "160px", marginTop: "20px", borderRadius: "15px" }}>
-                                Save Sale Data
-                            </Button>
-                        </Col>
-
-                    </Form>
-
+                    </List>
                 </Col>
+            </Form>
 
-            </Row>
+
+
 
         </>
     )

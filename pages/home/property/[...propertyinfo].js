@@ -17,7 +17,6 @@ const singlePropertyInfo = () => {
     const { Panel } = Collapse
     const [propertyInfoForm] = Form.useForm()
     const [ownerAndBorrower] = Form.useForm()
-    const [saleInfoForm] = Form.useForm()
     const [cmaInfoForm] = Form.useForm()
 
     const [isLoading, setIsLoading] = useState(true)
@@ -82,70 +81,62 @@ const singlePropertyInfo = () => {
                         <TabPane tab="Property Details" key="propertyInfoTab" style={{ overflow: "unset" }}>
 
 
-            <Row gutter={15} wrap={true} justify="center">
-                <Col span={23}>
+                        <Row gutter={15} wrap={true} justify="center">
+                            <Col span={23}>
                                 <Collapse defaultActiveKey={['1']} expandIconPosition="right" className="site-collapse-custom-collapse">
 
-                        <Panel header="Property Details (Building, Land, Assessment)" key="1" className="site-collapse-custom-panel" >
+                                    <Panel header="Property Details (Building, Land, Assessment)" key="1" className="site-collapse-custom-panel" >
                                         <PropertyInfoComponent propertyInfo={propertyInfoForm} data={requestedData} />
                                     </Panel>
 
-                        <Panel header="Mortgage, Other Liens" key="2" className="site-collapse-custom-panel" >
+                                    <Panel header="Mortgage, Other Liens" key="2" className="site-collapse-custom-panel" >
                                         <MortgageInfoComponent data={requestedData} />
                                     </Panel>
 
 
 
-                        <Panel header="Owner & Borrower Info" key="3" className="site-collapse-custom-panel" >
+                                    <Panel header="Owner & Borrower Info" key="3" className="site-collapse-custom-panel" >
                                         <OwnerInfoComponent ownerAndBorrower={ownerAndBorrower} data={requestedData} />
                                     </Panel>
 
 
 
 
-                        <Panel header="Sale Details or Foreclosure Info" key="4" className="site-collapse-custom-panel" >
-                            {/* iterate sale info thorugh loop*/}
-                                        <Collapse defaultActiveKey={['30']}
-                                // onChange={callback}
+                                    <Panel header="Sale Details or Foreclosure Info" key="4" className="site-collapse-custom-panel" >
+
+                                        {/* iterate sale info thorugh loop*/}
+                                        {/* <Collapse defaultActiveKey={['30']}
+                                            // onChange={callback}
                                             expandIconPosition="right"
 
                                             className="site-collapse-custom-collapse">
 
                                             <Panel header="Sale Date 1" key="30" className="site-collapse-custom-panel" >
 
-                                                {requestedData.saleinfo.length === 0 &&
+                                                <SaleInfoComponent />
 
-                                                    <SaleInfoComponent saleInfo={saleInfoForm} />
-                                                }
 
-                                                {requestedData.saleinfo.length !== 0 &&
-                                                    <>
-                                                        {requestedData.saleinfo.map((data, inx) => {
-                                                            return (
-                                                                <SaleInfoComponent key={inx} data={data} inx={inx} />
+                                            </Panel>
 
-                                                            )
-                                                        })}
+                                        </Collapse> */}
 
-                                                    </>
-                                                }
+                                        <SaleInfoComponent />
 
-                                </Panel>
 
-                                        </Collapse>
-                        </Panel>
 
-                    </Collapse>
+                                    </Panel>
 
-                </Col>
-            </Row>
-                </TabPane>
+                                </Collapse>
+
+                            </Col>
+                        </Row>
+                    </TabPane>
 
 
 
                     <TabPane tab="CMA/ARV" key="cmaArv" style={{ overflow: "unset" }} >
-                    <Row gutter={15} wrap={true} justify="center">
-                        <Col span={23}>
+                        <Row gutter={15} wrap={true} justify="center">
+                            <Col span={23}>
 
                                 <Collapse defaultActiveKey={['60']}
                                     // onChange={callback}
@@ -158,11 +149,11 @@ const singlePropertyInfo = () => {
                                     </Panel>
                                 </Collapse>
 
-                        </Col>
+                            </Col>
                         </Row>
-                </TabPane>
+                    </TabPane>
 
-            </Tabs>
+                </Tabs>
 
 
                 <div className="bottomPart" style={{ paddingBottom: "30px" }}> </div>

@@ -2,16 +2,16 @@ import React from 'react'
 import { Col, Form, DatePicker } from 'antd'
 
 
-const DateField = ({ label, name, placeholder, initVal }) => {
+const DynamicDateField = ({ label, placeholder, fieldname, name, fieldKey, ...restField }) => {
     const { Item } = Form
 
     return (
         <Col xs={12} sm={8} md={6} lg={4} >
-            <Item label={label} name={name} initialValue={initVal} >
+            <Item {...restField} label={label} name={[name, fieldname]}  >
                 <DatePicker placeholder={placeholder} style={{ margin: "0px", width: "100%" }} />
             </Item>
         </Col>
     )
 }
 
-export default DateField
+export default DynamicDateField;

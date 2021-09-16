@@ -87,14 +87,14 @@ const SingleResult = (props) => {
                             <li>DCA By Date: {dcaDate} </li>
                             <li>Third Check By : {info.thirdComp.thirdDCA} </li>
                             <li>Third Check Date: {thirdDcaDate} </li>
-                            <li>Opening Bid : {lastSaleinfo.firstBidderInfo && lastSaleinfo.firstBidderInfo.amountOfBid} </li>
+                            <li>Opening Bid : {lastSaleinfo.amountOfBid} </li>
                             <li>County Value: {info.countyValue}</li>
                             <li>Zestimates: {info.zestimate}</li>
                             <li>CMA: {firstMortgageInfo.cmaArv}</li>
                             <li>NOS By: {lastSaleinfo.nosName && lastSaleinfo.nosName} </li>
                             <li>NOS By Date: {lastSaleinfo.nosDate && lastSaleinfo.nosDate} </li>
-                            <li>Image By: {lastSaleinfo.firstBidderInfo.imby && lastSaleinfo.firstBidderInfo.imby}</li>
-                            <li>Image By Date: {lastSaleinfo.firstBidderInfo.imByDate && lastSaleinfo.firstBidderInfo.imByDate}</li>
+                            <li>Image By: {lastSaleinfo.fimby && lastSaleinfo.fimby}</li>
+                            <li>Image By Date: {lastSaleinfo.fimByDate && lastSaleinfo.fimByDate}</li>
                             <li>1st Buy It: pending...</li>
                             <li>2nd Buy It: pending...</li>
                         </ul>

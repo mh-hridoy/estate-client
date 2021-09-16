@@ -4,24 +4,41 @@ import SaleInfo from './utilsComp/SaleInfo';
 import FirstBidder from './utilsComp/FirstBidder';
 import UbBidder from './utilsComp/UbBidder';
 import { DeleteOutlined } from '@ant-design/icons'
+import moment from 'moment'
 
-
-const SaleInfoComponent = ({ data, inx }) => {
+const SaleInfoComponent = ({ data }) => {
     const { Panel } = Collapse
     const [saleInfoForm] = Form.useForm()
     const { Item, List } = Form
 
-    const genExtra = (remove) => (
-        <DeleteOutlined
-            onClick={event => {
-                // If you don't want click extra trigger collapse, you can prevent this:
-                event.stopPropagation();
-                remove()
-            }}
-        />
-    );
 
-    const saleInfoHandler = (values) => { }
+    const saleInfoHandler = (values) => {
+        console.log(values)
+
+    }
+
+    //we can follow the same method for the submit value
+    data.length !== 0 && data.map((saleInfo) => {
+        saleInfo.saleDate = saleInfo.saleDate && moment(saleInfo.moment)
+        saleInfo.datePulled = saleInfo.datePulled && moment(saleInfo.datePulled)
+        saleInfo.imByDate = saleInfo.imByDate && moment(saleInfo.imByDate)
+        saleInfo.nosDate = saleInfo.nosDate && moment(saleInfo.nosDate)
+        saleInfo.auctionDate = saleInfo.auctionDate && moment(saleInfo.auctionDate)
+        saleInfo.bidDate = saleInfo.bidDate && moment(saleInfo.bidDate)
+        saleInfo.ldub = saleInfo.ldub && moment(saleInfo.ldub)
+        saleInfo.dateOfReport = saleInfo.dateOfReport && moment(saleInfo.dateOfReport)
+        saleInfo.fimByDate = saleInfo.fimByDate && moment(saleInfo.fimByDate)
+        saleInfo.fnosDate = saleInfo.fnosDate && moment(saleInfo.fnosDate)
+        saleInfo.otherBidderInfo.length !== 0 && saleInfo.otherBidderInfo.map((ub) => {
+            ub.bidDate = ub.bidDate && moment(ub.bidDate)
+            ub.lastDateForNextUb = ub.lastDateForNextUb && moment(ub.lastDateForNextUb)
+            ub.dateOfFilling = ub.dateOfFilling && moment(ub.dateOfFilling)
+            return ub
+        })
+
+        return saleInfo
+    })
+
 
 
     return (
@@ -30,7 +47,7 @@ const SaleInfoComponent = ({ data, inx }) => {
 
 
             {/* making dynamic form  */}
-            <Form form={saleInfoForm} layout="vertical" className={styles.searchForm} onFinish={saleInfoHandler} initialValues={{ saleinfo: [""] }}  >
+            <Form form={saleInfoForm} layout="vertical" className={styles.searchForm} onFinish={saleInfoHandler} initialValues={{ saleinfo: data.length !== 0 ? data : [""] }}  >
 
                 <Col span={24} >
                     <List name="saleinfo" >
@@ -38,12 +55,11 @@ const SaleInfoComponent = ({ data, inx }) => {
                             <>
                                 {fields.map(({ key, name, fieldKey, ...restField }) => (
                                     <Item key={key} {...restField}  >
-                                        Okay Im here
                                         <Collapse expandIconPosition="right"
                                             destroyInactivePanel
                                             className="site-collapse-custom-collapse"
                                         >
-                                            <Panel header={`Sale Date ${key + 1}`} key={key + 1} className="site-collapse-custom-panel"   >
+                                            <Panel header={`Sale Date ${key + 1}`} key={key + 1} className="site-collapse-custom-panel" style={{ margin: "0px" }}   >
                                                 <Row gutter={20} wrap={true} justify="start" >
                                                     <Col span={24} style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }} >
                                                         <Divider orientation="center"> Sale Info </Divider>
@@ -84,7 +100,7 @@ const SaleInfoComponent = ({ data, inx }) => {
 
                                                     <Col span={24} >
 
-                                                        <UbBidder name={name} />
+                                                        <UbBidder name={name} data={data.otherBidderInfo} />
 
                                                     </Col>
 
@@ -102,6 +118,15 @@ const SaleInfoComponent = ({ data, inx }) => {
 
 
                     </List>
+                </Col>
+
+                <Col xs={4} style={{ position: "sticky", bottom: "20px" }}>
+                    <Button
+                        type="primary"
+                        htmlType="submit"
+                        style={{ width: "160px", marginTop: "20px", borderRadius: "15px" }}>
+                        Save Property Data
+                    </Button>
                 </Col>
             </Form>
 

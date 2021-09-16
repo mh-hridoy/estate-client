@@ -56,6 +56,8 @@ Store, localstorage, Protected routes, logout, menuItem....//Partially completed
 //next
 Fetch Single page Data//
 fix dynamc array field name and iD.//
+//need to update the endpoint with put.
+//close two seperate endpoints for single bidder and sale info/
 //limit getProperties endpoints.//
 //create another endpoints for the overview on result page.//
 //craete seperate endpoints for the unAuthorized request for property info & add there some data for better SEO.//

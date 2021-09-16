@@ -4,60 +4,70 @@ import DynamicNumberField from './DynamicNumberField'
 import DynamicDateField from './DynamicDateField'
 import { UploadOutlined } from '@ant-design/icons'
 import DynamicInputField from './DynamicInputField'
+import { useState } from 'react'
 
 const FirstBidder = ({ name, fieldKey, ...restField }) => {
     const { TextArea } = Input
     const { Item } = Form
+    const [bConfirmVal, setBConfirmVal] = useState()
+    const [bUbVal, setBUbVal] = useState()
+
+    const bConfirmValHandler = (e) => {
+        setBConfirmVal(e.target.checked)
+
+    }
+    const bUbValHandler = (e) => {
+        setBUbVal(e.target.checked)
+    }
 
     return (
         <>
             <Divider orientation="center">Bidder - Trustee Site</Divider>
             <Col span={24} style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
 
-                <DynamicInputField label="Name of Bidder"  {...restField} name={[name, "nameOfBidder"]} />
-                <DynamicNumberField label="Bid Amount"  {...restField} name={[name, "bidAmount"]} />
+                <DynamicInputField label="Name of Bidder"  {...restField} name={name} fieldname="nameOfBidder" />
+                <DynamicNumberField label="Bid Amount"  {...restField} name={name} fieldname="bidAmount" />
             </Col>
 
             <Divider orientation="left">Bidder
             </Divider>
             <Col span={24} style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
 
-                <DynamicInputField label="Name of Purchaser" {...restField} name={[name, "nameOfPurchaser"]} />
-                <DynamicNumberField label="Amount of Bid"  {...restField} name={[name, "amountOfBid"]} />
-                <DynamicDateField label="Bid Date" {...restField} name={[name, "bidDate"]} />
-                <DynamicDateField label="LDTUB" {...restField} name={[name, "ldub"]} />
+                <DynamicInputField label="Name of Purchaser" {...restField} name={name} fieldname="nameOfPurchaser" />
+                <DynamicNumberField label="Amount of Bid"  {...restField} name={name} fieldname="amountOfBid" />
+                <DynamicDateField label="Bid Date" {...restField} name={name} fieldname="bidDate" />
+                <DynamicDateField label="LDTUB" {...restField} name={name} fieldname="ldub" />
 
-                <DynamicNumberField label="Min. Amount of Next UB" />
 
-                <DynamicNumberField label="Deposit Required to Upset"  {...restField} name={[name, "depositRequiredToIpset"]} />
-                <DynamicInputField label="Address" {...restField} name={[name, "address"]} />
-                <DynamicInputField label="Phone" {...restField} name={[name, "phone"]} />
-                <DynamicInputField label="Email" {...restField} name={[name, "email"]} />
-                <DynamicInputField label="Fax" {...restField} name={[name, "fax"]} />
-                <DynamicDateField label="Date of Report" {...restField} name={[name, "dateOfReport"]} />
-                <DynamicInputField label="Name of Mortgagee" {...restField} name={[name, "nameOfMortgage"]} />
-                <DynamicInputField label="Cryer"  {...restField} name={[name, "cryer"]} />
-                <DynamicInputField label="IM By"  {...restField} name={[name, "imby"]} />
-                <DynamicDateField label="IM By Date" {...restField} name={[name, "fimByDate"]} />
+                <DynamicNumberField label="Deposit Required to Upset"  {...restField} name={name} fieldname="depositRequiredToIpset" />
+                <DynamicInputField label="Address" {...restField} name={name} fieldname="address" />
+                <DynamicInputField label="Phone" {...restField} name={name} fieldname="phone" />
+                <DynamicInputField label="Email" {...restField} name={name} fieldname="email" />
+                <DynamicInputField label="Fax" {...restField} name={name} fieldname="fax" />
+                <DynamicDateField label="Date of Report" {...restField} name={name} fieldname="dateOfReport" />
+                <DynamicInputField label="Name of Mortgagee" {...restField} name={name} fieldname="nameOfMortgage" />
+                <DynamicInputField label="Cryer"  {...restField} name={name} fieldname="cryer" />
+                <DynamicInputField label="IM By"  {...restField} name={name} fieldname="imby" />
+                <DynamicDateField label="IM By Date" {...restField} name={name} fieldname="fimByDate" />
 
                 <Col xs={12} sm={8} md={6} lg={4} style={{ height: "65px" }} >
-                    <Item  {...restField} name={[name, "bidConfirmed"]} >
-                        <Checkbox>Bid Confirmed</Checkbox>
+                    <Item  {...restField} valuePropName="checked" name={[name, "bidConfirmed"]} >
+                        <Checkbox onChange={bConfirmValHandler} checked={bConfirmVal} >Bid Confirmed</Checkbox>
                     </Item>
                 </Col>
 
                 <Col xs={12} sm={8} md={6} lg={4} style={{ height: "65px" }} >
-                    <Item  {...restField} name={[name, "bidUpset"]} >
-                        <Checkbox>Bid Upset</Checkbox>
+                    <Item  {...restField} valuePropName="checked" name={[name, "bidUpset"]} >
+                        <Checkbox onChange={bUbValHandler} checked={bUbVal}  >Bid Upset</Checkbox>
                     </Item>
                 </Col>
 
-                <DynamicInputField label="Auction" {...restField} name={[name, "auction"]} />
-                <DynamicInputField label="NOS Name" {...restField} name={[name, "fnosName"]} />
-                <DynamicDateField label="NOS By Date" {...restField} name={[name, "fnosDate"]} />
+                <DynamicInputField label="Auction" {...restField} name={name} fieldname="auction" />
+                <DynamicInputField label="NOS Name" {...restField} name={name} fieldname="fnosName" />
+                <DynamicDateField label="NOS By Date" {...restField} name={name} fieldname="fnosDate" />
 
                 <Col xs={24} >
-                    <Item label="Notes :"  {...restField} name={[name, "notes"]} >
+                    <Item label="Notes :"  {...restField} name={[name, "notes"]}  >
                         <TextArea rows={4} style={{ margin: "0px" }} />
                     </Item>
                 </Col>

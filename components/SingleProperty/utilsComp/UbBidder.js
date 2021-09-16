@@ -4,15 +4,32 @@ import styles from '../../../styles/search.module.css'
 import DynamicNumberField from './DynamicNumberField';
 import { UploadOutlined } from '@ant-design/icons'
 import DynamicDateField from './DynamicDateField';
+import { useState } from 'react';
 
-const UbBidder = ({ name }) => {
+const UbBidder = ({ data, name }) => {
     const { TextArea } = Input
     const { Item, List } = Form
     const { Panel } = Collapse
+    const [dCscVal, setdCscVal] = useState()
+    const [aCscVal, setaCscVal] = useState()
+    const [clerkVal, setclerkVal] = useState()
+
+    const dCscHandler = (e) => {
+        setdCscVal(e.target.checked)
+    }
+
+    const aCscHandler = (e) => {
+        setaCscVal(e.target.checked)
+    }
+
+    const clerkValHandler = (e) => {
+        setclerkVal(e.target.checked)
+    }
+
 
     return (
         <>
-            <List name={[name, "bidderInfo"]} initialValue={[""]} >
+            <List name={[name, "otherBidderInfo"]}>
 
                 {(fields, { add, remove }) => (
                     <>
@@ -35,12 +52,12 @@ const UbBidder = ({ name }) => {
                                         <Row gutter={20} wrap={true} justify="start" >
                                             <Col span={24} style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
 
-                                                <DynamicInputField label="Name of Upset Bidder" {...restField} name={[name, "nameOfUpsetBidder"]} />
-                                                <DynamicInputField label="Address Of Upset Bidder"  {...restField} name={[name, "addressOfUpsetBidder"]} />
-                                                <DynamicInputField label="City Of Upset Bidder"  {...restField} name={[name, "cityOfUpsetBidder"]} />
-                                                <DynamicNumberField label="Upset bidder Zipcode" {...restField} name={[name, "upsetBidderZipCode"]} />
-                                                <DynamicInputField label="Phone" {...restField} name={[name, "phone"]} />
-                                                <DynamicInputField label="E-mail"  {...restField} name={[name, "email"]} />
+                                                <DynamicInputField label="Name of Upset Bidder" {...restField} name={name} fieldname="nameOfUpsetBidder" />
+                                                <DynamicInputField label="Address Of Upset Bidder"  {...restField} name={name} fieldname="addressOfUpsetBidder" />
+                                                <DynamicInputField label="City Of Upset Bidder"  {...restField} name={name} fieldname="cityOfUpsetBidder" />
+                                                <DynamicNumberField label="Upset bidder Zipcode" {...restField} name={name} fieldname="upsetBidderZipCode" />
+                                                <DynamicInputField label="Phone" {...restField} name={name} fieldname="phone" />
+                                                <DynamicInputField label="E-mail"  {...restField} name={name} fieldname="email" />
                                             </Col>
 
                                             <Divider orientation="left">UPST Report
@@ -48,17 +65,17 @@ const UbBidder = ({ name }) => {
                                             </Divider>
                                             <Col span={24} style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
 
-                                                <DynamicNumberField label="Amount of New Upset Bid"  {...restField} name={[name, "amountOfBid"]} />
-                                                <DynamicDateField label="Bid Date"  {...restField} name={[name, "bidDate"]} />
-                                                <DynamicDateField label="LDTUB"  {...restField} name={[name, "lastDateForNextUb"]} />
-                                                <DynamicNumberField label="Deposit with the Clerk"  {...restField} name={[name, "depositWithTheClerk"]} />
-                                                <DynamicNumberField label="Min. Amount of Next UB"  {...restField} name={[name, "minAmountOfNextUb"]} />
-                                                <DynamicInputField label="Name of Attorney or Agent"  {...restField} name={[name, "nameOfAttorneyOrAgent"]} />
-                                                <DynamicInputField label="Address of Attorney or Agent"  {...restField} name={[name, "addressofAttorneyOrAgent"]} />
-                                                <DynamicInputField label="City of Attorney or Agent"   {...restField} name={[name, "cityOfAttorneyOrAgent"]} />
-                                                <DynamicNumberField label="Zipcode" {...restField} name={[name, "zipCode"]} />
-                                                <DynamicNumberField label="Phone Number" {...restField} name={[name, "phoneNumber"]} />
-                                                <DynamicDateField label="Date of Filling"  {...restField} name={[name, "dateOfFilling"]} />
+                                                <DynamicNumberField label="Amount of New Upset Bid"  {...restField} name={name} fieldname="amountOfBid" />
+                                                <DynamicDateField label="Bid Date"  {...restField} name={name} fieldname="bidDate" />
+                                                <DynamicDateField label="LDTUB"  {...restField} name={name} fieldname="lastDateForNextUb" />
+                                                <DynamicNumberField label="Deposit with the Clerk"  {...restField} name={name} fieldname="depositWithTheClerk" />
+                                                <DynamicNumberField label="Min. Amount of Next UB"  {...restField} name={name} fieldname="minAmountOfNextUb" />
+                                                <DynamicInputField label="Name of Attorney or Agent"  {...restField} name={name} fieldname="nameOfAttorneyOrAgent" />
+                                                <DynamicInputField label="Address of Attorney or Agent"  {...restField} name={name} fieldname="addressofAttorneyOrAgent" />
+                                                <DynamicInputField label="City of Attorney or Agent"   {...restField} name={name} fieldname="cityOfAttorneyOrAgent" />
+                                                <DynamicNumberField label="Zipcode" {...restField} name={name} fieldname="zipCode" />
+                                                <DynamicInputField label="Phone Number" {...restField} name={name} fieldname="phoneNumber" />
+                                                <DynamicDateField label="Date of Filling"  {...restField} name={name} fieldname="dateOfFilling" />
 
                                                 <Col xs={24} >
                                                     <Item label="Notes :" {...restField} name={[name, "Notes"]} >
@@ -67,27 +84,27 @@ const UbBidder = ({ name }) => {
                                                 </Col>
 
 
-                                                <DynamicInputField label="IM By"  {...restField} name={[name, "imby"]} />
-                                                <DynamicDateField label="IM By Date"  {...restField} name={[name, "imByDate"]} />
-                                                <DynamicInputField label="Auction" {...restField} name={[name, "auction"]} />
-                                                <DynamicInputField label="NOS Name" {...restField} name={[name, "nosName"]} />
-                                                <DynamicInputField label="NOS By Date" {...restField} name={[name, "nosDate"]} />
+                                                <DynamicInputField label="IM By"  {...restField} name={name} fieldname="imby" />
+                                                <DynamicDateField label="IM By Date"  {...restField} name={name} fieldname="imByDate" />
+                                                <DynamicInputField label="Auction" {...restField} name={name} fieldname="auction" />
+                                                <DynamicInputField label="NOS Name" {...restField} name={name} fieldname="nosName" />
+                                                <DynamicInputField label="NOS By Date" {...restField} name={name} fieldname="nosDate" />
 
                                                 <Col xs={12} sm={8} md={6} lg={4} style={{ height: "65px" }} >
-                                                    <Item  {...restField} name={[name, "deputyCSC"]} >
-                                                        <Checkbox >Deputy CSC</Checkbox>
+                                                    <Item  {...restField} valuePropName="checked" name={[name, "deputyCSC"]} >
+                                                        <Checkbox onChange={dCscHandler} checked={dCscVal} >Deputy CSC</Checkbox>
                                                     </Item>
                                                 </Col>
 
                                                 <Col xs={12} sm={8} md={6} lg={4} style={{ height: "65px" }} >
-                                                    <Item {...restField} name={[name, "assistantCSC"]} >
-                                                        <Checkbox >Assistant CSC</Checkbox>
+                                                    <Item {...restField} valuePropName="checked" name={[name, "assistantCSC"]} >
+                                                        <Checkbox onChange={aCscHandler} checked={aCscVal} >Assistant CSC</Checkbox>
                                                     </Item>
                                                 </Col>
 
                                                 <Col xs={12} sm={8} md={6} lg={4} style={{ height: "65px" }} >
-                                                    <Item {...restField} name={[name, "clerkOfSuperiorCourt"]} >
-                                                        <Checkbox >Clerk Of Superior Court</Checkbox>
+                                                    <Item {...restField} valuePropName="checked" name={[name, "clerkOfSuperiorCourt"]} >
+                                                        <Checkbox onChange={clerkValHandler} checked={clerkVal} >Clerk Of Superior Court</Checkbox>
                                                     </Item>
                                                 </Col>
 

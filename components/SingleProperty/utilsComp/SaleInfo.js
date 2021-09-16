@@ -44,8 +44,6 @@ const SaleInfo = ({ name, fieldKey, ...restField }) => {
             <DynamicInputWithSuffix label="Auction.Com URL"   {...restField} name={name} fieldname="auctionUrl" />
             <DynamicDateField label="Date Pulled"  {...restField} name={name} fieldname="auctionDate" />
 
-            <DynamicInputField label="Auction By" />
-            <DynamicDateField label="Auction By Date" />
 
             <Col span={24} style={{ width: "100%", display: "flex", flexDirection: "column", flexWrap: "wrap" }} >
 

@@ -7,7 +7,7 @@ const NumberField = ({ label, htmlFor, name, placeholder, id, initVal }) => {
 
     return (
         <Col xs={12} sm={8} md={6} lg={4}  >
-            <Item label={label} name={name} initialValue={initVal} >
+            <Item label={label} name={name} initialValue={initVal}  >
                 <InputNumber placeholder={placeholder} style={{ margin: "0px", width: "100%" }} />
             </Item>
         </Col>

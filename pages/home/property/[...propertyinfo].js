@@ -104,24 +104,7 @@ const singlePropertyInfo = () => {
 
                                     <Panel header="Sale Details or Foreclosure Info" key="4" className="site-collapse-custom-panel" >
 
-                                        {/* iterate sale info thorugh loop*/}
-                                        {/* <Collapse defaultActiveKey={['30']}
-                                            // onChange={callback}
-                                            expandIconPosition="right"
-
-                                            className="site-collapse-custom-collapse">
-
-                                            <Panel header="Sale Date 1" key="30" className="site-collapse-custom-panel" >
-
-                                                <SaleInfoComponent />
-
-
-                                            </Panel>
-
-                                        </Collapse> */}
-
-                                        <SaleInfoComponent />
-
+                                        <SaleInfoComponent data={requestedData.saleinfo} />
 
 
                                     </Panel>
@@ -145,7 +128,7 @@ const singlePropertyInfo = () => {
                                 >
 
                                     <Panel header="CMA/ARV Recommendations" key="60" className="site-collapse-custom-panel" >
-                                        <CmaArvComponent firstComp={requestedData.firstComp} secondComp={requestedData.secondComp} thirdComp={requestedData.thirdComp} cmaInfoForm={cmaInfoForm} />
+                                        <CmaArvComponent cmaInfoForm={cmaInfoForm} data={requestedData} />
                                     </Panel>
                                 </Collapse>
 

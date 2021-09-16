@@ -107,8 +107,8 @@ const PropertyOverview = (props) => {
                             <li>Sale Time : {lastSaleinfo.saleTime}</li>
                             <li>Trustee Name : {lastSaleinfo.Trustee}</li>
                             <li>NOS By Name : {lastSaleinfo.nosName}</li>
-                            <li>OB Amount : {lastSaleinfo.firstBidderInfo.amountOfBid}</li>
-                            <li>OB By : {lastSaleinfo.firstBidderInfo.nameOfPurchaser}</li>
+                            <li>OB Amount : {lastSaleinfo.amountOfBid}</li>
+                            <li>OB By : {lastSaleinfo.nameOfPurchaser}</li>
                             <li>Leading/Winning Bidder : {lastBidder && lastBidder.nameOfUpsetBidder}</li>
                             <li>Leading/Winning Bid Amount : {lastBidder && lastBidder.amountOfBid}</li>
                             <li>1st Buy it by : Pending...</li>

@@ -6,22 +6,10 @@ import NumberField from "./NumberField"
 import DateField from "./DateField"
 import { UploadOutlined } from '@ant-design/icons'
 import { useState } from "react"
-// import { mortgageInfoVal } from '../../../utils/mortgageInitVal'
 
 
 const SingleMortgage = ({ formName, viewAmort, viewModA, viewSubA, fclView, data, onFinish, isLoading, name }) => {
 
-    // const initVal = mortgageInfoVal(data)
-
-    // data.dateRecorded = data.dateRecorded && moment(data.dateRecorded)
-    // data.maturityDate = data.maturityDate && moment(data.maturityDate)
-    // data.strDate = data.strDate && moment(data.strDate)
-    // data.modADate = data.modADate && moment(data.modADate)
-    // data.modAmaturityDate = data.modAmaturityDate && moment(data.modAmaturityDate)
-    // data.subADate = data.subADate && moment(data.subADate)
-    // data.trDeedDate = data.trDeedDate && moment(data.trDeedDate)
-
-    // console.log(data)
 
 
     const [fLienVal, setfLienVal] = useState(false)
@@ -47,11 +35,6 @@ const SingleMortgage = ({ formName, viewAmort, viewModA, viewSubA, fclView, data
 
     const { Item } = Form
 
-    //declare valriables for checked comp.
-
-    // const mortgageHandler = (values) => {
-    //     console.log(values)
-    // }
 
 
     const fLienFCL = (e) => {
@@ -170,18 +153,18 @@ const SingleMortgage = ({ formName, viewAmort, viewModA, viewSubA, fclView, data
             <div className="details" style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
                     <InputField label="Lender" name={[name, "lender"]} />
                     <NumberField label="Lien Amount" name={[name, "lienAmount"]} />
-                    {/* <DateField label="Date Recorded" name={[name, "dateRecorded"]} /> */}
+                    <DateField label="Date Recorded" name={[name, "dateRecorded"]} />
                     <InputField label="Instrument #" name={[name, "instrument"]} />
                     <InputField label="DT Book/Page" name={[name, "dtBookPage"]} />
                     <InputField label="Assignment BP" name={[name, "assignmentBookPage"]} />
                     <InputField label="Loan Type" name={[name, "loanType"]} />
                     <InputField label="Loan Term" name={[name, "loanTerm"]} />
-                    {/* <DateField label="Maturity Date" name={[name, "maturityDate"]} /> */}
+                    <DateField label="Maturity Date" name={[name, "maturityDate"]} />
                     <InputField label="Right to Cure" name={[name, "rightToCure"]} />
                     <NumberField label="Trustee Fees" name={[name, "tursteeFee"]} />
                     <InputField label="Trustee" name={[name, "trustee"]} />
                     <InputField label="STR Book/Page" name={[name, "strBookPage"]} />
-                    {/* <DateField label="STR Date" name={[name, "strDate"]} /> */}
+                    <DateField label="STR Date" name={[name, "strDate"]} />
                     <NumberField label="Loan Estimated Balance" name={[name, "loanEstimatedBalance"]} />
                     <NumberField label="Est Late Payments & Fees" name={[name, "estLatePaymentAndFees"]} />
                     <NumberField label="Total Estimated Debt w/ Late Payments & Attorney Fees $" name={[name, "totalEstimatedDebt"]} />
@@ -214,10 +197,10 @@ const SingleMortgage = ({ formName, viewAmort, viewModA, viewSubA, fclView, data
                 {modAViewVal &&
                     <div style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
                         <InputField label="Modification Book/Page" name={[name, "modABookPage"]} />
-                        {/* <DateField label="Modification Date" name={[name, "modADate"]} /> */}
+                        <DateField label="Modification Date" name={[name, "modADate"]} />
                         <NumberField label="Modified Lien Amount" name={[name, "modALienAmount"]} />
                         <NumberField label="Modified Loan Term" name={[name, "modALoanTerm"]} />
-                        {/* <DateField label="Modification Maturity Date" name={[name, "modAmaturityDate"]} /> */}
+                        <DateField label="Modification Maturity Date" name={[name, "modAmaturityDate"]} />
                         <NumberField label="Annual Interest %" name={[name, "annualInterestRate"]} />
                         <NumberField label="Monthly Payment $" name={[name, "monthlyPayment"]} />
                         <NumberField label="Loan Estimated Balance" name={[name, "loanEstBalance"]} />
@@ -231,7 +214,7 @@ const SingleMortgage = ({ formName, viewAmort, viewModA, viewSubA, fclView, data
                 {subAViewVal &&
                     <div style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
                         <InputField label="SubA Book/Page" name={[name, "subABookPage"]} />
-                        {/* <DateField label="SubA Date" name={[name, "subADate"]} /> */}
+                        <DateField label="SubA Date" name={[name, "subADate"]} />
                         <InputField label="Lien Position" name={[name, "lienPosition"]} />
 
                     </div>}
@@ -240,7 +223,7 @@ const SingleMortgage = ({ formName, viewAmort, viewModA, viewSubA, fclView, data
                 {FResultsVal &&
                     <div style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
                         <InputField label="TRDeed Instrument #" name={[name, "trDeedInstrument"]} />
-                        {/* <DateField label="TRDeed Date" name={[name, "trDeedDate"]} /> */}
+                        <DateField label="TRDeed Date" name={[name, "trDeedDate"]} />
                         <InputField label="Winning Bidder" name={[name, "winningBidder"]} />
                         <InputField label="Winning Bid" name={[name, "winningbid"]} />
                     </div>}
@@ -253,11 +236,11 @@ const SingleMortgage = ({ formName, viewAmort, viewModA, viewSubA, fclView, data
 
                         <InputField label="File Name" name="sfLienFile" />
 
-                        {/* <Col xs={12} sm={8} md={4} >
+                        <Col xs={12} sm={8} md={4} >
                             <Item label="Date : " name="sfLienFileDate"  >
                                 <DatePicker placeholder="Select Date" style={{ width: "100%" }} />
                         </Item>
-                    </Col> */}
+                        </Col>
 
 
                     <Col xs={12} sm={8} md={4} style={{ paddingTop: "10px" }} >

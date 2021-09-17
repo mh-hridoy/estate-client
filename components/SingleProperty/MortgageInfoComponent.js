@@ -136,6 +136,32 @@ const MortgageInfoComponent = ({ data }) => {
 
     const { isLoading: isTMloading } = useHttp(isTLoading, `http://localhost:5000/api/update-property/${propertyId}`, "put", thirdMortgageVal)
 
+    const firstMData = data.firstmortgageInfo
+    firstMData.dateRecorded = firstMData.dateRecorded && moment(firstMData.dateRecorded)
+    firstMData.maturityDate = firstMData.maturityDate && moment(firstMData.maturityDate)
+    firstMData.strDate = firstMData.strDate && moment(firstMData.strDate)
+    firstMData.modADate = firstMData.modADate && moment(firstMData.modADate)
+    firstMData.modAmaturityDate = firstMData.modAmaturityDate && moment(firstMData.modAmaturityDate)
+    firstMData.subADate = firstMData.subADate && moment(firstMData.subADate)
+    firstMData.trDeedDate = firstMData.trDeedDate && moment(firstMData.trDeedDate)
+
+    const secondMData = data.secondMortgageInfo
+    secondMData.dateRecorded = secondMData.dateRecorded && moment(secondMData.dateRecorded)
+    secondMData.maturityDate = secondMData.maturityDate && moment(secondMData.maturityDate)
+    secondMData.strDate = secondMData.strDate && moment(secondMData.strDate)
+    secondMData.modADate = secondMData.modADate && moment(secondMData.modADate)
+    secondMData.modAmaturityDate = secondMData.modAmaturityDate && moment(secondMData.modAmaturityDate)
+    secondMData.subADate = secondMData.subADate && moment(secondMData.subADate)
+    secondMData.trDeedDate = secondMData.trDeedDate && moment(secondMData.trDeedDate)
+
+    const thirdMData = data.thirdMortgageInfo
+    thirdMData.dateRecorded = thirdMData.dateRecorded && moment(thirdMData.dateRecorded)
+    thirdMData.maturityDate = thirdMData.maturityDate && moment(thirdMData.maturityDate)
+    thirdMData.strDate = thirdMData.strDate && moment(thirdMData.strDate)
+    thirdMData.modADate = thirdMData.modADate && moment(thirdMData.modADate)
+    thirdMData.modAmaturityDate = thirdMData.modAmaturityDate && moment(thirdMData.modAmaturityDate)
+    thirdMData.subADate = thirdMData.subADate && moment(thirdMData.subADate)
+    thirdMData.trDeedDate = thirdMData.trDeedDate && moment(thirdMData.trDeedDate)
 
     return (
         <>
@@ -167,17 +193,17 @@ const MortgageInfoComponent = ({ data }) => {
                         >
 
                             <Panel header="First Lien" key="10">
-                                <SingleMortgage formName={firstMortgageForm} viewAmort={data.firstmortgageInfo.isAmortizationView} viewModA={data.firstmortgageInfo.isModA} viewSubA={data.firstmortgageInfo.isSubA} fclView={data.firstmortgageInfo.isForeclosureResult} data={{ firstmortgageInfo: data.firstmortgageInfo }} onFinish={firstMortgageHandler}
+                                <SingleMortgage formName={firstMortgageForm} viewAmort={data.firstmortgageInfo.isAmortizationView} viewModA={data.firstmortgageInfo.isModA} viewSubA={data.firstmortgageInfo.isSubA} fclView={data.firstmortgageInfo.isForeclosureResult} data={{ firstmortgageInfo: firstMData }} onFinish={firstMortgageHandler}
                                     isLoading={isFMloading}
                                     name="firstmortgageInfo" />
                             </Panel>
 
                             <Panel header="Second Lien" key="11">
-                                <SingleMortgage formName={secondMortgageForm} viewAmort={data.secondMortgageInfo.isAmortizationView} viewModA={data.secondMortgageInfo.isModA} viewSubA={data.secondMortgageInfo.isSubA} fclView={data.secondMortgageInfo.isForeclosureResult} data={{ secondMortgageInfo: data.secondMortgageInfo }} onFinish={secondMortgageHandler} isLoading={isSMloading} name="secondMortgageInfo" />
+                                <SingleMortgage formName={secondMortgageForm} viewAmort={data.secondMortgageInfo.isAmortizationView} viewModA={data.secondMortgageInfo.isModA} viewSubA={data.secondMortgageInfo.isSubA} fclView={data.secondMortgageInfo.isForeclosureResult} data={{ secondMortgageInfo: secondMData }} onFinish={secondMortgageHandler} isLoading={isSMloading} name="secondMortgageInfo" />
                             </Panel>
 
                             <Panel header="Third Lien" key="12">
-                                <SingleMortgage formName={thirdMortgageForm} viewAmort={data.thirdMortgageInfo.isAmortizationView} viewModA={data.thirdMortgageInfo.isModA} viewSubA={data.thirdMortgageInfo.isSubA} fclView={data.thirdMortgageInfo.isForeclosureResult} data={{ thirdMortgageInfo: data.thirdMortgageInfo }} onFinish={thirdMortgageHandler} isLoading={isTMloading} name="thirdMortgageInfo" />
+                                <SingleMortgage formName={thirdMortgageForm} viewAmort={data.thirdMortgageInfo.isAmortizationView} viewModA={data.thirdMortgageInfo.isModA} viewSubA={data.thirdMortgageInfo.isSubA} fclView={data.thirdMortgageInfo.isForeclosureResult} data={{ thirdMortgageInfo: thirdMData }} onFinish={thirdMortgageHandler} isLoading={isTMloading} name="thirdMortgageInfo" />
                             </Panel>
 
 

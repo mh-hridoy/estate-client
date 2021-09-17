@@ -33,28 +33,28 @@ const OtherMortgage = ({ viewRedemp }) => {
         setotherRedemView(e.target.checked)
     }
 
-    const ownerOne = () => {
-        setisOwnerOne(true)
+    const ownerOne = (e) => {
+        setisOwnerOne(e.target.checked)
     }
-    const ownerTwo = () => {
-        setisOwnerTwo(true)
+    const ownerTwo = (e) => {
+        setisOwnerTwo(e.target.checked)
     }
-    const ownerThree = () => {
-        setisOwnerThree(true)
+    const ownerThree = (e) => {
+        setisOwnerThree(e.target.checked)
     }
 
-    const ownerFour = () => {
-        setisOwnerFour(true)
+    const ownerFour = (e) => {
+        setisOwnerFour(e.target.checked)
     }
     const dtcCheck = () => {
-        setisDtcCheck(true)
+        setisDtcCheck(e.target.checked)
     }
 
-    const dcaCheck = () => {
-        setisDcaCheck(true)
+    const dcaCheck = (e) => {
+        setisDcaCheck(e.target.checked)
     }
-    const thirdCheck = () => {
-        setisThirdCheck(true)
+    const thirdCheck = (e) => {
+        setisThirdCheck(e.target.checked)
     }
 
     useEffect(() => {

@@ -1,21 +1,32 @@
-import { Row, Col, Form, Select, Input, Button, Divider, DatePicker, Upload } from 'antd'
+import { Row, Col, Form, Select, Input, Button, Divider, DatePicker, Upload, message } from 'antd'
 import InputField from './InputField'
 import styles from '../../../styles/search.module.css'
 import NumberField from './NumberField';
 import InputWithSuffix from './InputWithSuffix';
 import propertyInfoVal from '../../../utils/propertyInfoVal'
 import { UploadOutlined } from '@ant-design/icons';
+import { useState } from 'react';
+import { useSelector } from 'react-redux'
+import useHttp from '../../../utils/useHttp'
 
 const SinglePropertyInfo = ({ propertyinfo, data }) => {
     const { Item } = Form
     const { Option } = Select
     const { TextArea } = Input
+    const [infoVal, setInfoVal] = useState(null)
+    const [sendRequest, setSendRequest] = useState(false)
+    const propertyId = useSelector((state) => state.property.propertyId)
+    const token = useSelector((state) => state.user.token)
 
     const initialVal = propertyInfoVal(data)
 
     const propertyVal = (values) => {
-
+        setInfoVal(values)
+        setSendRequest((prev) => ({ sendRequest: !prev }))
     }
+
+    const { isLoading } = useHttp(sendRequest, `http://localhost:5000/api/update-property/${propertyId}`, "put", infoVal)
+
 
 
     return (
@@ -267,6 +278,7 @@ const SinglePropertyInfo = ({ propertyinfo, data }) => {
 
                         <Col xs={4} style={{ position: "sticky", bottom: "20px" }}>
                             <Button
+                                loading={isLoading}
                                 type="primary"
                                 htmlType="submit"
                                 style={{ width: "160px", marginTop: "20px", borderRadius: "15px" }}>

@@ -1,23 +1,31 @@
 import { Col, Form, InputNumber, Button } from 'antd'
-import moment from 'moment'
+import useHttp from '../../../utils/useHttp'
+import { useState } from 'react'
+import { useSelector } from 'react-redux'
 
 const TaxAssessed = ({ data }) => {
     const [taxAssessedForm] = Form.useForm()
-
+    const [sendRequest, setSendRequest] = useState(false)
+    const [taxAssessedVal, setTaxAssessedVal] = useState(null)
+    const propertyId = useSelector((state) => state.property.propertyId)
     const { List, Item } = Form
 
+
     const taxAssessedHandler = (values) => {
-        console.log(values)
+        setTaxAssessedVal(values)
+        setSendRequest((prev) => ({ sendRequest: !prev }))
     }
+
+    const { isLoading } = useHttp(sendRequest, `http://localhost:5000/api/update-property/${propertyId}`, "put", taxAssessedVal)
 
     return (
         <>
             <Form form={taxAssessedForm} name="taxAssessedForm"
                 onFinish={taxAssessedHandler}
                 layout="vertical"
-                initialValues={{ taxAssessed: data.length != 0 ? data : [""] }}
+                initialValues={{ assesmentAndTaxes: data.length != 0 ? data : [""] }}
             >
-                <List name="taxAssessed" >
+                <List name="assesmentAndTaxes" >
                     {(fields, { add, remove }) => (
                         <>
 
@@ -66,6 +74,7 @@ const TaxAssessed = ({ data }) => {
                 <Col xs={24} style={{ display: "flex", flexDirection: "row", flexWrap: "wrap", justifyContent: "flex-end" }} >
                     <Button
                         type="primary"
+                        loading={isLoading}
                         htmlType="submit"
                         style={{ width: "160px", marginTop: "20px", borderRadius: "15px" }}>
                         Save Tax Assessed

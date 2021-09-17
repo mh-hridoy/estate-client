@@ -3,7 +3,6 @@ import styles from '../../styles/search.module.css'
 import SaleInfo from './utilsComp/SaleInfo';
 import FirstBidder from './utilsComp/FirstBidder';
 import UbBidder from './utilsComp/UbBidder';
-import { DeleteOutlined } from '@ant-design/icons'
 import moment from 'moment'
 
 const SaleInfoComponent = ({ data }) => {
@@ -14,6 +13,7 @@ const SaleInfoComponent = ({ data }) => {
 
     const saleInfoHandler = (values) => {
         console.log(values)
+        console.log("clicked")
 
     }
 
@@ -128,6 +128,7 @@ const SaleInfoComponent = ({ data }) => {
                         Save Property Data
                     </Button>
                 </Col>
+
             </Form>
 
 

@@ -9,7 +9,9 @@ import SaleInfoComponent from '../../../components/SingleProperty/SaleInfoCompon
 import CmaArvComponent from '../../../components/SingleProperty/CmaArvComponent'
 import { SyncOutlined } from '@ant-design/icons'
 import axios from 'axios'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { storeData } from '../../../store/singleRecordSlice'
+
 
 const singlePropertyInfo = () => {
     const router = useRouter()
@@ -25,6 +27,7 @@ const singlePropertyInfo = () => {
     const token = useSelector((state) => state.user.token)
 
     const { TabPane } = Tabs;
+    const dispatch = useDispatch()
 
 
     const requestedProperty = propertyinfo && propertyinfo[0]
@@ -46,7 +49,8 @@ const singlePropertyInfo = () => {
                         })
                     console.log("getting single record data")
                     setRequestedData(data)
-                    console.log(data)
+                    // console.log(data)
+                    dispatch(storeData(data._id))
                     setIsLoading(false)
 
                 } catch (err) {

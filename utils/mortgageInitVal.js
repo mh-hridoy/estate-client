@@ -70,9 +70,9 @@ const mortgageInfoVal = (data) => {
         owner2: data.owner2,
         owner3: data.owner3,
         owner4: data.owner4,
-        dtc: data.isDtcFirstCheck,
-        dca: data.isDcaSecondCheck,
-        thirdDca: data.isDcaFinalCheck,
+        isDtcFirstCheck: data.isDtcFirstCheck,
+        isDcaSecondCheck: data.isDcaSecondCheck,
+        isDcaFinalCheck: data.isDcaFinalCheck,
     }
 }
 

@@ -58,11 +58,10 @@ const MortgageInfoComponent = ({ data }) => {
 
     const { isLoading } = useHttp(sendHeaderReq, `http://localhost:5000/api/update-property/${propertyId}`, "put", headerValue)
 
-
     const firstMortgageHandler = (values) => {
-        setFirstMortgageVal({ firstmortgageInfo: values })
+        setFirstMortgageVal(values)
         setIsFLoading((prev) => ({ isFLoading: !prev }))
-        console.log(values)
+        // console.log(values)
     }
     useEffect(() => {
         if (isFLoading && firstMortgageVal) {
@@ -83,11 +82,13 @@ const MortgageInfoComponent = ({ data }) => {
 
     }, [isFLoading && firstMortgageVal])
 
+
+
     const { isLoading: isFMloading } = useHttp(isFLoading, `http://localhost:5000/api/update-property/${propertyId}`, "put", firstMortgageVal)
 
     // console.log(firstMortgageVal)
     const secondMortgageHandler = (values) => {
-        setSecondMortgageVal({ secondMortgageInfo: values })
+        setSecondMortgageVal(values)
         setIsSLoading((prev) => ({ isSLoading: !prev }))
     }
     useEffect(() => {
@@ -112,7 +113,7 @@ const MortgageInfoComponent = ({ data }) => {
     const { isLoading: isSMloading } = useHttp(isSLoading, `http://localhost:5000/api/update-property/${propertyId}`, "put", secondMortgageVal)
 
     const thirdMortgageHandler = (values) => {
-        setThirdMortgageVal({ thirdMortgageInfo: values })
+        setThirdMortgageVal(values)
         setIsTLoading((prev) => ({ isTLoading: !prev }))
     }
     useEffect(() => {
@@ -163,6 +164,33 @@ const MortgageInfoComponent = ({ data }) => {
     thirdMData.subADate = thirdMData.subADate && moment(thirdMData.subADate)
     thirdMData.trDeedDate = thirdMData.trDeedDate && moment(thirdMData.trDeedDate)
 
+    const correctedHoaVal = data.hoaLien
+    correctedHoaVal.hoaLienDate = correctedHoaVal.hoaLienDate && moment(correctedHoaVal.hoaLienDate)
+    correctedHoaVal.strDate = correctedHoaVal.strDate && moment(correctedHoaVal.strDate)
+    correctedHoaVal.strDate = correctedHoaVal.strDate && moment(correctedHoaVal.strDate)
+    correctedHoaVal.ccAndRsDate = correctedHoaVal.ccAndRsDate && moment(correctedHoaVal.ccAndRsDate)
+    correctedHoaVal.affidavitDate = correctedHoaVal.affidavitDate && moment(correctedHoaVal.affidavitDate)
+    correctedHoaVal.redemptionExpires = correctedHoaVal.redemptionExpires && moment(correctedHoaVal.redemptionExpires)
+    correctedHoaVal.redemptionDate = correctedHoaVal.redemptionDate && moment(correctedHoaVal.redemptionDate)
+    correctedHoaVal.hLienFileDate = correctedHoaVal.hLienFileDate && moment(correctedHoaVal.hLienFileDate)
+    correctedHoaVal.trDeedDate = correctedHoaVal.trDeedDate && moment(correctedHoaVal.trDeedDate)
+
+    const correctedTaxVal = data.taxLien
+    correctedTaxVal.judgmentDate = correctedTaxVal.judgmentDate && moment(correctedTaxVal.judgmentDate)
+    correctedTaxVal.affidavitDate = correctedTaxVal.affidavitDate && moment(correctedTaxVal.affidavitDate)
+    correctedTaxVal.redemptionExpires = correctedTaxVal.redemptionExpires && moment(correctedTaxVal.redemptionExpires)
+    correctedTaxVal.redemptionDate = correctedTaxVal.redemptionDate && moment(correctedTaxVal.redemptionDate)
+    correctedTaxVal.trDeedDate = correctedTaxVal.trDeedDate && moment(correctedTaxVal.trDeedDate)
+    correctedTaxVal.txLienFileDate = correctedTaxVal.txLienFileDate && moment(correctedTaxVal.txLienFileDate)
+    correctedTaxVal.txLienFileDate = correctedTaxVal.txLienFileDate && moment(correctedTaxVal.txLienFileDate)
+
+    const correctedOtherMVal = data.otherMortgageInfo
+    correctedOtherMVal.dateRecorded = correctedOtherMVal.dateRecorded && moment(correctedOtherMVal.dateRecorded)
+    correctedOtherMVal.affidavitDate = correctedOtherMVal.affidavitDate && moment(correctedOtherMVal.affidavitDate)
+    correctedOtherMVal.redemptionExpires = correctedOtherMVal.redemptionExpires && moment(correctedOtherMVal.redemptionExpires)
+    correctedOtherMVal.redemptionDate = correctedOtherMVal.redemptionDate && moment(correctedOtherMVal.redemptionDate)
+    correctedOtherMVal.otherLienFileDate = correctedOtherMVal.otherLienFileDate && moment(correctedOtherMVal.otherLienFileDate)
+
     return (
         <>
             <Row gutter={20} wrap={true} justify="start" >
@@ -208,16 +236,16 @@ const MortgageInfoComponent = ({ data }) => {
 
 
                             <Panel header="HOA Lien" key="13">
-                                <HoaMortgage viewFcl={data.hoaLien.isForeclosureResult} viewRedemp={data.hoaLien.isRedemptionInfo} />
+                                <HoaMortgage viewFcl={data.hoaLien.isForeclosureResult} viewRedemp={data.hoaLien.isRedemptionInfo} data={{ hoaLien: correctedHoaVal }} />
                             </Panel>
 
                             <Panel header="TAX Lien" key="14">
-                                <TaxMortgage viewFcl={data.taxLien.isForeclosureResult} viewRedemp={data.taxLien.isRedemptionInfo} />
+                                <TaxMortgage viewFcl={data.taxLien.isForeclosureResult} viewRedemp={data.taxLien.isRedemptionInfo} data={{ taxLien: correctedTaxVal }} />
 
                             </Panel>
 
                             <Panel header="Other Lien" key="15">
-                                <OtherMortgage viewRedemp={data.otherMortgageInfo.isRedemptionInfo} />
+                                <OtherMortgage viewRedemp={data.otherMortgageInfo.isRedemptionInfo} data={{ otherMortgageInfo: correctedOtherMVal }} />
 
                                 </Panel>
 

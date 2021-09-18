@@ -11,6 +11,7 @@ const useHttp = (fetchNow, url, method, body) => {
 
     useEffect(() => {
         if (fetchNow) {
+            // console.log(body)
             const fetchData = async () => {
                 try {
                     setIsLoading(true)

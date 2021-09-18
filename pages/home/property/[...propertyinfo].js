@@ -29,12 +29,7 @@ const singlePropertyInfo = () => {
     const { TabPane } = Tabs;
     const dispatch = useDispatch()
 
-
     const requestedProperty = propertyinfo && propertyinfo[0]
-
-    // function callback(key) {
-    //     console.log(key);
-    // }
 
     useEffect(() => {
 
@@ -61,9 +56,7 @@ const singlePropertyInfo = () => {
                         router.push('/home/dashboard')
                     }, 1500)
                 }
-
             }
-
             fethSingleProperty()
         }
 

@@ -5,10 +5,12 @@ import NumberField from "./NumberField"
 import DateField from "./DateField"
 import { UploadOutlined } from '@ant-design/icons'
 import { useState, useEffect } from "react"
-
+import useHttp from "../../../utils/useHttp"
+import { useSelector } from 'react-redux'
+import moment from 'moment'
 
 const HoaMortgage = ({ viewFcl,
-    viewRedemp }) => {
+    viewRedemp, data }) => {
 
     const [fLienVal, setfLienVal] = useState(false)
     const [fNoStrVal, setfNoStrVal] = useState(false)
@@ -25,7 +27,9 @@ const HoaMortgage = ({ viewFcl,
     const [isDcaCheck, setisDcaCheck] = useState(false)
     const [isThirdCheck, setisThirdCheck] = useState(false)
     const [redemedByOwnerVal, setRedemedByOwnerVal] = useState(false)
-
+    const [hoaVal, sethoaVal] = useState()
+    const [sendRequest, setSendRequest] = useState(false)
+    const propertyId = useSelector((state) => state.property.propertyId)
 
 
     const { Item } = Form
@@ -59,30 +63,28 @@ const HoaMortgage = ({ viewFcl,
         setFResults(e.target.checked)
     }
 
-
-
-    const ownerOne = () => {
-        setisOwnerOne(true)
+    const ownerOne = (e) => {
+        setisOwnerOne(e.target.checked)
     }
-    const ownerTwo = () => {
-        setisOwnerTwo(true)
+    const ownerTwo = (e) => {
+        setisOwnerTwo(e.target.checked)
     }
-    const ownerThree = () => {
-        setisOwnerThree(true)
+    const ownerThree = (e) => {
+        setisOwnerThree(e.target.checked)
     }
 
-    const ownerFour = () => {
-        setisOwnerFour(true)
+    const ownerFour = (e) => {
+        setisOwnerFour(e.target.checked)
     }
-    const dtcCheck = () => {
-        setisDtcCheck(true)
+    const dtcCheck = (e) => {
+        setisDtcCheck(e.target.checked)
     }
 
-    const dcaCheck = () => {
-        setisDcaCheck(true)
+    const dcaCheck = (e) => {
+        setisDcaCheck(e.target.checked)
     }
-    const thirdCheck = () => {
-        setisThirdCheck(true)
+    const thirdCheck = (e) => {
+        setisThirdCheck(e.target.checked)
     }
 
 
@@ -91,7 +93,7 @@ const HoaMortgage = ({ viewFcl,
             setFResults(viewFcl)
         }
         if (viewRedemp) {
-            setmodAView(viewRedemp)
+            sethoaRedemVal(viewRedemp)
 
         }
 
@@ -99,16 +101,38 @@ const HoaMortgage = ({ viewFcl,
     }, [viewFcl, viewRedemp])
 
     const hoaMortgageHandler = (values) => {
-        console.log(values)
+        sethoaVal(values)
+        setSendRequest((prev) => ({ sendRequest: !prev }))
     }
+
+
+
+    useEffect(() => {
+        if (hoaVal && sendRequest) {
+            hoaVal.hoaLien.hoaLienDate = hoaVal.hoaLien.hoaLienDate && moment(hoaVal.hoaLien.hoaLienDate).toISOString()
+            hoaVal.hoaLien.strDate = hoaVal.hoaLien.strDate && moment(hoaVal.hoaLien.strDate).toISOString()
+            hoaVal.hoaLien.ccAndRsDate = hoaVal.hoaLien.ccAndRsDate && moment(hoaVal.hoaLien.ccAndRsDate).toISOString()
+            hoaVal.hoaLien.affidavitDate = hoaVal.hoaLien.affidavitDate && moment(hoaVal.hoaLien.affidavitDate).toISOString()
+            hoaVal.hoaLien.redemptionExpires = hoaVal.hoaLien.redemptionExpires && moment(hoaVal.hoaLien.redemptionExpires).toISOString()
+            hoaVal.hoaLien.redemptionDate = hoaVal.hoaLien.redemptionDate && moment(hoaVal.hoaLien.redemptionDate).toISOString()
+            hoaVal.hoaLien.hLienFileDate = hoaVal.hoaLien.hLienFileDate && moment(hoaVal.hoaLien.hLienFileDate).toISOString()
+            hoaVal.hoaLien.trDeedDate = hoaVal.hoaLien.trDeedDate && moment(hoaVal.hoaLien.trDeedDate).toISOString()
+
+        }
+    }, [hoaVal && sendRequest])
+
+    const { isLoading } = useHttp(sendRequest, `http://localhost:5000/api/update-property/${propertyId}`, "put", hoaVal)
+
+
+
 
     return (
         <>
-            <Form form={hoaForm} name="hoaForm" layout="vertical" onFinish={hoaMortgageHandler} >
+            <Form form={hoaForm} name="hoaForm" layout="vertical" onFinish={hoaMortgageHandler} initialValues={data} >
             <div className="headerPortion" style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
-                    <CheckField htmlFor="hLienFCL" label="HOA Lien Foreclosing" id="hLienFCL" name="lienForeclosing" onChange={fLienFCL} checked={fLienVal} />
-                    <CheckField htmlFor="hNoStr" label="No STR | No APPT" id="hNoStr" name="noSTR" onChange={fNoStr} checked={fNoStrVal} />
-                    <CheckField htmlFor="hfLien" label="Defective HOA Lien" id="hfLien" name="defectiveLien" onChange={dfLien} checked={dfLienVal} />
+                    <CheckField label="HOA Lien Foreclosing" name={["hoaLien", "lienForeclosing"]} onChange={fLienFCL} checked={fLienVal} />
+                    <CheckField label="No STR | No APPT" name={["hoaLien", "noSTR"]} onChange={fNoStr} checked={fNoStrVal} />
+                    <CheckField label="Defective HOA Lien" name={["hoaLien", "defectiveLien"]} onChange={dfLien} checked={dfLienVal} />
 
 
                 <Button
@@ -125,44 +149,44 @@ const HoaMortgage = ({ viewFcl,
             </div>
 
             <div className="details" style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
-                    <InputField label="HOA Name" htmlFor="hame" name="hoaName" id="hame" />
-                    <NumberField label="HOA Amount" htmlFor="hmount" name="hoaLienAmount" id="hmount" />
-                    <DateField label="Date Recorded" htmlFor="hateRecorded" name="hoaLienDate" id="hateRecorded" />
-                    <InputField label="HOA Book/Page" htmlFor="htBookPage" name="dtBookPage" id="htBookPage" />
-                    <InputField label="Trustee Fees" htmlFor="hrusteeFees" name="trusteeFees" id="hrusteeFees" />
-                    <InputField label="Trustee HOA" htmlFor="husteeHOA" name="trusteeHoa" id="husteeHOA" />
-                    <NumberField label="Total Debt" htmlFor="hotalDebt" name="totalDebt" id="hotalDebt" />
-                    <InputField label="STR Book/Page" htmlFor="htrBP" name="strBookPage" id="htrBP" />
-                    <DateField label="STR Date" htmlFor="htrDate" name="strDate" id="htrDate" />
-                    <InputField label="CC&Rs Instrument #" htmlFor="instrument" name="ccAndRsInstrument" id="hInstrument" />
-                    <DateField label="CC&Rs Date" htmlFor="hDate" name="ccAndRsDate" id="hDate" />
+                    <InputField label="HOA Name" name={["hoaLien", "hoaName"]} />
+                    <NumberField label="HOA Amount" name={["hoaLien", "hoaLienAmount"]} />
+                    <DateField label="Date Recorded" name={["hoaLien", "hoaLienDate"]} />
+                    <InputField label="HOA Book/Page" name={["hoaLien", "dtBookPage"]} />
+                    <InputField label="Trustee Fees" name={["hoaLien", "trusteeFees"]} />
+                    <InputField label="Trustee HOA" name={["hoaLien", "trusteeHoa"]} />
+                    <NumberField label="Total Debt" name={["hoaLien", "totalDebt"]} />
+                    <InputField label="STR Book/Page" name={["hoaLien", "strBookPage"]} />
+                    <DateField label="STR Date" name={["hoaLien", "strDate"]} />
+                    <InputField label="CC&Rs Instrument #" name={["hoaLien", "ccAndRsInstrument"]} />
+                    <DateField label="CC&Rs Date" name={["hoaLien", "ccAndRsDate"]} />
 
             </div>
 
 
             <div className="optional" style={{ display: "flex", flexDirection: "column" }}>
 
-                    <CheckField htmlFor="hoaRedemp" label="REDEMPTION INFO" id="hoaRedemp" name="isRedemptionInfo" onChange={hoaRedemView} checked={hoaRedemVal} />
+                    <CheckField label="REDEMPTION INFO" name={["hoaLien", "isRedemptionInfo"]} onChange={hoaRedemView} checked={hoaRedemVal} />
 
                 {hoaRedemVal &&
                     <div style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
-                        <DateField label="Affidavit (APM) Date" htmlFor="hfDate" name="affidavitDate" id="hfDate" />
-                        <InputField label="Tax Code" htmlFor="hCode" name="taxCode" id="hCode" />
-                        <DateField label="Redemption Expires" htmlFor="hdExp" name="redemptionExpires" id="hdExp" />
-                        <CheckField htmlFor="hddemOwner" label="Redeemed By Owner" id="redeemedByOwner" name="hddemOwner" onChange={redemedByOwner} checked={redemedByOwnerVal} />
-                        <InputField label="Redemption Notice Inst #" htmlFor="hdNotice" name="redemptionNoticeInst" id="hdNotice" />
-                        <DateField label="Redemption Date" htmlFor="hdNoticeDate" name="redemptionDate" id="hdNoticeDate" />
+                        <DateField label="Affidavit (APM) Date" name={["hoaLien", "affidavitDate"]} />
+                        <InputField label="Tax Code" name={["hoaLien", "taxCode"]} />
+                        <DateField label="Redemption Expires" name={["hoaLien", "redemptionExpires"]} />
+                        <CheckField htmlFor="hddemOwner" label="Redeemed By Owner" name={["hoaLien", "hddemOwner"]} onChange={redemedByOwner} checked={redemedByOwnerVal} />
+                        <InputField label="Redemption Notice Inst #" name={["hoaLien", "redemptionNoticeInst"]} />
+                        <DateField label="Redemption Date" name={["hoaLien", "redemptionDate"]} />
 
 
                     </div>}
 
-                    <CheckField htmlFor="hResults" label="FORECLOSURE RESULT" id="hResults" name="isForeclosureResult" onChange={FResults} checked={FResultsVal} />
+                    <CheckField label="FORECLOSURE RESULT" name={["hoaLien", "isForeclosureResult"]} onChange={FResults} checked={FResultsVal} />
                 {FResultsVal &&
                     <div style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
-                        <InputField label="TRDeed Instrument #" htmlFor="hrDeedIns" name="trDeedInstrument" id="hrDeedIns" />
-                        <DateField label="TRDeed Date" htmlFor="hrDeedDate" name="trDeedDate" id="hrDeedDate" />
-                        <InputField label="Winning Bidder" htmlFor="hwinningBidder" name="winningBidder" id="hwinningBidder" />
-                        <InputField label="Winning Bid" htmlFor="hinningBid" name="winningbid" id="hinningBid" id="hinningBid" />
+                        <InputField label="TRDeed Instrument #" name={["hoaLien", "trDeedInstrument"]} />
+                        <DateField label="TRDeed Date" name={["hoaLien", "trDeedDate"]} />
+                        <InputField label="Winning Bidder" name={["hoaLien", "winningBidder"]} />
+                        <NumberField label="Winning Bid" name={["hoaLien", "winningbid"]} />
                     </div>}
 
             </div>
@@ -171,11 +195,11 @@ const HoaMortgage = ({ viewFcl,
 
                 <Col span={24} style={{ display: "flex", alignItems: "center", justifyContent: "flex-start", width: "100%", flexWrap: "wrap", margin: "0", padding: "0" }}>
 
-                    <InputField label="File Name" htmlFor="hLienFile" name="hLienFile" id="hLienFile" />
+                        <InputField label="File Name" name={["hoaLien", "hLienFile"]} />
 
                     <Col xs={12} sm={8} md={4} >
-                        <Item label="Date : " htmlFor="hLienFileDate" name="hLienFileDate"  >
-                            <DatePicker placeholder="Select Date" id="hLienFileDate" style={{ width: "100%" }} />
+                            <Item label="Date : " name={["hoaLien", "hLienFileDate"]}   >
+                                <DatePicker placeholder="Select Date" style={{ width: "100%" }} />
                         </Item>
                     </Col>
 
@@ -221,18 +245,18 @@ const HoaMortgage = ({ viewFcl,
             </Col>
 
             <div className="details" style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
-                    <CheckField htmlFor="hwner1" label="Owner 1" id="hwner1" name="owner1" onChange={ownerOne} checked={isOwnerOne} />
-                    <CheckField htmlFor="hwner2" label="Owner 2" id="hwner2" name="owner2" onChange={ownerTwo} checked={isOwnerTwo} />
-                    <CheckField htmlFor="hwner3" label="Owner 3" id="hwner3" name="owner4" onChange={ownerThree} checked={isOwnerThree} />
-                    <CheckField htmlFor="hwner4" label="Owner 4" id="hwner4" name="owner4" onChange={ownerFour} checked={isOwnerFour} />
+                    <CheckField label="Owner 1" name={["hoaLien", "owner1"]} onChange={ownerOne} checked={isOwnerOne} />
+                    <CheckField label="Owner 2" name={["hoaLien", "owner2"]} onChange={ownerTwo} checked={isOwnerTwo} />
+                    <CheckField label="Owner 3" name={["hoaLien", "owner3"]} onChange={ownerThree} checked={isOwnerThree} />
+                    <CheckField label="Owner 4" name={["hoaLien", "owner4"]} onChange={ownerFour} checked={isOwnerFour} />
 
-                    <CheckField htmlFor="htc" label="DTC - First Check" id="htc" name="isDtcFirstCheck" onChange={dtcCheck} checked={isDtcCheck} />
-                    <CheckField htmlFor="hca" label="DCA - Second Check" id="hca" name="isDcaSecondCheck" onChange={dcaCheck} checked={isDcaCheck} />
-                    <CheckField htmlFor="hhirdDca" label="DCA - Third Check" id="hhirdDca" name="isDcaFinalCheck" onChange={thirdCheck} checked={isThirdCheck} />
+                    <CheckField label="DTC - First Check" name={["hoaLien", "isDtcFirstCheck"]} onChange={dtcCheck} checked={isDtcCheck} />
+                    <CheckField label="DCA - Second Check" name={["hoaLien", "isDcaSecondCheck"]} onChange={dcaCheck} checked={isDcaCheck} />
+                    <CheckField label="DCA - Third Check" name={["hoaLien", "isDcaFinalCheck"]} onChange={thirdCheck} checked={isThirdCheck} />
 
                 </div>
                 <Col span={24} style={{ display: "flex", flexDirection: "row", flexWrap: "wrap", justifyContent: "flex-end" }} >
-                    <Button htmlType="submit" type="primary" >Save Data</Button>
+                    <Button htmlType="submit" type="primary" loading={isLoading} >Save Data</Button>
                 </Col>
 
             </Form>

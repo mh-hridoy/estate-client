@@ -193,7 +193,7 @@ const SingleMortgage = ({ formName, viewAmort, viewModA, viewSubA, fclView, data
                     </div>
                 }
 
-                    <CheckField label="MODIFICATION AGREEMENT (MOD)" name="isModA" onChange={modAView} checked={modAViewVal} />
+                    <CheckField label="MODIFICATION AGREEMENT (MOD)" name={[name, "isModA"]} onChange={modAView} checked={modAViewVal} />
                 {modAViewVal &&
                     <div style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
                         <InputField label="Modification Book/Page" name={[name, "modABookPage"]} />
@@ -225,7 +225,7 @@ const SingleMortgage = ({ formName, viewAmort, viewModA, viewSubA, fclView, data
                         <InputField label="TRDeed Instrument #" name={[name, "trDeedInstrument"]} />
                         <DateField label="TRDeed Date" name={[name, "trDeedDate"]} />
                         <InputField label="Winning Bidder" name={[name, "winningBidder"]} />
-                        <InputField label="Winning Bid" name={[name, "winningbid"]} />
+                        <NumberField label="Winning Bid" name={[name, "winningbid"]} />
                     </div>}
 
             </div>
@@ -234,10 +234,10 @@ const SingleMortgage = ({ formName, viewAmort, viewModA, viewSubA, fclView, data
 
                 <Col span={24} style={{ display: "flex", alignItems: "center", justifyContent: "flex-start", width: "100%", flexWrap: "wrap", margin: "0", padding: "0" }}>
 
-                        <InputField label="File Name" name="sfLienFile" />
+                        <InputField label="File Name" name={[name, "sfLienFile"]} />
 
                         <Col xs={12} sm={8} md={4} >
-                            <Item label="Date : " name="sfLienFileDate"  >
+                            <Item label="Date : " name={[name, "sfLienFileDate"]} >
                                 <DatePicker placeholder="Select Date" style={{ width: "100%" }} />
                         </Item>
                         </Col>
@@ -279,7 +279,7 @@ const SingleMortgage = ({ formName, viewAmort, viewModA, viewSubA, fclView, data
 
                     </div>
 
-                </Col>
+                    </Col>
 
             </Col>
 

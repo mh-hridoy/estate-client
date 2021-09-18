@@ -5,9 +5,12 @@ import NumberField from "./NumberField"
 import DateField from "./DateField"
 import { UploadOutlined } from '@ant-design/icons'
 import { useState, useEffect } from "react"
+import moment from "moment"
+import useHttp from "../../../utils/useHttp"
+import { useSelector } from 'react-redux'
 
 
-const OtherMortgage = ({ viewRedemp }) => {
+const OtherMortgage = ({ viewRedemp, data }) => {
 
     const [exMatchVal, setexMatchVal] = useState(false)
 
@@ -20,6 +23,10 @@ const OtherMortgage = ({ viewRedemp }) => {
     const [isDtcCheck, setisDtcCheck] = useState(false)
     const [isDcaCheck, setisDcaCheck] = useState(false)
     const [isThirdCheck, setisThirdCheck] = useState(false)
+    const [otherMValue, setOtherMValue] = useState()
+    const [sendRequest, setSendRequest] = useState(false)
+
+    const propertyId = useSelector((state) => state.property.propertyId)
 
     const { Item } = Form
     //declare valriables for checked comp.
@@ -46,7 +53,7 @@ const OtherMortgage = ({ viewRedemp }) => {
     const ownerFour = (e) => {
         setisOwnerFour(e.target.checked)
     }
-    const dtcCheck = () => {
+    const dtcCheck = (e) => {
         setisDtcCheck(e.target.checked)
     }
 
@@ -67,11 +74,29 @@ const OtherMortgage = ({ viewRedemp }) => {
     }, [viewRedemp])
 
     const otherMortgageHandler = (values) => {
-        console.log(values)
+        setOtherMValue(values)
+        setSendRequest((prev) => ({ sendRequest: !prev }))
     }
+
+    useEffect(() => {
+        if (otherMValue && sendRequest) {
+            otherMValue.otherMortgageInfo.dateRecorded = otherMValue.otherMortgageInfo.dateRecorded && moment(otherMValue.otherMortgageInfo.dateRecorded).toISOString()
+            otherMValue.otherMortgageInfo.affidavitDate = otherMValue.otherMortgageInfo.affidavitDate && moment(otherMValue.otherMortgageInfo.affidavitDate).toISOString()
+            otherMValue.otherMortgageInfo.redemptionExpires = otherMValue.otherMortgageInfo.redemptionExpires && moment(otherMValue.otherMortgageInfo.redemptionExpires).toISOString()
+            otherMValue.otherMortgageInfo.redemptionDate = otherMValue.otherMortgageInfo.redemptionDate && moment(otherMValue.otherMortgageInfo.redemptionDate).toISOString()
+            otherMValue.otherMortgageInfo.otherLienFileDate = otherMValue.otherMortgageInfo.otherLienFileDate && moment(otherMValue.otherMortgageInfo.otherLienFileDate).toISOString()
+        }
+    }, [otherMValue && sendRequest])
+
+    const { isLoading } = useHttp(sendRequest, `http://localhost:5000/api/update-property/${propertyId}`, "put", otherMValue)
+
+
+
 
     return (
         <>
+            <Form form={otherMortgageForm} name="otherMortgageForm" layout="vertical" onFinish={otherMortgageHandler} initialValues={data}>
+
             <div className="headerPortion" style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
 
                 <Button
@@ -85,29 +110,28 @@ const OtherMortgage = ({ viewRedemp }) => {
                     style={{ margin: "10px", width: "100px" }}>
                     Add Note
                 </Button>
-            </div>
+                </div>
 
-            <Form form={otherMortgageForm} name="otherMortgageForm" layout="vertical" onFinish={otherMortgageHandler} ></Form>
             <div className="details" style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
-                <InputField label="Lender" htmlFor="otherLender" name="lender" id="otherLender" />
-                <NumberField label="Lien Amount" htmlFor="otherAmount" name="lienAmount" id="otherAmount" />
-                <DateField label="Date Recorded" htmlFor="otherDate" name="dateRecorded" id="otherDate" />
-                <InputField label="Book/Page or Instrument #" htmlFor="otherBP" name="dtBookPage" id="otherBP" />
-                <InputField label="Assignment BP" htmlFor="otherAssignment" name="assignmentBookPage" id="otherAssignment" />
+                    <InputField label="Lender" name={["otherMortgageInfo", "lender"]} />
+                    <NumberField label="Lien Amount" name={["otherMortgageInfo", "lienAmount"]} />
+                    <DateField label="Date Recorded" name={["otherMortgageInfo", "dateRecorded"]} />
+                    <InputField label="Book/Page or Instrument #" name={["otherMortgageInfo", "dtBookPage"]} />
+                    <InputField label="Assignment BP" name={["otherMortgageInfo", "assignmentBookPage"]} />
             </div>
 
             <div className="optional" style={{ display: "flex", flexDirection: "column" }}>
 
-                <CheckField htmlFor="otherubAView" label="REDEMPTION INFO" id="otherRedemp" name="isRedemptionInfo" onChange={otherRedem} checked={otherRedemView} />
+                    <CheckField label="REDEMPTION INFO" name={["otherMortgageInfo", "isRedemptionInfo"]} onChange={otherRedem} checked={otherRedemView} />
 
                 {otherRedemView &&
                     <div style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
-                    <DateField label="Affidavit (APM) Date" htmlFor="otherfDate" name="affidavitDate" id="otherfDate" />
-                    <InputField label="Tax Code" htmlFor="otherCode" name="taxCode" id="otherCode" />
-                    <DateField label="Redemption Expires" htmlFor="otherdExp" name="redemptionExpires" id="otherdExp" />
-                    <CheckField htmlFor="otherddemOwner" label="Redeemed By Owner" id="otherddemOwner" name="redeemedByOwner" onChange={exMatch} checked={exMatchVal} />
-                    <InputField label="Redemption Notice Inst #" htmlFor="otherdNotice" name="redemptionNoticeInst" id="otherdNotice" />
-                    <DateField label="Redemption Date" htmlFor="otherdNoticeDate" name="redemptionDate" id="otherdNoticeDate" />
+                        <DateField label="Affidavit (APM) Date" name={["otherMortgageInfo", "affidavitDate"]} />
+                        <InputField label="Tax Code" name={["otherMortgageInfo", "taxCode"]} />
+                        <DateField label="Redemption Expires" name={["otherMortgageInfo", "redemptionExpires"]} />
+                        <CheckField label="Redeemed By Owner" name={["otherMortgageInfo", "redeemedByOwner"]} onChange={exMatch} checked={exMatchVal} />
+                        <InputField label="Redemption Notice Inst #" name="redemptionNoticeInst" name={["otherMortgageInfo", "redemptionNoticeInst"]} />
+                        <DateField label="Redemption Date" name={["otherMortgageInfo", "redemptionDate"]} />
 
 
                     </div>}
@@ -118,11 +142,11 @@ const OtherMortgage = ({ viewRedemp }) => {
 
                 <Col span={24} style={{ display: "flex", alignItems: "center", justifyContent: "flex-start", width: "100%", flexWrap: "wrap", margin: "0", padding: "0" }}>
 
-                    <InputField label="File Name" htmlFor="otherLienFile" name="otherLienFile" id="otherLienFile" />
+                        <InputField label="File Name" name={["otherMortgageInfo", "otherLienFile"]} />
 
                     <Col xs={12} sm={8} md={4} >
-                        <Item label="Date : " htmlFor="otherLienFileDate" name="otherLienFileDate"  >
-                            <DatePicker placeholder="Select Date" id="otherLienFileDate" style={{ width: "100%" }} />
+                            <Item label="Date : " name={["otherMortgageInfo", "otherLienFileDate"]} >
+                                <DatePicker placeholder="Select Date" style={{ width: "100%" }} />
                         </Item>
                     </Col>
 
@@ -168,20 +192,21 @@ const OtherMortgage = ({ viewRedemp }) => {
             </Col>
 
             <div className="details" style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
-                <CheckField htmlFor="otherwner1" label="Owner 1" id="otherwner1" name="owner1" onChange={ownerOne} checked={isOwnerOne} />
-                <CheckField htmlFor="otherwner2" label="Owner 2" id="otherwner2" name="owner2" onChange={ownerTwo} checked={isOwnerTwo} />
-                <CheckField htmlFor="otherwner3" label="Owner 3" id="otherwner3" name="owner3" onChange={ownerThree} checked={isOwnerThree} />
-                <CheckField htmlFor="otherwner4" label="Owner 4" id="otherwner4" name="owner4" onChange={ownerFour} checked={isOwnerFour} />
+                    <CheckField label="Owner 1" name={["otherMortgageInfo", "owner1"]} onChange={ownerOne} checked={isOwnerOne} />
+                    <CheckField label="Owner 2" name={["otherMortgageInfo", "owner2"]} onChange={ownerTwo} checked={isOwnerTwo} />
+                    <CheckField label="Owner 3" name={["otherMortgageInfo", "owner3"]} onChange={ownerThree} checked={isOwnerThree} />
+                    <CheckField label="Owner 4" name={["otherMortgageInfo", "owner4"]} onChange={ownerFour} checked={isOwnerFour} />
 
-                <CheckField htmlFor="othertc" label="DTC - First Check" id="othertc" name="isDtcFirstCheck" onChange={dtcCheck} checked={isDtcCheck} />
-                <CheckField htmlFor="otherca" label="DCA - Second Check" id="otherca" name="isDcaSecondCheck" onChange={dcaCheck} checked={isDcaCheck} />
-                <CheckField htmlFor="otherhirdDca" label="DCA - Third Check" id="otherhirdDca" name="isDcaFinalCheck" onChange={thirdCheck} checked={isThirdCheck} />
+                    <CheckField label="DTC - First Check" name={["otherMortgageInfo", "isDtcFirstCheck"]} onChange={dtcCheck} checked={isDtcCheck} />
+                    <CheckField label="DCA - Second Check" name={["otherMortgageInfo", "isDcaSecondCheck"]} onChange={dcaCheck} checked={isDcaCheck} />
+                    <CheckField label="DCA - Third Check" name={["otherMortgageInfo", "isDcaFinalCheck"]} onChange={thirdCheck} checked={isThirdCheck} />
 
             </div>
 
             <Col span={24} style={{ display: "flex", flexDirection: "row", flexWrap: "wrap", justifyContent: "flex-end" }} >
-                <Button htmlType="submit" type="primary" >Save Data</Button>
-            </Col>
+                    <Button htmlType="submit" type="primary" loading={isLoading} >Save Data</Button>
+                </Col>
+            </Form>
         </>
     )
 }

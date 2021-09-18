@@ -1,82 +1,6 @@
 import moment from 'moment'
 
 
-const mortgageInfoVal = (data) => {
-    const dateRecorder = data.dateRecorded && moment(data.dateRecorded)
-    const maturityDate = data.maturityDate && moment(data.maturityDate)
-    const strDate = data.strDate && moment(data.strDate)
-    const modADate = data.modADate && moment(data.modADate)
-    const modAmaturityDate = data.modAmaturityDate && moment(data.modAmaturityDate)
-    const subADate = data.subADate && moment(data.subADate)
-    const trDeedDate = data.trDeedDate && moment(data.trDeedDate)
-    return {
-        lienForeclosing: data.lienForeclosing,
-        noSTR: data.noSTR,
-        defectiveLien: data.defectiveLien,
-        lender: data.lender,
-        lienAmount: data.lienAmount,
-        dateRecorded: dateRecorder,
-        instrument: data.instrument,
-        dtBookPage: data.dtBookPage,
-        assignmentBookPage: data.assignmentBookPage,
-        loanType: data.loanType,
-        loanTerm: data.loanTerm,
-        maturityDate: maturityDate,
-        rightToCure: data.rightToCure,
-        tursteeFee: data.tursteeFee,
-        trustee: data.trustee,
-        strBookPage: data.strBookPage,
-        strDate: strDate,
-        loanEstimatedBalance: data.loanEstimatedBalance,
-        estLatePaymentAndFees: data.estLatePaymentAndFees,
-        totalEstimatedDebt: data.totalEstimatedDebt,
-        cmaArv: data.cmaArv,
-        totalDebt: data.totalDebt,
-        rentalRate: data.rentalRate,
-        legalDescMatch: data.legalDescMatch,
-        propertyAddressMatch: data.propertyAddressMatch,
-        resonableFees: data.resonableFees,
-        isAmortizationView: data.isAmortizationView,
-        amortAnnualInterestRate: data.amortAnnualInterestRate,
-        amortMonthlyPayment: data.amortMonthlyPayment,
-        monthlyPrincipalPayment: data.monthlyPrincipalPayment,
-        monthlyInterestPayment: data.monthlyInterestPayment,
-        estimatedEquity: data.estimatedEquity,
-
-        isModA: data.isModA,
-        modABookPage: data.modABookPage,
-        modADate: modADate,
-        modALienAmount: data.modALienAmount,
-        modALoanTerm: data.modALoanTerm,
-        modAmaturityDate: modAmaturityDate,
-        annualInterestRate: data.annualInterestRate,
-        monthlyPayment: data.monthlyPayment,
-        loanEstBalance: data.loanEstBalance,
-        modAEstLatePaymentAndFees: data.modAEstLatePaymentAndFees,
-        modAtotalEstimatedDebt: data.modAtotalEstimatedDebt,
-
-        isSubA: data.isSubA,
-        subABookPage: data.subABookPage,
-        subADate: subADate,
-        lienPosition: data.lienPosition,
-
-        FResults: data.isForeclosureResult,
-        trDeedInstrument: data.trDeedInstrument,
-        trDeedDate: trDeedDate,
-        winningBidder: data.winningBidder,
-        winningbid: data.winningbid,
-
-        owner1: data.owner1,
-        owner2: data.owner2,
-        owner3: data.owner3,
-        owner4: data.owner4,
-        isDtcFirstCheck: data.isDtcFirstCheck,
-        isDcaSecondCheck: data.isDcaSecondCheck,
-        isDcaFinalCheck: data.isDcaFinalCheck,
-    }
-}
-
-
 const hoaLienData = (data) => {
     //HOA Lien
     const CcRsDate = data.ccAndRsDate && moment(data.ccAndRsDate)
@@ -214,4 +138,4 @@ const otherLienData = (data) => {
 
 }
 
-export { mortgageInfoVal, hoaLienData, taxLienData, otherLienData };
+export { hoaLienData, taxLienData, otherLienData };

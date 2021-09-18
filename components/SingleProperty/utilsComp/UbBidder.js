@@ -88,7 +88,7 @@ const UbBidder = ({ data, name }) => {
                                                 <DynamicDateField label="IM By Date"  {...restField} name={name} fieldname="imByDate" />
                                                 <DynamicInputField label="Auction" {...restField} name={name} fieldname="auction" />
                                                 <DynamicInputField label="NOS Name" {...restField} name={name} fieldname="nosName" />
-                                                <DynamicInputField label="NOS By Date" {...restField} name={name} fieldname="nosDate" />
+                                                <DynamicDateField label="NOS By Date" {...restField} name={name} fieldname="nosDate" />
 
                                                 <Col xs={12} sm={8} md={6} lg={4} style={{ height: "65px" }} >
                                                     <Item  {...restField} valuePropName="checked" name={[name, "deputyCSC"]} >

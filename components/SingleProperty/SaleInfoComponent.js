@@ -4,22 +4,26 @@ import SaleInfo from './utilsComp/SaleInfo';
 import FirstBidder from './utilsComp/FirstBidder';
 import UbBidder from './utilsComp/UbBidder';
 import moment from 'moment'
+import { useState, useEffect } from 'react'
+import useHttp from '../../utils/useHttp'
+import { useSelector } from 'react-redux';
 
 const SaleInfoComponent = ({ data }) => {
     const { Panel } = Collapse
     const [saleInfoForm] = Form.useForm()
     const { Item, List } = Form
+    const [saleValues, setSaleValues] = useState()
+    const [sendRequest, setSendRequest] = useState(false)
+    const propertyId = useSelector((state) => state.property.propertyId)
 
 
     const saleInfoHandler = (values) => {
-        console.log(values)
-        console.log("clicked")
-
+        setSaleValues(values)
+        setSendRequest((prev) => ({ sendRequest: !prev }))
     }
-
     //we can follow the same method for the submit value
     data.length !== 0 && data.map((saleInfo) => {
-        saleInfo.saleDate = saleInfo.saleDate && moment(saleInfo.moment)
+        saleInfo.saleDate = saleInfo.saleDate && moment(saleInfo.saleDate)
         saleInfo.datePulled = saleInfo.datePulled && moment(saleInfo.datePulled)
         saleInfo.imByDate = saleInfo.imByDate && moment(saleInfo.imByDate)
         saleInfo.nosDate = saleInfo.nosDate && moment(saleInfo.nosDate)
@@ -33,13 +37,45 @@ const SaleInfoComponent = ({ data }) => {
             ub.bidDate = ub.bidDate && moment(ub.bidDate)
             ub.lastDateForNextUb = ub.lastDateForNextUb && moment(ub.lastDateForNextUb)
             ub.dateOfFilling = ub.dateOfFilling && moment(ub.dateOfFilling)
+            ub.imByDate = ub.imByDate && moment(ub.imByDate)
+            ub.nosDate = ub.nosDate && moment(ub.nosDate)
             return ub
         })
 
         return saleInfo
     })
 
+    useEffect(() => {
+        if (sendRequest) {
+            saleValues.saleinfo.map((saleInfo) => {
+                saleInfo.saleDate = saleInfo.saleDate && moment(saleInfo.saleDate).toISOString()
+                saleInfo.datePulled = saleInfo.datePulled && moment(saleInfo.datePulled).toISOString()
+                saleInfo.imByDate = saleInfo.imByDate && moment(saleInfo.imByDate).toISOString()
+                saleInfo.nosDate = saleInfo.nosDate && moment(saleInfo.nosDate).toISOString()
+                saleInfo.auctionDate = saleInfo.auctionDate && moment(saleInfo.auctionDate).toISOString()
+                saleInfo.bidDate = saleInfo.bidDate && moment(saleInfo.bidDate).toISOString()
+                saleInfo.ldub = saleInfo.ldub && moment(saleInfo.ldub).toISOString()
+                saleInfo.dateOfReport = saleInfo.dateOfReport && moment(saleInfo.dateOfReport).toISOString()
+                saleInfo.fimByDate = saleInfo.fimByDate && moment(saleInfo.fimByDate).toISOString()
+                saleInfo.fnosDate = saleInfo.fnosDate && moment(saleInfo.fnosDate).toISOString()
+                saleInfo.otherBidderInfo.length !== 0 && saleInfo.otherBidderInfo.map((ub) => {
+                    ub.bidDate = ub.bidDate && moment(ub.bidDate).toISOString()
+                    ub.lastDateForNextUb = ub.lastDateForNextUb && moment(ub.lastDateForNextUb).toISOString()
+                    ub.dateOfFilling = ub.dateOfFilling && moment(ub.dateOfFilling).toISOString()
+                    ub.nosDate = ub.nosDate && moment(ub.nosDate).toISOString()
+                    ub.imByDate = ub.imByDate && moment(ub.imByDate).toISOString()
+                    return ub
+                })
 
+                return saleInfo
+
+            })
+        }
+
+    }, [sendRequest])
+
+
+    const { isLoading } = useHttp(sendRequest, `http://localhost:5000/api/update-property/${propertyId}`, "put", saleValues)
 
     return (
         <>
@@ -124,6 +160,7 @@ const SaleInfoComponent = ({ data }) => {
                     <Button
                         type="primary"
                         htmlType="submit"
+                        loading={isLoading}
                         style={{ width: "160px", marginTop: "20px", borderRadius: "15px" }}>
                         Save Property Data
                     </Button>

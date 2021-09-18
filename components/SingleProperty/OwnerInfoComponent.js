@@ -4,15 +4,21 @@ import styles from '../../styles/search.module.css'
 import { UploadOutlined } from '@ant-design/icons'
 import { useEffect, useState } from 'react';
 import { MonitorOutlined } from '@ant-design/icons'
+import useHttp from '../../utils/useHttp'
+import { useSelector } from 'react-redux'
 
 
 const OwnerInfoComponent = ({ ownerAndBorrower, data }) => {
     const [isSameOwner, setIsSameOwner] = useState(false)
     const [isPacer, setIsPacer] = useState(false)
+    const [wBValues, setWBValues] = useState()
+    const [sendRequest, setSendRequest] = useState(false)
+
 
     const [isSameOwnerAsB, setisSameOwnerAsB] = useState(false)
     const [isSameAddress, setisSameAddress] = useState(false)
 
+    const propertyId = useSelector((state) => state.property.propertyId)
 
     const { Item, List } = Form
 
@@ -25,10 +31,6 @@ const OwnerInfoComponent = ({ ownerAndBorrower, data }) => {
         setIsPacer(e.target.checked)
     }
 
-    const ownerDataHandler = (values) => {
-        console.log(values)
-
-    }
 
     const checkIfSameOwnerAsB = (e) => {
         setisSameOwnerAsB(e.target.checked)
@@ -37,6 +39,16 @@ const OwnerInfoComponent = ({ ownerAndBorrower, data }) => {
     const asSameAddressAsOwner = (e) => {
         setisSameAddress(e.target.checked)
     }
+
+
+    const ownerDataHandler = (values) => {
+        setWBValues(values)
+        setSendRequest((prev) => ({ sendRequest: !prev }))
+
+    }
+
+    const { isLoading } = useHttp(sendRequest, `http://localhost:5000/api/update-property/${propertyId}`, "put", wBValues)
+
 
     useEffect(() => {
         if (data.pacer) {
@@ -47,24 +59,23 @@ const OwnerInfoComponent = ({ ownerAndBorrower, data }) => {
 
     //ownerInfo
     // borrowerInfo
-
     return (
         <>
             <Row gutter={20} wrap={true} justify="start" >
                 <Col span={24}>
-                    <Form form={ownerAndBorrower} layout="vertical" className={styles.searchForm} onFinish={ownerDataHandler} initialValues={{ ownerInfo: data.ownerInfo ? data.ownerInfo : [""], borrowerInfo: data.borrowerInfo ? data.borrowerInfo : [""] }} >
+                    <Form form={ownerAndBorrower} layout="vertical" className={styles.searchForm} onFinish={ownerDataHandler} initialValues={{ ownerInfo: data.ownerInfo ? data.ownerInfo : [""], borrowerInfo: data.borrowerInfo ? data.borrowerInfo : [""], ...data }} >
                         <Divider orientation="center">Owner Info
                         </Divider>
                         <Col span={24} style={{ display: "flex", flexDirection: "row", flexWrap: "wrap", justifyContent: "space-around" }}>
                             <Col xs={12} style={{ height: "65px" }} >
-                                <Item htmlFor="checkIfSameOwner" name="checkIfSameOwner" valuePropName="checked"  >
-                                    <Checkbox onChange={checkIfSameOwner} checked={isSameOwner} id="checkIfSameOwner">Check if the Owner Information is same as Property Information.</Checkbox>
+                                <Item name="sameOwner" valuePropName="checked"  >
+                                    <Checkbox onChange={checkIfSameOwner} checked={isSameOwner} >Check if the Owner Information is same as Property Information.</Checkbox>
                                 </Item>
                             </Col>
 
                             <Col xs={12} style={{ height: "65px" }} >
-                                <Item htmlFor="noPacer" name="noPacer" valuePropName="checked"  >
-                                    <Checkbox onChange={checkNoPacer} checked={isPacer} id="noPacer">No Pacer Result</Checkbox>
+                                <Item name="pacer" valuePropName="checked"  >
+                                    <Checkbox onChange={checkNoPacer} checked={isPacer} >No Pacer Result</Checkbox>
                                 </Item>
                             </Col>
 
@@ -158,14 +169,14 @@ const OwnerInfoComponent = ({ ownerAndBorrower, data }) => {
                         </Divider>
                         <Col span={24} style={{ display: "flex", flexDirection: "row", flexWrap: "wrap", justifyContent: "space-around" }} >
                             <Col xs={12} style={{ height: "65px" }} >
-                                <Item htmlFor="checkIfSameOwnerAsBorrower" name="checkIfSameOwnerAsBorrower" valuePropName="checked" >
-                                    <Checkbox onChange={checkIfSameOwnerAsB} checked={isSameOwnerAsB} id="checkIfSameOwnerAsBorrower">Check if borrower full name is same as owner full name.</Checkbox>
+                                <Item name="sameAsOwner" valuePropName="checked" >
+                                    <Checkbox onChange={checkIfSameOwnerAsB} checked={isSameOwnerAsB} >Check if borrower full name is same as owner full name.</Checkbox>
                                 </Item>
                             </Col>
 
                             <Col xs={12} style={{ height: "65px" }} >
-                                <Item htmlFor="asSameAddress" name="asSameAddress" valuePropName="checked" >
-                                    <Checkbox onChange={asSameAddressAsOwner} checked={isSameAddress} id="asSameAddress">Check if borrower address is same with owner address.</Checkbox>
+                                <Item name="addressSameAsOwner" valuePropName="checked" >
+                                    <Checkbox onChange={asSameAddressAsOwner} checked={isSameAddress} >Check if borrower address is same with owner address.</Checkbox>
                                 </Item>
                             </Col>
 
@@ -242,18 +253,18 @@ const OwnerInfoComponent = ({ ownerAndBorrower, data }) => {
                                 <Divider orientation="center">Related Files
                                 </Divider>
 
-                                <InputField label="File Name" htmlFor="pdFile" name="pdFile" id="pdFile" />
+                                <InputField label="File Name" name="wpdFile" />
 
                                 <Col xs={12} sm={8} md={4} >
-                                    <Item label="Date : " htmlFor="pdDate" name="pdDate"  >
-                                        <DatePicker placeholder="Select Date" id="pdDate" style={{ width: "100%" }} />
+                                    <Item label="Date : " name="wpdDate"  >
+                                        <DatePicker placeholder="Select Date" style={{ width: "100%" }} />
                                     </Item>
                                 </Col>
 
 
                                 <Col xs={12} sm={8} md={4} style={{ paddingTop: "17px" }} >
 
-                                    <Upload id="pFile"
+                                    <Upload
                                     // {...props}
                                     >
                                         <Button
@@ -296,6 +307,7 @@ const OwnerInfoComponent = ({ ownerAndBorrower, data }) => {
 
                         <Col span={24} style={{ display: "flex", flexDirection: "row", flexWrap: "wrap", justifyContent: "flex-end" }} >
                             <Button
+                                loading={isLoading}
                                 type="primary"
                                 htmlType="submit"
                                 style={{ width: "170px", marginTop: "20px", borderRadius: "15px" }}>

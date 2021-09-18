@@ -16,7 +16,6 @@ const SinglePropertyInfo = ({ propertyinfo, data }) => {
     const [infoVal, setInfoVal] = useState(null)
     const [sendRequest, setSendRequest] = useState(false)
     const propertyId = useSelector((state) => state.property.propertyId)
-    const token = useSelector((state) => state.user.token)
 
     const initialVal = propertyInfoVal(data)
 
@@ -276,7 +275,7 @@ const SinglePropertyInfo = ({ propertyinfo, data }) => {
                         <InputField label="Distance" htmlFor="hDistance" name="hdistance" id="hDistance" />
 
 
-                        <Col xs={4} style={{ position: "sticky", bottom: "20px" }}>
+                        <Col span={24} style={{ display: "flex", flexDirection: "row", flexWrap: "wrap", justifyContent: "flex-end" }}>
                             <Button
                                 loading={isLoading}
                                 type="primary"

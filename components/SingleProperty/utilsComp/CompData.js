@@ -5,7 +5,7 @@ import InputWithSuffix from "./InputWithSuffix"
 import DateField from "./DateField"
 
 
-const CompData = ({ name, value }) => {
+const CompData = ({ name, value, nameVal }) => {
     const { Group } = Input
     const { Item } = Form
 
@@ -23,30 +23,33 @@ const CompData = ({ name, value }) => {
 
 
                 <Col xs={12} sm={8} md={6}>
-                    <Item label="Price/sq.ft.on Sale Comps" style={{ display: "flex", flexDirection: "column", flexWrap: "wrap" }} >
-                        <Group>
-                            <InputNumber name={[value, "priceSqfOnSaleComp1"]} style={{ margin: "0px", width: "40%" }} />
-                            To
-                            <InputNumber name={[value, "priceSqfOnSaleComp2"]} style={{ margin: "0px", width: "40%" }} />
-                        </Group>
-                    </Item>
+                    {/* <Item label="Price/sq.ft.on Sale Comps" > */}
+                    {/* <Group style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }} >
+                        <Item name={[value, "priceSqfOnSaleComp1"]} style={{ width: "46%" }} >
+                            <InputNumber style={{ margin: "0px", width: "100%" }} /> </Item>
+                        <Item name={[value, "priceSqfOnSaleComp2"]} style={{ width: "46%" }}   >
+                            <InputNumber style={{ margin: "0px", width: "100%" }} />
+                        </Item>
+                        </Group> */}
+                    {/* </Item> */}
                 </Col>
 
                 <InputWithSuffix label="Sale Comps & SSD Maps" name={[value, "saleCompsAndSSDMaps"]} />
                 <InputWithSuffix label="GSD Sale Comps Maps" name={[value, "GSDSaleCompMaps"]} />
-                <InputField label="Rent GSD" name="rentGSD" />
+                <NumberField label="Rent GSD" name={[value, "rentGSD"]} />
 
                 <Col xs={12} sm={8} md={6}>
-                    <Item label="Price/sq.ft.on Sold Comps" style={{ display: "flex", flexDirection: "column", flexWrap: "wrap" }} >
-                        <Group>
-                            <InputNumber name={[value, "priceSqfOnSoldComp1"]} style={{ margin: "0px", width: "40%" }} />
-                            To
-                            <InputNumber name={[value, "priceSqfOnSoldComp2"]} style={{ margin: "0px", width: "40%" }} />
-                        </Group>
-                    </Item>
+                    {/* <Item label="Price/sq.ft.on Sold Comps" > */}
+                    {/* <Group style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }} > */}
+                    {/* <Item name={[value, "priceSqfOnSoldComp1"]} style={{ width: "46%" }} >
+                            <InputNumber style={{ margin: "0px", width: "100%" }} /> </Item>
+                        <Item name={[value, "priceSqfOnSoldComp2"]} style={{ width: "46%" }}   >
+                            <InputNumber style={{ margin: "0px", width: "100%" }} />
+                        </Item> */}
+                    {/* </Group> */}
+                    {/* </Item> */}
                 </Col>
                 <InputWithSuffix label="Sold Comps & SSD Maps" name={[value, "GSDSoldCompMaps"]} />
-                <InputWithSuffix label="GSD sold Comps Maps" name={[value, "soldCompSSDMap"]} />
                 <InputWithSuffix label="Rental Comps & Map" name={[value, "rentalCompsAndMaps"]} />
 
                 <NumberField label="P1 Value" name={[value, "pOneValue"]} />
@@ -60,7 +63,7 @@ const CompData = ({ name, value }) => {
 
                 <NumberField label="Recommended CMA/ARV" name={[value, "recommendedCMA"]} />
                 <NumberField label="Wholetail Value" name={[value, "wholeTailValue"]} />
-                <InputField label="Comp By" name={[value, "secondDCA"]} />
+                <InputField label="Comp By" name={[value, nameVal]} />
                 <DateField label="Comp By Date" name={[value, "date"]} />
 
 

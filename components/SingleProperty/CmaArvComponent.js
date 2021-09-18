@@ -2,23 +2,38 @@ import { Row, Col, Form, Button, Collapse } from 'antd'
 import styles from '../../styles/search.module.css'
 import CompData from './utilsComp/CompData'
 import moment from 'moment'
-
+import { useState, useEffect } from 'react'
+import useHttp from '../../utils/useHttp'
+import { useSelector } from 'react-redux'
 
 
 
 const CmaArvComponent = ({ cmaInfoForm, data }) => {
     const { Panel } = Collapse
+    const [compValues, setCompValues] = useState()
+    const [sendRequest, setSendRequest] = useState(false)
+    const propertyId = useSelector((state) => state.property.propertyId)
 
 
     const cmaInfoHandler = (values) => {
-        console.log(values)
+        setCompValues(values)
+        setSendRequest((prev) => ({ sendRequest: !prev }))
     }
 
     data.firstComp.date = data.firstComp.date && moment(data.firstComp.date)
     data.secondComp.date = data.secondComp.date && moment(data.secondComp.date)
     data.thirdComp.date = data.thirdComp.date && moment(data.thirdComp.date)
 
+    // useEffect(() => {
+    //     if (sendRequest) {
+    //         compValues.firstComp.date = compValues.firstComp.date && moment(compValues.firstComp.date).toISOString()
+    //         compValues.secondComp.date = compValues.secondComp.date && moment(compValues.secondComp.date).toISOString()
+    //         compValues.thirdComp.date = compValues.thirdComp.date && moment(compValues.thirdComp.date).toISOString()
+    //     }
 
+    // }, [sendRequest, compValues])
+
+    const { isLoading } = useHttp(sendRequest, `http://localhost:5000/api/update-property/${propertyId}`, "put", compValues)
 
     return (
         <>
@@ -30,15 +45,15 @@ const CmaArvComponent = ({ cmaInfoForm, data }) => {
                                 expandIconPosition="right"
                                 className="site-collapse-custom-collapse">
                                 <Panel header="FIRST COMP" key="50" className="site-collapse-custom-panel" >
-                                    <CompData name="FIRST COMP" value="firstComp" />
+                                    <CompData name="FIRST COMP" value="firstComp" nameVal="firstDTC" />
                                 </Panel>
 
                                 <Panel header="SECOND COMP" key="51" className="site-collapse-custom-panel" >
-                                    <CompData name="SECOND COMP" value="secondComp" />
+                                    <CompData name="SECOND COMP" value="secondComp" nameVal="secondDCA" />
                                 </Panel>
 
                                 <Panel header="THIRD COMP" key="52" className="site-collapse-custom-panel" >
-                                    <CompData name="THIRD COMP" value="thirdComp" />
+                                    <CompData name="THIRD COMP" value="thirdComp" nameVal="thirdDCA" />
                                 </Panel>
 
 
@@ -49,6 +64,7 @@ const CmaArvComponent = ({ cmaInfoForm, data }) => {
                         <Col xs={24} md={8} lg={4} style={{ position: "sticky", bottom: "20px" }}>
                             <Button
                                 type="primary"
+                                loading={isLoading}
                                 htmlType="submit"
                                 style={{ width: "160px", marginTop: "20px", borderRadius: "15px" }}>
                                 Save Comp Data

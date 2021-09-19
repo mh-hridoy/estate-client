@@ -6,9 +6,7 @@ import DateField from "./DateField"
 
 
 const CompData = ({ name, value, nameVal }) => {
-    const { Group } = Input
     const { Item } = Form
-
 
 
     return (
@@ -22,33 +20,41 @@ const CompData = ({ name, value, nameVal }) => {
                 <NumberField label="Phase of Renovation" name={[value, "phaseOfRenovation"]} />
 
 
-                <Col xs={12} sm={8} md={6}>
-                    {/* <Item label="Price/sq.ft.on Sale Comps" > */}
-                    {/* <Group style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }} >
-                        <Item name={[value, "priceSqfOnSaleComp1"]} style={{ width: "46%" }} >
-                            <InputNumber style={{ margin: "0px", width: "100%" }} /> </Item>
-                        <Item name={[value, "priceSqfOnSaleComp2"]} style={{ width: "46%" }}   >
-                            <InputNumber style={{ margin: "0px", width: "100%" }} />
-                        </Item>
-                        </Group> */}
-                    {/* </Item> */}
+                <Col xs={12} sm={8} md={6} >
+                    <label>Price/sq.ft.on Sale Comps
+                        <Col xs={24} className="container" style={{ display: "flex", flexDirection: "row", flexWrap: "wrap", justifyContent: "space-evenly", marginTop: "8px" }} >
+                            <Item name={[value, "priceSqfOnSaleComp1"]} style={{ width: "45%" }}>
+                                <InputNumber style={{ width: "100%" }} />
+                            </Item>
+                            <span > to </span>
+                            <Item name={[value, "priceSqfOnSaleComp2"]} style={{ width: "45%" }}>
+                                <InputNumber style={{ width: "100%" }} />
+
+                            </Item>
+                        </Col>
+                    </label>
                 </Col>
 
                 <InputWithSuffix label="Sale Comps & SSD Maps" name={[value, "saleCompsAndSSDMaps"]} />
                 <InputWithSuffix label="GSD Sale Comps Maps" name={[value, "GSDSaleCompMaps"]} />
                 <NumberField label="Rent GSD" name={[value, "rentGSD"]} />
 
-                <Col xs={12} sm={8} md={6}>
-                    {/* <Item label="Price/sq.ft.on Sold Comps" > */}
-                    {/* <Group style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }} > */}
-                    {/* <Item name={[value, "priceSqfOnSoldComp1"]} style={{ width: "46%" }} >
-                            <InputNumber style={{ margin: "0px", width: "100%" }} /> </Item>
-                        <Item name={[value, "priceSqfOnSoldComp2"]} style={{ width: "46%" }}   >
-                            <InputNumber style={{ margin: "0px", width: "100%" }} />
-                        </Item> */}
-                    {/* </Group> */}
-                    {/* </Item> */}
+                <Col xs={12} sm={8} md={6} >
+                    <label>Price/sq.ft.on Sold Comps
+                        <Col xs={24} className="container" style={{ display: "flex", flexDirection: "row", flexWrap: "wrap", justifyContent: "space-evenly", marginTop: "8px" }} >
+                            <Item name={[value, "priceSqfOnSoldComp1"]} style={{ width: "45%" }}>
+                                <InputNumber style={{ width: "100%" }} />
+                            </Item>
+                            <span > to </span>
+                            <Item name={[value, "priceSqfOnSoldComp2"]} style={{ width: "45%" }}>
+                                <InputNumber style={{ width: "100%" }} />
+
+                            </Item>
+                        </Col>
+                    </label>
                 </Col>
+
+
                 <InputWithSuffix label="Sold Comps & SSD Maps" name={[value, "GSDSoldCompMaps"]} />
                 <InputWithSuffix label="Rental Comps & Map" name={[value, "rentalCompsAndMaps"]} />
 
@@ -63,9 +69,10 @@ const CompData = ({ name, value, nameVal }) => {
 
                 <NumberField label="Recommended CMA/ARV" name={[value, "recommendedCMA"]} />
                 <NumberField label="Wholetail Value" name={[value, "wholeTailValue"]} />
+                <Col span={24} style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
                 <InputField label="Comp By" name={[value, nameVal]} />
                 <DateField label="Comp By Date" name={[value, "date"]} />
-
+                </Col>
 
                 <Col span={24} style={{ display: "flex", flexDirection: "row", flexWrap: "wrap", justifyContent: "flex-end" }}>
                     <Button>Add Notes</Button>

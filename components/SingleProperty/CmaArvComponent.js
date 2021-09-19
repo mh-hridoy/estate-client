@@ -20,18 +20,26 @@ const CmaArvComponent = ({ cmaInfoForm, data }) => {
         setSendRequest((prev) => ({ sendRequest: !prev }))
     }
 
-    data.firstComp.date = data.firstComp.date && moment(data.firstComp.date)
-    data.secondComp.date = data.secondComp.date && moment(data.secondComp.date)
-    data.thirdComp.date = data.thirdComp.date && moment(data.thirdComp.date)
+    data.firstComp.date = data.firstComp && data.firstComp.date && moment(data.firstComp.date)
+    data.secondComp.date = data.secondComp && data.secondComp.date && moment(data.secondComp.date)
+    data.thirdComp.date = data.thirdComp && data.thirdComp.date && moment(data.thirdComp.date)
 
-    // useEffect(() => {
-    //     if (sendRequest) {
-    //         compValues.firstComp.date = compValues.firstComp.date && moment(compValues.firstComp.date).toISOString()
-    //         compValues.secondComp.date = compValues.secondComp.date && moment(compValues.secondComp.date).toISOString()
-    //         compValues.thirdComp.date = compValues.thirdComp.date && moment(compValues.thirdComp.date).toISOString()
-    //     }
+    useEffect(() => {
+        if (sendRequest) {
+            if (compValues.firstComp) {
+                compValues.firstComp.date = compValues.firstComp && compValues.firstComp.date && moment(compValues.firstComp.date).toISOString()
+            }
+            if (compValues.secondComp) {
 
-    // }, [sendRequest, compValues])
+                compValues.secondComp.date = compValues.secondComp && compValues.secondComp.date && moment(compValues.secondComp.date).toISOString()
+            }
+            if (compValues.thirdComp) {
+
+                compValues.thirdComp.date = compValues.thirdComp && compValues.thirdComp.date && moment(compValues.thirdComp.date).toISOString()
+            }
+        }
+
+    }, [sendRequest])
 
     const { isLoading } = useHttp(sendRequest, `http://localhost:5000/api/update-property/${propertyId}`, "put", compValues)
 

@@ -305,6 +305,20 @@ height: 70vh;
   border: none;
 }
 
+.imageDelIcon {
+  font-size: 18px;
+  transform: scale(1);
+  transition: transform 0.2s ease-in;
+  cursor: pointer;
+  
+
+}
+
+.imageDelIcon:hover{
+  color: red;
+  transform: scale(1.1);
+}
+
 
 .card {
   padding : 10px;

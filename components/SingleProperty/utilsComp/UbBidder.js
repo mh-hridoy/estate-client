@@ -156,14 +156,15 @@ const UbBidder = ({ data, name }) => {
 
                                                 </Col>
 
-                                                <Col xs={12} sm={8} md={6} lg={4} style={{ marginTop: "15px" }}>
 
-                                                    <div className={styles.displayPFile}>
-                                                        Files will be here
 
-                                                    </div>
+                                            </Col>
+                                            <Col xs={12} sm={8} md={6} lg={4} style={{ marginTop: "15px" }}>
 
-                                                </Col>
+                                                <div className={styles.displayPFile}>
+                                                    Files will be here
+
+                                                </div>
 
                                             </Col>
                                         </Row>

@@ -58,9 +58,9 @@ Fetch Single page Data//
 fix dynamc array field name and iD.//
 //need to update the endpoint with put.
 //close two seperate endpoints for single bidder and sale info/
-//limit getProperties endpoints.//
+//limit data from getProperties endpoints.//
 //create another endpoints for the overview on result page.//
-//craete seperate endpoints for the unAuthorized request for property info & add there some data for better SEO.//
+//create seperate endpoints for the unAuthorized request for property info & add there some data for better SEO.//
 //change file upload section name and ID/
 //check on react-draggable
 

@@ -8,6 +8,12 @@ import { UploadOutlined } from '@ant-design/icons';
 import { useState } from 'react';
 import { useSelector } from 'react-redux'
 import useHttp from '../../../utils/useHttp'
+import Resizer from "react-image-file-resizer";
+import axios from 'axios';
+import AdditionalPropertyInfo from './AdditionalPropertyInfo';
+
+
+
 
 const SinglePropertyInfo = ({ propertyinfo, data }) => {
     const { Item } = Form
@@ -16,6 +22,7 @@ const SinglePropertyInfo = ({ propertyinfo, data }) => {
     const [infoVal, setInfoVal] = useState(null)
     const [sendRequest, setSendRequest] = useState(false)
     const propertyId = useSelector((state) => state.property.propertyId)
+
 
     const initialVal = propertyInfoVal(data)
 
@@ -131,149 +138,7 @@ const SinglePropertyInfo = ({ propertyinfo, data }) => {
 
 
 
-                        <Col span={24} style={{ width: "100%", display: "flex", flexDirection: "column", flexWrap: "wrap" }} >
-
-                            <Col span={24} style={{ display: "flex", alignItems: "center", justifyContent: "flex-start", width: "100%", flexWrap: "wrap", margin: "0", padding: "0" }}>
-
-                                <Divider orientation="center">Property Info Files
-                                </Divider>
-
-                                <InputField label="File Name" htmlFor="pdFile" name="pdFile" id="pdFile" />
-
-                                <Col xs={12} sm={8} md={4} >
-                                    <Item label="Date : " htmlFor="pdDate" name="pdDate"  >
-                                        <DatePicker placeholder="Select Date" id="pdDate" style={{ width: "100%" }} />
-                                    </Item>
-                                </Col>
-
-
-                                <Col xs={12} sm={8} md={4} style={{ paddingTop: "17px" }} >
-
-                                    <Upload id="pFile"
-                                    // {...props}
-                                    >
-                                        <Button
-                                            icon={<UploadOutlined />}>Select File</Button>
-                                    </Upload>
-
-                                </Col>
-
-
-                                <Col xs={12} sm={8} md={6} >
-
-                                    <Button
-                                        type="primary"
-                                        // onClick={this.handleUpload}
-                                        // disabled={fileList.length === 0}
-                                        // loading={uploading}
-                                        style={{ marginTop: 16, width: "100%" }}
-                                    >
-                                        Upload
-                                        {/* {uploading ? 'Uploading' : 'Start Upload'} */}
-                                    </Button>
-                                </Col>
-
-
-                            </Col>
-
-                            <Col xs={12} sm={8} md={6} lg={4} style={{ marginTop: "15px" }}>
-
-                                <div className={styles.displayPFile}>
-                                    Files will be here
-
-                                </div>
-
-                            </Col>
-
-                        </Col>
-
-
-                        <Divider orientation="center">Local Real Estate Details
-                        </Divider>
-
-                        <InputWithSuffix label="Zillow URL" htmlFor="zillowUrl" name="zillowURL" id="zillowUrl" />
-                        <NumberField label="Zestimate" htmlFor="zestimate" name="zestimate" id="zestimate" />
-
-
-                        <Col xs={24} md={8} lg={4} >
-
-                            <Button
-                                type="primary"
-                                style={{ marginTop: 8, width: "100%" }}>
-                                Zillow Search
-                            </Button>
-                        </Col>
-
-                        <InputWithSuffix label="Redfin URL" htmlFor="redfinUrl" name="redfinUrl" id="redfinUrl" />
-                        <NumberField label="Redfin Est" htmlFor="redfinEst" name="redfinEst" id="redfinEst" />
-
-
-                        <Col xs={24} md={8} lg={4} >
-
-                            <Button
-                                type="primary"
-                                style={{ marginTop: 8, width: "100%" }}>
-                                Redfin Search
-                            </Button>
-                        </Col>
-
-
-                        <InputWithSuffix label="Realtor URL" htmlFor="realtorUrl" name="realtorURL" id="realtorUrl" />
-                        <NumberField label="Realtor Est" htmlFor="realtorEst" name="realtorEst" id="realtorEst" />
-
-
-                        <Col xs={24} md={8} lg={4} >
-
-                            <Button
-                                type="primary"
-                                style={{ marginTop: 8, width: "100%" }}>
-                                Realtor Search
-                            </Button>
-                        </Col>
-
-                        <InputWithSuffix label="Trulia URL" htmlFor="truliaUrl" name="truliaURL" id="truliaUrl" />
-                        <NumberField label="Trulia Est" htmlFor="truliaEst" name="truliaEst" id="truliaEst" />
-
-
-                        <Col xs={24} md={8} lg={4} >
-
-                            <Button
-                                type="primary"
-                                style={{ marginTop: 8, width: "100%" }}>
-                                Trulia Search
-                            </Button>
-                        </Col>
-
-                        <InputWithSuffix label="Har URL" htmlFor="harUrl" name="harUrl" id="harUrl" />
-                        <NumberField label="Har Est" htmlFor="harEst" name="harEst" id="harEst" />
-
-
-                        <Col xs={24} md={8} lg={4} >
-
-                            <Button
-                                type="primary"
-                                style={{ marginTop: 8, width: "100%" }}>
-                                Har Search
-                            </Button>
-                        </Col>
-
-                        <InputWithSuffix label="Beenverified URL" htmlFor="bvUrl" name="beenVerifiedURL" id="bvUrl" />
-
-
-                        <Divider orientation="center">Schools & Neighborhood
-                        </Divider>
-
-                        <InputField label="Elementary School" htmlFor="elemSchool" name="ename" id="elemSchool" />
-                        <InputField label="Ranking" htmlFor="ranking" name="eranking" id="ranking" />
-                        <InputField label="Distance" htmlFor="distance" name="edistance" id="distance" />
-                        <InputField label="Middle School" htmlFor="middleSchool" name="mname" id="mname" />
-                        <InputField label="Ranking" htmlFor="mranking" name="mranking" id="mranking" />
-                        <InputField label="Distance" htmlFor="mDistance" name="mdistance" id="mDistance" />
-
-                        <InputField label="High School" htmlFor="highSchool" name="hname" id="highSchool" />
-                        <InputField label="Ranking" htmlFor="hranking" name="hranking" id="hranking" />
-                        <InputField label="Distance" htmlFor="hDistance" name="hdistance" id="hDistance" />
-
+                        <AdditionalPropertyInfo />
 
                         <Col span={24} style={{ display: "flex", flexDirection: "row", flexWrap: "wrap", justifyContent: "flex-end" }}>
                             <Button
@@ -284,7 +149,6 @@ const SinglePropertyInfo = ({ propertyinfo, data }) => {
                                 Save Property Data
                             </Button>
                         </Col>
-
 
                     </Form>
 

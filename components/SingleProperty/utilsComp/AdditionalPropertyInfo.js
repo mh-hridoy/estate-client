@@ -23,10 +23,15 @@ const AdditionalPropertyInfo = () => {
     const [allUploadedFiles, setAllUploadedFiles] = useState([])
     const token = useSelector((state) => state.user.token)
 
-    const selectedFileHandler = async options => {
-        const { file } = options
 
-        if (file.type && !file.type.includes("image")) {
+
+    const selectedFileHandler = async options => {
+        let { file } = options
+
+
+        console.log(file)
+
+        if (!fallBack && file.type && !file.type.includes("image")) {
             new Promise((resolve, reject) => {
                 const reader = new FileReader();
                 reader.readAsDataURL(file)
@@ -50,7 +55,7 @@ const AdditionalPropertyInfo = () => {
                 };
             });
 
-        } else if (file.type && file.type.includes("image")) {
+        } else if (!fallBack && file.type && file.type.includes("image")) {
             const image = await resizeFile(file)
             const imageData = image && image.split("base64,")[1]
 
@@ -64,38 +69,55 @@ const AdditionalPropertyInfo = () => {
 
         }
         setSendRequest((pre) => ({ uploading: !pre }))
+
     }
 
+    let fallBack;
     useEffect(() => {
         if (sendRequest && Object.keys(selectedFiles).length !== 0) {
-            // console.log(fileList)
-            const submitToBackend = async () => {
 
-                try {
-                    setUploading(true)
-                    const { data } = await axios.post("http://localhost:5000/api/upload-files", selectedFiles, {
-                        headers: {
-                            'Authorization': `Bearer ${token}`
-                        }
-                    })
-                    console.log(data)
-                    setUploading(false)
-                    message.success("File Uploaded Successfully.")
-                    setSelectedFiles({})
-                    setAllUploadedFiles((prev) => {
-                        return [data, ...prev]
-                    })
-
-                } catch (err) {
-                    message.error("Something went wrong.")
-                    console.log(err)
+            allUploadedFiles.length !== 0 && allUploadedFiles.map((data) => {
+                if (data.name == selectedFiles.name) {
+                    fallBack = true
+                    return message.warning("Please select another file or rename the file first.")
                 }
+                return data
+            })
+
+            if (!fallBack) {
+                const submitToBackend = async () => {
+
+                    try {
+                        setUploading(true)
+                        const { data } = await axios.post("http://localhost:5000/api/upload-files", selectedFiles, {
+                            headers: {
+                                'Authorization': `Bearer ${token}`
+                            }
+                        })
+                        console.log(data)
+                        setUploading(false)
+                        message.success("File Uploaded Successfully.")
+                        setSelectedFiles({})
+                        setAllUploadedFiles((prev) => {
+                            return [data, ...prev]
+                        })
+
+                    } catch (err) {
+                        message.error("Something went wrong.")
+                        console.log(err)
+                    }
+                }
+                submitToBackend()
+
             }
 
-            submitToBackend()
         }
 
-    }, [sendRequest && Object.keys(selectedFiles).length !== 0, selectedFiles])
+        return (() => {
+            fallBack = false
+        })
+
+    }, [sendRequest && Object.keys(selectedFiles).length !== 0, selectedFiles, allUploadedFiles.length !== 0, fallBack])
 
     const deleteSelectedFile = async (key) => {
         const correctedKey = key.replace(/['"]+/g, '')
@@ -120,7 +142,7 @@ const AdditionalPropertyInfo = () => {
         <>
             <Col span={24} style={{ width: "100%", display: "flex", flexDirection: "column", flexWrap: "wrap" }} >
 
-                <Col span={24} style={{ display: "flex", alignItems: "center", justifyContent: "flex-start", width: "100%", flexWrap: "wrap", margin: "0", padding: "0", border: "1px solid black", borderStyle: "dashed", padding: "10px" }}>
+                <Col span={24} style={{ display: "flex", alignItems: "center", justifyContent: "flex-start", width: "100%", flexWrap: "wrap", margin: "0", padding: "0" }}>
 
                     <Divider orientation="center">Property Info Files
                     </Divider>

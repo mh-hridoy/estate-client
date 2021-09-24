@@ -6,8 +6,9 @@ import { UploadOutlined } from '@ant-design/icons';
 import { useState, useEffect } from 'react';
 import Resizer from "react-image-file-resizer";
 import axios from 'axios';
-import { DeleteOutlined } from '@ant-design/icons'
+import { DeleteOutlined, LoadingOutlined } from '@ant-design/icons'
 import { useSelector } from 'react-redux'
+
 
 const resizeFile = (file) =>
     new Promise((resolve) => {
@@ -16,127 +17,106 @@ const resizeFile = (file) =>
         );
     });
 
-const AdditionalPropertyInfo = () => {
-    const [selectedFiles, setSelectedFiles] = useState({})
+const AdditionalPropertyInfo = ({ files }) => {
+    const [selectedFiles, setSelectedFiles] = useState([])
     const [uploading, setUploading] = useState(false)
-    const [sendRequest, setSendRequest] = useState(false)
     const [allUploadedFiles, setAllUploadedFiles] = useState([])
     const token = useSelector((state) => state.user.token)
+    const propertyId = useSelector((state) => state.property.propertyId)
+    const [requesDelete, setRequestDelete] = useState(false)
+    const [requestedDelFile, setRequestedDelFile] = useState()
+    const [sendRequest, setSendRequest] = useState(false)
 
-
-
-    const selectedFileHandler = async options => {
-        let { file } = options
-
-
-        console.log(file)
-
-        if (!fallBack && file.type && !file.type.includes("image")) {
-            new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.readAsDataURL(file)
-                reader.onload = () => {
-                    resolve(reader.result)
-                    const pdfData = reader.result && reader.result.split("base64,")[1]
-                    setSelectedFiles(
-                        {
-                            name: file.name,
-                            uid: file.uid,
-                            type: file.type,
-                            data: pdfData
-                        }
-                    )
-
-                    // const base64Data = new Buffer.from(reader.result.replace(/^data:image\/\w+;base64,/, ""), "base64")
-                };
-                reader.onerror = error => {
-                    reject(error)
-                    console.log(error)
-                };
-            });
-
-        } else if (!fallBack && file.type && file.type.includes("image")) {
-            const image = await resizeFile(file)
-            const imageData = image && image.split("base64,")[1]
-
-            setSelectedFiles({
-                name: file.name,
-                uid: file.uid,
-                type: file.type,
-                data: imageData
-            }
-            )
-
-        }
-        setSendRequest((pre) => ({ uploading: !pre }))
-
+    const selectedFileHandler = () => {
+        setTimeout(() => {
+            setSendRequest(true)
+        }, 10)
     }
 
-    let fallBack;
-    useEffect(() => {
-        if (sendRequest && Object.keys(selectedFiles).length !== 0) {
+    const beforeUpload = async (file) => {
+        if (file.type && !file.type.includes("image")) {
+            const reader = new FileReader();
+            reader.readAsDataURL(file)
 
-            allUploadedFiles.length !== 0 && allUploadedFiles.map((data) => {
-                if (data.name == selectedFiles.name) {
-                    fallBack = true
-                    return message.warning("Please select another file or rename the file first.")
+            reader.onload = () => {
+                const pdfData = reader.result && reader.result.split("base64,")[1]
+                const allPdfData =
+                {
+                    name: file.name,
+                    uid: file.uid,
+                    type: file.type,
+                    data: pdfData
                 }
-                return data
-            })
+                setSelectedFiles((prev) => ([allPdfData, ...prev]))
 
-            if (!fallBack) {
-                const submitToBackend = async () => {
+                // const base64Data = new Buffer.from(reader.result.replace(/^data:image\/\w+;base64,/, ""), "base64")
+            };
+            reader.onerror = (err) => {
+                console.log(err)
+            }
 
+        } else if (file.type && file.type.includes("image")) {
+            try {
+                const image = await resizeFile(file)
+                const imageData = image.split("base64,")[1]
+
+                const allImageData = {
+                    name: file.name,
+                    uid: file.uid,
+                    type: file.type,
+                    data: imageData
+                }
+                setSelectedFiles((prev) => ([allImageData, ...prev]))
+
+
+            } catch (err) {
+                console.log(err)
+
+            }
+        }
+    }
+
+    useEffect(() => {
+        setAllUploadedFiles((prev) => ([...prev, ...files]))
+    }, [])
+
+    console.log(allUploadedFiles)
+
+    useEffect(() => {
+
+        if (sendRequest && selectedFiles) {
+
+            if (selectedFiles.length !== 0) {//declare the length method here. otherwise it wont work properly with dependencies
+
+                const uploadData = async () => {
                     try {
                         setUploading(true)
-                        const { data } = await axios.post("http://localhost:5000/api/upload-files", selectedFiles, {
+                        message.loading({ content: "File uploading...", key: "5" })
+                        const { data } = await axios.post(`http://localhost:5000/api/upload-files/${propertyId}`, selectedFiles, {
                             headers: {
                                 'Authorization': `Bearer ${token}`
                             }
                         })
-                        console.log(data)
+                        // console.log(data)
                         setUploading(false)
-                        message.success("File Uploaded Successfully.")
-                        setSelectedFiles({})
-                        setAllUploadedFiles((prev) => {
-                            return [data, ...prev]
-                        })
-
+                        message.success({ content: "File Uploaded Successfully.", key: "5" })
+                        setAllUploadedFiles((prev) => ([...data, ...prev]))
                     } catch (err) {
-                        message.error("Something went wrong.")
+                        setUploading(false)
+                        message.error({ content: "Something went wrong.", key: "5" })
                         console.log(err)
                     }
                 }
-                submitToBackend()
-
+                uploadData()
             }
-
         }
-
         return (() => {
-            fallBack = false
+            setSelectedFiles([])
+            setSendRequest(false)
         })
 
-    }, [sendRequest && Object.keys(selectedFiles).length !== 0, selectedFiles, allUploadedFiles.length !== 0, fallBack])
+    }, [sendRequest && selectedFiles])
 
-    const deleteSelectedFile = async (key) => {
-        const correctedKey = key.replace(/['"]+/g, '')
-        setSelectedFiles(selectedFiles.filter(item => item.id !== correctedKey))
-        try {
-            const { data } = await axios.delete(`http://localhost:5000/api/delete-file/${correctedKey}`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            })
-
-            console.log(data)
-
-        } catch (err) {
-            console.log(err)
-        }
-
-
-    }
 
     return (
         <>
@@ -146,14 +126,11 @@ const AdditionalPropertyInfo = () => {
 
                     <Divider orientation="center">Property Info Files
                     </Divider>
-
-
-
                     <Col xs={12} sm={8} md={4} style={{ paddingTop: "17px" }} >
 
-                        <Upload id="pFile" showUploadList={false} customRequest={selectedFileHandler} multiple={true} >
+                        <Upload id="pFile" showUploadList={false} customRequest={selectedFileHandler} multiple={true} beforeUpload={beforeUpload} >
                             <Button disabled={uploading} loading={uploading}
-                                icon={<UploadOutlined />}>Upload Files
+                                icon={<UploadOutlined />}> {!uploading ? "Upload Files" : "Uploading..."}
                             </Button>
                         </Upload>
 
@@ -164,21 +141,20 @@ const AdditionalPropertyInfo = () => {
 
                 <Col xs={24} style={{ marginTop: "15px" }}>
 
-                    {allUploadedFiles.length !== 0 && <>
+                    {/* {allUploadedFiles.length !== 0 && <>
 
                         <ul  >
                             {allUploadedFiles.map((file) => {
                                 return (
-                                    <li style={{ margin: "5px", padding: "10px", border: "1px solid black", borderStyle: "dashed", width: "100%", display: "flex", flexDirection: "row", justifyContent: "space-between" }} key={file.id}> <a href={file.Location} target="_fuck" >{file.name}</a>
-
-                                        <span className="imageDelIcon" ><DeleteOutlined onClick={() => deleteSelectedFile(file.id)} /></span>
+                                    <li style={{ margin: "5px", padding: "10px", border: "1px solid black", borderStyle: "dashed", width: "100%", display: "flex", flexDirection: "row", justifyContent: "space-between" }} key={file.uid}> <a href={file.Location} target="_fuck" >{file.name}</a>
+                                        <span className="imageDelIcon" ><DeleteOutlined onClick={() => deleteSelectedFile(file.name)} /></span>
                                     </li>
                                 )
                             })}
                         </ul>
 
                     </>
-                    }
+                    } */}
 
 
                 </Col>

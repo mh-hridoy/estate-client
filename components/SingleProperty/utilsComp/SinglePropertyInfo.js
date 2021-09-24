@@ -138,7 +138,7 @@ const SinglePropertyInfo = ({ propertyinfo, data }) => {
 
 
 
-                        <AdditionalPropertyInfo />
+                        <AdditionalPropertyInfo files={data.infoTabFile} />
 
                         <Col span={24} style={{ display: "flex", flexDirection: "row", flexWrap: "wrap", justifyContent: "flex-end" }}>
                             <Button

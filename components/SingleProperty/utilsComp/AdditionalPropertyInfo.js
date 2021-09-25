@@ -33,7 +33,7 @@ const AdditionalPropertyInfo = ({ files }) => {
     const selectedFileHandler = () => {
         setTimeout(() => {
             setSendRequest(true)
-        }, 10)
+        }, 15)
     }
 
     const dateToday = new Date().toISOString().split("T")[0]
@@ -84,10 +84,13 @@ const AdditionalPropertyInfo = ({ files }) => {
     }
 
     useEffect(() => {
-        if (files && files.length !== 0 && !allUploadedFiles.some(file => files.includes(file))) {
-            setAllUploadedFiles((prev) => ([...prev, ...files]))
+        if (files.length !== 0) {
+            setAllUploadedFiles(files)
         }
-    }, [])
+
+    }, [files.length !== 0])
+
+    //&& !allUploadedFiles.some(file => files.includes(file))
 
 
 
@@ -145,7 +148,7 @@ const AdditionalPropertyInfo = ({ files }) => {
                     const indexOfDelFile = allUploadedFiles.findIndex((file) => file.key === delFile)
                     allUploadedFiles.splice(indexOfDelFile, 1)
 
-                    setAllUploadedFiles([...allUploadedFiles])
+                    setAllUploadedFiles([...new Set(allUploadedFiles)])
                     message.success({ content: "File Deleted Successfully.", key: "6" })
 
                 } catch (err) {
@@ -154,8 +157,8 @@ const AdditionalPropertyInfo = ({ files }) => {
                 }
             }
 
-            delFileHandler()
 
+            delFileHandler()
         }
         return (() => {
             setDelFile()

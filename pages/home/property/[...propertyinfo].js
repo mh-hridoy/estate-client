@@ -11,6 +11,7 @@ import { SyncOutlined } from '@ant-design/icons'
 import axios from 'axios'
 import { useSelector, useDispatch } from 'react-redux'
 import { storeData } from '../../../store/singleRecordSlice'
+import PicturesAndMaps from '../../../components/SingleProperty/PicturesAndMaps'
 
 
 const singlePropertyInfo = () => {
@@ -102,6 +103,13 @@ const singlePropertyInfo = () => {
                                     <Panel header="Sale Details or Foreclosure Info" key="4" className="site-collapse-custom-panel" >
 
                                         <SaleInfoComponent data={requestedData.saleinfo} />
+
+
+                                    </Panel>
+
+                                    <Panel header="Pictures / Maps" key="5" className="site-collapse-custom-panel" >
+
+                                        <PicturesAndMaps data={requestedData.infoTabFile} />
 
 
                                     </Panel>

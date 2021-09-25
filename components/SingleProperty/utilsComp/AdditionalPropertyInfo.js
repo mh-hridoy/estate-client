@@ -6,8 +6,9 @@ import { UploadOutlined } from '@ant-design/icons';
 import { useState, useEffect } from 'react';
 import Resizer from "react-image-file-resizer";
 import axios from 'axios';
-import { DeleteOutlined, LoadingOutlined } from '@ant-design/icons'
+import { DeleteOutlined } from '@ant-design/icons'
 import { useSelector } from 'react-redux'
+
 
 
 const resizeFile = (file) =>
@@ -23,15 +24,21 @@ const AdditionalPropertyInfo = ({ files }) => {
     const [allUploadedFiles, setAllUploadedFiles] = useState([])
     const token = useSelector((state) => state.user.token)
     const propertyId = useSelector((state) => state.property.propertyId)
-    const [requesDelete, setRequestDelete] = useState(false)
-    const [requestedDelFile, setRequestedDelFile] = useState()
+    const [requestDelete, setRequestDelete] = useState(false)
+    const [delFile, setDelFile] = useState()
     const [sendRequest, setSendRequest] = useState(false)
+
+    const user = useSelector((state) => state.user.user)
 
     const selectedFileHandler = () => {
         setTimeout(() => {
             setSendRequest(true)
         }, 10)
     }
+
+    const dateToday = new Date().toISOString().split("T")[0]
+    const todayHour = new Date().getHours()
+    const todayMin = new Date().getMinutes()
 
     const beforeUpload = async (file) => {
         if (file.type && !file.type.includes("image")) {
@@ -42,7 +49,7 @@ const AdditionalPropertyInfo = ({ files }) => {
                 const pdfData = reader.result && reader.result.split("base64,")[1]
                 const allPdfData =
                 {
-                    name: file.name,
+                    name: file.name + " - " + user.name + " " + dateToday + " " + todayHour + ":" + todayMin,
                     uid: file.uid,
                     type: file.type,
                     data: pdfData
@@ -61,7 +68,7 @@ const AdditionalPropertyInfo = ({ files }) => {
                 const imageData = image.split("base64,")[1]
 
                 const allImageData = {
-                    name: file.name,
+                    name: file.name + " - " + user.name + " " + dateToday + " " + todayHour + ":" + todayMin,
                     uid: file.uid,
                     type: file.type,
                     data: imageData
@@ -77,10 +84,12 @@ const AdditionalPropertyInfo = ({ files }) => {
     }
 
     useEffect(() => {
-        setAllUploadedFiles((prev) => ([...prev, ...files]))
+        if (files && files.length !== 0 && !allUploadedFiles.some(file => files.includes(file))) {
+            setAllUploadedFiles((prev) => ([...prev, ...files]))
+        }
     }, [])
 
-    console.log(allUploadedFiles)
+
 
     useEffect(() => {
 
@@ -97,13 +106,12 @@ const AdditionalPropertyInfo = ({ files }) => {
                                 'Authorization': `Bearer ${token}`
                             }
                         })
-                        // console.log(data)
                         setUploading(false)
                         message.success({ content: "File Uploaded Successfully.", key: "5" })
                         setAllUploadedFiles((prev) => ([...data, ...prev]))
                     } catch (err) {
                         setUploading(false)
-                        message.error({ content: "Something went wrong.", key: "5" })
+                        message.error({ content: err.response ? err.response.data.message : "Something went wrong.", key: "5", duration: "3.5" })
                         console.log(err)
                     }
                 }
@@ -116,6 +124,44 @@ const AdditionalPropertyInfo = ({ files }) => {
         })
 
     }, [sendRequest && selectedFiles])
+
+    const deleteSelectedFile = (key) => {
+        setDelFile(key)
+        setRequestDelete(true)
+        console.log(key)
+    }
+
+    useEffect(() => {
+        if (requestDelete && delFile) {
+            const delFileHandler = async () => {
+
+                try {
+                    message.loading({ content: delFile + " deleting....", key: "6" })
+                    await axios.post(`http://localhost:5000/api/delete-file/${propertyId}`, { key: delFile }, {
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    })
+                    const indexOfDelFile = allUploadedFiles.findIndex((file) => file.key === delFile)
+                    allUploadedFiles.splice(indexOfDelFile, 1)
+
+                    setAllUploadedFiles([...allUploadedFiles])
+                    message.success({ content: "File Deleted Successfully.", key: "6" })
+
+                } catch (err) {
+                    message.error({ content: err.response ? err.response.data.message : "Something went wrong.", key: "6", duration: "3.5" })
+                    console.log(err)
+                }
+            }
+
+            delFileHandler()
+
+        }
+        return (() => {
+            setDelFile()
+
+        })
+    }, [requestDelete && delFile])
 
 
     return (
@@ -140,22 +186,18 @@ const AdditionalPropertyInfo = ({ files }) => {
                 </Col>
 
                 <Col xs={24} style={{ marginTop: "15px" }}>
-
-                    {/* {allUploadedFiles.length !== 0 && <>
-
-                        <ul  >
-                            {allUploadedFiles.map((file) => {
+                    <ul>
+                        {allUploadedFiles.length !== 0 && allUploadedFiles.map((file) => {
                                 return (
-                                    <li style={{ margin: "5px", padding: "10px", border: "1px solid black", borderStyle: "dashed", width: "100%", display: "flex", flexDirection: "row", justifyContent: "space-between" }} key={file.uid}> <a href={file.Location} target="_fuck" >{file.name}</a>
-                                        <span className="imageDelIcon" ><DeleteOutlined onClick={() => deleteSelectedFile(file.name)} /></span>
+                                    <li style={{ margin: "5px", padding: "10px", border: "1px solid black", borderStyle: "dashed", width: "100%", display: "flex", flexDirection: "row", justifyContent: "space-between" }} key={file.key}> <a href={file.Location} target="_fuck" >{file.key}</a>
+                                        <span className="imageDelIcon">
+                                            <DeleteOutlined onClick={() => deleteSelectedFile(file.key)} />
+
+                                        </span>
                                     </li>
                                 )
-                            })}
-                        </ul>
-
-                    </>
-                    } */}
-
+                        })}
+                    </ul>
 
                 </Col>
 

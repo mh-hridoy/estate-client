@@ -133,10 +133,24 @@ const PicturesAndMaps = ({ data }) => {
 
     }, [sendRequest && selectedFiles.length !== 0])
 
-    const removeSelectedFile = (file) => {
-        console.log(file)
-    }
+    const removeSelectedFile = async (file) => {
+        try {
+            message.loading({ content: file.name + " deleting....", key: "6" })
+            await axios.post(`http://localhost:5000/api/delete-image/${propertyId}`, { key: file.name }, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            const indexOfDelFile = allCorrectedImages.findIndex((fFIle) => fFIle.name === file.name)
+            allCorrectedImages.splice(indexOfDelFile, 1)
+            setAllCorrectedImages([...allCorrectedImages])
+            message.success({ content: "File Deleted Successfully.", key: "6" })
 
+        } catch (err) {
+            message.error({ content: err.response ? err.response.data.message : "Something went wrong.", key: "6", duration: "3.5" })
+            console.log(err)
+        }
+    }
 
     return (
         <Row gutter={[12, 15]} wrap={true} justify="start" style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start" }}  >

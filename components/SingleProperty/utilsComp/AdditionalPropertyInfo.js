@@ -27,20 +27,23 @@ const AdditionalPropertyInfo = ({ files }) => {
     const [requestDelete, setRequestDelete] = useState(false)
     const [delFile, setDelFile] = useState()
     const [sendRequest, setSendRequest] = useState(false)
+    const [isDeleting, setIsDeleting] = useState(false)
 
     const user = useSelector((state) => state.user.user)
 
     const selectedFileHandler = () => {
         setTimeout(() => {
-            setSendRequest(true)
-        }, 15)
+            setSendRequest((prev) => ({ sendRequest: !prev }))
+        }, 50) //this timeout wont work everytime if the file size is too large. the better practice would be convert this to bloob data in the backend.
     }
 
     const dateToday = new Date().toISOString().split("T")[0]
     const todayHour = new Date().getHours()
     const todayMin = new Date().getMinutes()
+    const todaySec = new Date().getSeconds()
 
     const beforeUpload = async (file) => {
+
         if (file.type && !file.type.includes("image")) {
             const reader = new FileReader();
             reader.readAsDataURL(file)
@@ -49,7 +52,7 @@ const AdditionalPropertyInfo = ({ files }) => {
                 const pdfData = reader.result && reader.result.split("base64,")[1]
                 const allPdfData =
                 {
-                    name: file.name + " - " + user.name + " " + dateToday + " " + todayHour + ":" + todayMin,
+                    name: file.name.split(".").shift() + " - By " + user.name + " " + dateToday + " " + todayHour + ":" + todayMin + ":" + todaySec + "." + file.name.split(".").pop(),
                     uid: file.uid,
                     type: file.type,
                     data: pdfData
@@ -68,7 +71,7 @@ const AdditionalPropertyInfo = ({ files }) => {
                 const imageData = image.split("base64,")[1]
 
                 const allImageData = {
-                    name: file.name + " - " + user.name + " " + dateToday + " " + todayHour + ":" + todayMin,
+                    name: file.name.split(".").shift() + " - By " + user.name + " " + dateToday + " " + todayHour + ":" + todayMin + ":" + todaySec + "." + file.name.split(".").pop(),
                     uid: file.uid,
                     type: file.type,
                     data: imageData
@@ -88,11 +91,9 @@ const AdditionalPropertyInfo = ({ files }) => {
             setAllUploadedFiles(files)
         }
 
-    }, [files.length !== 0])
+    }, [files])
 
     //&& !allUploadedFiles.some(file => files.includes(file))
-
-
 
     useEffect(() => {
 
@@ -139,6 +140,7 @@ const AdditionalPropertyInfo = ({ files }) => {
             const delFileHandler = async () => {
 
                 try {
+                    setIsDeleting(true)
                     message.loading({ content: delFile + " deleting....", key: "6" })
                     await axios.post(`http://localhost:5000/api/delete-file/${propertyId}`, { key: delFile }, {
                         headers: {
@@ -149,9 +151,11 @@ const AdditionalPropertyInfo = ({ files }) => {
                     allUploadedFiles.splice(indexOfDelFile, 1)
 
                     setAllUploadedFiles([...new Set(allUploadedFiles)])
+                    setIsDeleting(false)
                     message.success({ content: "File Deleted Successfully.", key: "6" })
 
                 } catch (err) {
+                    setIsDeleting(false)
                     message.error({ content: err.response ? err.response.data.message : "Something went wrong.", key: "6", duration: "3.5" })
                     console.log(err)
                 }
@@ -177,8 +181,8 @@ const AdditionalPropertyInfo = ({ files }) => {
                     </Divider>
                     <Col xs={12} sm={8} md={4} style={{ paddingTop: "17px" }} >
 
-                        <Upload id="pFile" showUploadList={false} customRequest={selectedFileHandler} multiple={true} beforeUpload={beforeUpload} >
-                            <Button disabled={uploading} loading={uploading}
+                        <Upload id="pFile" showUploadList={false} customRequest={selectedFileHandler} multiple={true} beforeUpload={beforeUpload} accept="application/pdf, image/*" >
+                            <Button type="dashed" disabled={uploading} loading={uploading}
                                 icon={<UploadOutlined />}> {!uploading ? "Upload Files" : "Uploading..."}
                             </Button>
                         </Upload>
@@ -194,8 +198,11 @@ const AdditionalPropertyInfo = ({ files }) => {
                                 return (
                                     <li style={{ margin: "5px", padding: "10px", border: "1px solid black", borderStyle: "dashed", width: "100%", display: "flex", flexDirection: "row", justifyContent: "space-between" }} key={file.key}> <a href={file.Location} target="_fuck" >{file.key}</a>
                                         <span className="imageDelIcon">
-                                            <DeleteOutlined onClick={() => deleteSelectedFile(file.key)} />
-
+                                            <Button type="text" disabled={isDeleting}  >
+                                                {/* {delFile == file.key && isDeleting ? <LoadingOutlined /> : */}
+                                                <DeleteOutlined onClick={() => deleteSelectedFile(file.key)} />
+                                                {/* } */}
+                                            </Button>
                                         </span>
                                     </li>
                                 )

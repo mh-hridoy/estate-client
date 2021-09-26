@@ -109,7 +109,7 @@ const singlePropertyInfo = () => {
 
                                     <Panel header="Pictures / Maps" key="5" className="site-collapse-custom-panel" >
 
-                                        <PicturesAndMaps data={requestedData.infoTabFile} />
+                                        <PicturesAndMaps data={requestedData.propertyImages} />
 
 
                                     </Panel>

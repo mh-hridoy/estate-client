@@ -81,7 +81,7 @@ const Signup = () => {
       const loginHandler = async () => {
         try {
           // console.log(requestedUrl)
-          console.log("Iam loign")
+          console.log("logged in")
           setIsLoading(true)
           const { data } = await axios.post(`http://localhost:5000/api/login`, loginData, {
             headers: {

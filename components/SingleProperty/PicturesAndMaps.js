@@ -1,9 +1,12 @@
-import { Row, Upload, message } from 'antd'
+import { Row, Upload, message, Button } from 'antd'
 import { PlusOutlined } from '@ant-design/icons'
 import { useState, useEffect } from 'react';
 import Resizer from "react-image-file-resizer";
 import axios from 'axios';
 import { useSelector } from 'react-redux'
+import ReactMapboxGl, { ZoomControl, RotationControl, Popup, Layer, ScaleControl, Feature } from 'react-mapbox-gl';
+
+import 'mapbox-gl/dist/mapbox-gl.css'; //must install mapbox-gl alongside react-mapbox-gl
 
 
 function getBase64(file) {
@@ -23,7 +26,7 @@ const resizeFile = (file) =>
     });
 
 
-const PicturesAndMaps = ({ data }) => {
+const PicturesAndMaps = ({ data, geo }) => {
     const [selectedFiles, setSelectedFiles] = useState([])
     const [allCorrectedImages, setAllCorrectedImages] = useState([])
     const [sendRequest, setSendRequest] = useState(false)
@@ -31,6 +34,7 @@ const PicturesAndMaps = ({ data }) => {
     const token = useSelector((state) => state.user.token)
     const propertyId = useSelector((state) => state.property.propertyId)
     const user = useSelector((state) => state.user.user)
+    const [isSatellite, setIsSatellite] = useState(false)
 
 
 
@@ -41,7 +45,10 @@ const PicturesAndMaps = ({ data }) => {
         </div>
     );
 
+    const Map = ReactMapboxGl({
+        accessToken: process.env.NEXT_PUBLIC_MAPBOX_ACCESS_ID,
 
+    });
 
 
     useEffect(() => {
@@ -95,6 +102,8 @@ const PicturesAndMaps = ({ data }) => {
             setSendRequest(true)
         }, 10)
     }
+
+
 
     useEffect(() => {
         if (sendRequest && selectedFiles.length !== 0) {
@@ -152,10 +161,12 @@ const PicturesAndMaps = ({ data }) => {
         }
     }
 
+    console.log(isSatellite)
+
     return (
         <Row gutter={[12, 15]} wrap={true} justify="start" style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start" }}  >
 
-            <div style={{ border: "1px solid black", height: "200px", overflow: "auto", display: "flex", flexDirection: "row", flexWrap: "wrap", borderStyle: "dotted", padding: "10px" }}>
+            <div style={{ border: "1px solid black", height: "300px", overflow: "auto", display: "flex", flexDirection: "row", flexWrap: "wrap", borderStyle: "dotted", padding: "10px" }}>
 
                 <Upload listType="picture-card"
                     accept="image/*"
@@ -170,8 +181,40 @@ const PicturesAndMaps = ({ data }) => {
                     {uploadButton}
                 </Upload>
             </div>
-            <div style={{ border: "1px solid black", height: "350px", overflow: "auto", display: "flex", flexDirection: "row", flexWrap: "wrap" }} >
-                Property Map here.
+            <div className="map" style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }} >
+                <div style={{ height: "60vh", width: "90%", border: "1px solid black", borderStyle: "dotted", position: "relative", zIndex: "5" }}>
+
+                    <div style={{ position: 'absolute', zIndex: "6" }}>
+                        <Button onClick={() => setIsSatellite(!isSatellite)} type="primary"> {isSatellite ? "Satellite View" : "Street View"}</Button>
+                    </div>
+                    <Map
+                        style={isSatellite ? "mapbox://styles/mapbox/satellite-v9" : "mapbox://styles/mapbox/outdoors-v11"}
+                        containerStyle={{
+                            height: '100%',
+                            width: '100%'
+                        }}
+                        center={[geo.long ? geo.long : -78.2952710, geo.lat ? geo.lat : 35.9553564]}
+                        zoom={[geo.lat || geo.long ? 15 : 0]}
+                    >
+                        <ZoomControl position="bottom-right" />
+                        <RotationControl />
+
+
+                        {geo && Object.keys(geo).length !== 0 &&
+                            <Popup
+                                coordinates={[geo.long, geo.lat]}
+                                offset={{
+                                    'bottom-left': [12, -38], 'bottom': [0, -38], 'bottom-right': [-12, -38]
+                                }}>
+                                <h1>Popup</h1>
+                            </Popup>
+                        }
+
+                        <ScaleControl position="bottom-left" />
+
+                    </Map>;
+
+                </div>
             </div>
 
         </Row>

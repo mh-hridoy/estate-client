@@ -97,8 +97,12 @@ const Signup = () => {
           const route = requestedUrl ? requestedUrl : "/home/dashboard"
           router.push(route)
           dispatch(setInLoginPage(false))
+          setClickedOnLogin(false)
+
         } catch (err) {
           setIsLoading(false)
+          setClickedOnLogin(false)
+
           //do not put here err.response.data.message ? err.response.data.message : "Something went wrong!!!".. otherwise it wont catch the error.
           const errorMsg = err.response ? err.response.data.message : "Something went wrong!!!"
           message.error(errorMsg)
@@ -108,9 +112,6 @@ const Signup = () => {
       loginHandler()
     }
 
-    return (() => {
-      setClickedOnLogin(false)
-    })
 
   }, [clickedOnLogin && loginData])
 

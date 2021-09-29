@@ -37,7 +37,7 @@ const singlePropertyInfo = () => {
         if (requestedProperty) {
             const fethSingleProperty = async () => {
                 try {
-                    const { data } = await axios.get(`http://localhost:5000/api/requested-property/${requestedProperty}`,
+                    const { data } = await axios.get(`${process.env.NEXT_PUBLIC_MAIN_PROXY}/requested-property/${requestedProperty}`,
                         {
                             headers: {
                                 'Authorization': `Bearer ${token}`

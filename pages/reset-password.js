@@ -50,7 +50,7 @@ const resetPassword = () => {
         try {
             setFirstStatus("process")
             setIsLoading(true)
-            await axios.post(`http://localhost:5000/api/reset-password`, values, {
+            await axios.post(`${process.env.NEXT_PUBLIC_MAIN_PROXY}/reset-password`, values, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -72,7 +72,7 @@ const resetPassword = () => {
         try {
             setSecondStatus("process")
             setIsLoading(true)
-            await axios.post(`http://localhost:5000/api/verify-code`, { email: requestedMail, resetCode: code }, {
+            await axios.post(`${process.env.NEXT_PUBLIC_MAIN_PROXY}/verify-code`, { email: requestedMail, resetCode: code }, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -94,7 +94,7 @@ const resetPassword = () => {
         try {
             setThirdStatus("process")
             setIsLoading(true)
-            await axios.patch(`http://localhost:5000/api/change-password`, { email: requestedMail, password, cPassword }, {
+            await axios.patch(`${process.env.NEXT_PUBLIC_MAIN_PROXY}/change-password`, { email: requestedMail, password, cPassword }, {
                 headers: {
                     'Content-Type': 'application/json'
                 }

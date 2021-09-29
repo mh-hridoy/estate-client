@@ -34,7 +34,7 @@ const PriceHistory = ({ data }) => {
     }, [sendRequest, historyVal])
 
 
-    const { isLoading } = useHttp(sendRequest, `http://localhost:5000/api/update-property/${propertyId}`, "put", historyVal)
+    const { isLoading } = useHttp(sendRequest, `${process.env.NEXT_PUBLIC_MAIN_PROXY}/update-property/${propertyId}`, "put", historyVal)
 
 
     data.map(history => {

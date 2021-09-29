@@ -45,6 +45,11 @@ also add query string if requested url contains query.// Done
 create endpoints for single property info//Done
 //need to fix property overview and result due to changes of shcema//Done
 work on single page property info UI//Done
+Fetch Single page Data//Done
+fix dynamc array field name and iD.//Done
+//need to update the endpoint with put.//Done
+//close two seperate endpoints for single bidder and sale info/decided not to close
+//change file upload section name and ID/Done
 
 Store, localstorage, Protected routes, logout, menuItem....//Partially completed, also working on this along other task.... 
 *******
@@ -54,24 +59,21 @@ Store, localstorage, Protected routes, logout, menuItem....//Partially completed
 *****************************
 
 //next
-Fetch Single page Data//
-fix dynamc array field name and iD.//
-//need to update the endpoint with put.
-//close two seperate endpoints for single bidder and sale info/
+
 //limit data from getProperties endpoints.//
 //create another endpoints for the overview on result page.//
+
 //create seperate endpoints for the unAuthorized request for property info & add there some data for better SEO.//
-//change file upload section name and ID/
 //check on react-draggable
 
 ************
 
 Others features, security and changes.
 *****************************
-//consider to change the reset page ui with progress component.// Also check for the form data collision problem.
+//consider to change the reset page ui with progress component.// Also check for the login and signup form data collision problem.
 //use result component for the blocked or inactive users.
 //make change for the selectedRole . Put an endpoint and update all the data.
-sent token .. csurf and the status.
+csurf and the status.
 must lookup on aggregation method.
 //Research for the Automation on logs.com
 

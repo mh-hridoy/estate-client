@@ -116,7 +116,7 @@ const PicturesAndMaps = ({ data, geo }) => {
                 try {
                     setUploading(true)
                     message.loading({ content: "File uploading...", key: "5" })
-                    const { data } = await axios.post(`http://localhost:5000/api/upload-pictures/${propertyId}`, selectedFiles, {
+                    const { data } = await axios.post(`${process.env.NEXT_PUBLIC_MAIN_PROXY}/upload-pictures/${propertyId}`, selectedFiles, {
                         headers: {
                             'Authorization': `Bearer ${token}`
                         }
@@ -150,7 +150,7 @@ const PicturesAndMaps = ({ data, geo }) => {
     const removeSelectedFile = async (file) => {
         try {
             message.loading({ content: file.name + " deleting....", key: "6" })
-            await axios.post(`http://localhost:5000/api/delete-image/${propertyId}`, { key: file.name }, {
+            await axios.post(`${process.env.NEXT_PUBLIC_MAIN_PROXY}/delete-image/${propertyId}`, { key: file.name }, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -171,7 +171,7 @@ const PicturesAndMaps = ({ data, geo }) => {
         try {
             message.loading({ content: "Updating property location...", key: "7" })
             setIsLoading(true)
-            await axios.put(`http://localhost:5000/api/update-map/${propertyId}`, { long, lat }, {
+            await axios.put(`${process.env.NEXT_PUBLIC_MAIN_PROXY}/update-map/${propertyId}`, { long, lat }, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }

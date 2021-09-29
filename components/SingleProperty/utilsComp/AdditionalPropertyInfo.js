@@ -105,7 +105,7 @@ const AdditionalPropertyInfo = ({ files }) => {
                     try {
                         setUploading(true)
                         message.loading({ content: "File uploading...", key: "5" })
-                        const { data } = await axios.post(`http://localhost:5000/api/upload-files/${propertyId}`, selectedFiles, {
+                        const { data } = await axios.post(`${process.env.NEXT_PUBLIC_MAIN_PROXY}/upload-files/${propertyId}`, selectedFiles, {
                             headers: {
                                 'Authorization': `Bearer ${token}`
                             }
@@ -142,7 +142,7 @@ const AdditionalPropertyInfo = ({ files }) => {
                 try {
                     setIsDeleting(true)
                     message.loading({ content: delFile + " deleting....", key: "6" })
-                    await axios.post(`http://localhost:5000/api/delete-file/${propertyId}`, { key: delFile }, {
+                    await axios.post(`${process.env.NEXT_PUBLIC_MAIN_PROXY}/delete-file/${propertyId}`, { key: delFile }, {
                         headers: {
                             'Authorization': `Bearer ${token}`
                         }

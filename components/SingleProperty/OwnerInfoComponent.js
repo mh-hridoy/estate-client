@@ -47,7 +47,7 @@ const OwnerInfoComponent = ({ ownerAndBorrower, data }) => {
 
     }
 
-    const { isLoading } = useHttp(sendRequest, `http://localhost:5000/api/update-property/${propertyId}`, "put", wBValues)
+    const { isLoading } = useHttp(sendRequest, `${process.env.NEXT_PUBLIC_MAIN_PROXY}/update-property/${propertyId}`, "put", wBValues)
 
 
     useEffect(() => {

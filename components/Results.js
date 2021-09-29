@@ -101,7 +101,7 @@ const Result = (props) => {
         try {
             const { data } = await axios({
                 method: 'delete',
-                url: 'http://localhost:5000/api/delete-property',
+                url: `${process.env.NEXT_PUBLIC_MAIN_PROXY}/delete-property`,
                 data: {
                     id: mergeSelectedItem
                 },

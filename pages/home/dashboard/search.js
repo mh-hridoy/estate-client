@@ -151,7 +151,7 @@ const search = () => {
 
             console.log(URI)
 
-            const URL = `http://localhost:5000/api/properties?${URI}`
+            const URL = `${process.env.NEXT_PUBLIC_MAIN_PROXY}/properties?${URI}`
             const requestableURL = URL.replace(/,\s*$/, "");
             const basicSearchReq = async () => {
                 try {
@@ -241,7 +241,7 @@ const search = () => {
             setQueryOfArray(arrayOfURI)
 
 
-            const URL = `http://localhost:5000/api/properties?${URI}`
+            const URL = `${process.env.NEXT_PUBLIC_MAIN_PROXY}/properties?${URI}`
 
             const requestableURL = URL.replace(/,\s*$/, "");
             const advanceSearchReq = async () => {
@@ -299,7 +299,7 @@ const search = () => {
             emmitSpace = requesteURI.replace(oldPage, correctPage)
             setShallowUrl(emmitSpace)
 
-            const requestableURL = `http://localhost:5000/api/properties?${emmitSpace}`
+            const requestableURL = `${process.env.NEXT_PUBLIC_MAIN_PROXY}/properties?${emmitSpace}`
 
             const onChangeSearch = async () => {
                 setResultIsLoading(true)
@@ -367,7 +367,7 @@ const search = () => {
             setQueryOfArray(arrayOfURI)
             setResultLimit(pageLimit)
             setRequestedUri(joinedUrl)
-            const requestableURL = `http://localhost:5000/api/properties?${joinedUrl}`
+            const requestableURL = `${process.env.NEXT_PUBLIC_MAIN_PROXY}/properties?${joinedUrl}`
 
             const onPageReloadFetch = async () => {
                 try {

@@ -83,7 +83,7 @@ const Signup = () => {
           // console.log(requestedUrl)
           console.log("logged in")
           setIsLoading(true)
-          const { data } = await axios.post(`http://localhost:5000/api/login`, loginData, {
+          const { data } = await axios.post(`${process.env.NEXT_PUBLIC_MAIN_PROXY}/login`, loginData, {
             headers: {
               'Content-Type': 'application/json'
             }, withCredentials: true //must include this shit.. otherwise cookies wont work
@@ -113,7 +113,7 @@ const Signup = () => {
   const registerAccount = async ({ email, fullName: name, password, cPassword }) => {
     try {
       setIsLoading(true)
-      await axios.post(`http://localhost:5000/api/signup`, { email, name, password, cPassword }, {
+      await axios.post(`${process.env.NEXT_PUBLIC_MAIN_PROXY}/signup`, { email, name, password, cPassword }, {
         headers: {
           'Content-Type': 'application/json'
         }

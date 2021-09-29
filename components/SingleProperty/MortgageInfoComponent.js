@@ -56,7 +56,7 @@ const MortgageInfoComponent = ({ data }) => {
         setSendHeaderReq((prev) => ({ sendHeaderReq: !prev }))
     }
 
-    const { isLoading } = useHttp(sendHeaderReq, `http://localhost:5000/api/update-property/${propertyId}`, "put", headerValue)
+    const { isLoading } = useHttp(sendHeaderReq, `${process.env.NEXT_PUBLIC_MAIN_PROXY}/update-property/${propertyId}`, "put", headerValue)
 
     const firstMortgageHandler = (values) => {
         setFirstMortgageVal(values)
@@ -84,7 +84,7 @@ const MortgageInfoComponent = ({ data }) => {
 
 
 
-    const { isLoading: isFMloading } = useHttp(isFLoading, `http://localhost:5000/api/update-property/${propertyId}`, "put", firstMortgageVal)
+    const { isLoading: isFMloading } = useHttp(isFLoading, `${process.env.NEXT_PUBLIC_MAIN_PROXY}/update-property/${propertyId}`, "put", firstMortgageVal)
 
     // console.log(firstMortgageVal)
     const secondMortgageHandler = (values) => {
@@ -110,7 +110,7 @@ const MortgageInfoComponent = ({ data }) => {
 
     }, [isSLoading && secondMortgageVal])
 
-    const { isLoading: isSMloading } = useHttp(isSLoading, `http://localhost:5000/api/update-property/${propertyId}`, "put", secondMortgageVal)
+    const { isLoading: isSMloading } = useHttp(isSLoading, `${process.env.NEXT_PUBLIC_MAIN_PROXY}/update-property/${propertyId}`, "put", secondMortgageVal)
 
     const thirdMortgageHandler = (values) => {
         setThirdMortgageVal(values)
@@ -135,7 +135,7 @@ const MortgageInfoComponent = ({ data }) => {
 
     }, [isTLoading && thirdMortgageVal])
 
-    const { isLoading: isTMloading } = useHttp(isTLoading, `http://localhost:5000/api/update-property/${propertyId}`, "put", thirdMortgageVal)
+    const { isLoading: isTMloading } = useHttp(isTLoading, `${process.env.NEXT_PUBLIC_MAIN_PROXY}/update-property/${propertyId}`, "put", thirdMortgageVal)
 
     const firstMData = data.firstmortgageInfo
     firstMData.dateRecorded = firstMData.dateRecorded && moment(firstMData.dateRecorded)

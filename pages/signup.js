@@ -108,6 +108,10 @@ const Signup = () => {
       loginHandler()
     }
 
+    return (() => {
+      setClickedOnLogin(false)
+    })
+
   }, [clickedOnLogin && loginData])
 
   const registerAccount = async ({ email, fullName: name, password, cPassword }) => {

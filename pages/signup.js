@@ -73,7 +73,6 @@ const Signup = () => {
   };
 
 
-  // console.log(requestedUrl)
   dispatch(setInLoginPage(true))
 
   useEffect(() => {

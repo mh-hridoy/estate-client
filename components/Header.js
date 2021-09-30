@@ -31,7 +31,7 @@ const Header = () => {
 
                     try {
                         setIsLoading(true)
-                        await axios.get('http://localhost:5000/api/logout', { withCredentials: true })
+                        await axios.get(`${process.env.NEXT_PUBLIC_MAIN_PROXY}/api/logout`, { withCredentials: true })
                         setIsLoading(false)
                         localStorage.clear('user')
                         message.loading({ content: "Logging Out...", key: "1" })

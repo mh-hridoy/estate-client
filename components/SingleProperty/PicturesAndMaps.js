@@ -1,13 +1,12 @@
-import { Row, Upload, message, Button, Col, Form, Input } from 'antd'
+import { Row, Upload, message, Button, Col, Form } from 'antd'
 import { PlusOutlined } from '@ant-design/icons'
 import { useState, useEffect } from 'react';
 import Resizer from "react-image-file-resizer";
 import axios from 'axios';
 import { useSelector } from 'react-redux'
-import ReactMapboxGl, { ZoomControl, RotationControl, ScaleControl, Marker } from 'react-mapbox-gl';
 import InputField from './utilsComp/InputField';
+import PropertyMap from './PropertyMap'
 
-import 'mapbox-gl/dist/mapbox-gl.css'; //must install mapbox-gl alongside react-mapbox-gl
 
 function getBase64(file) {
     return new Promise((resolve, reject) => {
@@ -34,12 +33,11 @@ const PicturesAndMaps = ({ data, geo }) => {
     const token = useSelector((state) => state.user.token)
     const propertyId = useSelector((state) => state.property.propertyId)
     const user = useSelector((state) => state.user.user)
-    const [isSatellite, setIsSatellite] = useState(false)
     const [lat, setLat] = useState(geo.lat)
     const [long, setLong] = useState(geo.long)
     const [isLoading, setIsLoading] = useState(false)
 
-    const { Item } = Form
+    // const { Item } = Form
 
     const [geoForm] = Form.useForm()
 
@@ -50,10 +48,7 @@ const PicturesAndMaps = ({ data, geo }) => {
         </div>
     );
 
-    const Map = ReactMapboxGl({
-        accessToken: process.env.NEXT_PUBLIC_MAPBOX_ACCESS_ID,
 
-    });
 
 
     useEffect(() => {
@@ -220,43 +215,15 @@ const PicturesAndMaps = ({ data, geo }) => {
                     {uploadButton}
                 </Upload>
             </div>
+
             <div className="map" style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }} >
                 <div style={{ height: "60vh", width: "90%", border: "1px solid black", borderStyle: "dotted", position: "relative", zIndex: "5" }}>
 
-                    <div style={{ position: 'absolute', zIndex: "6" }}>
-                        <Button onClick={() => setIsSatellite(!isSatellite)} > {isSatellite ? "Satellite View" : "Street View"}</Button>
-                    </div>
-                    <Map
-                        style={isSatellite ? "mapbox://styles/mapbox/satellite-v9" : "mapbox://styles/mapbox/outdoors-v11"}
-                        containerStyle={{
-                            height: '100%',
-                            width: '100%'
-                        }}
-                        center={[long ? long : -78.2952710, lat ? lat : 35.9553564]}
-                        zoom={[lat || long ? 15 : 0]}
-                        renderChildrenInPortal={true}
-                    >
-                        <ZoomControl position="bottom-right" />
-                        <RotationControl />
-
-                        {geo && Object.keys(geo).length !== 0 &&
-
-                            <Marker
-                                coordinates={[long, lat]}
-                                anchor="bottom"
-                            >
-                                <img src="/marker.png"
-                                    height={55} width={55}
-                                />
-
-                            </Marker>
-                        }
-                        <ScaleControl position="bottom-left" />
-
-                    </Map>;
-
+                    {/* map */}
+                    <PropertyMap lat={lat} long={long} geo={geo} />
                 </div>
             </div>
+
 
         </Row>
     )

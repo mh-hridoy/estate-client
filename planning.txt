@@ -59,6 +59,8 @@ Store, localstorage, Protected routes, logout, menuItem....//Partially completed
 *****************************
 
 //next
+fix modal view property info.
+fix onLogin redirect functionality.
 
 //limit data from getProperties endpoints.//
 //create another endpoints for the overview on result page.//

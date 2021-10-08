@@ -2,12 +2,17 @@ import React from 'react'
 import styles from '../styles/propertyOverview.module.css'
 import { Drawer, Space, Button } from 'antd'
 import CarouselSection from './CarouselSection'
+import PropertyMap from './SingleProperty/PropertyMap'
 
 const PropertyOverview = (props) => {
     const { closeOverviewDrawer, showOverviewDrawer, property } = props
-
-
     const info = property[0]
+    // const allImageURI = []
+    const geo = info.geo
+
+    const lat = geo.lat
+    const long = geo.long
+    // info.propertyImages.length !== 0 && info.propertyImages.forEach((image) => allImageURI.push(image.Location))
 
 
     const lastSaleinfo = info.saleinfo && info.saleinfo[info.saleinfo.length - 1]
@@ -95,7 +100,7 @@ const PropertyOverview = (props) => {
                         <div className={styles.imageSection}>
                             <h2>Property Images</h2>
                             <hr />
-                            <CarouselSection />
+                            <CarouselSection images={info.propertyImages} />
                         </div>
 
                     </div>
@@ -121,7 +126,7 @@ const PropertyOverview = (props) => {
                         <hr />
 
                         <div className={styles.propertyMap}>
-
+                            <PropertyMap lat={lat} long={long} geo={geo} />
                         </div>
                     </div>
 

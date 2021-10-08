@@ -11,6 +11,11 @@ body {
   overflow-x: hidden;
 }
 
+.carousel-container {
+  height: 250px;
+  width : 400px;
+}
+
 .homePage {
   background-image: url("../public/house3.svg");
   height: 100vh;
@@ -460,7 +465,6 @@ img {
   object-fit: fill;
   background-position: bottom;
   object-position: bottom;
-  background-position: bottom;
 }
 
 @media screen and (max-width: 1350px) {

@@ -26,10 +26,11 @@
     "react-hamburger-menu": "^1.2.1",
     "react-image-file-resizer": "^0.4.7",
     "react-mapbox-gl": "^5.1.1",
+    "react-multi-carousel": "^2.6.5",
     "react-redux": "^7.2.4",
     "react-responsive-carousel": "^3.2.20",
+    "react-slick": "^0.28.1",
     "xlsx": "^0.17.1",
     "yup": "^0.32.9"
-  },
-  "devDependencies": {}
+  }
 }

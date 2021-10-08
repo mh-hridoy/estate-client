@@ -18,8 +18,6 @@ const SingleResult = (props) => {
 
     // console.log(lastSaleinfo, firstMortgageInfo, secondMortgageInfo)
 
-
-
     return (
         <>
             <div className={styles.singleResultCard}>

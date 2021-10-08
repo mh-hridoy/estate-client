@@ -16,6 +16,7 @@
      height : 250px;
     width : 400px;
     border: 1px solid var(--optional-color);
+    position: relative;
 
 } 
 

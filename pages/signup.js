@@ -40,9 +40,11 @@ const Signup = () => {
   // let requestedUrl;
 
   const requestedPathname = useSelector((state) => state.user.requestedPath)
-  const requestedQuery = useSelector((state) => state.user.requestedQuery)
 
-  const arrayOfURI = []
+
+  // const requestedQuery = useSelector((state) => state.user.requestedQuery)
+
+  // const arrayOfURI = []
 
   // useEffect(() => {
   //   if (Object.entries(requestedQuery).length != 0) {

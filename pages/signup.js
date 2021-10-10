@@ -150,9 +150,17 @@ const Signup = () => {
 
     if (user && !requestedUrl) {
       router.push("/home/dashboard")
+      setPageLoading(false)
     }
 
   }, [user && !requestedUrl])
+
+  useEffect(() => {
+    if (user == null) {
+      setPageLoading(false)
+    }
+  }, [user == null])
+
 
   return (
     <>

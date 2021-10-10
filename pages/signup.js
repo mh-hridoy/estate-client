@@ -11,8 +11,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { login, setInLoginPage } from '../store/userInfoSlice'
 import { useRouter } from 'next/router'
 
-
-
 const loginValidation = Yup.object().shape({
   email: Yup.string().email('Please enter a valid email address').required('Email is required!'),
   password: Yup.string().min(8, "Password must be at least 8 characters long").required('Password is required!')
@@ -39,30 +37,35 @@ const Signup = () => {
   const router = useRouter()
   const dispatch = useDispatch()
 
-  let requestedUrl;
+  // let requestedUrl;
 
   const requestedPathname = useSelector((state) => state.user.requestedPath)
   const requestedQuery = useSelector((state) => state.user.requestedQuery)
 
   const arrayOfURI = []
 
+  // useEffect(() => {
+  //   if (Object.entries(requestedQuery).length != 0) {
+  //     try {
+  //       for (const [key, value] of Object.entries(requestedQuery)) {
+  //         const iteratedData = `${key.trim()}=${value.split(' ').join("+")}`
+  //         arrayOfURI.push(iteratedData)
+  //       }
 
-  if (Object.entries(requestedQuery).length != 0) {
-    try {
-      for (const [key, value] of Object.entries(requestedQuery)) {
-        const iteratedData = `${key.trim()}=${value.split(' ').join("+")}`
-        arrayOfURI.push(iteratedData)
-      }
+  //       const newArra = [new Set(arrayOfURI)]
+  //       const URI = `${requestedPathname}?${newArra.join("&")}`
+  //       const correctedUrl = URI.split("?[object Set]")[0]
+  //       requestedUrl = correctedUrl
+  //     } catch (err) { console.log(err) }
 
-      const newArra = [new Set(arrayOfURI)]
-      const URI = `${requestedPathname}?${newArra.join("&")}`
-      const correctedUrl = URI.split("?[object Set]")[0]
-      requestedUrl = correctedUrl
-    } catch (err) { console.log(err) }
+  //   } else {
+  //     console.log(requestedUrl)
+  //     requestedUrl = requestedPathname
+  //   }
+  // }, [Object.entries(requestedQuery).length != 0, requestedPathname, requestedUrl])
 
-  } else {
-    requestedUrl = requestedPathname
-  }
+
+
 
   const loginAccount = (values) => {
     setClickedOnLogin(true)
@@ -91,7 +94,8 @@ const Signup = () => {
           localStorage.setItem('user', JSON.stringify(data))
           setIsLoading(false)
           message.success("Logged in successfully.")
-          const route = requestedUrl ? requestedUrl : "/home/dashboard"
+          console.log(requestedPathname)
+          const route = requestedPathname ? requestedPathname : "/home/dashboard"
           router.push(route)
           dispatch(setInLoginPage(false))
           setClickedOnLogin(false)
@@ -148,12 +152,12 @@ const Signup = () => {
 
   useEffect(() => {
 
-    if (user && !requestedUrl) {
+    if (user && !requestedPathname) {
       router.push("/home/dashboard")
       setPageLoading(false)
     }
 
-  }, [user && !requestedUrl])
+  }, [user && !requestedPathname])
 
   useEffect(() => {
     if (user == null) {

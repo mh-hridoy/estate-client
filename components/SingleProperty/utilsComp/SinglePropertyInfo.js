@@ -4,12 +4,9 @@ import styles from '../../../styles/search.module.css'
 import NumberField from './NumberField';
 import InputWithSuffix from './InputWithSuffix';
 import propertyInfoVal from '../../../utils/propertyInfoVal'
-import { UploadOutlined } from '@ant-design/icons';
 import { useState } from 'react';
 import { useSelector } from 'react-redux'
 import useHttp from '../../../utils/useHttp'
-import Resizer from "react-image-file-resizer";
-import axios from 'axios';
 import AdditionalPropertyInfo from './AdditionalPropertyInfo';
 
 

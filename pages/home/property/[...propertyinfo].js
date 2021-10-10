@@ -24,6 +24,7 @@ const singlePropertyInfo = () => {
 
     const [isLoading, setIsLoading] = useState(true)
     const [requestedData, setRequestedData] = useState(null)
+    const user = useSelector((state) => state.user.user)
 
     const token = useSelector((state) => state.user.token)
 
@@ -37,6 +38,7 @@ const singlePropertyInfo = () => {
         if (requestedProperty) {
             const fethSingleProperty = async () => {
                 try {
+                    if (user == null) return router.push('/signup')
                     const { data } = await axios.get(`${process.env.NEXT_PUBLIC_MAIN_PROXY}/requested-property/${requestedProperty}`,
                         {
                             headers: {
@@ -53,9 +55,9 @@ const singlePropertyInfo = () => {
                     const errorMsg = err.response ? err.response.data.message : "Something went wrong!!!"
                     console.log(err.response)
                     message.error(errorMsg)
-                    setTimeout(() => {
+                    // setTimeout(() => {
                         router.push('/home/dashboard')
-                    }, 1500)
+                    // }, 1500)
                 }
             }
             fethSingleProperty()

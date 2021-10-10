@@ -31,10 +31,10 @@ const CarouselSection = ({ images }) => {
             slidesToSlide={1}
             infinite={true}
             autoPlay
-            autoPlaySpeed={1500}
+            autoPlaySpeed={1000}
             arrows={false}
-            customTransition="all 0.9"
-            transitionDuration={1500}
+            customTransition="all 0.5"
+            transitionDuration={500}
             containerClass="carousel-container"
             removeArrowOnDeviceType={["tablet", "mobile"]}
             dotListClass="custom-dot-list-style"

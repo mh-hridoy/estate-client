@@ -59,11 +59,13 @@ Store, localstorage, Protected routes, logout, menuItem....//Partially completed
 *****************************
 
 //next
-fix modal view property info.
+fix modal view property info.//done
+fix useEffect of signup page.//Done
 fix onLogin redirect functionality.
 
-//limit data from getProperties endpoints.//
-//create another endpoints for the overview on result page.//
+
+//limit data from getProperties endpoints.//will do that only for app.
+//create another endpoints for the overview on result page.//will do that only for app.
 
 //create seperate endpoints for the unAuthorized request for property info & add there some data for better SEO.//
 //check on react-draggable

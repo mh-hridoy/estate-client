@@ -28,8 +28,6 @@ const signupValidation = Yup.object().shape({
     })
 })
 
-
-
 const Signup = () => {
 
   const [isLogin, setIsLogin] = useState(false)
@@ -49,7 +47,7 @@ const Signup = () => {
   const arrayOfURI = []
 
 
-  if (requestedPathname && Object.entries(requestedQuery).length != 0) {
+  if (Object.entries(requestedQuery).length != 0) {
     try {
       for (const [key, value] of Object.entries(requestedQuery)) {
         const iteratedData = `${key.trim()}=${value.split(' ').join("+")}`
@@ -150,12 +148,12 @@ const Signup = () => {
 
   useEffect(() => {
 
-    if (user) {
+    if (user && !requestedUrl) {
       setPageLoading(true)
-      // router.push(requestedUrl ? requestedUrl : "/home/dashboard")
+      router.push("/home/dashboard")
     }
 
-  }, [user])
+  }, [user && !requestedUrl])
 
   return (
     <>

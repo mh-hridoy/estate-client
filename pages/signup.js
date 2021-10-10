@@ -32,7 +32,7 @@ const Signup = () => {
 
   const [isLogin, setIsLogin] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-  const [pageLoading, setPageLoading] = useState(false)
+  const [pageLoading, setPageLoading] = useState(true)
   const [clickedOnLogin, setClickedOnLogin] = useState(false)
   const [loginData, setLoginData] = useState()
   const user = useSelector((state) => state.user.user)
@@ -149,7 +149,6 @@ const Signup = () => {
   useEffect(() => {
 
     if (user && !requestedUrl) {
-      setPageLoading(true)
       router.push("/home/dashboard")
     }
 

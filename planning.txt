@@ -59,6 +59,7 @@ Store, localstorage, Protected routes, logout, menuItem....//Partially completed
 *****************************
 
 //next
+//Delete property image and fils while the user merge record from the server.
 fix modal view property info.//done
 fix useEffect of signup page.//Done
 fix onLogin redirect functionality.

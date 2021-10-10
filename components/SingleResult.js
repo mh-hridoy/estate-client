@@ -5,6 +5,7 @@ import styles from '../styles/results.module.css'
 const SingleResult = (props) => {
 
     const { info } = props
+    const image = info.propertyImages && info.propertyImages.length !== 0 && info.propertyImages[0].Location
 
     const lastSaleinfo = info.saleinfo && info.saleinfo[info.saleinfo.length - 1]
     const firstMortgageInfo = info.firstmortgageInfo && info.firstmortgageInfo
@@ -24,7 +25,7 @@ const SingleResult = (props) => {
                 <Checkbox value={props.value} style={{ marginRight: "5px" }} />
                 <div className={styles.imageContainer}>
                     <div className={styles.mainImage}>
-                        <Image width={150} height={150} src="" />
+                        <Image width={150} height={150} src={image} />
                     </div>
 
                     <div className={styles.resultButton}>

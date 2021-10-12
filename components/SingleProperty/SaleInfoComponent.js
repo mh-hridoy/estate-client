@@ -58,7 +58,7 @@ const SaleInfoComponent = ({ data }) => {
                 saleInfo.dateOfReport = saleInfo.dateOfReport && moment(saleInfo.dateOfReport).toISOString()
                 saleInfo.fimByDate = saleInfo.fimByDate && moment(saleInfo.fimByDate).toISOString()
                 saleInfo.fnosDate = saleInfo.fnosDate && moment(saleInfo.fnosDate).toISOString()
-                saleInfo.otherBidderInfo.length !== 0 && saleInfo.otherBidderInfo.map((ub) => {
+                saleInfo.otherBidderInfo && saleInfo.otherBidderInfo.map((ub) => {
                     ub.bidDate = ub.bidDate && moment(ub.bidDate).toISOString()
                     ub.lastDateForNextUb = ub.lastDateForNextUb && moment(ub.lastDateForNextUb).toISOString()
                     ub.dateOfFilling = ub.dateOfFilling && moment(ub.dateOfFilling).toISOString()

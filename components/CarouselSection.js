@@ -50,7 +50,7 @@ const CarouselSection = ({ images }) => {
             })}
 
             {images.length == 0 && <>
-                <div key={inx} >
+                <div>
                     <img src='/NoImage.jpg' alt="no image found" />
                 </div> </>}
 

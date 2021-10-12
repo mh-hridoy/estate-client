@@ -97,7 +97,7 @@ const Signup = () => {
           setIsLoading(false)
           message.success("Logged in successfully.")
           console.log(requestedPathname)
-          const route = requestedPathname ? requestedPathname : "/home/dashboard"
+          const route = requestedPathname != "" ? requestedPathname : "/home/dashboard"
           router.push(route)
           dispatch(setInLoginPage(false))
           setClickedOnLogin(false)
@@ -154,12 +154,12 @@ const Signup = () => {
 
   useEffect(() => {
 
-    if (user && !requestedPathname) {
+    if (user && requestedPathname == "") {
       router.push("/home/dashboard")
       setPageLoading(false)
     }
 
-  }, [user && !requestedPathname])
+  }, [user && requestedPathname == ""])
 
   useEffect(() => {
     if (user == null) {

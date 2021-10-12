@@ -160,7 +160,7 @@ const SingleMortgage = ({ formName, viewAmort, viewModA, viewSubA, fclView, data
                     <InputField label="Loan Type" name={[name, "loanType"]} />
                     <InputField label="Loan Term" name={[name, "loanTerm"]} />
                     <DateField label="Maturity Date" name={[name, "maturityDate"]} />
-                    <InputField label="Right to Cure" name={[name, "rightToCure"]} />
+                    <NumberField label="Right to Cure" name={[name, "rightToCure"]} />
                     <NumberField label="Trustee Fees" name={[name, "tursteeFee"]} />
                     <InputField label="Trustee" name={[name, "trustee"]} />
                     <InputField label="STR Book/Page" name={[name, "strBookPage"]} />

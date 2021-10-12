@@ -33,8 +33,8 @@ const PicturesAndMaps = ({ data, geo }) => {
     const token = useSelector((state) => state.user.token)
     const propertyId = useSelector((state) => state.property.propertyId)
     const user = useSelector((state) => state.user.user)
-    const [lat, setLat] = useState(geo.lat)
-    const [long, setLong] = useState(geo.long)
+    const [lat, setLat] = useState(geo ? geo.lat : "")
+    const [long, setLong] = useState(geo ? geo.long : "")
     const [isLoading, setIsLoading] = useState(false)
 
     // const { Item } = Form

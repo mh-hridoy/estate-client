@@ -59,17 +59,17 @@ const propertyInfoVal = (data) => {
         beenVerifiedURL: data.beenVerifiedURL,
 
 
-        ename: data.elementarySchool.ename,
-        eranking: data.elementarySchool.eranking,
-        edistance: data.elementarySchool.edistance,
+        ename: data.elementarySchool && data.elementarySchool.ename,
+        eranking: data.elementarySchool && data.elementarySchool.eranking,
+        edistance: data.elementarySchool && data.elementarySchool.edistance,
 
-        mname: data.middleSchool.mname,
-        mranking: data.middleSchool.mranking,
-        mdistance: data.middleSchool.mdistance,
+        mname: data.middleSchool && data.middleSchool.mname,
+        mranking: data.middleSchool && data.middleSchool.mranking,
+        mdistance: data.middleSchool && data.middleSchool.mdistance,
         
-        hname: data.highSchool.hname,
-        hranking: data.highSchool.hranking,
-        hdistance: data.highSchool.hdistance
+        hname: data.highSchool && data.highSchool.hname,
+        hranking: data.highSchool && data.highSchool.hranking,
+        hdistance: data.highSchool && data.highSchool.hdistance
     }
 
 }

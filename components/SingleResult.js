@@ -5,17 +5,17 @@ import styles from '../styles/results.module.css'
 const SingleResult = (props) => {
 
     const { info } = props
-    const image = info.propertyImages && info.propertyImages.length !== 0 && info.propertyImages[0].Location
+    const image = info.propertyImages.length !== 0 ? info.propertyImages[0].Location : "/NoImage.jpg"
 
     const lastSaleinfo = info.saleinfo && info.saleinfo[info.saleinfo.length - 1]
     const firstMortgageInfo = info.firstmortgageInfo && info.firstmortgageInfo
     const secondMortgageInfo = info.secondMortgageInfo && info.secondMortgageInfo
 
 
-    const dtcDate = info.firstComp && info.firstComp.date.split("T")[0]
-    const dcaDate = info.secondComp && info.secondComp.date.split("T")[0]
-    const thirdDcaDate = info.thridComp && info.thridComp.date.split("T")[0]
-    const saleDate = lastSaleinfo && lastSaleinfo.saleDate.split("T")[0]
+    const dtcDate = info.firstComp && info.firstComp.date && info.firstComp.date.split("T")[0]
+    const dcaDate = info.secondComp && info.secondComp.date && info.secondComp.date.split("T")[0]
+    const thirdDcaDate = info.thridComp && info.thridComp.date && info.thridComp.date.split("T")[0]
+    const saleDate = lastSaleinfo && lastSaleinfo.saleDate && lastSaleinfo.saleDate.split("T")[0]
 
     // console.log(lastSaleinfo, firstMortgageInfo, secondMortgageInfo)
 
@@ -60,11 +60,11 @@ const SingleResult = (props) => {
 
                     <div className={styles.otherInfo} onClick={() => props.onClick(info._id)}>
                         <ul>
-                            <li>Trustee : {lastSaleinfo.trustee && lastSaleinfo.trustee}</li>
-                            <li>Trustee Address : {lastSaleinfo.trusteeAddress && lastSaleinfo.trusteeAddress}</li>
-                            <li>Sale Type : {lastSaleinfo.saleType}</li>
+                            <li>Trustee : {lastSaleinfo && lastSaleinfo.trustee}</li>
+                            <li>Trustee Address : {lastSaleinfo && lastSaleinfo.trusteeAddress}</li>
+                            <li>Sale Type : {lastSaleinfo && lastSaleinfo.saleType}</li>
                             <li>Sale Date : {saleDate && saleDate}</li>
-                            <li>Case No. : {lastSaleinfo.caseNumber && lastSaleinfo.caseNumber}</li>
+                            <li>Case No. : {lastSaleinfo && lastSaleinfo.caseNumber}</li>
 
 
                             <li>1st Lien Amount :  {firstMortgageInfo && firstMortgageInfo.lienAmount}</li>
@@ -73,10 +73,10 @@ const SingleResult = (props) => {
                             <li>2nd Lien Bank : {secondMortgageInfo && secondMortgageInfo.lender}</li>
 
 
-                            <li>HOA Name : {info.hoaLien.hoaName}</li>
-                            <li>DTC By : {info.firstComp.firstDTC}</li>
+                            <li>HOA Name : {info && info.hoaLien.hoaName}</li>
+                            <li>DTC By : {info && info.firstComp.firstDTC}</li>
                             <li>DTC By Date : {dtcDate}</li>
-                            <li>DCA By : {info.secondComp.secondDCA}</li>
+                            <li>DCA By : {info && info.secondComp.secondDCA}</li>
                         </ul>
 
                     </div>
@@ -86,14 +86,14 @@ const SingleResult = (props) => {
                             <li>DCA By Date: {dcaDate} </li>
                             <li>Third Check By : {info.thirdComp.thirdDCA} </li>
                             <li>Third Check Date: {thirdDcaDate} </li>
-                            <li>Opening Bid : {lastSaleinfo.amountOfBid} </li>
-                            <li>County Value: {info.countyValue}</li>
-                            <li>Zestimates: {info.zestimate}</li>
-                            <li>CMA: {firstMortgageInfo.cmaArv}</li>
-                            <li>NOS By: {lastSaleinfo.nosName && lastSaleinfo.nosName} </li>
-                            <li>NOS By Date: {lastSaleinfo.nosDate && lastSaleinfo.nosDate} </li>
-                            <li>Image By: {lastSaleinfo.fimby && lastSaleinfo.fimby}</li>
-                            <li>Image By Date: {lastSaleinfo.fimByDate && lastSaleinfo.fimByDate}</li>
+                            <li>Opening Bid : {lastSaleinfo && lastSaleinfo.amountOfBid} </li>
+                            <li>County Value: {info && info.countyValue}</li>
+                            <li>Zestimates: {info && info.zestimate}</li>
+                            <li>CMA: {firstMortgageInfo && firstMortgageInfo.cmaArv}</li>
+                            <li>NOS By: {lastSaleinfo && lastSaleinfo.nosName} </li>
+                            <li>NOS By Date: {lastSaleinfo && lastSaleinfo.nosDate} </li>
+                            <li>Image By: {lastSaleinfo && lastSaleinfo.fimby}</li>
+                            <li>Image By Date: {lastSaleinfo && lastSaleinfo.fimByDate}</li>
                             <li>1st Buy It: pending...</li>
                             <li>2nd Buy It: pending...</li>
                         </ul>

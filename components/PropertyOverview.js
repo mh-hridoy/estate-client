@@ -10,8 +10,8 @@ const PropertyOverview = (props) => {
     // const allImageURI = []
     const geo = info.geo
 
-    const lat = geo.lat
-    const long = geo.long
+    const lat = geo && geo.lat
+    const long = geo && geo.long
     // info.propertyImages.length !== 0 && info.propertyImages.forEach((image) => allImageURI.push(image.Location))
 
 
@@ -20,10 +20,10 @@ const PropertyOverview = (props) => {
     const secondMortgageInfo = info.secondMortgageInfo && info.secondMortgageInfo
     const hoaLien = info.hoaLien
     const lastAssesment = info.assesmentAndTaxes[info.assesmentAndTaxes.length - 1]
-    const lastBidder = lastSaleinfo.otherBidderInfo && lastSaleinfo.otherBidderInfo[lastSaleinfo.otherBidderInfo.length - 1]
+    const lastBidder = lastSaleinfo && lastSaleinfo.otherBidderInfo[lastSaleinfo.otherBidderInfo.length - 1]
 
 
-    const saleDate = lastSaleinfo && lastSaleinfo.saleDate.split("T")[0]
+    const saleDate = lastSaleinfo && lastSaleinfo.saleDate && lastSaleinfo.saleDate.split("T")[0]
 
 
     return (
@@ -75,10 +75,10 @@ const PropertyOverview = (props) => {
                         <hr />
 
                         <ul>
-                            <li>Property Tax Owed : {lastAssesment.propertyTaxOwed}</li>
-                            <li>Owed Year : {lastAssesment.owedYear}</li>
-                            <li>Tax Assessed : {lastAssesment.taxAssessed}</li>
-                            <li>Tax Year : {lastAssesment.taxYear}</li>
+                            <li>Property Tax Owed : {lastAssesment && lastAssesment.propertyTaxOwed}</li>
+                            <li>Owed Year : {lastAssesment && lastAssesment.owedYear}</li>
+                            <li>Tax Assessed : {lastAssesment && lastAssesment.taxAssessed}</li>
+                            <li>Tax Year : {lastAssesment && lastAssesment.taxYear}</li>
                             <li>HOA Name : {hoaLien.hoaName}</li>
                             <li>HOA Amount : {hoaLien.hoaLienAmount}</li>
                             <li>HOA Date : {hoaLien.hoaLienDate}</li>
@@ -109,11 +109,11 @@ const PropertyOverview = (props) => {
                         <hr />
                         <ul>
                             <li>Sale Date : {saleDate}</li>
-                            <li>Sale Time : {lastSaleinfo.saleTime}</li>
-                            <li>Trustee Name : {lastSaleinfo.Trustee}</li>
-                            <li>NOS By Name : {lastSaleinfo.nosName}</li>
-                            <li>OB Amount : {lastSaleinfo.amountOfBid}</li>
-                            <li>OB By : {lastSaleinfo.nameOfPurchaser}</li>
+                            <li>Sale Time : {lastSaleinfo && lastSaleinfo.saleTime}</li>
+                            <li>Trustee Name : {lastSaleinfo && lastSaleinfo.Trustee}</li>
+                            <li>NOS By Name : {lastSaleinfo && lastSaleinfo.nosName}</li>
+                            <li>OB Amount : {lastSaleinfo && lastSaleinfo.amountOfBid}</li>
+                            <li>OB By : {lastSaleinfo && lastSaleinfo.nameOfPurchaser}</li>
                             <li>Leading/Winning Bidder : {lastBidder && lastBidder.nameOfUpsetBidder}</li>
                             <li>Leading/Winning Bid Amount : {lastBidder && lastBidder.amountOfBid}</li>
                             <li>1st Buy it by : Pending...</li>

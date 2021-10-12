@@ -112,6 +112,7 @@ const search = () => {
 
             const { startDate, endDate, fSort, fOrder, sSort, sOrder } = searchValue
             // console.log(searchValue)
+            Object.keys(searchValue).forEach((key) => searchValue[key] == "" && delete searchValue[key])
 
             for (const [key, value] of Object.entries(searchValue)) {
                 // undefined the searchValue before the conditional loop. otherwise it wont work. 
@@ -142,8 +143,8 @@ const search = () => {
 
             const newSatartDate = startDate ? new Date(startDate._d).toISOString().split('T')[0] : ""
             const newEndDate = endDate ? new Date(endDate._d).toISOString().split('T')[0] : ""
-            arrayOfURI.unshift(`endDate=${newEndDate && newEndDate}`)
-            arrayOfURI.unshift(`startDate=${newSatartDate && newSatartDate}`)
+            newEndDate && arrayOfURI.unshift(`endDate=${newEndDate}`)
+            newSatartDate && arrayOfURI.unshift(`startDate=${newSatartDate}`)
             const URI = arrayOfURI.join("&")
             setRequestedUri(URI)
             setShallowUrl(URI)

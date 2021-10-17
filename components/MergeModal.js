@@ -28,7 +28,7 @@ const MergeModal = (props) => {
                 <pre style={{ fontSize: "10px", textAlign: "center" }}>(Please click on <b> "Submit" </b> button to continue...)</pre>
                 {info.map(record => {
                     const lastSaleinfo = record.saleinfo && record.saleinfo[record.saleinfo.length - 1]
-                    const saleDate = lastSaleinfo && lastSaleinfo.saleDate.split("T")[0]
+                    const saleDate = lastSaleinfo && lastSaleinfo.saleDate && lastSaleinfo.saleDate.split("T")[0]
                     return (
                         <div className={styles.singleContainer} key={record._id} >
                             <div className={styles.imageContainer}>
@@ -41,7 +41,7 @@ const MergeModal = (props) => {
                                     <li>Zip : {record.zip}</li>
                                     <li>CMA: {record.firstmortgageInfo.cmaArv}</li>
                                     <li>Year Built : {record.yearBuilt}</li>
-                                    <li>Sale Type : {lastSaleinfo.saleType}</li>
+                                    <li>Sale Type : {lastSaleinfo && lastSaleinfo.saleType}</li>
                                     <li>1st Buy It: pending...</li>
                                 </ul>
                             </div>
@@ -50,7 +50,7 @@ const MergeModal = (props) => {
                                 <ul>
                                     <li>Parcel : {record.parcelId}</li>
                                     <li>Sale Date : {saleDate && saleDate}</li>
-                                    <li>Case No. : {lastSaleinfo.caseNumber && lastSaleinfo.caseNumber}</li>
+                                    <li>Case No. : {lastSaleinfo && lastSaleinfo.caseNumber}</li>
                                     <li>DCA By : {record.secondComp.secondDCA}</li>
                                     <li>County Value: {record.countyValue}</li>
 

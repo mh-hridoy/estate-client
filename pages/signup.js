@@ -33,14 +33,10 @@ const Signup = () => {
   const [pageLoading, setPageLoading] = useState(true)
   const [clickedOnLogin, setClickedOnLogin] = useState(false)
   const [loginData, setLoginData] = useState()
+  const [requestedPathname] = useState(useSelector((state) => state.user.requestedPath))
   const user = useSelector((state) => state.user.user)
   const router = useRouter()
   const dispatch = useDispatch()
-
-  // let requestedUrl;
-
-  const requestedPathname = useSelector((state) => state.user.requestedPath)
-
 
   // const requestedQuery = useSelector((state) => state.user.requestedQuery)
 
@@ -96,7 +92,6 @@ const Signup = () => {
           localStorage.setItem('user', JSON.stringify(data))
           setIsLoading(false)
           message.success("Logged in successfully.")
-          console.log(requestedPathname)
           const route = requestedPathname != "" ? requestedPathname : "/home/dashboard"
           router.push(route)
           dispatch(setInLoginPage(false))
@@ -140,31 +135,25 @@ const Signup = () => {
 
   const toggleForm = (e) => {
     e.preventDefault()
-
     setIsLogin(true)
-
   }
-
   const toggleToFalse = (e) => {
     e.preventDefault()
-
     setIsLogin(false)
-
   }
-
   useEffect(() => {
+                  setPageLoading(true)
 
-    if (user && requestedPathname == "") {
+    if (user !== null && requestedPathname == "") {
       router.push("/home/dashboard")
-      setPageLoading(false)
     }
-
-  }, [user && requestedPathname == ""])
+  }, [user !== null   && requestedPathname == ""])
 
   useEffect(() => {
     if (user == null) {
-      setPageLoading(false)
+            setPageLoading(false)
     }
+
   }, [user == null])
 
 

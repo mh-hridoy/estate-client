@@ -65,13 +65,12 @@ const ProtectedPage = (props) => {
             message.warning("You are not authenticated! Please login and try again.")
             const windowLocation = window.location.href
             const onlyPathname = windowLocation.split("3000")[1]
+            console.log(onlyPathname)
             dispatch(storeRequestedPath((onlyPathname)))
-            setTimeout(() => {
                 router.push('/signup')
-}, 10)
         }
 
-    }, [user !== null, user === null])
+    }, [])
 
     useEffect(() => {
         if (width <= 1000) {

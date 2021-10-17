@@ -62,14 +62,10 @@ const ProtectedPage = (props) => {
             setIsLoading(false)
 
         } else if (!userInfo || user === null) {
+            dispatch(storeRequestedPath((window.location.href.split("3000")[1])))
             message.warning("You are not authenticated! Please login and try again.")
-            const windowLocation = window.location.href
-            const onlyPathname = windowLocation.split("3000")[1]
-            console.log(onlyPathname)
-            dispatch(storeRequestedPath((onlyPathname)))
-                router.push('/signup')
+            router.push('/signup')
         }
-
     }, [])
 
     useEffect(() => {
@@ -77,7 +73,6 @@ const ProtectedPage = (props) => {
             setIsFullScreen(false)
         } else {
             setIsFullScreen(true)
-
         }
     }, [width])
 

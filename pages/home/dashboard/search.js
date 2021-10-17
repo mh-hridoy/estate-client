@@ -374,7 +374,7 @@ const search = () => {
                 try {
                     setSelectedPage(page)
                     setResultIsLoading(true)
-                    message.loading({ content: 'Loading...', key: "3" });
+                    message.loading({ content: 'Loading...', key: "6" });
                     setIsLoading(true)
                     const { data } = await axios.get(requestableURL, {
                         headers: {
@@ -383,7 +383,7 @@ const search = () => {
                     }
 
                     )
-                    message.success({ content: 'Loaded successfully!', key: "3" });
+                    message.success({ content: 'Loaded successfully!', key: "6" });
                     setIsLoading(false)
                     setResultIsLoading(false)
 
@@ -393,7 +393,7 @@ const search = () => {
 
                     setIsLoading(false)
                     const errorMsg = err.response ? err.response.data.message : "Something went wrong!!!"
-                    message.error({ content: errorMsg, key: "3" });
+                    message.error({ content: errorMsg, key: "6" });
 
                 }
             }

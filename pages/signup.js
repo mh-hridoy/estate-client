@@ -62,9 +62,6 @@ const Signup = () => {
   //   }
   // }, [Object.entries(requestedQuery).length != 0, requestedPathname, requestedUrl])
 
-
-
-
   const loginAccount = (values) => {
     setClickedOnLogin(true)
     setLoginData(values)

@@ -62,7 +62,8 @@ const ProtectedPage = (props) => {
             setIsLoading(false)
 
         } else if (!userInfo || user === null) {
-            dispatch(storeRequestedPath((window.location.href.split("3000")[1])))
+            const hostName = window.location.hostname
+            dispatch(storeRequestedPath(window.location.href.split(hostName + ":3000" && ":3000")[1]))
             message.warning("You are not authenticated! Please login and try again.")
             router.push('/signup')
         }

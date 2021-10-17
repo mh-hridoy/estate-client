@@ -62,8 +62,7 @@ const ProtectedPage = (props) => {
             setIsLoading(false)
 
         } else if (!userInfo || user === null) {
-            const hostName = window.location.hostname
-            dispatch(storeRequestedPath(window.location.href)) //checking...
+            dispatch(storeRequestedPath(window.location.href.split("estate-client-p.herokuapp.com" )[1])) //checking...
             message.warning("You are not authenticated! Please login and try again.")
             router.push('/signup')
         }

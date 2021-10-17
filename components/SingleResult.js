@@ -1,11 +1,13 @@
 import React from 'react'
 import { Image, Button, Checkbox } from 'antd'
 import styles from '../styles/results.module.css'
+import {useRouter} from 'next/router' 
 
 const SingleResult = (props) => {
 
     const { info } = props
     const image = info.propertyImages.length !== 0 ? info.propertyImages[0].Location : "/NoImage.jpg"
+    const router = useRouter()
 
     const lastSaleinfo = info.saleinfo && info.saleinfo[info.saleinfo.length - 1]
     const firstMortgageInfo = info.firstmortgageInfo && info.firstmortgageInfo
@@ -19,6 +21,11 @@ const SingleResult = (props) => {
 
     // console.log(lastSaleinfo, firstMortgageInfo, secondMortgageInfo)
 
+    const redirectToProperty = (id) => {
+        const hostname = window.location.origin
+        const propertyLink = `${hostname}/home/property/${id}`
+        window.open(propertyLink, '_blank')
+    }
     return (
         <>
             <div className={styles.singleResultCard}>
@@ -31,11 +38,11 @@ const SingleResult = (props) => {
                     <div className={styles.resultButton}>
                         <Button className={styles.btn}>Add to Favorite</Button>
                         <Button className={styles.btn}>Set Alarm</Button>
-                        <Button className={styles.btn}>Open Link</Button>
+                        <Button className={styles.btn } onClick={() => redirectToProperty(info._id)} >Open Link</Button>
                     </div>
                 </div>
 
-                <div className={styles.allInfo} onClick={() => props.onClick(info._id)}>
+                <div className={styles.allInfo} onClick={() => props.onClick(info)}>
 
                     <div className={styles.propertyInfo}>
                         <ul>

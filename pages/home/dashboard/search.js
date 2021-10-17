@@ -197,6 +197,8 @@ const search = () => {
 
     }, [!changePage && !isASearched && limit && searchValue && isSearched])
 
+    useEffect(() => {    document.title = "Search Property";
+})
 
     useEffect(() => {
         if (!changePage && !isSearched && aLimit && searchAValue && isASearched) {
@@ -453,7 +455,7 @@ const search = () => {
 
             </div>
 
-        </ProtectedPage >
+        </ProtectedPage>
     )
 }
 

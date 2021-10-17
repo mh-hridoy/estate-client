@@ -34,7 +34,7 @@ const style = {
 const ProtectedPage = (props) => {
     const router = useRouter()
     const user = useSelector((state) => state.user.user)
-    const [isLoading, setIsLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState(true)
 
     const [isSeeMore, setIsSeeMore] = useState(false)
     const [isFullScreen, setIsFullScreen] = useState(false)
@@ -58,20 +58,20 @@ const ProtectedPage = (props) => {
 
     useEffect(() => {
         const userInfo = localStorage.getItem('user')
-        setIsLoading(true)
         if (userInfo || user !== null) {
             setIsLoading(false)
 
         } else if (!userInfo || user === null) {
             message.warning("You are not authenticated! Please login and try again.")
-            router.push('/signup')
             const windowLocation = window.location.href
-
             const onlyPathname = windowLocation.split("3000")[1]
             dispatch(storeRequestedPath((onlyPathname)))
+            setTimeout(() => {
+                router.push('/signup')
+}, 10)
         }
 
-    }, [user])
+    }, [user !== null, user === null])
 
     useEffect(() => {
         if (width <= 1000) {

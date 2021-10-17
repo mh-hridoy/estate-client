@@ -8,8 +8,8 @@ import StoreProvider from '../store/store'
 import 'mapbox-gl/dist/mapbox-gl.css'
 
 const progress = new ProgressBar({
-  size: 3,
-  color: "blue",
+  size: 2,
+  color: "rgba(255,0,0,0.5)",
   className: "bar-of-progress",
   delay: 100,
 });

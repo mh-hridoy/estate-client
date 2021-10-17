@@ -16,12 +16,9 @@ export const userInfoSlice = createSlice({
         login: (state, action) => {
             return { ...state, user: action.payload.user, token: action.payload.token }
         },
-        // logout: (state) => {
-        //     state.user = null
-        //     state.token = ""
-        //     state.requestedUrl = ""
-        //     return state;
-        // },
+        logout: (state) => {
+            return { user: action.payload.user, token: action.payload.token }
+        },
         storeRequestedPath: (state, action) => {
             return { ...state, requestedPath: action.payload }
         },
@@ -40,6 +37,6 @@ export const userInfoSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { login, storeRequestedPath, setInLoginPage, storeRequestedQuery } = userInfoSlice.actions
+export const { login, storeRequestedPath, setInLoginPage, storeRequestedQuery, logout } = userInfoSlice.actions
 
 export default userInfoSlice.reducer

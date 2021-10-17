@@ -4,11 +4,12 @@ import Image from 'next/image'
 import Hamburger from './Hamburger'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import UserAvatar from './UserAvatar';
 import { Button, message } from 'antd'
 import axios from 'axios'
 import NotiBar from './NotiBar'
+// import { logout } from '../store/userInfoSlice'
 
 
 
@@ -19,8 +20,9 @@ const Header = () => {
     const [isLoading, setIsLoading] = useState(false)
     const [clickedToLogOut, setClickedToLogOut] = useState(false)
 
+    // const dispatch = useDispatch()
 
-    const logout = async () => {
+    const logoutHandle = async () => {
         setClickedToLogOut(true)
 
     }
@@ -66,7 +68,7 @@ const Header = () => {
                         </Link>
                     </li>
                     <li>
-                        <Button onClick={logout} htmlType="submit" disabled={isLoading} loading={isLoading}>
+                    <Button onClick={logoutHandle} htmlType="submit" disabled={isLoading} loading={isLoading}>
                             Sign Out
                         </Button>
                     </li>

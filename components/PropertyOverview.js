@@ -6,6 +6,7 @@ import PropertyMap from "./SingleProperty/PropertyMap";
 
 const PropertyOverview = (props) => {
   const { closeOverviewDrawer, showOverviewDrawer, property } = props;
+  console.log(property)
   const info = property[0];
   // const allImageURI = []
   const geo = info && info.geo;

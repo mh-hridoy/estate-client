@@ -123,7 +123,9 @@ const Result = (props) => {
         showWarningModal(false)
     }
     //this will check all the properties._id and if it matched with newDefaultCheckedList(id) then it will stage the data. //Do NOT USE (every) method OR DO NOT CHNAGE THE ORDER OF FILTER. LIKE newDefaultCheckedList.filter && properties.some ***DONT DO THAT. IT WILL RETURN ONLY ID SINCE ITS FILTERING ONLY IDs.
+
     return (
+
         <>
         <div className={styles.fullResult}>
             <div className={styles.paginationArea}>
@@ -151,8 +153,13 @@ const Result = (props) => {
                     //Push the data from here. Othrwise it wont work for the first render.. See above newPlainOptins variable.
                     newPlainOptins = [...new Set(plainOptions)]
                     return (
-                        <SingleResult key={property._id} value={property._id} info={property} onClick={openOverviewDrawer} />
-                    )
+                      <SingleResult
+                        key={property._id}
+                        value={property._id}
+                        info={property}
+                        onClick={() => openOverviewDrawer(property._id)}
+                      />
+                    );
                 })
                     }
 

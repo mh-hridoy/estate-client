@@ -52,7 +52,15 @@ const CarouselSection = ({ images }) => {
       ) : (
         <>
           <div>
-            <img src="/NoImage.jpg" alt="no image found" />
+            <img
+              src="/NoImage.jpg"
+              alt="no image found"
+              style={{
+                objectFit: "cover",
+                height: "60%",
+                width: "60%",
+              }}
+            />
           </div>{" "}
         </>
       )}

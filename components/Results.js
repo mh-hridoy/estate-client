@@ -9,6 +9,7 @@ import { useSelector } from 'react-redux'
 import { message } from 'antd'
 import Export from './Export';
 import PropertyOverview from './PropertyOverview';
+import {useRouter} from 'next/router'
 
 //need to push all the results id.
 const plainOptions = [];
@@ -37,6 +38,7 @@ const Result = (props) => {
 
     const mergeThisRecord = properties.filter(({ _id: id1 }) => newDefaultCheckedList.some((id2) => id2 === id1));
 
+    const router = useRouter()
     const pageLimit = +limit
     // console.log(limit)
     const nSelectedPage = +selectedPage || 1
@@ -108,7 +110,8 @@ const Result = (props) => {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
 
-            message.success(data + " Please reload or search property again!")
+            message.success(data)
+            router.reload() //here I can delete the merged properties from the array for better UX.
             setModalLoading(false)
             setVisible(false)
         } catch (err) {

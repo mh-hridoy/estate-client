@@ -36,6 +36,7 @@ const CaseInputComponent = ({
                     placeholder="Property Address...."
                     id="propertyAddress"
                     style={{ border: "1px solid black" }}
+                    required
                   />
                 </Item>
               </Col>

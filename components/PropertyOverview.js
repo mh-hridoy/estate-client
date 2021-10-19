@@ -6,7 +6,6 @@ import PropertyMap from "./SingleProperty/PropertyMap";
 
 const PropertyOverview = (props) => {
   const { closeOverviewDrawer, showOverviewDrawer, property } = props;
-  console.log(property)
   const info = property[0];
   // const allImageURI = []
   const geo = info && info.geo;
@@ -142,7 +141,16 @@ const PropertyOverview = (props) => {
                 Leading/Winning Bid Amount :{" "}
                 {lastBidder && lastBidder.amountOfBid}
               </li>
-              <li>1st Buy it by : Pending...</li>
+              {info.buyItUser &&
+                info.buyItUser.length != 0 &&
+                info.buyItUser.map((user, inx) => {
+                  return <li key={inx}>Buy it by : {user.name}</li>
+                })}
+
+              {info.buyItUser &&
+                info.buyItUser.length ===0 && <li>No buy it yet!!!</li>
+                }
+              
             </ul>
           </div>
 
@@ -157,7 +165,7 @@ const PropertyOverview = (props) => {
         </div>
       </div>
     </Drawer>
-  );
+  )
 };
 
 export default PropertyOverview;

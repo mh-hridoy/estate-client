@@ -12,6 +12,7 @@ import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { storeData } from "../../../store/singleRecordSlice";
 import PicturesAndMaps from "../../../components/SingleProperty/PicturesAndMaps";
+import BottomSection from "../../../components/SingleProperty/BottomSection";
 
 const singlePropertyInfo = () => {
   const router = useRouter();
@@ -173,9 +174,12 @@ const singlePropertyInfo = () => {
             </TabPane>
           </Tabs>
 
+
+          <BottomSection/>
           <div className="bottomPart" style={{ paddingBottom: "30px" }}>
-            {" "}
+            
           </div>
+
         </>
       )}
     </ProtectedPage>

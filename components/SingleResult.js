@@ -122,7 +122,7 @@ const SingleResult = (props) => {
                 <li>Image By: {lastSaleinfo && lastSaleinfo.fimby}</li>
                 <li>Image By Date: {lastSaleinfo && lastSaleinfo.fimByDate}</li>
                 <li>
-                  1st Buy It:
+                  1st Buy It:  
                   {info.buyItUser && info.buyItUser.length !==0 ? info.buyItUser[0].name
                     : ""}
                 </li>

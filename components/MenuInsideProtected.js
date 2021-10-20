@@ -22,37 +22,47 @@ const MenuInsideProtected = (props) => {
     }, [pathname])
 
     return (
-        <>
-            <Affix offsetTop={58}>
-                <Menu onClick={handleClick} selectedKeys={current} mode="horizontal" style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-                    <Item key="/home/dashboard/search" icon={<SearchOutlined />}>
-                        Search Property
-                    </Item>
-                    <Item key="caseInput" icon={<PlusOutlined />}>
-                        Case Input
-                    </Item>
-                    <Item key="buyIt" icon={<DollarOutlined />}>
-                        BuyIt Request
-                    </Item>
-                    <Item key="favorite" icon={<StarOutlined />}>
-                        Favorite Property
-                    </Item>
-                    <Item key="alarm" icon={<NotificationOutlined />}>
-                        Show Alarm
-                    </Item>
-                    <Item key="report" icon={<LineChartOutlined />}>
-                        Report
-                    </Item>
-                    <Item key="AAreport" icon={<LineChartOutlined />}>
-                        AA Report
-                    </Item>
-                </Menu>
+      <>
+        <Affix offsetTop={58}>
+          <Menu
+            onClick={handleClick}
+            selectedKeys={current}
+            mode="horizontal"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Item key="/home/dashboard/search" icon={<SearchOutlined />}>
+              Search Property
+            </Item>
+            <Item
+              key="dashboard/caseInput"
+                          icon={<PlusOutlined />}
+            >
+              Case Input
+            </Item>
+            <Item key="buyIt" icon={<DollarOutlined />}>
+              BuyIt Request
+            </Item>
+            <Item key="favorite" icon={<StarOutlined />}>
+              Favorite Property
+            </Item>
+            <Item key="alarm" icon={<NotificationOutlined />}>
+              Show Alarm
+            </Item>
+            <Item key="report" icon={<LineChartOutlined />}>
+              Report
+            </Item>
+            <Item key="AAreport" icon={<LineChartOutlined />}>
+              AA Report
+            </Item>
+          </Menu>
+        </Affix>
 
-            </Affix>
-
-            {props.children}
-
-        </>
+        {props.children}
+      </>
     )
 }
 

@@ -115,7 +115,9 @@ const Result = (props) => {
             setModalLoading(false)
             setVisible(false)
         } catch (err) {
-            message.error(err.response.data.message || "Something went wrong!")
+            message.error(
+              err.response && err.response.data.message || "Something went wrong!"
+            )
             setModalLoading(false)
 
 

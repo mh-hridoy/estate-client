@@ -6,7 +6,7 @@ import { DollarOutlined, LineChartOutlined, NotificationOutlined, PlusOutlined, 
 const MenuInsideProtected = (props) => {
     const { Item } = Menu;
     const router = useRouter()
-    const [current, setCurrent] = useState(null)
+  const [current, setCurrent] = useState(null)
 
     const pathname = router.pathname
 
@@ -38,8 +38,8 @@ const MenuInsideProtected = (props) => {
               Search Property
             </Item>
             <Item
-              key="dashboard/caseInput"
-                          icon={<PlusOutlined />}
+              key= "/home/dashboard/caseInput"
+              icon={<PlusOutlined />}
             >
               Case Input
             </Item>

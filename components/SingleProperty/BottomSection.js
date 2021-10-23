@@ -110,7 +110,7 @@ function BottomSection() {
         }}
       >
         <div
-          style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}
+          style={{ display: "flex", flexDirection: "row", flexWrap: "wrap", overflow : "auto" }}
         >
           <Space>
             <Button

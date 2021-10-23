@@ -23,6 +23,7 @@ const SaleInfoComponent = ({ data }) => {
   //we can follow the same method for the submit value
   data.length !== 0 &&
     data.map((saleInfo) => {
+      saleInfo.beforeSaleNotes = saleInfo.beforeSaleNotes && saleInfo.beforeSaleNotes.trim()
       saleInfo.saleDate = saleInfo.saleDate && moment(saleInfo.saleDate);
       saleInfo.datePulled = saleInfo.datePulled && moment(saleInfo.datePulled);
       saleInfo.imByDate = saleInfo.imByDate && moment(saleInfo.imByDate);
@@ -211,7 +212,7 @@ const SaleInfoComponent = ({ data }) => {
           </List>
         </Col>
 
-        <Col xs={4} style={{ position: "sticky", bottom: "20px" }}>
+        <Col xs={4} style={{ position: "sticky", bottom: "100px" }}>
           <Button
             type="primary"
             htmlType="submit"

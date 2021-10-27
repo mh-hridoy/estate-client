@@ -8,6 +8,7 @@ const PropertyMapping = () => {
   const [showPrice, setShowPrice] = useState(false)
   const [showBedBath, setShowBedBath] = useState(false)
   const [isSatellite, setIsSatellite] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
   const { Search } = Input
   const { Option } = Select
@@ -76,16 +77,17 @@ const PropertyMapping = () => {
 
           {/* Actual map component. */}
           <Map
+            setIsLoading={setIsLoading}
             mapStyle={
               isSatellite
-                ? "mapbox://styles/mapbox/satellite-v9"
+                ? "mapbox://styles/alif-h2543/ckv648hg3798814l9pdsn9ptt"
                 : "mapbox://styles/mapbox/outdoors-v11"
             }
           />
         </div>
 
         <div className={styles.results}>
-          <Results />
+          <Results isLoading={isLoading} />
         </div>
       </div>
     </>

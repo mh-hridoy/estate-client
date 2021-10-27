@@ -27,7 +27,7 @@ const StoreProvider = (props) => {
 
     }, [])
 
-    //declare the axios instance method to chcek if the token is valid unless forece the client to logout.
+    //declare the axios instance method to chcek if the token is valid unless force the client to logout.
 
     // axios.defaults.baseURL = 'https://api.example.com';
     // axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;

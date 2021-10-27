@@ -1,0 +1,41 @@
+.mapAndResult {
+    display: flex;
+    flex-direction: "row";
+  height : 83vh;
+  width : 100vw;
+}
+
+.map {
+    width: 60%;
+    height: 100%;
+    border: 1px solid #ccc;
+    position: relative;
+}
+
+.results {
+    width: 40%;
+    height: 100%;
+        border: 1px solid #ccc;
+
+}
+
+@media screen and (max-width: 700px) {
+
+
+.mapAndResult {
+  display: block;
+
+}
+
+.map {
+    width: 100%;
+    height: 60%;
+}
+
+.results {
+    width: 100%;
+    height: 40%;
+
+} 
+
+}

@@ -126,7 +126,8 @@ const SingleResult = (props) => {
                   {info.buyItUser && info.buyItUser.length !==0 ? info.buyItUser[0].name
                     : ""}
                 </li>
-                <li>2nd Buy It: {info.buyItUser && info.buyItUser.length > 1  ? info.buyItUser[1].name : ""}</li>
+                {/* <li>2nd Buy It: {info.buyItUser && info.buyItUser.length > 1  ? info.buyItUser[1].name : ""}</li> */}
+                <li>Geo: {info.geo && info.geo.long}</li>
               </ul>
             </div>
           </div>

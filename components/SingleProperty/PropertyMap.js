@@ -7,12 +7,15 @@ import ReactMapboxGl, {
   Marker,
 } from "react-mapbox-gl";
 
+
 function PropertyMap({ lat, long }) {
   const [isSatellite, setIsSatellite] = useState(false);
 
   const Map = ReactMapboxGl({
     accessToken: process.env.NEXT_PUBLIC_MAPBOX_ACCESS_ID,
   });
+
+  
 
   return (
     <>

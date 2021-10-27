@@ -1,13 +1,17 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
+import {useRouter} from 'next/router'
 
 
 const Footer = () => {
+    const router = useRouter()
     const user = useSelector((state) => state.user.user)
+
+    console.log(router.pathname)
 
     return (
         <>
-            {!user &&
+            {!user && router.pathname != "/search" &&
             <div className="footer">
 
                 <div className="allContent">

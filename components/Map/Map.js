@@ -5,19 +5,23 @@ import "mapbox-gl/dist/mapbox-gl.css"
 const navControlStyle = {
   bottom: 20,
   right: 10,
+  zIndex: 100,
 }
 
-const Map = ({ mapStyle, searchedData, onMapLoad, setSendRequest, mapRef }) => {
+const Map = ({
+  mapStyle,
+  allSearchedData,
+  onMapLoad,
+  setSendRequest,
+  mapRef,
+  viewport,
+  setViewport,
+}) => {
  
-  const [viewport, setViewport] = useState({
-    latitude: 35.329286,
-    longitude: -79.732162,
-    zoom: 5,
-  })
-  
+
   const markers = React.useMemo(
     () =>
-      searchedData.map((city, inx) => (
+      allSearchedData.map((city, inx) => (
         <Marker
           captureDrag={false}
           key={city.propertyAddress + inx}
@@ -33,7 +37,7 @@ const Map = ({ mapStyle, searchedData, onMapLoad, setSendRequest, mapRef }) => {
           />
         </Marker>
       )),
-    [searchedData]
+    [allSearchedData]
   )
 
   return (
@@ -45,7 +49,9 @@ const Map = ({ mapStyle, searchedData, onMapLoad, setSendRequest, mapRef }) => {
         width="100%"
         height="100%"
         mapStyle={mapStyle}
-        onViewportChange={(viewport) => setViewport(viewport)}
+        onViewportChange={(viewport) => {
+          setViewport(viewport)
+        }}
         maxZoom={18}
         minZoom={2}
         onLoad={(e) => onMapLoad(e)}

@@ -10,6 +10,7 @@
   "dependencies": {
     "@ant-design/icons": "^4.6.3",
     "@badrap/bar-of-progress": "^0.1.2",
+    "@mapbox/mapbox-sdk": "^0.13.2",
     "@reduxjs/toolkit": "^1.6.1",
     "antd": "^4.15.0",
     "axios": "^0.21.1",

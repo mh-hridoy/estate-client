@@ -4,13 +4,15 @@ import { Provider } from 'react-redux'
 import { useEffect } from 'react'
 import { login } from './userInfoSlice'
 import singleRecordSlice from './singleRecordSlice'
+import mapSlice from './mapSlice'
 
 
 
 const store = configureStore({
     reducer: {
         user: userInfoSlice,
-        property: singleRecordSlice
+        property: singleRecordSlice,
+        map : mapSlice
     },
 })
 

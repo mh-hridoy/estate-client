@@ -1,54 +1,72 @@
 import React from "react"
-import { Row, Col, Image } from "antd"
+import { Row, Col, Spin } from "antd"
 import styles from "../../styles/mapping.module.css"
+import { LoadingOutlined } from "@ant-design/icons"
 
-const Results = ({ isLoading, searchedData }) => {
+const Results = ({ isLoading, allSearchedData }) => {
   return (
     <>
       {isLoading && (
-        <h4 style={{ textAlign: "center", marginTop: 10 }}>Loading....</h4>
-      )}
-      <Row gutter={15} wrap={true} justify="start">
-        <h3 style={{ textAlign: "center", width: "100%", marginTop: 5 }}>
-          Total results : {searchedData.length}
-        </h3>
-        <Col
-          span={24}
-          className={styles.resultContainer}
+        <div
+          style={{
+            position: "fixed",
+            zIndex: 100,
+            top: "50%",
+            right: "60%",
+          }}
         >
-          {searchedData.map((property, inx) => {
-                const image =
-                  property.propertyImages.length !== 0
-                    ? property.propertyImages[0].Location
-                    : "/NoImage.jpg"
+          <Spin
+            indicator={
+              <LoadingOutlined
+                style={{ fontSize: 50, fontWeight: "bolder", color: "#57033E" }}
+                spin
+              />
+            }
+          />
+        </div>
+      )}
+      <Row gutter={10} wrap={true} justify="start">
+        <h3 style={{ textAlign: "center", width: "100%", marginTop: 5 }}>
+          Total results : {!isLoading ? allSearchedData.length : "getting data..."}
+        </h3>
+        <Col span={24} className={styles.resultContainer}>
+          {allSearchedData.map((property, inx) => {
+            const image =
+              property.propertyImages.length !== 0
+                ? property.propertyImages[0].Location
+                : "/NoImage5.png"
 
             return (
-              <Col xs={12} key={inx} style={{ margin: "10px 0" }}>
+              <Col xs={12} key={inx} className={styles.singleContainer}>
                 <div className={styles.resultBox}>
                   {/* property Image */}
-                  <div
-                    style={{
-                      width: "100%",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <Image src={image} className={styles.resultImage} />
+                  <div className={styles.imageContainer}>
+                    <img src={image} className={styles.resultImage} />
+                    <h4
+                      style={{
+                        fontWeight: "bold",
+                        fontSize: "12px",
+                        padding: 4,
+                        margin: "0 5px",
+                      }}
+                    >
+                      {property.propertyAddress}, {property.city}{" "}
+                      {property.state} {property.zip}
+                    </h4>
                   </div>
 
-                  {/* property Address */}
-                  <h4 style={{ fontWeight: "bold", fontSize: "12px" }}>
-                    {property.propertyAddress}, {property.city} {property.state}{" "}
-                    {property.zip}
-                  </h4>
                   {/* Some Info */}
+                  <h5 style={{ margin: "5px 10px" }}>
+                    County Value: ${property.countyValue}
+                  </h5>
+
+                  <h5 style={{ margin: "5px 10px" }}>
+                    Total SQF: {property.totalSqf}
+                  </h5>
                 </div>
               </Col>
             )
           })}
-
-         
         </Col>
       </Row>
     </>

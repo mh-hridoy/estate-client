@@ -4,115 +4,173 @@ import styles from "../../styles/mapping.module.css"
 import Map from "./Map"
 import Results from "./Results"
 import axios from "axios"
-import { useSelector } from "react-redux"
+import { searchedData } from "../../store/mapSlice"
+import { useSelector, useDispatch } from "react-redux"
+import { useRouter } from "next/router"
+const mbxClient = require("@mapbox/mapbox-sdk")
+const mbxStyles = require("@mapbox/mapbox-sdk/services/geocoding")
 
 const PropertyMapping = () => {
   const [showPrice, setShowPrice] = useState(false)
   const [showBedBath, setShowBedBath] = useState(false)
   const [isSatellite, setIsSatellite] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
+  const [searchIsLoading, setSearchIsLoading] = useState(false)
+  const dispatch = useDispatch()
+  // const [centerVal, setCenterVal] = useState()
 
   const { Search } = Input
   const { Option } = Select
+  const token = useSelector((state) => state.user.token)
+  const address = useSelector((state) => state.map.address)
+  const center = useSelector((state) => state.map.center)
+  const fromHome = useSelector((state) => state.map.fromHome)
+  const [coords, setCoords] = useState()
+  const [sendRequest, setSendRequest] = useState(false)
+  const [firstRender, setFirstRender] = useState(false)
+  const [firstCoord, setFirstCoord] = useState()
+  const [allSearchedData, setAllSearchedData] = useState([])
+  const [zoomLev, setZoomLev] = useState()
+  const router = useRouter()
+  const [searchValue, setSearchValue] = useState(address ? address : "")
 
-   const token = useSelector((state) => state.user.token)
-   const [coords, setCoords] = useState()
-   const [sendRequest, setSendRequest] = useState(false)
-   const [firstRender, setFirstRender] = useState(false)
-   const [firstCoord, setFirstCoord] = useState()
-   const [searchedData, setSearchedData] = useState([])
-
-   const [fetchOnScroll, setFetchOnScroll] = useState(false)
+  const [fetchOnScroll, setFetchOnScroll] = useState(false)
   const mapRef = useRef()
 
-   useEffect(() => {
-     if (sendRequest) {
-       const map = mapRef.current.getMap()
-       const bounds = map.getBounds()
-       setCoords({
-         upper: [bounds._ne.lng, bounds._ne.lat],
-         bottom: [bounds._sw.lng, bounds._sw.lat],
-       })
+  const [viewport, setViewport] = useState({
+    latitude: 35.329286,
+    longitude: -79.732162,
+    zoom: 5,
+    // latitude: center ? center[1] : 35.329286,
+    // longitude: center ? center[0] : -79.732162,
+    // zoom: center ? 15 : 5,
+  })
 
-       setFetchOnScroll(true)
-     }
-   }, [sendRequest])
+  const baseClient = mbxClient({
+    accessToken: process.env.NEXT_PUBLIC_MAPBOX_ACCESS_ID,
+  })
+  const stylesService = mbxStyles(baseClient)
 
-   useEffect(() => {
-     if (fetchOnScroll && coords) {
-       // console.log("onScroll" + coords)
-       const fetchByViewport = async () => {
-         setIsLoading(true)
-         try {
-           const { data } = await axios.post(
-             `${process.env.NEXT_PUBLIC_MAIN_PROXY}/property-map`,
-             coords,
-             {
-               headers: {
-                 Authorization: `Bearer ${token}`,
-               },
-               withCredentials: true,
-             }
-           )
-           setIsLoading(false)
+  useEffect(() => {
+    if (sendRequest) {
+      const map = mapRef.current.getMap()
+      const bounds = map.getBounds()
+      setCoords({
+        upper: [bounds._ne.lng, bounds._ne.lat],
+        bottom: [bounds._sw.lng, bounds._sw.lat],
+      })
+      const zoomL = map.getZoom()
+      setZoomLev(Math.floor(zoomL))
+      setFetchOnScroll(true)
+    }
+  }, [sendRequest])
 
-           setSearchedData(data)
-         } catch (err) {
-           console.log(err)
-           setIsLoading(false)
-         }
-       }
-       fetchByViewport()
-     }
+  useEffect(() => {
+    if (fromHome) {
+      setViewport({ latitude: center[1], longitude: center[0], zoom: 14 })
+      const map = mapRef.current.getMap()
+      const bounds = map.getBounds()
+      setCoords({
+        upper: [bounds._ne.lng, bounds._ne.lat],
+        bottom: [bounds._sw.lng, bounds._sw.lat],
+      })
+      const zoomL = map.getZoom()
+      setZoomLev(Math.floor(zoomL))
+      setFetchOnScroll(true)
+    }
+  }, [fromHome])
 
-     return () => {
-       setCoords()
-       setFetchOnScroll(false)
-     }
-   }, [fetchOnScroll && coords])
+  useEffect(() => {
+    if (fetchOnScroll && coords) {
+      // console.log("onScroll" + coords)
+      const fetchByViewport = async () => {
+        setIsLoading(true)
+        try {
+          const queryUrl = `${"west=" + coords.upper[0]}&${
+            "east=" + coords.upper[1]
+          }&${"south=" + coords.bottom[0]}&${"north=" + coords.bottom[1]}&${
+            "zoom=" + zoomLev
+          }`
+          router.push("?" + queryUrl, undefined, { shallow: true })
 
-   const onMapLoad = (map) => {
-     const bounds = map.target.getBounds()
-     setFirstCoord({
-       upper: [bounds._ne.lng, bounds._ne.lat],
-       bottom: [bounds._sw.lng, bounds._sw.lat],
-     })
-     setFirstRender(true)
-   }
+          const { data } = await axios.get(
+            `${process.env.NEXT_PUBLIC_MAIN_PROXY}/property-map?${queryUrl}`,
 
-   useEffect(() => {
-     if (firstRender && firstCoord) {
-       const fetchByViewport = async () => {
-         try {
-           setIsLoading(true)
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+              withCredentials: true,
+            }
+          )
+          setIsLoading(false)
 
-           const { data } = await axios.post(
-             `${process.env.NEXT_PUBLIC_MAIN_PROXY}/property-map`,
-             firstCoord,
-             {
-               headers: {
-                 Authorization: `Bearer ${token}`,
-               },
-               withCredentials: true,
-             }
-           )
-           setIsLoading(false)
+          setAllSearchedData(data)
+        } catch (err) {
+          console.log(err)
+          setIsLoading(false)
+        }
+      }
+      fetchByViewport()
+    }
 
-           setSearchedData(data)
-         } catch (err) {
-           setIsLoading(false)
-           console.log(err)
-         }
-       }
+    return () => {
+      setCoords()
+      setFetchOnScroll(false)
+    }
+  }, [fetchOnScroll && coords])
 
-       fetchByViewport()
-     }
+  const onMapLoad = (map) => {
+    if (!fromHome) {
+      const bounds = map.target.getBounds()
+      setFirstCoord({
+        upper: [bounds._ne.lng, bounds._ne.lat],
+        bottom: [bounds._sw.lng, bounds._sw.lat],
+      })
+      //get lev from query params or use default
+      setZoomLev(8)
+      setFirstRender(true)
+    }
+  }
 
-     return () => {
-       setFirstRender(false)
-       setFirstCoord()
-     }
-   }, [firstRender && firstCoord])
+  useEffect(() => {
+    if (!fromHome && firstRender && firstCoord) {
+      const fetchByViewport = async () => {
+        try {
+          const queryUrl = `${"west=" + firstCoord.upper[0]}&${
+            "east=" + firstCoord.upper[1]
+          }&${"south=" + firstCoord.bottom[0]}&${
+            "north=" + firstCoord.bottom[1]
+          }&${"zoom=" + zoomLev}`
+
+          setIsLoading(true)
+          router.push("?" + queryUrl, undefined, { shallow: true })
+          const { data } = await axios.get(
+            `${process.env.NEXT_PUBLIC_MAIN_PROXY}/property-map?${queryUrl}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+              withCredentials: true,
+            }
+          )
+          setIsLoading(false)
+
+          setAllSearchedData(data)
+        } catch (err) {
+          setIsLoading(false)
+          console.log(err)
+        }
+      }
+
+      fetchByViewport()
+    }
+
+    return () => {
+      setFirstRender(false)
+      setFirstCoord()
+    }
+  }, [!fromHome && firstRender && firstCoord])
 
   const pricePopHandler = () => {
     setShowPrice(!showPrice)
@@ -121,6 +179,41 @@ const PropertyMapping = () => {
     setShowBedBath(!showBedBath)
   }
 
+  const searchProperty = async (property) => {
+    //dispatch all the auto generated lat long and bounds information.
+    try {
+      setSearchIsLoading(true)
+      const mapReq = await stylesService.forwardGeocode({
+        query: property,
+        types: ["address"],
+        limit: 1,
+      })
+
+      const response = await mapReq.send()
+      const match = response.body
+      setSearchIsLoading(false)
+      setViewport({
+        latitude: match.features[0].center[1],
+        longitude: match.features[0].center[0],
+        zoom: 15,
+      })
+      dispatch(
+        searchedData({ address: property, center: match.features[0].center })
+      )
+      const map = mapRef.current.getMap()
+      const bounds = map.getBounds()
+      setCoords({
+        upper: [bounds._ne.lng, bounds._ne.lat],
+        bottom: [bounds._sw.lng, bounds._sw.lat],
+      })
+      const zoomL = map.getZoom()
+      setZoomLev(Math.floor(zoomL))
+      setFetchOnScroll(true)
+    } catch (err) {
+      console.log(err)
+      setSearchIsLoading(false)
+    }
+  }
 
   const priceChoose = () => {
     return (
@@ -137,7 +230,13 @@ const PropertyMapping = () => {
     <>
       <div style={{ width: "100%", height: "7vh", padding: 5 }}>
         <Space direction="horizontal" size="middle">
-          <Search placeholder="Property Address..." />
+          <Search
+            placeholder="Property Address..."
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
+            onSearch={searchProperty}
+            loading={searchIsLoading}
+          />
 
           <Select defaultValue="forSale" style={{ width: "100%" }}>
             <Option value="forSale">For Sale</Option>
@@ -177,8 +276,11 @@ const PropertyMapping = () => {
 
           {/* Actual map component. */}
           <Map
+            viewport={viewport}
+            setViewport={setViewport}
+            center={center}
             mapRef={mapRef}
-            searchedData={searchedData}
+            allSearchedData={allSearchedData}
             onMapLoad={onMapLoad}
             setSendRequest={setSendRequest}
             mapStyle={
@@ -190,7 +292,7 @@ const PropertyMapping = () => {
         </div>
 
         <div className={styles.results}>
-          <Results isLoading={isLoading} searchedData={searchedData} />
+          <Results isLoading={isLoading} allSearchedData={allSearchedData} />
         </div>
       </div>
     </>

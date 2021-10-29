@@ -7,8 +7,6 @@ const Footer = () => {
     const router = useRouter()
     const user = useSelector((state) => state.user.user)
 
-    console.log(router.pathname)
-
     return (
         <>
             {!user && router.pathname != "/search" &&

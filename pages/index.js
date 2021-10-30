@@ -32,11 +32,11 @@ const HomePage = () => {
 
       const response = await mapReq.send()
       const match = response.body
-      setSearchIsLoading(false)
       dispatch(
         searchedData({ address: property, center: match.features[0].center, fromHome : true })
       )
       router.push("/search")
+
     } catch (err) {
       console.log(err)
       setSearchIsLoading(false)

@@ -13,6 +13,7 @@ export const mapSlice = createSlice({
   reducers: {
     searchedData: (state, action) => {
       return {
+        ...state,
         address: action.payload.address,
         center: action.payload.center,
         fromHome: action.payload.fromHome,

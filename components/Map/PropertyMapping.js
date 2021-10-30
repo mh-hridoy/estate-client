@@ -33,6 +33,7 @@ const PropertyMapping = () => {
   const [zoomLev, setZoomLev] = useState()
   const router = useRouter()
   const [searchValue, setSearchValue] = useState(address ? address : "")
+  const [searchFromHome, setSearchFromHome] = useState(false)
 
   const [fetchOnScroll, setFetchOnScroll] = useState(false)
   const mapRef = useRef()
@@ -40,7 +41,7 @@ const PropertyMapping = () => {
   const [viewport, setViewport] = useState({
     latitude: 35.329286,
     longitude: -79.732162,
-    zoom: 5,
+    zoom: !center ? 5 : 14,
     // latitude: center ? center[1] : 35.329286,
     // longitude: center ? center[0] : -79.732162,
     // zoom: center ? 15 : 5,
@@ -53,6 +54,7 @@ const PropertyMapping = () => {
 
   useEffect(() => {
     if (sendRequest) {
+      setIsLoading(true)
       const map = mapRef.current.getMap()
       const bounds = map.getBounds()
       setCoords({
@@ -66,19 +68,33 @@ const PropertyMapping = () => {
   }, [sendRequest])
 
   useEffect(() => {
-    if (fromHome) {
-      setViewport({ latitude: center[1], longitude: center[0], zoom: 14 })
+    if (mapRef.current && fromHome) {
+      setViewport({ latitude: +center[1], longitude: +center[0], zoom: 14 })
+
       const map = mapRef.current.getMap()
       const bounds = map.getBounds()
       setCoords({
-        upper: [bounds._ne.lng, bounds._ne.lat],
-        bottom: [bounds._sw.lng, bounds._sw.lat],
+        upper: [+bounds._ne.lng, +bounds._ne.lat],
+        bottom: [+bounds._sw.lng, +bounds._sw.lat],
       })
       const zoomL = map.getZoom()
       setZoomLev(Math.floor(zoomL))
-      setFetchOnScroll(true)
+      setSearchFromHome(true)
     }
-  }, [fromHome])
+    return () => {
+      dispatch(
+        searchedData({ address: address, center: center, fromHome: false })
+      )
+    }
+  }, [mapRef.current && fromHome])
+
+  useEffect(() => {
+    if (searchFromHome) {
+      setFetchOnScroll(true)
+setSearchFromHome(false)
+
+    }
+  }, [searchFromHome])
 
   useEffect(() => {
     if (fetchOnScroll && coords) {
@@ -86,16 +102,16 @@ const PropertyMapping = () => {
       const fetchByViewport = async () => {
         setIsLoading(true)
         try {
-          const queryUrl = `${"west=" + coords.upper[0]}&${
-            "east=" + coords.upper[1]
-          }&${"south=" + coords.bottom[0]}&${"north=" + coords.bottom[1]}&${
-            "zoom=" + zoomLev
+          const queryUrl = `${
+            address != null ? "address=" + address + "&" : ""
+          }${"west=" + coords.upper[0]}&${"east=" + coords.upper[1]}&${
+            "south=" + coords.bottom[0]
+          }&${"north=" + coords.bottom[1]}&${"zoom=" + zoomLev}&${
+            "pcenter=" + viewport.longitude + "," + viewport.latitude
           }`
           router.push("?" + queryUrl, undefined, { shallow: true })
-
           const { data } = await axios.get(
             `${process.env.NEXT_PUBLIC_MAIN_PROXY}/property-map?${queryUrl}`,
-
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -104,7 +120,6 @@ const PropertyMapping = () => {
             }
           )
           setIsLoading(false)
-
           setAllSearchedData(data)
         } catch (err) {
           console.log(err)
@@ -122,14 +137,38 @@ const PropertyMapping = () => {
 
   const onMapLoad = (map) => {
     if (!fromHome) {
-      const bounds = map.target.getBounds()
-      setFirstCoord({
-        upper: [bounds._ne.lng, bounds._ne.lat],
-        bottom: [bounds._sw.lng, bounds._sw.lat],
-      })
-      //get lev from query params or use default
-      setZoomLev(8)
-      setFirstRender(true)
+      // console.log(router.query)
+      // make two statement for existing query value and non existing query value
+      if (Object.keys(router.query).length != 0) {
+        //put the center data.
+        const { west, east, south, north, address, zoom, pcenter } =
+          router.query
+        dispatch(
+          searchedData({ address: address, center: center, fromHome: false })
+        )
+        setViewport({
+          latitude: +pcenter.split(",")[1],
+          longitude: +pcenter.split(",")[0],
+          zoom: +zoom,
+        })
+        setFirstCoord({
+          upper: [west, east],
+          bottom: [south, north],
+        })
+        setZoomLev(zoom)
+
+        //get lev from query params or use default
+        setFirstRender(true)
+      } else {
+        const bounds = map.target.getBounds()
+        setFirstCoord({
+          upper: [bounds._ne.lng, bounds._ne.lat],
+          bottom: [bounds._sw.lng, bounds._sw.lat],
+        })
+        //get lev from query params or use default
+        setZoomLev(8)
+        setFirstRender(true)
+      }
     }
   }
 
@@ -137,11 +176,13 @@ const PropertyMapping = () => {
     if (!fromHome && firstRender && firstCoord) {
       const fetchByViewport = async () => {
         try {
-          const queryUrl = `${"west=" + firstCoord.upper[0]}&${
-            "east=" + firstCoord.upper[1]
-          }&${"south=" + firstCoord.bottom[0]}&${
-            "north=" + firstCoord.bottom[1]
-          }&${"zoom=" + zoomLev}`
+          const queryUrl = `${address ? "address=" + address + "&" : ""}${
+            "west=" + firstCoord.upper[0]
+          }&${"east=" + firstCoord.upper[1]}&${
+            "south=" + firstCoord.bottom[0]
+          }&${"north=" + firstCoord.bottom[1]}&${"zoom=" + zoomLev}&${
+            "pcenter=" + viewport.longitude + "," + viewport.latitude
+          }`
 
           setIsLoading(true)
           router.push("?" + queryUrl, undefined, { shallow: true })
@@ -181,37 +222,45 @@ const PropertyMapping = () => {
 
   const searchProperty = async (property) => {
     //dispatch all the auto generated lat long and bounds information.
-    try {
-      setSearchIsLoading(true)
-      const mapReq = await stylesService.forwardGeocode({
-        query: property,
-        types: ["address"],
-        limit: 1,
-      })
+    if (property != "") {
+      try {
+        setSearchIsLoading(true)
+        const mapReq = await stylesService.forwardGeocode({
+          query: property,
+          types: ["address"],
+          limit: 1,
+        })
 
-      const response = await mapReq.send()
-      const match = response.body
-      setSearchIsLoading(false)
-      setViewport({
-        latitude: match.features[0].center[1],
-        longitude: match.features[0].center[0],
-        zoom: 15,
-      })
+        const response = await mapReq.send()
+        const match = response.body
+        setSearchIsLoading(false)
+        setViewport({
+          latitude: match.features[0].center[1],
+          longitude: match.features[0].center[0],
+          zoom: 15,
+        })
+        dispatch(
+          searchedData({ address: property, center: match.features[0].center })
+        )
+        const map = mapRef.current.getMap()
+        const bounds = map.getBounds()
+        setCoords({
+          upper: [bounds._ne.lng, bounds._ne.lat],
+          bottom: [bounds._sw.lng, bounds._sw.lat],
+        })
+        const zoomL = map.getZoom()
+        setZoomLev(Math.floor(zoomL))
+        setFetchOnScroll(true)
+      } catch (err) {
+        console.log(err)
+        setSearchIsLoading(false)
+      }
+    } else {
+      delete router.query.address
       dispatch(
-        searchedData({ address: property, center: match.features[0].center })
+        searchedData({ address: "", center: center, fromHome: fromHome })
       )
-      const map = mapRef.current.getMap()
-      const bounds = map.getBounds()
-      setCoords({
-        upper: [bounds._ne.lng, bounds._ne.lat],
-        bottom: [bounds._sw.lng, bounds._sw.lat],
-      })
-      const zoomL = map.getZoom()
-      setZoomLev(Math.floor(zoomL))
       setFetchOnScroll(true)
-    } catch (err) {
-      console.log(err)
-      setSearchIsLoading(false)
     }
   }
 

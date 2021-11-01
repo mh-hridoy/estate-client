@@ -1,5 +1,5 @@
 import { Button } from "antd";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react"
 import ReactMapboxGl, {
   ZoomControl,
   RotationControl,
@@ -8,13 +8,18 @@ import ReactMapboxGl, {
 } from "react-mapbox-gl";
 
 
-function PropertyMap({ lat, long }) {
-  const [isSatellite, setIsSatellite] = useState(false);
+function PropertyMap({ lat, long, isSat }) {
+  const [isSatellite, setIsSatellite] = useState(false)
 
   const Map = ReactMapboxGl({
     accessToken: process.env.NEXT_PUBLIC_MAPBOX_ACCESS_ID,
   });
 
+  useEffect(() => {
+    if (isSat) {
+      setIsSatellite(true)
+    }
+  })
   
 
   return (
@@ -36,7 +41,7 @@ function PropertyMap({ lat, long }) {
           width: "100%",
         }}
         center={[long ? long : -78.295271, lat ? lat : 35.9553564]}
-        zoom={[lat || long ? 15 : 0]}
+        zoom={[lat || long || isSat ? 18 : 0]}
         renderChildrenInPortal={true}
       >
         <ZoomControl position="bottom-right" />

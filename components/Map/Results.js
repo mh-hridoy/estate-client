@@ -2,8 +2,31 @@ import React from "react"
 import { Row, Col, Spin } from "antd"
 import styles from "../../styles/mapping.module.css"
 import { LoadingOutlined } from "@ant-design/icons"
+import { useDispatch, useSelector } from 'react-redux'
+import {propertyModalHandler, onHover} from '../../store/mapSlice'
+import MapPropertyModal from "./MapPropertyModal"
+
 
 const Results = ({ isLoading, allSearchedData }) => {
+  const dispatch = useDispatch()
+  const isShowModal = useSelector((state) => state.map.showPropertyModal)
+
+  const showPropertyModal = (pId) => {
+    dispatch(
+      propertyModalHandler({ showPropertyModal: true, modalPropertyId: pId })
+    )
+        
+  }
+
+  const onHoverId = (id) => {
+   dispatch(onHover(id))
+ }
+  const onHoverOut = () => {
+   dispatch(onHover(null))
+
+  }
+
+
   return (
     <>
       {isLoading && (
@@ -27,7 +50,8 @@ const Results = ({ isLoading, allSearchedData }) => {
       )}
       <Row gutter={10} wrap={true} justify="start">
         <h3 style={{ textAlign: "center", width: "100%", marginTop: 5 }}>
-          Total results : {!isLoading ? allSearchedData.length : "getting data..."}
+          Total results :{" "}
+          {!isLoading ? allSearchedData.length : "getting data..."}
         </h3>
         <Col span={24} className={styles.resultContainer}>
           {allSearchedData.map((property, inx) => {
@@ -37,7 +61,14 @@ const Results = ({ isLoading, allSearchedData }) => {
                 : "/NoImage5.png"
 
             return (
-              <Col xs={12} key={inx} className={styles.singleContainer}>
+              <Col
+                xs={12}
+                key={inx}
+                className={styles.singleContainer}
+                onClick={() => showPropertyModal(property._id)}
+                onMouseOver={() => onHoverId(property._id)}
+                onMouseOut={() => onHoverOut()}
+              >
                 <div className={styles.resultBox}>
                   {/* property Image */}
                   <div className={styles.imageContainer}>
@@ -69,6 +100,7 @@ const Results = ({ isLoading, allSearchedData }) => {
           })}
         </Col>
       </Row>
+      {isShowModal && <MapPropertyModal/>}
     </>
   )
 }

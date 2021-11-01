@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import ReactMapGL, { NavigationControl, Marker } from "react-map-gl"
 import "mapbox-gl/dist/mapbox-gl.css"
-
+import {useSelector} from "react-redux"
 const navControlStyle = {
   bottom: 20,
   right: 10,
@@ -17,8 +17,9 @@ const Map = ({
   viewport,
   setViewport,
 }) => {
- 
 
+  const hoverId = useSelector((state) => state.map.hoverId)
+ 
   const markers = React.useMemo(
     () =>
       allSearchedData.map((city, inx) => (
@@ -27,17 +28,20 @@ const Map = ({
           key={city.propertyAddress + inx}
           longitude={+city.geo.long}
           latitude={+city.geo.lat}
+          offsetLeft={-20}
+          offsetTop={-10}
         >
           <img
-            height={40}
-            width={40}
-            src="/marker2.png"
+            data-id={city._id == hoverId ? "y" : "n"}
+            height={city._id == hoverId ? 60 : 40}
+            width={city._id == hoverId ? 60 : 40}
+            src={city._id == hoverId ? "/marker.png" : "/marker2.png"}
             draggable={false}
-            onClick={() => console.log(city._id)}
+            // onMouseEnter={() => console.log(city._id)}
           />
         </Marker>
       )),
-    [allSearchedData]
+    [allSearchedData, hoverId]
   )
 
   return (

@@ -4,7 +4,10 @@ const initialState = {
   address: null,
   //auto generated address lat long and bound lat long.
   center: null,
-  fromHome : false
+  fromHome: false,
+  showPropertyModal: false,
+  modalPropertyId: null,
+  hoverId : null,
 }
 
 export const mapSlice = createSlice({
@@ -19,10 +22,22 @@ export const mapSlice = createSlice({
         fromHome: action.payload.fromHome,
       }
     },
+    propertyModalHandler: (state, action) => {
+      return {
+        ...state,
+        showPropertyModal: action.payload.showPropertyModal,
+        modalPropertyId: action.payload.modalPropertyId,
+      }
+    },
+    onHover: (state, action) => {
+      return {
+        ...state, hoverId: action.payload
+      }
+    }
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { searchedData } = mapSlice.actions
+export const { searchedData, propertyModalHandler, onHover } = mapSlice.actions
 
 export default mapSlice.reducer

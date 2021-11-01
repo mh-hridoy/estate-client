@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react"
-import { Input, Space, Select, Popover, Button, InputNumber } from "antd"
+import { Input, Space, Select, Popover, Button, InputNumber, message } from "antd"
 import styles from "../../styles/mapping.module.css"
 import Map from "./Map"
 import Results from "./Results"
@@ -123,6 +123,11 @@ setSearchFromHome(false)
           setAllSearchedData(data)
         } catch (err) {
           console.log(err)
+            message.error(
+              err.response
+                ? err.response.data.message
+                : "Something went wrong!!!"
+            )
           setIsLoading(false)
         }
       }
@@ -199,6 +204,11 @@ setSearchFromHome(false)
 
           setAllSearchedData(data)
         } catch (err) {
+            message.error(
+              err.response
+                ? err.response.data.message
+                : "Something went wrong!!!"
+            )
           setIsLoading(false)
           console.log(err)
         }
@@ -252,6 +262,9 @@ setSearchFromHome(false)
         setZoomLev(Math.floor(zoomL))
         setFetchOnScroll(true)
       } catch (err) {
+          message.error(
+            err.response ? err.response.data.message : "Something went wrong!!!"
+          )
         console.log(err)
         setSearchIsLoading(false)
       }

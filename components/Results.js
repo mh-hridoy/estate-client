@@ -153,18 +153,18 @@ const Result = (props) => {
 
             <Checkbox.Group style={{ width: '100%' }} onChange={onChange} value={checkedList} >
 
-                    {properties && properties.length !== 0 && properties.map((property) => {
+                    {properties && properties.length !== 0 && properties.map((property, inx) => {
                     plainOptions.push(property._id)
                     //Push the data from here. Othrwise it wont work for the first render.. See above newPlainOptins variable.
                     newPlainOptins = [...new Set(plainOptions)]
                     return (
                       <SingleResult
-                        key={property._id}
+                        key={property._id + inx}
                         value={property._id}
                         info={property}
                         onClick={() => openOverviewDrawer(property._id)}
                       />
-                    );
+                    )
                 })
                     }
 

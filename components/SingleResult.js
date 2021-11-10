@@ -20,7 +20,7 @@ const SingleResult = (props) => {
 
     // console.log(lastSaleinfo, firstMortgageInfo, secondMortgageInfo)
 
-    const redirectToProperty = (id) => {
+  const redirectToProperty = (id) => {
         const hostname = window.location.origin
         const propertyLink = `${hostname}/home/property/${id}`
         window.open(propertyLink, '_blank')

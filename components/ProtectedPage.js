@@ -9,7 +9,6 @@ import MenuInsideProtected from './MenuInsideProtected';
 import { storeRequestedPath, storeRequestedQuery } from '../store/userInfoSlice'
 
 
-
 const alltext = (
     <p> <b>ATTENTION/WARNING: </b> THESE TRANSACTIONS INVOLVE RISK.YOU MAY LOSE SOME OR ALL OF YOUR CAPITAL.The services offered may not be suitable for you.You must do your own due diligence and verify any information provided.We encourage you to seek advice from an independent financial advisor, real estate professional, accountant, tax advisor and / or attorney.Unless otherwise stated, the figures shown in all documents provided(including, but not limited to, information regarding title, ownership, liens, tax liens, taxes, current property values, after repair property values, and costs of repairs or renovations) are NOT guaranteed to be accurate and are estimates only.Some estimates are high; some are low.There are NO representations being made that any transaction will achieve profits similar to those being shown and there are NO GUARANTEES OF RESULTS OR PROFITS.DO NOT ENTER INTO THESE TRANSACTIONS UNLESS YOU ARE PREPARED TO LOSE SOME OR ALL OF YOUR CAPITAL. </p>
 )
@@ -35,7 +34,6 @@ const ProtectedPage = (props) => {
     const router = useRouter()
     const user = useSelector((state) => state.user.user)
     const [isLoading, setIsLoading] = useState(true)
-
     const [isSeeMore, setIsSeeMore] = useState(false)
     const [isFullScreen, setIsFullScreen] = useState(false)
 
@@ -55,18 +53,21 @@ const ProtectedPage = (props) => {
 
     }, [Object.keys(query).length !== 0])
 
+    
 
+        
     useEffect(() => {
         const userInfo = localStorage.getItem('user')
         if (userInfo || user !== null) {
             setIsLoading(false)
-
+        
         } else if (!userInfo || user === null) {
             dispatch(storeRequestedPath(window.location.href.split("estate-client-p.herokuapp.com" )[1])) //checking...
             message.warning("You are not authenticated! Please login and try again.")
             router.push('/signup')
         }
     }, [])
+
 
     useEffect(() => {
         if (width <= 1000) {

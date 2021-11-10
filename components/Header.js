@@ -10,6 +10,8 @@ import { Button, message } from 'antd'
 import axios from 'axios'
 import NotiBar from './NotiBar'
 // import { logout } from '../store/userInfoSlice'
+import { getNotifications, updateNotifications } from "../store/userInfoSlice"
+import io from "socket.io-client"
 
 
 
@@ -19,6 +21,8 @@ const Header = () => {
     const { pathname } = router
     const [isLoading, setIsLoading] = useState(false)
     const [clickedToLogOut, setClickedToLogOut] = useState(false)
+ const token = useSelector((state) => state.user.token)
+ const dispatch = useDispatch()
 
     // const dispatch = useDispatch()
 
@@ -26,6 +30,34 @@ const Header = () => {
         setClickedToLogOut(true)
 
     }
+
+    
+     useEffect(() => {
+       if (user !== null) {
+         const fetchNotification = async () => {
+           const { data } = await axios.get(
+             `${process.env.NEXT_PUBLIC_MAIN_PROXY}/get-notifications/${user._id}`,
+             {
+               headers: {
+                 Authorization: `Bearer ${token}`,
+               },
+               withCredentials: true,
+             }
+           )
+           dispatch(getNotifications(data.buyItNotifications))
+         }
+         fetchNotification()
+       }
+     }, [user !== null])
+
+    useEffect(() => {
+      if (user !== null) {
+        const socket = io("http://localhost:5000", {
+          query: { userId: user._id },
+        })
+        socket.on("notifications", (data) => dispatch(updateNotifications(data)))
+      }
+    }, [user !== null])
 
     useEffect(() => {
         if (clickedToLogOut) {

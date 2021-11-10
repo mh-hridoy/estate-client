@@ -7,7 +7,6 @@ import singleRecordSlice from './singleRecordSlice'
 import mapSlice from './mapSlice'
 
 
-
 const store = configureStore({
     reducer: {
         user: userInfoSlice,
@@ -18,7 +17,7 @@ const store = configureStore({
 
 
 const StoreProvider = (props) => {
-
+ 
     useEffect(() => {
         const userData = localStorage.getItem('user')
 
@@ -28,6 +27,7 @@ const StoreProvider = (props) => {
 
 
     }, [])
+
 
     //declare the axios instance method to chcek if the token is valid unless force the client to logout.
 

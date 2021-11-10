@@ -1,12 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-    user: null,
-    token: "",
-    requestedPath: "",
-    requestedQuery: {},
-    inLoginPage: false
-    // storeQuery: ""
+  user: null,
+  token: "",
+  requestedPath: "",
+  requestedQuery: {},
+  inLoginPage: false,
+  buyItNotifications: null
+  // storeQuery: ""
 }
 
 export const userInfoSlice = createSlice({
@@ -30,6 +31,24 @@ export const userInfoSlice = createSlice({
         storeRequestedQuery: (state, action) => {
             return { ...state, requestedQuery: action.payload }
         },
+        updateNotifications: (state, action) => {
+            return {
+                ...state,
+              buyItNotifications: [action.payload, ...state.buyItNotifications]
+            }
+        },
+        getNotifications: (state, action) => {
+            return { ...state, buyItNotifications : action.payload }
+        },
+        readNotification: (state, action) => {
+            const index = action.payload.index
+            const noti = state.buyItNotifications[index]
+            noti.status = action.payload.status
+            // return {
+            //   ...state,
+            //   buyItNotifications: [...state.buyItNotifications],
+            // }
+        }
         // storeFullQuery: (state, action) => {
         //     return { ...state, requestedUrl: action.payload }
         // }
@@ -37,6 +56,15 @@ export const userInfoSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { login, storeRequestedPath, setInLoginPage, storeRequestedQuery, logout } = userInfoSlice.actions
+export const {
+  login,
+  storeRequestedPath,
+  setInLoginPage,
+  storeRequestedQuery,
+  logout,
+  updateNotifications,
+  getNotifications,
+  readNotification,
+} = userInfoSlice.actions
 
 export default userInfoSlice.reducer

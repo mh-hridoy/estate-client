@@ -52,7 +52,7 @@ const Header = () => {
 
     useEffect(() => {
       if (user !== null) {
-        const socket = io("http://localhost:5000", {
+        const socket = io(process.env.NEXT_PUBLIC_RAW_PROXY, {
           query: { userId: user._id },
         })
         socket.on("notifications", (data) => dispatch(updateNotifications(data)))

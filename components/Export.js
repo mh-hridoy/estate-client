@@ -14,8 +14,6 @@ const Export = (props) => {
     const [modalLoading, setModalLoading] = useState(false)
     const [selectedData, setSelectedData] = useState([])
 
-
-
     const fileType =
         "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
     const fileExtension = ".xlsx";

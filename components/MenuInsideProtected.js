@@ -37,10 +37,7 @@ const MenuInsideProtected = (props) => {
             <Item key="/home/dashboard/search" icon={<SearchOutlined />}>
               Search Property
             </Item>
-            <Item
-              key= "/home/dashboard/caseInput"
-              icon={<PlusOutlined />}
-            >
+            <Item key="/home/dashboard/caseInput" icon={<PlusOutlined />}>
               Case Input
             </Item>
             <Item key="buyIt" icon={<DollarOutlined />}>
@@ -52,7 +49,7 @@ const MenuInsideProtected = (props) => {
             <Item key="alarm" icon={<NotificationOutlined />}>
               Show Alarm
             </Item>
-            <Item key="report" icon={<LineChartOutlined />}>
+            <Item key="/home/dashboard/report" icon={<LineChartOutlined />}>
               Report
             </Item>
             <Item key="AAreport" icon={<LineChartOutlined />}>

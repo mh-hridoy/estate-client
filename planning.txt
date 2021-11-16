@@ -50,6 +50,16 @@ fix dynamc array field name and iD.//Done
 //need to update the endpoint with put.//Done
 //close two seperate endpoints for single bidder and sale info/decided not to close
 //change file upload section name and ID/Done
+//auto manupulate lat long if there is none.
+//Delete property image and fils while the user merge record from the server.
+fix modal view property info.//done
+fix useEffect of signup page.//Done
+fix onLogin redirect functionality.
+
+//limit data from getProperties endpoints.//
+//create another endpoints for the overview on result page.//
+
+//create seperate endpoints for the unAuthorized request for property info & add there some data for better SEO.//
 
 Store, localstorage, Protected routes, logout, menuItem....//Partially completed, also working on this along other task.... 
 *******
@@ -59,17 +69,10 @@ Store, localstorage, Protected routes, logout, menuItem....//Partially completed
 *****************************
 
 //next
-//auto manupulate lat long if there is none.
-//Delete property image and fils while the user merge record from the server.
-fix modal view property info.//done
-fix useEffect of signup page.//Done
-fix onLogin redirect functionality.
 
 
-//limit data from getProperties endpoints.//will do that only for app.
-//create another endpoints for the overview on result page.//will do that only for app.
 
-//create seperate endpoints for the unAuthorized request for property info & add there some data for better SEO.//
+
 //check on react-draggable
 
 ************

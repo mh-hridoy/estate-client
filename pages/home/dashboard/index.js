@@ -45,6 +45,7 @@ const dashboard = () => {
             description="Click here to check all your set Alarmed properties that you marked on this site."
           />
           <Card
+            onClick={() => router.push("dashboard/report")}
             icon={<LineChartOutlined />}
             title="Report"
             description="Click here to check reports ."

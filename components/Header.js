@@ -161,7 +161,7 @@ const Header = () => {
                                 </Link>
                             </li>
 
-                            <li >
+                            {/* <li >
                                 <Link href="/community">
                                     <a id="community" className={`fullMenuItem ${pathname === "/community" ? "active" : ""}`}>Community</a>
                                 </Link>
@@ -172,7 +172,7 @@ const Header = () => {
                                     <a id="services" className={`fullMenuItem ${pathname === "/services" ? "active" : ""}`}>Our Services</a>
                                 </Link>
 
-                            </li>
+                            </li> */}
                             {!user &&
                                 <li>
                                     <Link href="/signup">

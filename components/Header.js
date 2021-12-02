@@ -27,7 +27,7 @@ const Header = () => {
     // const dispatch = useDispatch()
 
     const logoutHandle = async () => {
-        setClickedToLogOut(true)
+        setClickedToLogOut(!clickedToLogOut)
 
     }
 
@@ -74,7 +74,8 @@ const Header = () => {
                     } catch (err) {
                         setIsLoading(false)
                         message.warning({ content: "Something went wrong!", key: "1" })
-                        router.push("/home/dashboard").then(() => router.reload())
+                        router.back()
+                        // router.push("/home/dashboard").then(() => router.reload())
 
                     }
 
@@ -94,11 +95,11 @@ const Header = () => {
                             <a id="dashboard" name='/home/dashboard' className={`avatarMenuItem ${pathname === "/home/dashboard" ? "active" : ""}`}>Dashboard</a>
                         </Link>
                     </li>
-                    <li>
+                    {/* <li>
                         <Link href="/" >
                             <a id="userAccount" name='/' className={`avatarMenuItem ${pathname === "/" ? "active" : ""}`}>My Account</a>
                         </Link>
-                    </li>
+                    </li> */}
                     <li>
                     <Button onClick={logoutHandle} htmlType="submit" disabled={isLoading} loading={isLoading}>
                             Sign Out
@@ -113,96 +114,117 @@ const Header = () => {
     )
 
     return (
-        <>
-            <Row className="header" justify="space-between">
-                <Col xs={16} md={8} wrap="true" >
-                    <div className="logo-section">
-                        <div className="logo">
-                            <Image src="/favicon.ico" alt="logo" width="40" height="40" />
-                        </div>
+      <>
+        <Row className="header" justify="space-between">
+          <Col xs={16} md={8} wrap="true">
+            <div className="logo-section">
+              <div className="logo">
+                <Image src="/favicon.ico" alt="logo" width="40" height="40" />
+              </div>
 
-                        <div className="nameinfo">
-                            <div className="name">
-                                <strong>Estates Community</strong>
+              <div className="nameinfo">
+                <div className="name">
+                  <strong>Estates Community</strong>
+                </div>
+                <div className="number">(+1)847-XXX-XXXX</div>
+              </div>
+            </div>
+          </Col>
+          <Col xs={8} md={0}>
+            <div className="burgerContainer">
+              {user && (
+                <>
+                  <NotiBar />
 
-                            </div>
-                            <div className="number">
-                                (+1)847-XXX-XXXX</div>
-                        </div>
-                    </div>
+                  <div className="avatarContainer">
+                    <UserAvatar content={content} />
+                  </div>
+                </>
+              )}
 
-                </Col>
-                <Col xs={8} md={0}>
-                    <div className="burgerContainer">
-                        {user &&
-                            <>
-                                <NotiBar />
+              <div className="hamBurger">
+                <Hamburger />
+              </div>
+            </div>
+          </Col>
+          <Col xs={0} md={12}>
+            <div className="fullMenu">
+              <ul className="fullMenuList">
+                <li>
+                  <Link href="/">
+                    <a
+                      id="home"
+                      name="/"
+                      className={`fullMenuItem ${
+                        pathname === "/" ? "active" : ""
+                      }`}
+                    >
+                      Home
+                    </a>
+                  </Link>
+                </li>
 
-
-                                <div className="avatarContainer">
-                                    <UserAvatar content={content} />
-                                </div>
-
-                            </>
-                        }
-
-                        <div className="hamBurger">
-                            <Hamburger />
-                        </div>
-                    </div>
-
-                </Col>
-                <Col xs={0} md={12}>
-                    <div className="fullMenu" >
-                        <ul className="fullMenuList">
-                            <li>
-                                <Link href="/" >
-                                    <a id="home" name='/' className={`fullMenuItem ${pathname === "/" ? "active" : ""}`}>Home</a>
-                                </Link>
-                            </li>
-
-                            {/* <li >
-                                <Link href="/community">
-                                    <a id="community" className={`fullMenuItem ${pathname === "/community" ? "active" : ""}`}>Community</a>
-                                </Link>
-
-                            </li>
-                            <li >
+                <li>
+                  <Link href="/features">
+                    <a
+                      id="features"
+                      className={`fullMenuItem ${
+                        pathname === "/features" ? "active" : ""
+                      }`}
+                    >
+                      Features
+                    </a>
+                  </Link>
+                </li>
+                {/* <li >
                                 <Link href="/services">
                                     <a id="services" className={`fullMenuItem ${pathname === "/services" ? "active" : ""}`}>Our Services</a>
                                 </Link>
 
                             </li> */}
-                            {!user &&
-                                <li>
-                                    <Link href="/signup">
-                                        <a id="signup" className={`fullMenuItem ${pathname === "/signup" ? "active" : ""}`}>Sign Up</a>
-                                    </Link>
+                {!user && (
+                  <li>
+                    <Link href="/signup">
+                      <a
+                        id="signup"
+                        className={`fullMenuItem ${
+                          pathname === "/signup" ? "active" : ""
+                        }`}
+                      >
+                        Sign Up
+                      </a>
+                    </Link>
+                  </li>
+                )}
 
-                                </li>
-                            }
+                {user && (
+                  <>
+                    <li
+                      style={{
+                        transform: "translateY(20%)",
+                        marginLeft: "5px",
+                      }}
+                    >
+                      <NotiBar />
+                    </li>
 
-                            {user &&
-                                <>
-                                    <li style={{ transform: "translateY(20%)", marginLeft: "5px" }}>
-                                        <NotiBar />
-                                    </li>
-
-                                <li style={{ marginLeft: '30px', transform: "translateY(5%)" }}>
-                                    <div className="avatarContainer">
-                                        <UserAvatar content={content} />
-                                    </div>
-
-                                </li>
-
-                            </>
-                            }
-
-                        </ul>
-                    </div>
-                </Col>
-            </Row>
-        </>
+                    <li
+                      style={{
+                        marginLeft: "30px",
+                        transform: "translateY(5%)",
+                      }}
+                    >
+                      <div className="avatarContainer">
+                        <UserAvatar content={content} />
+                      </div>
+                    </li>
+                  </>
+                )}
+              </ul>
+            </div>
+          </Col>
+        </Row>
+      </>
     )
 }
 

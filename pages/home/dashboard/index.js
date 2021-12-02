@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import ProtectedPage from '../../../components/ProtectedPage'
 import { useSelector } from 'react-redux'
 import { DollarOutlined, LineChartOutlined, NotificationOutlined, PlusOutlined, SearchOutlined, StarOutlined } from '@ant-design/icons'
@@ -9,6 +9,10 @@ import { useRouter } from 'next/router'
 const dashboard = () => {
     const user = useSelector((state) => state.user.user)
     const router = useRouter()
+
+  useEffect(() => {
+    document.title = "Dashboard"
+  }, [])
 
     return (
       <ProtectedPage>

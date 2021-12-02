@@ -79,8 +79,7 @@ const NotiBar = () => {
   }, [isReadNotification && clickedNotificationId !== null])
   const content = (
     <>
-      {buyItNotification != null &&
-        buyItNotification.lenght !== 0 &&
+      {buyItNotification != null && buyItNotification.lenght !== 0 ? (
         buyItNotification.map((notification, inx) => {
           return (
             <div
@@ -140,10 +139,10 @@ const NotiBar = () => {
               </div>
             </div>
           )
-        })}
-      {buyItNotification == null || buyItNotification.length == 0 && (
+        })
+      ) : (
         <>
-          <h5>There are no notifications to show.</h5>
+            <h5>There are no notifications to show.</h5>
         </>
       )}
     </>

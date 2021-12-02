@@ -30,33 +30,49 @@ const MergeModal = (props) => {
                     const lastSaleinfo = record.saleinfo && record.saleinfo[record.saleinfo.length - 1]
                     const saleDate = lastSaleinfo && lastSaleinfo.saleDate && lastSaleinfo.saleDate.split("T")[0]
                     return (
-                        <div className={styles.singleContainer} key={record._id} >
-                            <div className={styles.imageContainer}>
-                                <Image alt="image" height={80} width={80} />
-                            </div>
-                            <div className={styles.firstSection} style={{ fontSize: "13px" }}>
-                                <ul>
-                                    <li>Address : {record.propertyAddress}</li>
-                                    <li>County : {record.county}</li>
-                                    <li>Zip : {record.zip}</li>
-                                    <li>CMA: {record.firstmortgageInfo.cmaArv}</li>
-                                    <li>Year Built : {record.yearBuilt}</li>
-                                    <li>Sale Type : {lastSaleinfo && lastSaleinfo.saleType}</li>
-                                    <li>1st Buy It: pending...</li>
-                                </ul>
-                            </div>
-
-                            <div className={styles.thirdSection} style={{ fontSize: "13px" }}>
-                                <ul>
-                                    <li>Parcel : {record.parcelId}</li>
-                                    <li>Sale Date : {saleDate && saleDate}</li>
-                                    <li>Case No. : {lastSaleinfo && lastSaleinfo.caseNumber}</li>
-                                    <li>DCA By : {record.secondComp.secondDCA}</li>
-                                    <li>County Value: {record.countyValue}</li>
-
-                                </ul>
-                            </div>
+                      <div className={styles.singleContainer} key={record._id}>
+                        <div className={styles.imageContainer}>
+                          <Image alt="image" height={80} width={80} />
                         </div>
+                        <div
+                          className={styles.firstSection}
+                          style={{ fontSize: "13px" }}
+                        >
+                          <ul>
+                            <li>Address : {record.propertyAddress}</li>
+                            <li>County : {record.county}</li>
+                            <li>Zip : {record.zip}</li>
+                            <li>CMA: {record.firstmortgageInfo.cmaArv}</li>
+                            <li>Year Built : {record.yearBuilt}</li>
+                            <li>
+                              Sale Type :{" "}
+                              {lastSaleinfo && lastSaleinfo.saleType}
+                            </li>
+                            <li>
+                              1st Buy It:{" "}
+                              {info.buyItUser && info.buyItUser.length !== 0
+                                ? info.buyItUser[0].name
+                                : ""}
+                            </li>
+                          </ul>
+                        </div>
+
+                        <div
+                          className={styles.thirdSection}
+                          style={{ fontSize: "13px" }}
+                        >
+                          <ul>
+                            <li>Parcel : {record.parcelId}</li>
+                            <li>Sale Date : {saleDate && saleDate}</li>
+                            <li>
+                              Case No. :{" "}
+                              {lastSaleinfo && lastSaleinfo.caseNumber}
+                            </li>
+                            <li>DCA By : {record.secondComp.secondDCA}</li>
+                            <li>County Value: {record.countyValue}</li>
+                          </ul>
+                        </div>
+                      </div>
                     )
                 })}
 

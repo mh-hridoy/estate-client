@@ -55,9 +55,11 @@ fix dynamc array field name and iD.//Done
 fix modal view property info.//done
 fix useEffect of signup page.//Done
 fix onLogin redirect functionality.
+fix header selected item styles // Done
 
 //limit data from getProperties endpoints.//
 //create another endpoints for the overview on result page.//
+fix automation from logs.com// Done
 
 //create seperate endpoints for the unAuthorized request for property info & add there some data for better SEO.//
 
@@ -69,9 +71,7 @@ Store, localstorage, Protected routes, logout, menuItem....//Partially completed
 *****************************
 
 //next
-
-
-
+create feature page.//
 
 //check on react-draggable
 

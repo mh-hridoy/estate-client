@@ -43,7 +43,7 @@ const caseInput = () => {
               headers: {
                 Authorization: `Bearer ${token}`,
               },
-              withCredentials: true,
+              //withCredentials: true,
             }
           );
           setIsLoading(false);

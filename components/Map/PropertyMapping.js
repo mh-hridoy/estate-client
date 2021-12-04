@@ -116,7 +116,7 @@ setSearchFromHome(false)
               headers: {
                 Authorization: `Bearer ${token}`,
               },
-              withCredentials: true,
+              // withCredentials: true,
             }
           )
           setIsLoading(false)
@@ -197,7 +197,7 @@ setSearchFromHome(false)
               headers: {
                 Authorization: `Bearer ${token}`,
               },
-              withCredentials: true,
+              // withCredentials: true,
             }
           )
           setIsLoading(false)

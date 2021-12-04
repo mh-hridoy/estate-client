@@ -18,7 +18,7 @@ const Chart = () => {
             headers: {
               Authorization: `Bearer ${token}`,
             },
-            withCredentials: true,
+           // withCredentials: true,
           }
         )
         for (let i = 0; i < labelValues.length; i++) {

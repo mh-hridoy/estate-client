@@ -41,7 +41,7 @@ const Header = () => {
                headers: {
                  Authorization: `Bearer ${token}`,
                },
-               withCredentials: true,
+              //  withCredentials: true,
              }
            )
            dispatch(getNotifications(data.buyItNotifications))
@@ -65,7 +65,8 @@ const Header = () => {
 
                     try {
                         setIsLoading(true)
-                        await axios.get(`${process.env.NEXT_PUBLIC_MAIN_PROXY}/logout`, { withCredentials: true })
+                      await axios.get(`${process.env.NEXT_PUBLIC_MAIN_PROXY}/logout`, //{ withCredentials: true }
+                      )
                         setIsLoading(false)
                         localStorage.clear('user')
                         message.loading({ content: "Logging Out...", key: "1" })
@@ -165,14 +166,14 @@ const Header = () => {
                 </li>
 
                 <li>
-                  <Link href="/features">
+                  <Link href="/app">
                     <a
-                      id="features"
+                      id="app"
                       className={`fullMenuItem ${
-                        pathname === "/features" ? "active" : ""
+                        pathname === "/app" ? "active" : ""
                       }`}
                     >
-                      Features
+                      App
                     </a>
                   </Link>
                 </li>

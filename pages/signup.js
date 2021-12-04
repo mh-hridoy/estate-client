@@ -106,7 +106,7 @@ const Signup = () => {
               headers: {
                 "Content-Type": "application/json",
               },
-              withCredentials: true, //must include this shit.. otherwise cookies wont work
+              // withCredentials: true, //must include this shit.. otherwise cookies wont work
             }
           );
           // data.token && delete data.token

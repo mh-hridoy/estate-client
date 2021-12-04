@@ -15,7 +15,7 @@ import {useRouter} from 'next/router'
 const plainOptions = [];
 const defaultCheckedList = []; //push value after click on the cheked element.
 
-const Result = (props) => {
+    const Result = (props) => {
     //use let newPlainOptins... and push the data from map funtion. otherwise it wont render the data with the very first render.
     let newPlainOptins;
     const token = useSelector((state) => state.user.token)

@@ -18,7 +18,7 @@ const useHttp = (fetchNow, url, method, body) => {
                     await axios[method](url, body, {
                         headers: {
                             'Authorization': `Bearer ${token}`
-                        }, withCredentials: true
+                        }, //withCredentials: true
                     })
                     message.success('Updated Successfully!')
                     setIsLoading(false)

@@ -21,7 +21,9 @@ const MapPropertyModal = () => {
           setIsLoading(true)
           const { data } = await axios.get(
             `${process.env.NEXT_PUBLIC_MAIN_PROXY}/single-property-map/${propertyId}`,
-            { withCredentials: true }
+            // {
+            //   withCredentials: true
+            // }
           )
 
           setPropertyData(data)

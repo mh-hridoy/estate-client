@@ -165,7 +165,7 @@ const search = () => {
                     const { data } = await axios.get(requestableURL, {
                         headers: {
                             'Authorization': `Bearer ${token}`
-                        }, withCredentials: true
+                        }, //withCredentials: true
                     }
 
                     )
@@ -259,7 +259,7 @@ const search = () => {
                     const { data } = await axios.get(requestableURL, {
                         headers: {
                             'Authorization': `Bearer ${token}`
-                        }, withCredentials: true
+                        }, //withCredentials: true
                     })
                     message.success({ content: 'Loaded successfully!', key: "2" });
                     setIsLoading(false)
@@ -381,7 +381,7 @@ const search = () => {
                     const { data } = await axios.get(requestableURL, {
                         headers: {
                             'Authorization': `Bearer ${token}`
-                        }, withCredentials: true,
+                        }, //withCredentials: true,
                     }
 
                     )

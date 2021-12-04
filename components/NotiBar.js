@@ -52,7 +52,7 @@ const NotiBar = () => {
               headers: {
                 Authorization: `Bearer ${token}`,
               },
-              withCredentials: true,
+              // withCredentials: true,
             }
           )
 

@@ -63,19 +63,7 @@ const HomePage = () => {
         </div>
       </div>
 
-      <h2
-        style={{
-          backgroundColor: "#eee",
-          fontSize: 12,
-          color: "red",
-          position: "absoulute",
-          bottom: 20,
-          left : 20
-        }}
-      >
-        This is a demo project. Only worked on functionalities. So, Don't look
-        for stylings. Although this is fully responsive.
-      </h2>
+
     </div>
   )
 }

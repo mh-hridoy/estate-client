@@ -1,5 +1,4 @@
 name: Azure Static Web Apps CI/CD
-
 on:
   push:
     branches:
@@ -8,6 +7,10 @@ on:
     types: [opened, synchronize, reopened, closed]
     branches:
       - Client
+env:
+  NEXT_PUBLIC_MAPBOX_ACCESS_ID: ${{secrets.NEXT_PUBLIC_MAPBOX_ACCESS_ID}}
+  NEXT_PUBLIC_MAIN_PROXY: ${{secrets.NEXT_PUBLIC_MAIN_PROXY}}
+  NEXT_PUBLIC_RAW_PROXY: ${{secrets.NEXT_PUBLIC_RAW_PROXY}}
 
 jobs:
   build_and_deploy_job:
@@ -19,12 +22,6 @@ jobs:
         with:
           submodules: true
       - name: Build And Deploy
-        env:
-          NEXT_PUBLIC_MAPBOX_ACCESS_ID: ${{secrets.NEXT_PUBLIC_MAPBOX_ACCESS_ID}}
-          NEXT_PUBLIC_MAIN_PROXY: ${{secrets.NEXT_PUBLIC_MAIN_PROXY}}
-          NEXT_PUBLIC_RAW_PROXY: ${{secrets.NEXT_PUBLIC_RAW_PROXY}}
-
-
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
         with:

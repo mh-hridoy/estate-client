@@ -1,5 +1,5 @@
 module.exports = {
   images : {
-    loader: 'cloudinary'
+    loader: 'akamai'
   }
 }

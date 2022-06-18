@@ -34,7 +34,6 @@ jobs:
           api_location: "" # Api source code path - optional
           output_location: "out" # Built app content directory - optional
           app_artifact_location : "out"
-          app_build_command: 'npm run build && npm run export'
           ###### End of Repository/Build Configurations ######
 
   close_pull_request_job:

@@ -1,5 +1,5 @@
 module.exports = {
   images : {
-    loader: 'imgix'
+    loader: 'cloudinary'
   }
 }

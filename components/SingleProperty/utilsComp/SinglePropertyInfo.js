@@ -28,7 +28,7 @@ const SinglePropertyInfo = ({ propertyinfo, data }) => {
         setSendRequest((prev) => ({ sendRequest: !prev }))
     }
 
-    const { isLoading } = useHttp(sendRequest, `http://localhost:5000/api/update-property/${propertyId}`, "put", infoVal)
+    const { isLoading } = useHttp(sendRequest, `${process.env.NEXT_PUBLIC_MAIN_PROXY}/update-property/${propertyId}`, "put", infoVal)
 
 
 

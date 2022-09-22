@@ -121,7 +121,7 @@ const HoaMortgage = ({ viewFcl,
         }
     }, [hoaVal && sendRequest])
 
-    const { isLoading } = useHttp(sendRequest, `http://localhost:5000/api/update-property/${propertyId}`, "put", hoaVal)
+    const { isLoading } = useHttp(sendRequest, `process.env.NEXT_PUBLIC_MAIN_PROXY/update-property/${propertyId}`, "put", hoaVal)
 
 
 

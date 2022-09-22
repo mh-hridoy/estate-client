@@ -9,7 +9,7 @@ axios.interceptors.request.use(
         // Do something before request is sent
         config.headers.Authorization = `Bearer ${token}`;
         // OR config.headers.common['Authorization'] = `Bearer ${your_token}`;
-        config.baseURL = 'http://localhost:5000/api';
+        config.baseURL = `${process.env.NEXT_PUBLIC_MAIN_PROXY}`;
 
         config.withCredentials = true
 

@@ -29,6 +29,12 @@ const PropertyOverview = (props) => {
     lastSaleinfo &&
     lastSaleinfo.saleDate &&
     lastSaleinfo.saleDate.split("T")[0];
+  
+  const redirectToProperty = (id) => {
+        const hostname = window.location.origin
+        const propertyLink = `${hostname}/home/property/${id}`
+        window.open(propertyLink, '_blank')
+    }
 
   return (
     <Drawer
@@ -46,7 +52,7 @@ const PropertyOverview = (props) => {
       footer={
         <Space size={20}>
           <Button onClick={closeOverviewDrawer}>Back</Button>
-          <Button type="primary" onClick={closeOverviewDrawer}>
+          <Button type="primary" onClick={() => redirectToProperty(info._id)}>
             Check Record
           </Button>
         </Space>
